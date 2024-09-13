@@ -1,0 +1,108 @@
+using ActionPart.MemoryPool;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AttackEffect : MonoBehaviour
+{
+    private float shakeDuration;
+    private float shakeIntensity;
+    
+    private Coroutine coroutine;
+    //[SerializeField] private float duration;
+    private Animator animator;
+    public delegate void OnAttackHit();
+    public event OnAttackHit eventAttackHit;
+
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+
+        //animator.Rebind();
+        //animator.Update(0f);
+        animator.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        animator.enabled = true;
+        //StartCoroutine(delayRemove(duration));
+    }
+
+    private void OnDisable()
+    {
+        //animator.Rebind();
+        //animator.Update(0f);
+        animator.enabled = false;
+
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+    }
+
+    public void SetShakeDuration(float _shakeDuration)
+    {
+        shakeDuration = _shakeDuration;
+    }
+
+    public void SetShakeIntensity(float _shakeIntensity)
+    {
+        shakeIntensity = _shakeIntensity;
+    }
+
+    /*IEnumerator delayRemove(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        gameObject.SetActive(false);
+    }
+
+    public void Remove()
+    {
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+        gameObject.SetActive(false);
+    }*/
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            //Debug.Log("Hit!!!");
+            float minDistance = Mathf.Infinity;
+            Vector2 closestHitPoint = Vector2.zero;
+            bool isOnRight = true;
+            foreach(ContactPoint2D hitPoint in collision.contacts)
+            {
+                var attackPos = new Vector2(transform.position.x, transform.position.y);
+                var hitPos = new Vector2(hitPoint.point.x, hitPoint.point.y);
+                var distance = Vector2.Distance(attackPos, hitPos);
+
+                if (distance < minDistance)
+                {
+                    if (attackPos.x < hitPos.x)
+                        isOnRight = true;
+                    else
+                        isOnRight = false;
+
+                    minDistance = distance;
+                    closestHitPoint = hitPos;
+                }
+            }
+
+            var hitEffect = ObjectPoolManager.Instance.GetObject("Hit_Effect");
+            hitEffect.transform.position = new Vector3(closestHitPoint.x, closestHitPoint.y, -5f);
+            if (isOnRight)
+                hitEffect.transform.localScale = new Vector3(1f, 1f, 1f);
+            else
+                hitEffect.transform.localScale = new Vector3(-1f, 1f, 1f);
+
+            VirtualCameraControl.Instance.ShakeCamera(shakeDuration, shakeIntensity);
+
+            eventAttackHit?.Invoke();
+        }
+    }
+}
