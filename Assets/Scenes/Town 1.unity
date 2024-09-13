@@ -5640,11 +5640,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 172533533232718376, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_Size.x
-      value: 1
+      value: 1.98
       objectReference: {fileID: 0}
     - target: {fileID: 172533533232718376, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_Size.y
-      value: 2
+      value: 1.99
       objectReference: {fileID: 0}
     - target: {fileID: 172533533232718376, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_SpriteSortPoint

@@ -76,7 +76,6 @@ public class PlayerMoveState : State
         PlayerInputPart.Instance.EventAttackKeyDown -= AttackKeyDown;
         PlayerInputPart.Instance.EventDashKeyDown -= DashKeyDown;
 
-        player.SetAnimatorBool("isTurn", false);
         player.SetAnimatorBool("isMove", false);
         //Debug.Log("Exit Player Move State");
     }
@@ -152,7 +151,8 @@ public class PlayerMoveState : State
         {
             //왼쪽으로 돌기
             //Debug.Log("왼쪽으로 돌기");
-            player.SetAnimatorTrigger("isTurn");
+            if(player.isGrounded)
+                player.SetAnimatorTrigger("isTurn");
             player.SetAnimatorBool("isMove", false);
             Flip(!isLookRight);
         }
@@ -160,7 +160,8 @@ public class PlayerMoveState : State
         {
             //오른쪽으로 돌기
             //Debug.Log("오른쪽으로 돌기");
-            player.SetAnimatorTrigger("isTurn");
+            if(player.isGrounded)
+                player.SetAnimatorTrigger("isTurn");
             player.SetAnimatorBool("isMove", false);
             Flip(!isLookRight);
         }
