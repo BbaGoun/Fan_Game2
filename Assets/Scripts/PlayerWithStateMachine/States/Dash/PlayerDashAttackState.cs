@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static AttackEffect;
@@ -16,11 +17,9 @@ public class PlayerDashAttackState : State
     [SerializeField]
     private DashAttackState dashAttackState;
     [SerializeField]
-    private float dashAttackSpeed;
+    private float attackSpeed;
     [SerializeField]
-    private float dashDuration;
-    [SerializeField]
-    private float attackWaitTime;
+    private float waitTime;
     [SerializeField]
     private int attackMoveDelayFrame;
     [SerializeField]
@@ -36,8 +35,6 @@ public class PlayerDashAttackState : State
 
     private bool isAttackHit;
     private float timer;
-    private float totalDuration;
-    private float attackMoveDelay;
     private bool isBackStep;
 
     private void Awake()
@@ -54,7 +51,7 @@ public class PlayerDashAttackState : State
 
     public override void EnterState()
     {
-        dashAttackState = DashAttackState.PrepareDash;
+        dashAttackState = DashAttackState.PrepareAttack;
         attackEffect.eventAttackHit += OnAttackHit;
 
         base.EnterState();
@@ -96,43 +93,28 @@ public class PlayerDashAttackState : State
 
     public override void PhysicsUpdate()
     {
-        totalDuration = dashDuration + attackMoveDelayFrame / 60 + attackMoveFrame / 60;
-        attackMoveDelay = attackMoveDelayFrame / 60;
-
         switch (dashAttackState)
         {
-            case DashAttackState.Dashing:
-                timer += Time.deltaTime;
-                var timePer = timer / totalDuration;
-                timePer = Mathf.Clamp01(timePer);
-                var rate = 1 - Mathf.Pow(timePer, 2.5f);
-                var lookDirection = 1 * Mathf.Sign(gameObject.transform.localScale.x);
-
-                player.velocity.x = lookDirection * dashAttackSpeed * rate;
-                player.velocity.y = 0f;
-                break;
             case DashAttackState.Attacking:
                 timer += Time.deltaTime;
-                if (timer - dashDuration > attackMoveDelay)
-                {
-                    var attack_timePer = timer / totalDuration;
-                    attack_timePer = Mathf.Clamp01(attack_timePer);
-                    var attack_rate = 1 - Mathf.Pow(attack_timePer, 2.5f);
-                    var attack_lookDirection = 1 * Mathf.Sign(gameObject.transform.localScale.x);
+                var attackDuration = attackMoveFrame / 60f;
+                var timePer = timer / attackDuration;
+                timePer = Mathf.Clamp01(timePer);
+                var rate = 1 - Mathf.Pow(timePer, 2f);
+                var lookDirection = 1 * Mathf.Sign(gameObject.transform.localScale.x);
 
-                    if(isAttackHit)
-                        player.velocity.x = -attack_lookDirection * dashAttackSpeed * attack_rate / 2f;
-                    else
-                        player.velocity.x = attack_lookDirection * dashAttackSpeed * attack_rate;
-                    player.velocity.y = 0f;
-                }
+                if (isAttackHit)
+                    player.velocity.x = -lookDirection * attackSpeed * rate / 2f;
+                else
+                    player.velocity.x = lookDirection * attackSpeed * rate;
+                player.velocity.y = 0f;
                 break;
             default:
                 player.velocity.x = 0f;
                 player.velocity.y = Physics2D.gravity.y;
                 break;
         }
-        
+
     }
 
     public override void AnimationTrigger()
@@ -146,29 +128,17 @@ public class PlayerDashAttackState : State
         {
             case DashAttackState.Idle:
                 break;
-            case DashAttackState.PrepareDash:
-                player.SetAnimatorTrigger("isDash");
-                timer = 0f;
-                //Debug.Log("대쉬공격_대쉬 준비");
-                dashAttackState = DashAttackState.Dashing;
-                break;
-            case DashAttackState.Dashing:
-                if (timer >= dashDuration)
-                {
-                    dashAttackState = DashAttackState.PrepareAttack;
-                }
-                break;
             case DashAttackState.PrepareAttack:
                 player.SetAnimatorTrigger("isDashAttack");
                 isAttackHit = false;
-                //Debug.Log("대쉬공격_공격 준비");
+                timer = 0f;
                 dashAttackState = DashAttackState.Attacking;
                 break;
             case DashAttackState.Attacking:
                 break;
             case DashAttackState.PrepareIdle:
                 timer += Time.deltaTime;
-                if(timer > attackWaitTime)
+                if(timer > waitTime)
                 {
                     timer = 0f;
                     dashAttackState = DashAttackState.Idle;
