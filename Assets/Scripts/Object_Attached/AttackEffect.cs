@@ -14,9 +14,12 @@ public class AttackEffect : MonoBehaviour
     public delegate void OnAttackHit();
     public event OnAttackHit eventAttackHit;
 
+    private GameObject player;
 
     private void Awake()
     {
+        player = transform.parent.gameObject;
+
         animator = GetComponent<Animator>();
 
         //animator.Rebind();
@@ -71,8 +74,11 @@ public class AttackEffect : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            //Debug.Log("Hit!!!");
-            float minDistance = Mathf.Infinity;
+            var playerPos = new Vector2(player.transform.position.x, transform.position.y);
+            var closestHitPoint = collision.collider.ClosestPoint(playerPos);
+            bool isOnRight = playerPos.x < closestHitPoint.x;
+
+            /*float minDistance = Mathf.Infinity;
             Vector2 closestHitPoint = Vector2.zero;
             bool isOnRight = true;
             foreach(ContactPoint2D hitPoint in collision.contacts)
@@ -91,7 +97,7 @@ public class AttackEffect : MonoBehaviour
                     minDistance = distance;
                     closestHitPoint = hitPos;
                 }
-            }
+            }*/
 
             var hitEffect = ObjectPoolManager.Instance.GetObject("Hit_Effect");
             hitEffect.transform.position = new Vector3(closestHitPoint.x, closestHitPoint.y, -5f);

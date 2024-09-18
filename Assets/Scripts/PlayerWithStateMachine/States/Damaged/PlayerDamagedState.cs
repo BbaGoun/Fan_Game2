@@ -17,15 +17,13 @@ public class PlayerDamagedState : State, IDamageAble
     List<Stiffness> stiffnessList;
     Stiffness currentStiffness;
     
-
-    [Header("Twinkle Parameter")]
-    [SerializeField]
-    private float twinkleIntensity;
-
     [Header("Else")]
     [SerializeField]
     private float waitTime;
     private float waitTimer;
+    [SerializeField]
+    private float slowScale;
+    private float slowTimer;
 
     private Health health;
     private int hpDelta;
@@ -128,8 +126,6 @@ public class PlayerDamagedState : State, IDamageAble
 
         var hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Effect");
         hittedEffect.transform.position = gameObject.transform.position;
-
-        VirtualCameraControl.Instance.ShakeCamera(currentStiffness.shakeDuration, currentStiffness.shakeIntensity);
     }
 
     void UpdateDamagedState()
@@ -142,15 +138,32 @@ public class PlayerDamagedState : State, IDamageAble
                 knockBackTimer = 0f;
                 var canHurt = health.Hurt(hpDelta, currentStiffness.invincibleDuration,
                     currentStiffness.waitFlashTime, currentStiffness.flashTime, currentStiffness.maxFlash);
+
+                VirtualCameraControl.Instance.ShakeCamera(currentStiffness.shakeDuration, currentStiffness.shakeIntensity);
+                
                 player.SetAnimatorTrigger(currentStiffness.animationTriggerName);
+
+                slowTimer = 0f;
+                TimeController.Instance.SetTimeScale(slowScale);
                 damagedState = DamagedState.KnockBacked;
                 break;
             case DamagedState.KnockBacked:
+                if (TimeController.Instance.GetTimeScale() != 0f)
+                {
+                    slowTimer += Time.unscaledDeltaTime;
+                    if(slowTimer >= currentStiffness.slowTime)
+                    {
+                        TimeController.Instance.SetTimeScale(1f);
+                    }
+                }
                 break;
             case DamagedState.PrepareIdle:
                 waitTimer += Time.deltaTime;
                 if (waitTimer > waitTime)
+                {
+                    waitTimer = 0f;
                     damagedState = DamagedState.Idle;
+                }
                 break;
         }
     }
@@ -190,5 +203,7 @@ public class PlayerDamagedState : State, IDamageAble
         public float flashTime;
         [Range(0f, 1f)]
         public float maxFlash;
+
+        public float slowTime;
     }
 }
