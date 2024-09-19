@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
 
-public class PlayerWithStateMachine : KinematicObject, IWithStateMachine
+public class PlayerWithStateMachine : KinematicObject, IWithStateMachine, IDamageAble
 {
     StateMachine stateMachine;
 
@@ -24,6 +24,8 @@ public class PlayerWithStateMachine : KinematicObject, IWithStateMachine
     PlayerChargeAttackState playerChargeAttackState;
     [SerializeField]
     PlayerDamagedState playerDamagedState;
+    [SerializeField]
+    PlayerGuardState playerGuardState;
 
     #endregion
 
@@ -37,7 +39,7 @@ public class PlayerWithStateMachine : KinematicObject, IWithStateMachine
     public DelegateJump delegateJump;
 
     public bool isCharged;
-    public bool isDamaged;
+    public IDamageAble.DamageInfo damageInfo; 
 
     Animator animator;
     [SerializeField]
@@ -46,6 +48,7 @@ public class PlayerWithStateMachine : KinematicObject, IWithStateMachine
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        health = GetComponent<Health>();
     }
 
     protected override void Start()
@@ -61,6 +64,7 @@ public class PlayerWithStateMachine : KinematicObject, IWithStateMachine
         playerJumpAttackState.Initialize(this);
         playerChargeAttackState.Initialize(this);
         playerDamagedState.Initialize(this);
+        playerGuardState.Initialize(this);
 
         delegateGrounded += playerDashState.ResetDashCount;
         delegateGrounded += playerJumpAttackState.ResetCanJumpAttack;
@@ -106,6 +110,20 @@ public class PlayerWithStateMachine : KinematicObject, IWithStateMachine
     public void ChargeDone()
     {
         isCharged = false;
+    }
+
+    public void GetDamage(int _hpDelta, Vector2 _direction)
+    {
+        var isInvincible = health.CheckInvincible();
+        if (isInvincible)
+        {
+            Debug.Log("무적일 때 닿음");
+            return;
+        }
+
+        damageInfo.isDamaged = true;
+        damageInfo.hpDelta = _hpDelta;
+        damageInfo.direction = _direction;
     }
 
     public void LookRight()

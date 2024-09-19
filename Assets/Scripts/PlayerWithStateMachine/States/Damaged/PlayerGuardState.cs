@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDamagedState : State
+public class PlayerGuardState : State
 {
     PlayerWithStateMachine player;
 
@@ -16,7 +16,7 @@ public class PlayerDamagedState : State
     [SerializeField]
     List<Stiffness> stiffnessList;
     Stiffness currentStiffness;
-    
+
     [Header("Else")]
     [SerializeField]
     private float waitTime;
@@ -28,7 +28,7 @@ public class PlayerDamagedState : State
     private Health health;
     private int hpDelta;
 
-    private DamagedState damagedState;
+    private GuardState guardState;
     #endregion
 
 
@@ -40,8 +40,7 @@ public class PlayerDamagedState : State
 
     public override void EnterState()
     {
-        damagedState = DamagedState.Damaged;
-        GetDamageInfo();
+        guardState = GuardState.Damaged;
         player.damageInfo.isDamaged = false;
         base.EnterState();
     }
@@ -55,7 +54,7 @@ public class PlayerDamagedState : State
     public override void FrameUpdate()
     {
         #region State Change
-        if (damagedState == DamagedState.Idle)
+        if (guardState == GuardState.Idle)
         {
             player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
         }
@@ -67,9 +66,9 @@ public class PlayerDamagedState : State
 
     public override void PhysicsUpdate()
     {
-        switch (damagedState)
+        switch (guardState)
         {
-            case DamagedState.KnockBacked:
+            case GuardState.KnockBacked:
                 knockBackTimer += Time.deltaTime;
                 var duration = currentStiffness.knockBackDurationFrame / 60f;
                 var timePer = knockBackTimer / duration;
@@ -94,37 +93,42 @@ public class PlayerDamagedState : State
 
     public void GetDamageInfo()
     {
-        hpDelta = player.damageInfo.hpDelta;
-
-        foreach(Stiffness stiffness in stiffnessList)
+        if (player.damageInfo.isDamaged)
         {
-            if(hpDelta <= stiffness.damageThreshold)
+            if (player.damageInfo.direction.x <= 0f && transform.localScale.x != 1f)
             {
-                currentStiffness = stiffness;
-                Debug.Log("Stiffness Type : " + currentStiffness.StiffnessName);
-                break;
+                // 오른쪽에서 공격을 당했는데, 오른쪽을 보고있지 않았을 경우
+                player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
             }
-        }
+            else if (player.damageInfo.direction.x > 0f && transform.localScale.x != -1f)
+            {
+                // 왼쪽에서 공격을 당했는데, 왼쪽을 보고있지 않았을 경우
+                player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
+            }
+            else
+            {
+                hpDelta = player.damageInfo.hpDelta;
+                if(player.damageInfo.direction.x <= 0)
+                {
+                    knockBackDirection = -1f;
+                }
+                else if(player.damageInfo.direction.x > 0)
+                {
+                    knockBackDirection = 1f;
+                }
 
-        if (player.damageInfo.direction.x <= 0)
-        { // 오른쪽에서 온 충격
-            player.LookRight();
-            knockBackDirection = -1f;
-        }
-        else if (player.damageInfo.direction.x > 0)
-        { // 왼쪽에서 온 충격
-            player.LookLeft();
-            knockBackDirection = 1f;
+                guardState = GuardState.Damaged;
+            }
         }
     }
 
     void UpdateDamagedState()
     {
-        switch(damagedState)
+        switch(guardState)
         {
-            case DamagedState.Idle:
+            case GuardState.Idle:
                 break;
-            case DamagedState.Damaged:
+            case GuardState.Damaged:
                 knockBackTimer = 0f;
                 var canHurt = health.Hurt(hpDelta, currentStiffness.invincibleDuration,
                     currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
@@ -133,14 +137,11 @@ public class PlayerDamagedState : State
                 
                 player.SetAnimatorTrigger(currentStiffness.animationTriggerName);
 
-                var hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Effect");
-                hittedEffect.transform.position = gameObject.transform.position;
-
                 slowTimer = 0f;
                 TimeController.Instance.SetTimeScale(slowScale);
-                damagedState = DamagedState.KnockBacked;
+                guardState = GuardState.KnockBacked;
                 break;
-            case DamagedState.KnockBacked:
+            case GuardState.KnockBacked:
                 if (TimeController.Instance.GetTimeScale() != 0f)
                 {
                     slowTimer += Time.unscaledDeltaTime;
@@ -150,12 +151,12 @@ public class PlayerDamagedState : State
                     }
                 }
                 break;
-            case DamagedState.PrepareIdle:
+            case GuardState.PrepareIdle:
                 waitTimer += Time.deltaTime;
                 if (waitTimer > waitTime)
                 {
                     waitTimer = 0f;
-                    damagedState = DamagedState.Idle;
+                    guardState = GuardState.Idle;
                 }
                 break;
         }
@@ -164,13 +165,15 @@ public class PlayerDamagedState : State
     #region Animation Events
     void KnockBackDone()
     {
-        damagedState = DamagedState.PrepareIdle;
+        guardState = GuardState.PrepareIdle;
         waitTimer = 0f;
     }
     #endregion
 
-    enum DamagedState
+    enum GuardState
     {
+        JustGuard,
+        Parrying,
         Idle,
         Damaged,
         KnockBacked,

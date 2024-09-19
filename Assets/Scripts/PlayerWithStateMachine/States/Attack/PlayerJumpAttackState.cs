@@ -95,7 +95,7 @@ public class PlayerJumpAttackState : State
         {
             player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
         }
-        if (player.isDamaged)
+        if (player.damageInfo.isDamaged)
         {
             player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
         }

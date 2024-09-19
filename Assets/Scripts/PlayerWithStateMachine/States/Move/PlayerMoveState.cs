@@ -87,7 +87,7 @@ public class PlayerMoveState : State
         {
             player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.ChargeAttack);
         }
-        if (player.isDamaged)
+        if (player.damageInfo.isDamaged)
         {
             player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
         }

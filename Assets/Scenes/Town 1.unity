@@ -4481,6 +4481,11 @@ MonoBehaviour:
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
   mNoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!1 &1477335472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+  m_PrefabInstance: {fileID: 2339304044686255310}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1591384906
 GameObject:
   m_ObjectHideFlags: 0
@@ -6050,6 +6055,10 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[73].y
       value: -1.03
       objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: playerGuardState
+      value: 
+      objectReference: {fileID: 8770118516554096233}
     - target: {fileID: 3477904884161359452, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
       value: 1.98
@@ -6129,13 +6138,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      insertIndex: 11
+      addedObject: {fileID: 8770118516554096233}
   m_SourcePrefab: {fileID: 100100000, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
 --- !u!4 &8770118516554096216 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
   m_PrefabInstance: {fileID: 2339304044686255310}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8770118516554096233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477335472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64f311b8080fc34b9cf736ecb549021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stiffnessList: []
+  waitTime: 0.1
+  slowScale: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
