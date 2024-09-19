@@ -21,26 +21,29 @@ namespace ActionPart
             _material = _spriteRenderer.material;
         }
 
-        public void CallDamageFlash(float waitFlashTime, float flashTime, float maxFlash)
+        public void CallDamageFlash(float waitFlashTime, float flashFrequency, float flashRepetition, float maxFlash)
         {
             if (_damageFlashCoroutine != null)
                 StopCoroutine(_damageFlashCoroutine);
-            _damageFlashCoroutine = StartCoroutine(DamageFlashCoroutine(waitFlashTime, flashTime, maxFlash));
+            _damageFlashCoroutine = StartCoroutine(DamageFlashCoroutine(waitFlashTime, flashFrequency, flashRepetition, maxFlash));
         }
 
-        IEnumerator DamageFlashCoroutine(float waitFlashTime, float flashTime, float maxFlash)
+        IEnumerator DamageFlashCoroutine(float waitFlashTime, float flashFrequency, float flashRepetition, float maxFlash)
         {
             yield return new WaitForSeconds(waitFlashTime);
 
             SetFlashColor();
 
             float currentFlashAmount = 0f;
-            float elapsedTime = 0f;
-            while(elapsedTime < flashTime)
+            float timer = 0f;
+            float flashTime = flashFrequency * flashRepetition;
+            while(timer < flashTime)
             {
-                elapsedTime += Time.deltaTime;
+                timer += Time.deltaTime;
 
-                currentFlashAmount = Mathf.Lerp(maxFlash, 0, elapsedTime / flashTime);
+                var rate = Mathf.Sin(2 * (1 / flashFrequency) * Mathf.PI * (timer - (0.25f * flashFrequency))) / 2 + 0.5f;
+
+                currentFlashAmount = maxFlash * rate;
                 SetFlashAmount(currentFlashAmount);
 
                 yield return null;

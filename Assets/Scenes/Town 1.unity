@@ -5751,12 +5751,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].flashFrequency
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[0].shakeIntensity
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].flashFrequency
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[1].shakeIntensity
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[2].flashFrequency
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[2].shakeIntensity
@@ -5767,12 +5779,24 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].flashRepetition
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[1].damageThreshold
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].flashRepetition
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[2].damageThreshold
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[2].flashRepetition
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[0].knockBackVector.x

@@ -137,7 +137,7 @@ public class PlayerDamagedState : State, IDamageAble
             case DamagedState.Damaged:
                 knockBackTimer = 0f;
                 var canHurt = health.Hurt(hpDelta, currentStiffness.invincibleDuration,
-                    currentStiffness.waitFlashTime, currentStiffness.flashTime, currentStiffness.maxFlash);
+                    currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
 
                 VirtualCameraControl.Instance.ShakeCamera(currentStiffness.shakeDuration, currentStiffness.shakeIntensity);
                 
@@ -200,7 +200,8 @@ public class PlayerDamagedState : State, IDamageAble
         public float shakeIntensity;
 
         public float waitFlashTime;
-        public float flashTime;
+        public float flashFrequency;
+        public float flashRepetition;
         [Range(0f, 1f)]
         public float maxFlash;
 

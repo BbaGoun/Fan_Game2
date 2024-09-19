@@ -77,13 +77,13 @@ namespace ActionPart
             HPIncrement(hpDelta);
         }
 
-        public bool Hurt(int hpDelta, float invincibleDuration, float waitFlashTime, float flashTime, float maxFlash)
+        public bool Hurt(int hpDelta, float invincibleDuration, float waitFlashTime, float flashFrequency, float flashRepetition, float maxFlash)
         {
             if (isInvincible)
                 return false;
 
             StartCoroutine(Invincible(invincibleDuration));
-            _damageFlash.CallDamageFlash(waitFlashTime, flashTime, maxFlash);
+            _damageFlash.CallDamageFlash(waitFlashTime, flashFrequency, flashRepetition, maxFlash);
             HPDecrement(hpDelta);
             
             return true;
