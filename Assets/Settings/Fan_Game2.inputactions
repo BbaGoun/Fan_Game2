@@ -42,6 +42,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Guard",
+                    "type": "Button",
+                    "id": "d430274a-1533-4547-be63-502ea63947de",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Skill",
                     "type": "Button",
                     "id": "d6a97279-b16a-4d5d-acbe-37689088b8bf",
@@ -88,7 +97,7 @@
                 {
                     "name": "",
                     "id": "029c4675-334d-4b61-9ab6-bfea72a722ae",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -99,7 +108,7 @@
                 {
                     "name": "",
                     "id": "e7f642d9-cda6-4f10-a890-4327dc0050af",
-                    "path": "<Keyboard>/x",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -110,7 +119,7 @@
                 {
                     "name": "",
                     "id": "a7c5d147-ff08-4d48-8caf-d525d13b2013",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -126,6 +135,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f0e8064-4c02-404c-ac1d-f8854311ac5a",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Guard",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

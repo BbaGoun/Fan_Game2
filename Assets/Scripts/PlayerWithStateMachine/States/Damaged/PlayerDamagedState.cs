@@ -42,13 +42,13 @@ public class PlayerDamagedState : State
     {
         damagedState = DamagedState.Damaged;
         GetDamageInfo();
-        player.damageInfo.isDamaged = false;
+        player.ResetDamage();
         base.EnterState();
     }
 
     public override void ExitState()
     {
-        player.damageInfo.isDamaged = false;
+        player.ResetDamage();
         base.ExitState();
     }
 
@@ -106,12 +106,12 @@ public class PlayerDamagedState : State
             }
         }
 
-        if (player.damageInfo.direction.x <= 0)
+        if (player.damageInfo.knockbackDirection.x <= 0)
         { // 오른쪽에서 온 충격
             player.LookRight();
             knockBackDirection = -1f;
         }
-        else if (player.damageInfo.direction.x > 0)
+        else if (player.damageInfo.knockbackDirection.x > 0)
         { // 왼쪽에서 온 충격
             player.LookLeft();
             knockBackDirection = 1f;

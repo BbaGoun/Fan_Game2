@@ -17,7 +17,7 @@ namespace ActionPart
 
         private bool isAlive => currentHP > 0;
 
-        private bool isGroggy;
+        private bool isGroggy => currentStamina <= 0;
 
         private bool isInvincible;
 
@@ -52,12 +52,12 @@ namespace ActionPart
             currentStamina = Mathf.Clamp(currentStamina - staminaDelta, 0, maxStamina);
         }
 
-        public bool IsAlive()
+        public bool CheckIsAlive()
         {
             return isAlive;
         }
 
-        public bool IsGroggy()
+        public bool CheckIsGroggy()
         {
             return isGroggy;
         }

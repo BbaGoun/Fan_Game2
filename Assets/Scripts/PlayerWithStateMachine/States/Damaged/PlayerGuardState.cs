@@ -24,6 +24,9 @@ public class PlayerGuardState : State
     [SerializeField]
     private float slowScale;
     private float slowTimer;
+    [SerializeField]
+    private float justGuardTime;
+    private float justGuardTimer;
 
     private Health health;
     private int hpDelta;
@@ -40,27 +43,31 @@ public class PlayerGuardState : State
 
     public override void EnterState()
     {
-        guardState = GuardState.Damaged;
-        player.damageInfo.isDamaged = false;
+        PlayerInputPart.Instance.EventGuardKeyUp += GuardKeyUp;
+        player.SetAnimatorBool("isGuard", true);
+        guardState = GuardState.PrepareJustGuard;
         base.EnterState();
     }
 
     public override void ExitState()
     {
-        player.damageInfo.isDamaged = false;
+        PlayerInputPart.Instance.EventGuardKeyUp -= GuardKeyUp;
+        player.SetAnimatorBool("isGuard", false);
         base.ExitState();
     }
 
     public override void FrameUpdate()
     {
         #region State Change
-        if (guardState == GuardState.Idle)
+        if(health.CheckIsGroggy())
         {
-            player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
+            // 아직 그로기 상태가 준비 안 됌.
+            //player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Groggy);
         }
         #endregion
 
-        UpdateDamagedState();
+        GetDamageInfo();
+        UpdateGuardState();
         base.FrameUpdate();
     }
 
@@ -95,12 +102,12 @@ public class PlayerGuardState : State
     {
         if (player.damageInfo.isDamaged)
         {
-            if (player.damageInfo.direction.x <= 0f && transform.localScale.x != 1f)
+            if (player.damageInfo.knockbackDirection.x <= 0f && transform.localScale.x != 1f)
             {
                 // 오른쪽에서 공격을 당했는데, 오른쪽을 보고있지 않았을 경우
                 player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
             }
-            else if (player.damageInfo.direction.x > 0f && transform.localScale.x != -1f)
+            else if (player.damageInfo.knockbackDirection.x > 0f && transform.localScale.x != -1f)
             {
                 // 왼쪽에서 공격을 당했는데, 왼쪽을 보고있지 않았을 경우
                 player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
@@ -108,24 +115,49 @@ public class PlayerGuardState : State
             else
             {
                 hpDelta = player.damageInfo.hpDelta;
-                if(player.damageInfo.direction.x <= 0)
+                if(player.damageInfo.knockbackDirection.x <= 0)
                 {
                     knockBackDirection = -1f;
                 }
-                else if(player.damageInfo.direction.x > 0)
+                else if(player.damageInfo.knockbackDirection.x > 0)
                 {
                     knockBackDirection = 1f;
                 }
 
-                guardState = GuardState.Damaged;
+                if (guardState == GuardState.JustGuard)
+                    guardState = GuardState.PrepareParry;
+                else
+                    guardState = GuardState.Damaged;
             }
+
+            player.ResetDamage();
         }
     }
 
-    void UpdateDamagedState()
+    void UpdateGuardState()
     {
         switch(guardState)
         {
+            case GuardState.PrepareJustGuard:
+                justGuardTimer = 0f;
+                guardState = GuardState.JustGuard;
+                break;
+            case GuardState.JustGuard:
+                justGuardTimer += Time.deltaTime;
+                if(justGuardTimer >= justGuardTime)
+                {
+                    guardState = GuardState.Idle;
+                }
+                break;
+            case GuardState.PrepareParry:
+                player.SetAnimatorTrigger("isParry");
+                //애니메이션, 무적, 효과 등등 처리 필요
+                guardState = GuardState.Parrying;
+                break;
+            case GuardState.Parrying:
+                //밀려나는 물리 필요
+                // 여기까지 하다 말았어요~~~~~~~~~~~
+                break;
             case GuardState.Idle:
                 break;
             case GuardState.Damaged:
@@ -170,9 +202,19 @@ public class PlayerGuardState : State
     }
     #endregion
 
+    #region Key Event
+    void GuardKeyUp()
+    {
+        player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
+    }
+
+    #endregion
+
     enum GuardState
     {
+        PrepareJustGuard,
         JustGuard,
+        PrepareParry,
         Parrying,
         Idle,
         Damaged,

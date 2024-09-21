@@ -46,11 +46,19 @@ public class PlayerInputPart : MonoBehaviour
     public event DelAttackKeyDown EventAttackKeyDown;
 
     public bool attackHolding { get; private set; }
-    public delegate void DelAttackKeyDowning();
-    public event DelAttackKeyDowning EventAttackKeyHolding;
+    public delegate void DelAttackKeyHolding();
+    public event DelAttackKeyHolding EventAttackKeyHolding;
     public bool attackCanceled {  get; private set; }
     public delegate void DelAttackKeyUp();
     public event DelAttackKeyUp EventAttackKeyUp;
+
+    public bool guardStarted {  get; private set; }
+    public delegate void DelGuardKeyDown();
+    public event DelGuardKeyDown EventGuardKeyDown;
+
+    public bool guardCanceled {  get; private set; }
+    public delegate void DelGuardKeyUp();
+    public event DelGuardKeyUp EventGuardKeyUp;
 
     public bool skillStarted {  get; private set; }
     public bool skillCanceled {  get; private set; }
@@ -101,6 +109,18 @@ public class PlayerInputPart : MonoBehaviour
         {
             attackHolding = false;
             EventAttackKeyUp?.Invoke();
+        }
+    }
+
+    public void ActionGuard(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            EventGuardKeyDown?.Invoke();
+        }
+        else if(context.canceled)
+        {
+            EventGuardKeyUp?.Invoke();
         }
     }
 

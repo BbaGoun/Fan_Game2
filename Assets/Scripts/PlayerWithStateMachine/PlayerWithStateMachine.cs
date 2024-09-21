@@ -123,7 +123,14 @@ public class PlayerWithStateMachine : KinematicObject, IWithStateMachine, IDamag
 
         damageInfo.isDamaged = true;
         damageInfo.hpDelta = _hpDelta;
-        damageInfo.direction = _direction;
+        damageInfo.knockbackDirection = _direction;
+    }
+
+    public void ResetDamage()
+    {
+        damageInfo.isDamaged = false;
+        damageInfo.hpDelta = 0;
+        damageInfo.knockbackDirection = Vector2.zero;
     }
 
     public void LookRight()

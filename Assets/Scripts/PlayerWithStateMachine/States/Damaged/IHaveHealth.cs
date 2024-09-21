@@ -10,6 +10,6 @@ public interface IDamageAble
     {
         public bool isDamaged;
         public int hpDelta;
-        public Vector2 direction;
+        public Vector2 knockbackDirection;
     }
 }
