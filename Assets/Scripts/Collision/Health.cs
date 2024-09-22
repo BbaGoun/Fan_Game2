@@ -77,7 +77,7 @@ namespace ActionPart
             HPIncrement(hpDelta);
         }
 
-        public bool Hurt(int hpDelta, float invincibleDuration, float waitFlashTime, float flashFrequency, float flashRepetition, float maxFlash)
+        public bool Hurt_Hp(int hpDelta, float invincibleDuration, float waitFlashTime, float flashFrequency, float flashRepetition, float maxFlash)
         {
             if (isInvincible)
                 return false;
@@ -87,6 +87,11 @@ namespace ActionPart
             HPDecrement(hpDelta);
             
             return true;
+        }
+
+        public void Hurt_Stamina(int staminaDelta)
+        {
+            StaminaDecrement(staminaDelta);
         }
 
         public void OnInvincible(float invincibleDuration)

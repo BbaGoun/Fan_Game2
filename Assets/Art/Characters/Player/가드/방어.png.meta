@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7a01003a43cd7234087a6082c8f4c650
+guid: 81d14b475adaa8b4ca47894e059eb099
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -100,19 +100,19 @@ TextureImporter:
       name: "\u1107\u1161\u11BC\u110B\u1165_0"
       rect:
         serializedVersion: 2
-        x: 81
-        y: 1
-        width: 130
-        height: 197
+        x: 55
+        y: 0
+        width: 200
+        height: 200
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c91b4705c3c16546ab9e3e2f3e68364
-      internalID: -2072368242
+      spriteID: dc6cc66bc3f4bd248977241922175eb8
+      internalID: -724148841
       vertices: []
       indices: 
       edges: []
@@ -121,19 +121,19 @@ TextureImporter:
       name: "\u1107\u1161\u11BC\u110B\u1165_1"
       rect:
         serializedVersion: 2
-        x: 286
-        y: 1
-        width: 136
-        height: 197
+        x: 260
+        y: 0
+        width: 200
+        height: 200
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ce130cc81a80c649a4ea3564b588b0c
-      internalID: 866724482
+      spriteID: 29b827b16586f2144a9745fadaf8efed
+      internalID: -1682133979
       vertices: []
       indices: 
       edges: []
@@ -142,19 +142,19 @@ TextureImporter:
       name: "\u1107\u1161\u11BC\u110B\u1165_2"
       rect:
         serializedVersion: 2
-        x: 509
-        y: 2
-        width: 120
-        height: 159
+        x: 470
+        y: 0
+        width: 200
+        height: 200
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aecfc3629ceba7d4bb158818da25988e
-      internalID: 1654820009
+      spriteID: fd99c1010f11be84dbfa2d5b0db4c013
+      internalID: 1549970018
       vertices: []
       indices: 
       edges: []
@@ -163,19 +163,19 @@ TextureImporter:
       name: "\u1107\u1161\u11BC\u110B\u1165_3"
       rect:
         serializedVersion: 2
-        x: 695
-        y: 1
-        width: 120
-        height: 160
+        x: 660
+        y: 0
+        width: 200
+        height: 200
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 48c52668df8393d4696e04e53a5155f8
-      internalID: -1398017436
+      spriteID: c21c0c006ab18184aabc5c4703e34b81
+      internalID: 1678772008
       vertices: []
       indices: 
       edges: []
@@ -184,19 +184,19 @@ TextureImporter:
       name: "\u1107\u1161\u11BC\u110B\u1165_4"
       rect:
         serializedVersion: 2
-        x: 886
-        y: 2
-        width: 128
-        height: 155
+        x: 855
+        y: 0
+        width: 200
+        height: 200
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 660b5cd80b65a1945b2de1545caec0dd
-      internalID: 603660882
+      spriteID: 2cdf888b9123435498f7169ad911c452
+      internalID: -1403965813
       vertices: []
       indices: 
       edges: []
@@ -212,11 +212,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\u1107\u1161\u11BC\u110B\u1165_0": -2072368242
-      "\u1107\u1161\u11BC\u110B\u1165_1": 866724482
-      "\u1107\u1161\u11BC\u110B\u1165_2": 1654820009
-      "\u1107\u1161\u11BC\u110B\u1165_3": -1398017436
-      "\u1107\u1161\u11BC\u110B\u1165_4": 603660882
+      "\u1107\u1161\u11BC\u110B\u1165_0": -724148841
+      "\u1107\u1161\u11BC\u110B\u1165_1": -1682133979
+      "\u1107\u1161\u11BC\u110B\u1165_2": 1549970018
+      "\u1107\u1161\u11BC\u110B\u1165_3": 1678772008
+      "\u1107\u1161\u11BC\u110B\u1165_4": -1403965813
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

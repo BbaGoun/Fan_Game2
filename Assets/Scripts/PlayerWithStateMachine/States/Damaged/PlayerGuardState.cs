@@ -27,10 +27,17 @@ public class PlayerGuardState : State
     [SerializeField]
     private float justGuardTime;
     private float justGuardTimer;
+    [SerializeField]
+    private float parryTime;
+    [SerializeField]
+    private float parryShakeDuration;
+    [SerializeField]
+    private float parryShakeIntensity;
 
     private Health health;
     private int hpDelta;
 
+    [SerializeField]
     private GuardState guardState;
     #endregion
 
@@ -44,6 +51,7 @@ public class PlayerGuardState : State
     public override void EnterState()
     {
         PlayerInputPart.Instance.EventGuardKeyUp += GuardKeyUp;
+        player.SetAnimatorTrigger("isGuardStart");
         player.SetAnimatorBool("isGuard", true);
         guardState = GuardState.PrepareJustGuard;
         base.EnterState();
@@ -75,6 +83,7 @@ public class PlayerGuardState : State
     {
         switch (guardState)
         {
+            case GuardState.Parrying:
             case GuardState.KnockBacked:
                 knockBackTimer += Time.deltaTime;
                 var duration = currentStiffness.knockBackDurationFrame / 60f;
@@ -82,7 +91,10 @@ public class PlayerGuardState : State
                 timePer = Mathf.Clamp01(timePer);
                 var rate = 1 - Mathf.Pow(timePer, 2f);
 
-                player.velocity.x = knockBackDirection * currentStiffness.knockBackVector.x * rate;
+                if (guardState == GuardState.Parrying)
+                    player.velocity.x = knockBackDirection * currentStiffness.knockBackVector.x / 2 * rate;
+                if(guardState == GuardState.KnockBacked)
+                    player.velocity.x = knockBackDirection * currentStiffness.knockBackVector.x * rate;
                 player.velocity.y = currentStiffness.knockBackVector.y * rate + Physics2D.gravity.y;
                 break;
             default:
@@ -115,7 +127,18 @@ public class PlayerGuardState : State
             else
             {
                 hpDelta = player.damageInfo.hpDelta;
-                if(player.damageInfo.knockbackDirection.x <= 0)
+
+                foreach (Stiffness stiffness in stiffnessList)
+                {
+                    if (hpDelta <= stiffness.damageThreshold)
+                    {
+                        currentStiffness = stiffness;
+                        Debug.Log("Stiffness Type : " + currentStiffness.StiffnessName);
+                        break;
+                    }
+                }
+
+                if (player.damageInfo.knockbackDirection.x <= 0)
                 {
                     knockBackDirection = -1f;
                 }
@@ -150,27 +173,51 @@ public class PlayerGuardState : State
                 }
                 break;
             case GuardState.PrepareParry:
+                knockBackTimer = 0f;
+
                 player.SetAnimatorTrigger("isParry");
-                //애니메이션, 무적, 효과 등등 처리 필요
+
+                health.Hurt_Stamina(hpDelta);
+                health.OnInvincible(parryTime);
+                // 적 스테미나 감소 시키기 필요
+                var parryEffect = ObjectPoolManager.Instance.GetObject("Player_Parry_Effect");
+                parryEffect.transform.position = player.transform.position + new Vector3(-1 * knockBackDirection * 1f, 0.5f, 0f);
+                parryEffect.transform.localScale = new Vector3(-1 * knockBackDirection, 1, 1);
+
+                VirtualCameraControl.Instance.ShakeCamera(parryShakeDuration, parryShakeIntensity);
+
+                slowTimer = 0f;
+                TimeController.Instance.SetTimeScale(slowScale);
+
                 guardState = GuardState.Parrying;
                 break;
             case GuardState.Parrying:
-                //밀려나는 물리 필요
-                // 여기까지 하다 말았어요~~~~~~~~~~~
+                if (TimeController.Instance.GetTimeScale() != 0f)
+                {
+                    slowTimer += Time.unscaledDeltaTime;
+                    if (slowTimer >= currentStiffness.slowTime)
+                    {
+                        TimeController.Instance.SetTimeScale(1f);
+                    }
+                }
+                // 패링 애니메이션에 트리거 붙여놓음
                 break;
             case GuardState.Idle:
                 break;
             case GuardState.Damaged:
                 knockBackTimer = 0f;
-                var canHurt = health.Hurt(hpDelta, currentStiffness.invincibleDuration,
+
+                var canHurt = health.Hurt_Hp(hpDelta/2, currentStiffness.invincibleDuration,
                     currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
+                health.Hurt_Stamina(hpDelta);
 
                 VirtualCameraControl.Instance.ShakeCamera(currentStiffness.shakeDuration, currentStiffness.shakeIntensity);
-                
-                player.SetAnimatorTrigger(currentStiffness.animationTriggerName);
+
+                player.SetAnimatorBool("isGuard", true);
 
                 slowTimer = 0f;
                 TimeController.Instance.SetTimeScale(slowScale);
+
                 guardState = GuardState.KnockBacked;
                 break;
             case GuardState.KnockBacked:
@@ -182,6 +229,7 @@ public class PlayerGuardState : State
                         TimeController.Instance.SetTimeScale(1f);
                     }
                 }
+                // 넉백 애니메이션에 트리거 붙여놓음
                 break;
             case GuardState.PrepareIdle:
                 waitTimer += Time.deltaTime;
@@ -195,7 +243,7 @@ public class PlayerGuardState : State
     }
 
     #region Animation Events
-    void KnockBackDone()
+    void GuardDone()
     {
         guardState = GuardState.PrepareIdle;
         waitTimer = 0f;
@@ -205,7 +253,15 @@ public class PlayerGuardState : State
     #region Key Event
     void GuardKeyUp()
     {
-        player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
+        switch (guardState)
+        {
+            case GuardState.Idle:
+            case GuardState.JustGuard:
+                player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
+                break;
+            default:
+                break;
+        }
     }
 
     #endregion

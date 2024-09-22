@@ -61,6 +61,8 @@ public class PlayerAttackState : State
         PlayerInputPart.Instance.EventAttackKeyDown += AttackKeyDown;
         PlayerInputPart.Instance.EventAttackKeyUp += AttackKeyUp;
         PlayerInputPart.Instance.EventDashKeyDown += DashKeyDown;
+        PlayerInputPart.Instance.EventGuardKeyDown += GuardKeyDown;
+
 
         attackEffect1.eventAttackHit += OnAttackHit;
         attackEffect2.eventAttackHit += OnAttackHit;
@@ -75,6 +77,8 @@ public class PlayerAttackState : State
         PlayerInputPart.Instance.EventAttackKeyDown -= AttackKeyDown;
         PlayerInputPart.Instance.EventAttackKeyUp -= AttackKeyUp;
         PlayerInputPart.Instance.EventDashKeyDown -= DashKeyDown;
+        PlayerInputPart.Instance.EventGuardKeyDown -= GuardKeyDown;
+
 
         attackEffect1.eventAttackHit -= OnAttackHit;
         attackEffect2.eventAttackHit -= OnAttackHit;
@@ -303,6 +307,11 @@ public class PlayerAttackState : State
     void DashKeyDown()
     {
         player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Dash);
+    }
+
+    void GuardKeyDown()
+    {
+        player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Guard);
     }
     #endregion
 

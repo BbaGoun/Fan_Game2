@@ -65,6 +65,7 @@ public class PlayerMoveState : State
         PlayerInputPart.Instance.EventJumpKeyUp += JumpKeyUp;
         PlayerInputPart.Instance.EventAttackKeyDown += AttackKeyDown;
         PlayerInputPart.Instance.EventDashKeyDown += DashKeyDown;
+        PlayerInputPart.Instance.EventGuardKeyDown += GuardKeyDown;
 
         //Debug.Log("Enter Player Move State");
     }
@@ -75,6 +76,8 @@ public class PlayerMoveState : State
         PlayerInputPart.Instance.EventJumpKeyUp -= JumpKeyUp;
         PlayerInputPart.Instance.EventAttackKeyDown -= AttackKeyDown;
         PlayerInputPart.Instance.EventDashKeyDown -= DashKeyDown;
+        PlayerInputPart.Instance.EventGuardKeyDown -= GuardKeyDown;
+
 
         player.SetAnimatorBool("isMove", false);
         //Debug.Log("Exit Player Move State");
@@ -301,6 +304,12 @@ public class PlayerMoveState : State
     void DashKeyDown()
     {
         player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Dash);
+    }
+
+    void GuardKeyDown()
+    {
+        if(player.isGrounded)
+            player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Guard);
     }
     #endregion
 

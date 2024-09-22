@@ -157,12 +157,13 @@ public class PlayerDashState : State
         return isBackStep;
     }
 
+    #region Key Event
     void AttackKeyDown()
     {
         if(player.isGrounded)
             player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.DashAttack);
     }
-
+    #endregion
 
     private enum DashState
     {

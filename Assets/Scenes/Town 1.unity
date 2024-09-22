@@ -4390,7 +4390,10 @@ MonoBehaviour:
     count: 3
   - objectName: Player_Hitted_Effect
     perfab: {fileID: 2132805837656999731, guid: 56f76c54e60e7f142b5cdd0e190029d6, type: 3}
-    count: 3
+    count: 2
+  - objectName: Player_Parry_Effect
+    perfab: {fileID: 335092984610233948, guid: 38b394836412d9241924143e76e43f3d, type: 3}
+    count: 2
 --- !u!1 &1090723026
 GameObject:
   m_ObjectHideFlags: 3
@@ -5426,6 +5429,7 @@ GameObject:
   - component: {fileID: 2077885080}
   - component: {fileID: 2077885079}
   - component: {fileID: 2077885078}
+  - component: {fileID: 2077885082}
   - component: {fileID: 2077885077}
   - component: {fileID: 2077885081}
   m_Layer: 0
@@ -5590,6 +5594,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2077885082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077885076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06dc7f333b1b374d9118c9b2550e740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xMoveScale: 5
 --- !u!1001 &2046442575706877812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6176,10 +6193,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64f311b8080fc34b9cf736ecb549021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stiffnessList: []
+  stiffnessList:
+  - StiffnessName: Small
+    damageThreshold: 5
+    knockBackVector: {x: 5, y: 0}
+    knockBackDurationFrame: 30
+    invincibleDuration: 1.5
+    animationTriggerName: 
+    shakeDuration: 1
+    shakeIntensity: 1
+    waitFlashTime: 0
+    flashFrequency: 0.5
+    flashRepetition: 3
+    maxFlash: 0.2
+    slowTime: 0.5
+  - StiffnessName: Medium
+    damageThreshold: 10
+    knockBackVector: {x: 10, y: 0}
+    knockBackDurationFrame: 30
+    invincibleDuration: 1.5
+    animationTriggerName: 
+    shakeDuration: 1
+    shakeIntensity: 2
+    waitFlashTime: 0
+    flashFrequency: 0.5
+    flashRepetition: 3
+    maxFlash: 0.4
+    slowTime: 0.5
+  - StiffnessName: Big
+    damageThreshold: 20
+    knockBackVector: {x: 15, y: 0}
+    knockBackDurationFrame: 30
+    invincibleDuration: 1.5
+    animationTriggerName: 
+    shakeDuration: 1
+    shakeIntensity: 3
+    waitFlashTime: 0
+    flashFrequency: 0.5
+    flashRepetition: 3
+    maxFlash: 0.6
+    slowTime: 0.5
   waitTime: 0.1
-  slowScale: 0
-  justGuardTime: 0
+  slowScale: 0.4
+  justGuardTime: 0.3
+  parryTime: 1.5
+  parryShakeDuration: 1
+  parryShakeIntensity: 2
+  guardState: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

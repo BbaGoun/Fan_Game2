@@ -212,6 +212,10 @@ public class PlayerWithStateMachine : KinematicObject, IWithStateMachine, IDamag
                 stateMachine.ChangeState(playerDamagedState);
                 playerState = PlayerState.Damaged;
                 break;
+            case PlayerState.Guard:
+                stateMachine.ChangeState(playerGuardState);
+                playerState = PlayerState.Guard;
+                break;
             default:
                 break;
         }

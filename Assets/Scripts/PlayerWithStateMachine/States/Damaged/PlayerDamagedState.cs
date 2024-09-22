@@ -126,7 +126,7 @@ public class PlayerDamagedState : State
                 break;
             case DamagedState.Damaged:
                 knockBackTimer = 0f;
-                var canHurt = health.Hurt(hpDelta, currentStiffness.invincibleDuration,
+                var canHurt = health.Hurt_Hp(hpDelta, currentStiffness.invincibleDuration,
                     currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
 
                 VirtualCameraControl.Instance.ShakeCamera(currentStiffness.shakeDuration, currentStiffness.shakeIntensity);
