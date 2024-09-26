@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParallaxLayer : MonoBehaviour
+namespace ActionPart
 {
-    public float parallaxFactor;
-    private Vector3 basePosition;
-
-    private void Start()
+    public class ParallaxLayer : MonoBehaviour
     {
-        basePosition = transform.localPosition;
-    }
+        public float parallaxFactor;
+        private Vector3 basePosition;
 
-    public void Move(float delta)
-    {
-        Vector3 deltaMove = new Vector3();
-        deltaMove.x = delta * parallaxFactor;
+        private void Start()
+        {
+            basePosition = transform.localPosition;
+        }
 
-        transform.localPosition = basePosition + deltaMove;
+        public void Move(float delta)
+        {
+            Vector3 deltaMove = new Vector3();
+            deltaMove.x = delta * parallaxFactor;
+
+            transform.localPosition = basePosition + deltaMove;
+        }
     }
 }

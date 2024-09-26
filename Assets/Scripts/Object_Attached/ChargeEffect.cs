@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChargeEffect : MonoBehaviour
+namespace ActionPart
 {
-    public Animator animator;
-
-    private void Awake()
+    public class ChargeEffect : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
+        public Animator animator;
+
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
     }
 }

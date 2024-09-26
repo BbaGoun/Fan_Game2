@@ -52,6 +52,31 @@ namespace ActionPart
             currentStamina = Mathf.Clamp(currentStamina - staminaDelta, 0, maxStamina);
         }
 
+        private void StaminaDecrementOnlyTo1(int staminaDelta)
+        {
+            currentStamina = Mathf.Clamp(currentStamina - staminaDelta, 1, maxStamina);
+        }
+
+        public int GetMaxHp()
+        {
+            return maxHP;
+        }
+
+        public int GetCurrentHp()
+        {
+            return currentHP;
+        }
+
+        public int GetMaxStamina()
+        {
+            return maxStamina;
+        }
+
+        public int GetCurrentStamina()
+        {
+            return currentStamina;
+        }
+
         public bool CheckIsAlive()
         {
             return isAlive;
@@ -92,6 +117,11 @@ namespace ActionPart
         public void Hurt_Stamina(int staminaDelta)
         {
             StaminaDecrement(staminaDelta);
+        }
+
+        public void Hurt_StaminaOnlyTo1(int staminaDelta)
+        {
+            StaminaDecrementOnlyTo1(staminaDelta);
         }
 
         public void OnInvincible(float invincibleDuration)

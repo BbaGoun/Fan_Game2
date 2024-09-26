@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(StateMachine))]
-public class StateMachineEditor : Editor
+namespace ActionPart
 {
-    private Editor _editor;
-
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(StateMachine))]
+    public class StateMachineEditor : Editor
     {
-        serializedObject.Update();
+        private Editor _editor;
 
-        var currentState = serializedObject.FindProperty("currentState");
-        if (currentState != null)
+        public override void OnInspectorGUI()
         {
-            CreateCachedEditor(currentState.objectReferenceValue, null, ref _editor);
-            _editor?.OnInspectorGUI();
+            serializedObject.Update();
 
-            serializedObject.ApplyModifiedProperties();
+            var currentState = serializedObject.FindProperty("currentState");
+            if (currentState != null)
+            {
+                CreateCachedEditor(currentState.objectReferenceValue, null, ref _editor);
+                _editor?.OnInspectorGUI();
+
+                serializedObject.ApplyModifiedProperties();
+            }
         }
     }
 }

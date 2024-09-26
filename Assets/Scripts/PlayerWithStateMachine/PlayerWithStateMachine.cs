@@ -5,231 +5,245 @@ using System.Collections.Generic;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
 
-public class PlayerWithStateMachine : KinematicObject, IWithStateMachine, IDamageAble
+namespace ActionPart
 {
-    StateMachine stateMachine;
-
-    #region PlayerState
-    [SerializeField] 
-    PlayerMoveState playerMoveState;
-    [SerializeField] 
-    PlayerAttackState playerAttackState;
-    [SerializeField]
-    PlayerDashState playerDashState;
-    [SerializeField]
-    PlayerDashAttackState playerDashAttackState;
-    [SerializeField]
-    PlayerJumpAttackState playerJumpAttackState;
-    [SerializeField]
-    PlayerChargeAttackState playerChargeAttackState;
-    [SerializeField]
-    PlayerDamagedState playerDamagedState;
-    [SerializeField]
-    PlayerGuardState playerGuardState;
-
-    #endregion
-
-    #region Else Scripts
-    Health health;
-    #endregion
-
-    delegate void DelegateGrounded();
-    DelegateGrounded delegateGrounded;
-    public delegate void DelegateJump();
-    public DelegateJump delegateJump;
-
-    public bool isCharged;
-    public IDamageAble.DamageInfo damageInfo; 
-
-    Animator animator;
-    [SerializeField]
-    PlayerState playerState;
-
-    private void Awake()
+    public class PlayerWithStateMachine : KinematicObject, IWithStateMachine, IDamageAble
     {
-        animator = GetComponent<Animator>();
-        health = GetComponent<Health>();
-    }
+        StateMachine stateMachine;
 
-    protected override void Start()
-    {
-        base.Start();
+        #region PlayerState
+        [SerializeField]
+        PlayerMoveState playerMoveState;
+        [SerializeField]
+        PlayerAttackState playerAttackState;
+        [SerializeField]
+        PlayerDashState playerDashState;
+        [SerializeField]
+        PlayerDashAttackState playerDashAttackState;
+        [SerializeField]
+        PlayerJumpAttackState playerJumpAttackState;
+        [SerializeField]
+        PlayerChargeAttackState playerChargeAttackState;
+        [SerializeField]
+        PlayerDamagedState playerDamagedState;
+        [SerializeField]
+        PlayerGuardState playerGuardState;
 
-        stateMachine = GetComponent<StateMachine>();
+        #endregion
 
-        playerMoveState.Initialize(this);
-        playerAttackState.Initialize(this);
-        playerDashState.Initialize(this);
-        playerDashAttackState.Initialize(this, playerDashState, playerAttackState);
-        playerJumpAttackState.Initialize(this);
-        playerChargeAttackState.Initialize(this);
-        playerDamagedState.Initialize(this);
-        playerGuardState.Initialize(this);
+        #region Else Scripts
+        Health health;
+        #endregion
 
-        delegateGrounded += playerDashState.ResetDashCount;
-        delegateGrounded += playerJumpAttackState.ResetCanJumpAttack;
+        delegate void DelegateGrounded();
+        DelegateGrounded delegateGrounded;
+        public delegate void DelegateJump();
+        public DelegateJump delegateJump;
 
-        delegateJump += playerJumpAttackState.ResetCanJumpAttack;
-        
-        stateMachine.InitState(playerMoveState);
+        public bool isCharged;
+        public bool isGuard;
+        public IDamageAble.DamageInfo damageInfo;
 
-        LookRight();
-    }
+        Animator animator;
+        [SerializeField]
+        PlayerState playerState;
 
-    private void Update()
-    {
-        if (isGrounded)
+        private void Awake()
         {
-            delegateGrounded?.Invoke();
-        }
-        switch (playerState)
-        {
-            case PlayerState.Move:
-            case PlayerState.Dash:
-                playerChargeAttackState.UpdateChargeState();
-                break;
-            case PlayerState.ChargeAttack:
-                break;
-            default:
-                playerChargeAttackState.ResetCharge();
-                break;
-        }
-        stateMachine.StateFrameUpdate();
-    }
-
-    protected override void ComputeVelocity()
-    {
-        stateMachine.StatePhysicsUpdate();
-    }
-
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-    }
-
-    public void ChargeDone()
-    {
-        isCharged = false;
-    }
-
-    public void GetDamage(int _hpDelta, Vector2 _direction)
-    {
-        var isInvincible = health.CheckInvincible();
-        if (isInvincible)
-        {
-            Debug.Log("公利老 锭 搓澜");
-            return;
+            animator = GetComponent<Animator>();
+            health = GetComponent<Health>();
         }
 
-        damageInfo.isDamaged = true;
-        damageInfo.hpDelta = _hpDelta;
-        damageInfo.knockbackDirection = _direction;
-    }
-
-    public void ResetDamage()
-    {
-        damageInfo.isDamaged = false;
-        damageInfo.hpDelta = 0;
-        damageInfo.knockbackDirection = Vector2.zero;
-    }
-
-    public void LookRight()
-    {
-        transform.localScale = new Vector3(1, 1, 1);
-        VirtualCameraControl.Instance.TurnCamera(1);
-    }
-
-    public void LookLeft()
-    {
-        transform.localScale = new Vector3(-1, 1, 1);
-        VirtualCameraControl.Instance.TurnCamera(-1);
-    }
-
-    public void SetAnimatorTrigger(string triggerName)
-    {
-        animator.SetTrigger(triggerName);
-    }
-
-    public void SetAnimatorBool(string boolName, bool value)
-    {
-        animator.SetBool(boolName, value);
-    }
-    
-    public void SetAnimatorFloat(string floatName, float value)
-    {
-        animator.SetFloat(floatName, value);
-    }
-
-    public void ResetAnimator()
-    {
-        animator.Rebind();
-        animator.Update(0f);
-    }
-
-    public void ChangeStateOfStateMachine(PlayerState state)
-    {
-        switch (state)
+        protected override void Start()
         {
-            case PlayerState.Move:
-                stateMachine.ChangeState(playerMoveState);
-                playerState = PlayerState.Move;
-                break;
-            case PlayerState.Attack:
-                if(playerAttackState.CheckCanAttack())
-                {
-                    if (isGrounded)
+            base.Start();
+
+            stateMachine = GetComponent<StateMachine>();
+
+            playerMoveState.Initialize(this);
+            playerAttackState.Initialize(this);
+            playerDashState.Initialize(this);
+            playerDashAttackState.Initialize(this, playerDashState, playerAttackState);
+            playerJumpAttackState.Initialize(this);
+            playerChargeAttackState.Initialize(this);
+            playerDamagedState.Initialize(this);
+            playerGuardState.Initialize(this);
+
+            PlayerInputPart.Instance.EventGuardKeyDown += playerGuardState.GuardKeyDown;
+            PlayerInputPart.Instance.EventGuardKeyUp += playerGuardState.GuardKeyUp;
+
+            delegateGrounded += playerDashState.ResetDashCount;
+            delegateGrounded += playerJumpAttackState.ResetCanJumpAttack;
+
+            delegateJump += playerJumpAttackState.ResetCanJumpAttack;
+
+            stateMachine.InitState(playerMoveState);
+
+            LookRight();
+        }
+
+        public void OnDisable()
+        {
+
+        }
+
+        private void Update()
+        {
+            if (isGrounded)
+            {
+                delegateGrounded?.Invoke();
+            }
+            switch (playerState)
+            {
+                case PlayerState.Move:
+                case PlayerState.Dash:
+                case PlayerState.Guard:
+                    playerChargeAttackState.UpdateChargeState();
+                    break;
+                case PlayerState.ChargeAttack:
+                    break;
+                default:
+                    playerChargeAttackState.ResetCharge();
+                    break;
+            }
+            stateMachine.StateFrameUpdate();
+        }
+
+        protected override void ComputeVelocity()
+        {
+            stateMachine.StatePhysicsUpdate();
+        }
+
+        protected override void FixedUpdate()
+        {
+            base.FixedUpdate();
+        }
+
+        public void ChargeDone()
+        {
+            isCharged = false;
+        }
+
+        public void GetDamage(int _hpDelta, Vector2 _direction)
+        {
+            var isInvincible = health.CheckInvincible();
+            if (isInvincible)
+            {
+                Debug.Log("公利老 锭 搓澜");
+                return;
+            }
+
+            damageInfo.isDamaged = true;
+            damageInfo.hpDelta = _hpDelta;
+            damageInfo.knockbackDirection = _direction;
+        }
+
+        public void ResetDamage()
+        {
+            damageInfo.isDamaged = false;
+            damageInfo.hpDelta = 0;
+            damageInfo.knockbackDirection = Vector2.zero;
+        }
+
+        public void LookRight()
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            VirtualCameraControl.Instance.TurnCamera(1);
+        }
+
+        public void LookLeft()
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            VirtualCameraControl.Instance.TurnCamera(-1);
+        }
+
+        public void SetAnimatorTrigger(string triggerName)
+        {
+            animator.SetTrigger(triggerName);
+        }
+
+        public void SetAnimatorBool(string boolName, bool value)
+        {
+            animator.SetBool(boolName, value);
+        }
+
+        public void SetAnimatorFloat(string floatName, float value)
+        {
+            animator.SetFloat(floatName, value);
+        }
+
+        public void ResetAnimator()
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
+        public void ChangeStateOfStateMachine(PlayerState state)
+        {
+            switch (state)
+            {
+                case PlayerState.Move:
+                    stateMachine.ChangeState(playerMoveState);
+                    playerState = PlayerState.Move;
+                    break;
+                case PlayerState.Attack:
+                    if (playerAttackState.CheckCanAttack())
                     {
-                        stateMachine.ChangeState(playerAttackState);
-                        playerState = PlayerState.Attack;
+                        if (isGrounded)
+                        {
+                            stateMachine.ChangeState(playerAttackState);
+                            playerState = PlayerState.Attack;
+                        }
                     }
-                }
-                break;
-            case PlayerState.Dash:
-                if (playerDashState.CheckCanDash())
-                {
-                    playerDashState.SetMoveVec();
-                    stateMachine.ChangeState(playerDashState);
-                    playerState = PlayerState.Dash;
-                }
-                break;
-            case PlayerState.DashAttack:
-                playerDashAttackState.SetBackStep(playerDashState.CheckBackStep());
-                stateMachine.ChangeState(playerDashAttackState);
-                playerState = PlayerState.DashAttack;
-                break;
-            case PlayerState.JumpAttack:
-                if (playerJumpAttackState.CheckCanAttack())
-                {
-                    stateMachine.ChangeState(playerJumpAttackState);
-                    playerState = PlayerState.JumpAttack;
-                }
-                break;
-            case PlayerState.ChargeAttack:
-                stateMachine.ChangeState(playerChargeAttackState);
-                playerState = PlayerState.ChargeAttack;
-                break;
-            case PlayerState.Damaged:
-                stateMachine.ChangeState(playerDamagedState);
-                playerState = PlayerState.Damaged;
-                break;
-            case PlayerState.Guard:
-                stateMachine.ChangeState(playerGuardState);
-                playerState = PlayerState.Guard;
-                break;
-            default:
-                break;
+                    break;
+                case PlayerState.Dash:
+                    if (playerDashState.CheckCanDash())
+                    {
+                        playerDashState.SetMoveVec();
+                        stateMachine.ChangeState(playerDashState);
+                        playerState = PlayerState.Dash;
+                    }
+                    break;
+                case PlayerState.DashAttack:
+                    playerDashAttackState.SetBackStep(playerDashState.CheckBackStep());
+                    stateMachine.ChangeState(playerDashAttackState);
+                    playerState = PlayerState.DashAttack;
+                    break;
+                case PlayerState.JumpAttack:
+                    if (playerJumpAttackState.CheckCanAttack())
+                    {
+                        stateMachine.ChangeState(playerJumpAttackState);
+                        playerState = PlayerState.JumpAttack;
+                    }
+                    break;
+                case PlayerState.ChargeAttack:
+                    stateMachine.ChangeState(playerChargeAttackState);
+                    playerState = PlayerState.ChargeAttack;
+                    break;
+                case PlayerState.Damaged:
+                    stateMachine.ChangeState(playerDamagedState);
+                    playerState = PlayerState.Damaged;
+                    break;
+                case PlayerState.Guard:
+                    stateMachine.ChangeState(playerGuardState);
+                    playerState = PlayerState.Guard;
+                    break;
+                default:
+                    break;
+            }
         }
-    }
 
-    public enum PlayerState{
-        Move,
-        Dash,
-        Attack,
-        DashAttack,
-        JumpAttack,
-        ChargeAttack,
-        Guard,
-        Damaged,
-        Death,
+        public enum PlayerState
+        {
+            Move,
+            Dash,
+            Attack,
+            DashAttack,
+            JumpAttack,
+            ChargeAttack,
+            Guard,
+            Damaged,
+            Death,
+        }
     }
 }

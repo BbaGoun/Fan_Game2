@@ -3,35 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine:MonoBehaviour
+namespace ActionPart
 {
-    [SerializeField] private State currentState;
-
-    public State GetCurrentState()
+    public class StateMachine : MonoBehaviour
     {
-        return currentState;
-    }
+        [SerializeField] private State currentState;
 
-    public void InitState(State state)
-    {
-        currentState = state;
-        currentState.EnterState();
-    }
+        public State GetCurrentState()
+        {
+            return currentState;
+        }
 
-    public void ChangeState(State state)
-    {
-        currentState?.ExitState();
-        currentState = state;
-        currentState.EnterState();
-    }
+        public void InitState(State state)
+        {
+            currentState = state;
+            currentState.EnterState();
+        }
 
-    public void StateFrameUpdate()
-    {
-        currentState?.FrameUpdate();
-    }
+        public void ChangeState(State state)
+        {
+            currentState?.ExitState();
+            currentState = state;
+            currentState.EnterState();
+        }
 
-    public void StatePhysicsUpdate()
-    {
-        currentState.PhysicsUpdate();
+        public void StateFrameUpdate()
+        {
+            currentState?.FrameUpdate();
+        }
+
+        public void StatePhysicsUpdate()
+        {
+            currentState.PhysicsUpdate();
+        }
     }
 }

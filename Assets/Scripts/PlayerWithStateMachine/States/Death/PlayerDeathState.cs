@@ -2,36 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDeathState : State
+namespace ActionPart
 {
-    PlayerWithStateMachine playerWithStateMachine;
-    public PlayerDeathState(PlayerWithStateMachine _playerWithStateMachine)
+    public class PlayerDeathState : State
     {
-        playerWithStateMachine = _playerWithStateMachine;
-    }
+        PlayerWithStateMachine playerWithStateMachine;
+        public PlayerDeathState(PlayerWithStateMachine _playerWithStateMachine)
+        {
+            playerWithStateMachine = _playerWithStateMachine;
+        }
 
-    public override void EnterState()
-    {
-        base.EnterState();
-    }
+        public override void EnterState()
+        {
+            base.EnterState();
+        }
 
-    public override void ExitState()
-    {
-        base.ExitState();
-    }
+        public override void ExitState()
+        {
+            base.ExitState();
+        }
 
-    public override void FrameUpdate()
-    {
-        base.FrameUpdate();
-    }
+        public override void FrameUpdate()
+        {
+            base.FrameUpdate();
+        }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+        }
 
-    public override void AnimationTrigger()
-    {
-        base.AnimationTrigger();
+        public override void AnimationTrigger()
+        {
+            base.AnimationTrigger();
+        }
     }
 }

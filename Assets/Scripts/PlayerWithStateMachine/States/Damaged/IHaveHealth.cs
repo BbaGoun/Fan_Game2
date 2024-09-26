@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IDamageAble
+namespace ActionPart
 {
-    public void GetDamage(int hpDelta, Vector2 direction);
-
-    public struct DamageInfo
+    public interface IDamageAble
     {
-        public bool isDamaged;
-        public int hpDelta;
-        public Vector2 knockbackDirection;
+        public void GetDamage(int hpDelta, Vector2 direction);
+
+        public struct DamageInfo
+        {
+            public bool isDamaged;
+            public int hpDelta;
+            public Vector2 knockbackDirection;
+        }
     }
 }

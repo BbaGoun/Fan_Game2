@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 4404090010638762496}
   - component: {fileID: 6052787938863382467}
   - component: {fileID: 1280239672331627736}
+  - component: {fileID: 3587476436405571643}
   - component: {fileID: 5089177072131451508}
   - component: {fileID: 8419111730897473696}
   - component: {fileID: 688679593378186175}
@@ -183,7 +184,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.56, y: 5.12}
+  m_Size: {x: 1.98, y: 1.99}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -252,8 +253,9 @@ MonoBehaviour:
   playerJumpAttackState: {fileID: 4404090010638762496}
   playerChargeAttackState: {fileID: 6052787938863382467}
   playerDamagedState: {fileID: 1280239672331627736}
+  playerGuardState: {fileID: 3587476436405571643}
   isCharged: 0
-  isDamaged: 0
+  isGuard: 0
   playerState: 0
 --- !u!114 &7233790644082638672
 MonoBehaviour:
@@ -327,6 +329,7 @@ MonoBehaviour:
   dashSpeed: 45
   dashDuration: 0.2
   dashCoolTime: 0.3
+  invincibleDuration: 0
 --- !u!114 &6583310234407391294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,11 +343,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashAttackState: 0
-  dashAttackSpeed: 75
-  dashDuration: 0.125
-  attackWaitTime: 0.1
-  attackMoveDelayFrame: 3
-  attackMoveFrame: 7
+  attackSpeed: 50
+  waitTime: 0.15
+  attackMoveDelayFrame: 0
+  attackMoveFrame: 10
   attackObject: {fileID: 179122456905654117}
   shakeDuration: 0.25
   shakeIntensity: 0.35
@@ -407,11 +409,107 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 675f38f1a1106fb46a1df3f1b2ade1ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockBackVector: {x: 15, y: 5}
-  knockBackDelayFrame: 5
-  knockBackDurationFrame: 25
-  twinkleIntensity: 0
-  waitTime: 1
+  stiffnessList:
+  - StiffnessName: Small
+    damageThreshold: 5
+    knockBackVector: {x: 5, y: 10}
+    knockBackDurationFrame: 30
+    invincibleDuration: 1.5
+    animationTriggerName: isSmallDamaged
+    shakeDuration: 1
+    shakeIntensity: 1
+    waitFlashTime: 0
+    flashFrequency: 0.5
+    flashRepetition: 3
+    maxFlash: 0.4
+    slowTime: 0.5
+  - StiffnessName: Medium
+    damageThreshold: 10
+    knockBackVector: {x: 10, y: 15}
+    knockBackDurationFrame: 30
+    invincibleDuration: 1.5
+    animationTriggerName: isMediumDamaged
+    shakeDuration: 1
+    shakeIntensity: 2
+    waitFlashTime: 0
+    flashFrequency: 0.5
+    flashRepetition: 3
+    maxFlash: 0.6
+    slowTime: 0.5
+  - StiffnessName: Big
+    damageThreshold: 20
+    knockBackVector: {x: 15, y: 20}
+    knockBackDurationFrame: 30
+    invincibleDuration: 1.5
+    animationTriggerName: isBigDamaged
+    shakeDuration: 1
+    shakeIntensity: 3
+    waitFlashTime: 0
+    flashFrequency: 0.5
+    flashRepetition: 3
+    maxFlash: 0.8
+    slowTime: 0.5
+  waitTime: 0.1
+  slowScale: 0.4
+--- !u!114 &3587476436405571643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4056507680979183462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64f311b8080fc34b9cf736ecb549021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stiffnessList:
+  - StiffnessName: Small
+    damageThreshold: 5
+    knockBackVector: {x: 5, y: 0}
+    knockBackDurationFrame: 30
+    invincibleDuration: 1.5
+    animationTriggerName: 
+    shakeDuration: 1
+    shakeIntensity: 1
+    waitFlashTime: 0
+    flashFrequency: 0.5
+    flashRepetition: 3
+    maxFlash: 0.2
+    slowTime: 0.3
+  - StiffnessName: Medium
+    damageThreshold: 10
+    knockBackVector: {x: 10, y: 0}
+    knockBackDurationFrame: 30
+    invincibleDuration: 1.5
+    animationTriggerName: 
+    shakeDuration: 1
+    shakeIntensity: 2
+    waitFlashTime: 0
+    flashFrequency: 0.5
+    flashRepetition: 3
+    maxFlash: 0.4
+    slowTime: 0.3
+  - StiffnessName: Big
+    damageThreshold: 20
+    knockBackVector: {x: 15, y: 0}
+    knockBackDurationFrame: 30
+    invincibleDuration: 1.5
+    animationTriggerName: 
+    shakeDuration: 1
+    shakeIntensity: 3
+    waitFlashTime: 0
+    flashFrequency: 0.5
+    flashRepetition: 3
+    maxFlash: 0.6
+    slowTime: 0.3
+  waitTime: 0.1
+  slowScale: 0.5
+  justGuardTime: 0.25
+  parryInvincibleTime: 1.5
+  parryShakeDuration: 1
+  parryShakeIntensity: 2
+  guardState: 0
 --- !u!114 &5089177072131451508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,7 +526,6 @@ MonoBehaviour:
   currentHP: 0
   maxStamina: 0
   currentStamina: 0
-  invincibleDuration: 1.5
 --- !u!114 &8419111730897473696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,9 +539,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _flashColor: {r: 0, g: 0, b: 0, a: 0}
-  waitFlashTime: 0.25
-  flashTime: 1.25
-  maxFlash: 0.8
 --- !u!95 &688679593378186175
 Animator:
   serializedVersion: 5
@@ -530,7 +624,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 2}
-    newSize: {x: 2.56, y: 5.12}
+    newSize: {x: 1.98, y: 1.99}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1639,6 +1733,10 @@ PrefabInstance:
     - target: {fileID: 3844731906795426241, guid: 511d16e991fde1c459daa40e61132a7e, type: 3}
       propertyPath: m_Name
       value: Charge Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 3844731906795426241, guid: 511d16e991fde1c459daa40e61132a7e, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3844731906795426241, guid: 511d16e991fde1c459daa40e61132a7e, type: 3}
       propertyPath: m_IsActive
