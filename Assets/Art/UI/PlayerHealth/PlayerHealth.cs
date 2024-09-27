@@ -32,50 +32,76 @@ namespace ActionPart
 
             sliderHP.value = currentHP;
             sliderStamina.value = currentStamina;
+
+            playerHealth.eventHPChange += ChangeHP;
+            playerHealth.eventHPChangeDot += ChangeHPDot;
+
+            playerHealth.eventStaminaChange += ChangeStamina;
+            playerHealth.eventStaminaChangeDot += ChangeStaminaDot;
+            // 도트 딜 중에 데미지 받기, 회복 중에 도트 회복 얻기 등을 할 시 문제가 발생할 것으로 예상 됨
         }
 
-        private void Update()
+        void ChangeHP()
         {
-            if (playerHealth)
-            {
-                var nextHP = playerHealth.GetCurrentHp();
-                var nextStamina = playerHealth.GetCurrentStamina();
-                
-                if(currentHP != nextHP)
-                {
-                    if (coroutineHP != null)
-                        StopCoroutine(coroutineHP);
-                    coroutineHP = StartCoroutine(ChangeHP(currentHP, nextHP));
-                    currentHP = nextHP;
-                }
+            var changedHP = playerHealth.GetCurrentHp();
 
-                if(currentStamina != nextStamina)
-                {
-                    if (coroutineStamina != null)
-                        StopCoroutine(coroutineStamina);
-                    coroutineStamina = StartCoroutine(ChangeStamina(currentStamina, nextStamina));
-                    currentStamina = nextStamina;
-                }
-            }
+            if (coroutineHP != null)
+                StopCoroutine(coroutineHP);
+
+            coroutineHP = StartCoroutine(IEChangeHP(currentHP, changedHP));
+            currentHP = changedHP;
         }
 
-        IEnumerator ChangeHP(float start, float end)
+        void ChangeHPDot()
         {
-            var gap = (end - start) / 20f;
-            for(int i = 0; i < 20; i++)
+            var changedHP = playerHealth.GetCurrentHp();
+
+            if (coroutineHP != null)
+                StopCoroutine(coroutineHP);
+
+            currentHP = changedHP;
+            sliderHP.value = currentHP;
+        }
+
+        void ChangeStamina()
+        {
+            var changedStamina = playerHealth.GetCurrentStamina();
+
+            if (coroutineStamina != null)
+                StopCoroutine(coroutineStamina);
+
+            coroutineStamina = StartCoroutine(IEChangeStamina(currentStamina, changedStamina));
+            currentStamina = changedStamina;
+        }
+
+        void ChangeStaminaDot()
+        {
+            var changedStamina = playerHealth.GetCurrentStamina();
+
+            if (coroutineStamina != null)
+                StopCoroutine(coroutineStamina);
+
+            currentStamina = changedStamina;
+            sliderStamina.value = currentStamina;
+        }
+
+        IEnumerator IEChangeHP(float start, float end)
+        {
+            var gap = (end - start) / 40f;
+            for(int i = 0; i < 40; i++)
             {
                 sliderHP.value += gap;
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.01f * Time.timeScale);
             }
         }
 
-        IEnumerator ChangeStamina(float start, float end)
+        IEnumerator IEChangeStamina(float start, float end)
         {
-            var gap = (end - start) / 20f;
-            for (int i = 0; i < 20; i++)
+            var gap = (end - start) / 40f;
+            for (int i = 0; i < 40; i++)
             {
                 sliderStamina.value += gap;
-                yield return new WaitForSecondsRealtime(0.01f);
+                yield return new WaitForSeconds(0.01f * Time.timeScale);
             }
         }
     }

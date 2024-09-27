@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ActionPart
@@ -7,19 +8,39 @@ namespace ActionPart
     public class Health : MonoBehaviour
     {
         [SerializeField]
-        private int maxHP;
+        private float maxHP;
         [SerializeField]
-        private int currentHP;
+        private float currentHP;
         [SerializeField]
-        private int maxStamina;
+        private float maxStamina;
         [SerializeField]
-        private int currentStamina;
+        private float currentStamina;
+
+        [SerializeField]
+        private float staminaRecoveryTime;
+        private float staminaRecoveryTimer;
+        Coroutine staminaRecoveryCoroutine;
+
+        public delegate void DelHPChange();
+        public event DelHPChange eventHPChange;
+
+        public delegate void DelHPChangeDot();
+        public event DelHPChangeDot eventHPChangeDot;
+
+        public delegate void DelStaminaChange();
+        public event DelStaminaChange eventStaminaChange;
+
+        public delegate void DelStaminaChangeDot();
+        public event DelStaminaChangeDot eventStaminaChangeDot;
 
         private bool isAlive => currentHP > 0;
 
         private bool isGroggy => currentStamina <= 0;
 
         private bool isInvincible;
+
+        [SerializeField]
+        private bool isCanRecoveryStamina;
 
         Coroutine invincibleCoroutine;
 
@@ -30,49 +51,60 @@ namespace ActionPart
         {
             currentHP = maxHP;
             _damageFlash = GetComponent<DamageFlash>();
+            isCanRecoveryStamina = true;
         }
 
-        private void HPIncrement(int hpDelta)
+        private void OnEnable()
+        {
+            staminaRecoveryCoroutine = StartCoroutine(IEStaminaRecovery());
+        }
+
+        private void OnDisable()
+        {
+            StopCoroutine(staminaRecoveryCoroutine);
+        }
+
+        private void HPIncrement(float hpDelta)
         {
             currentHP = Mathf.Clamp(currentHP + hpDelta, 0, maxHP);
         }
 
-        private void HPDecrement(int hpDelta)
+        private void HPDecrement(float hpDelta)
         {
             currentHP = Mathf.Clamp(currentHP - hpDelta, 0, maxHP);
         }
 
-        private void StaminaIncrement(int staminaDelta)
+        private void StaminaIncrement(float staminaDelta)
         {
             currentStamina = Mathf.Clamp(currentStamina + staminaDelta, 0, maxStamina);
         }
 
-        private void StaminaDecrement(int staminaDelta)
+        private void StaminaDecrement(float staminaDelta)
         {
             currentStamina = Mathf.Clamp(currentStamina - staminaDelta, 0, maxStamina);
         }
 
-        private void StaminaDecrementOnlyTo1(int staminaDelta)
+        private void StaminaDecrementOnlyTo1(float staminaDelta)
         {
             currentStamina = Mathf.Clamp(currentStamina - staminaDelta, 1, maxStamina);
         }
 
-        public int GetMaxHp()
+        public float GetMaxHp()
         {
             return maxHP;
         }
 
-        public int GetCurrentHp()
+        public float GetCurrentHp()
         {
             return currentHP;
         }
 
-        public int GetMaxStamina()
+        public float GetMaxStamina()
         {
             return maxStamina;
         }
 
-        public int GetCurrentStamina()
+        public float GetCurrentStamina()
         {
             return currentStamina;
         }
@@ -99,6 +131,7 @@ namespace ActionPart
 
         public void Heal(int hpDelta)
         {
+            // 회복에 대해선 아직 코드가 완성되지 않음
             HPIncrement(hpDelta);
         }
 
@@ -110,6 +143,11 @@ namespace ActionPart
             StartCoroutine(Invincible(invincibleDuration));
             _damageFlash.CallDamageFlash(waitFlashTime, flashFrequency, flashRepetition, maxFlash);
             HPDecrement(hpDelta);
+
+            eventHPChange?.Invoke();
+
+            staminaRecoveryTimer = 0f;
+            isCanRecoveryStamina = false;
             
             return true;
         }
@@ -117,11 +155,21 @@ namespace ActionPart
         public void Hurt_Stamina(int staminaDelta)
         {
             StaminaDecrement(staminaDelta);
+
+            eventStaminaChange?.Invoke();
+
+            staminaRecoveryTimer = 0f;
+            isCanRecoveryStamina = false;
         }
 
         public void Hurt_StaminaOnlyTo1(int staminaDelta)
         {
             StaminaDecrementOnlyTo1(staminaDelta);
+
+            eventStaminaChange?.Invoke();
+
+            staminaRecoveryTimer = 0f;
+            isCanRecoveryStamina = false;
         }
 
         public void OnInvincible(float invincibleDuration)
@@ -146,6 +194,26 @@ namespace ActionPart
                 yield return null;
             }
             isInvincible = false;
+        }
+
+        IEnumerator IEStaminaRecovery()
+        {
+            while(true)
+            {
+                if (isCanRecoveryStamina)
+                {
+                    StaminaIncrement(0.7f * currentHP / maxHP + 0.3f);
+                    eventStaminaChangeDot?.Invoke();
+                    yield return new WaitForSeconds(0.033f);
+                }
+                else
+                {
+                    staminaRecoveryTimer += Time.deltaTime;
+                    if (staminaRecoveryTimer > staminaRecoveryTime)
+                        isCanRecoveryStamina = true;
+                    yield return null;
+                }
+            }
         }
     }
 }

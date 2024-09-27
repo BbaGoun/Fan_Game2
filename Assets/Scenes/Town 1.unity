@@ -5608,7 +5608,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1622055985}
   - component: {fileID: 1622055984}
-  - component: {fileID: 1622055983}
   - component: {fileID: 1622055982}
   m_Layer: 8
   m_Name: Enemy
@@ -5662,18 +5661,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1622055983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622055981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95da58cbc28a8fa4fa092b39fd3c3343, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &1622055984
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5889,7 +5876,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1844675685}
   - component: {fileID: 1844675684}
-  - component: {fileID: 1844675683}
   - component: {fileID: 1844675682}
   m_Layer: 8
   m_Name: Enemy (1)
@@ -5943,18 +5929,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1844675683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1844675681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95da58cbc28a8fa4fa092b39fd3c3343, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &1844675684
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6558,6 +6532,14 @@ PrefabInstance:
       propertyPath: stiffnessList.Array.data[2].slowTime
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 3477904884161359452, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477904884161359452, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.99
+      objectReference: {fileID: 0}
     - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[0].slowTime
       value: 0.4
@@ -6585,6 +6567,14 @@ PrefabInstance:
     - target: {fileID: 5089177072131451508, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: currentStamina
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089177072131451508, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: staminaRecoveryTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089177072131451508, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: staminaRecoveryAmount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalPosition.x
