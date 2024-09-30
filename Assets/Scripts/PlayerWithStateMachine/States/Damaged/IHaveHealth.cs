@@ -6,12 +6,12 @@ namespace ActionPart
 {
     public interface IDamageAble
     {
-        public void GetDamage(int hpDelta, Vector2 direction);
+        public void GetDamage(float hpDelta, Vector2 direction);
 
         public struct DamageInfo
         {
             public bool isDamaged;
-            public int hpDelta;
+            public float hpDelta;
             public Vector2 knockbackDirection;
         }
     }

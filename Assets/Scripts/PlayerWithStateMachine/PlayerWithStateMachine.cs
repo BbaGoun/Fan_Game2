@@ -28,6 +28,8 @@ namespace ActionPart
         PlayerDamagedState playerDamagedState;
         [SerializeField]
         PlayerGuardState playerGuardState;
+        [SerializeField]
+        PlayerHealState playerHealState;
 
         #endregion
 
@@ -68,6 +70,7 @@ namespace ActionPart
             playerChargeAttackState.Initialize(this);
             playerDamagedState.Initialize(this);
             playerGuardState.Initialize(this);
+            playerHealState.Initialize(this);
 
             PlayerInputPart.Instance.EventGuardKeyDown += playerGuardState.GuardKeyDown;
             PlayerInputPart.Instance.EventGuardKeyUp += playerGuardState.GuardKeyUp;
@@ -124,7 +127,7 @@ namespace ActionPart
             isCharged = false;
         }
 
-        public void GetDamage(int _hpDelta, Vector2 _direction)
+        public void GetDamage(float _hpDelta, Vector2 _direction)
         {
             var isInvincible = health.CheckInvincible();
             if (isInvincible)
@@ -228,6 +231,10 @@ namespace ActionPart
                     stateMachine.ChangeState(playerGuardState);
                     playerState = PlayerState.Guard;
                     break;
+                case PlayerState.Heal:
+                    stateMachine.ChangeState(playerHealState);
+                    playerState = PlayerState.Heal;
+                    break;
                 default:
                     break;
             }
@@ -243,6 +250,7 @@ namespace ActionPart
             ChargeAttack,
             Guard,
             Damaged,
+            Heal,
             Death,
         }
     }

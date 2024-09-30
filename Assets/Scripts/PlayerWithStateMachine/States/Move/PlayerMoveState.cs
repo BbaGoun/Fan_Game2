@@ -67,6 +67,7 @@ namespace ActionPart
             PlayerInputPart.Instance.EventJumpKeyUp += JumpKeyUp;
             PlayerInputPart.Instance.EventAttackKeyDown += AttackKeyDown;
             PlayerInputPart.Instance.EventDashKeyDown += DashKeyDown;
+            PlayerInputPart.Instance.EventHealKeyDown += HealKeyDown;
 
             //Debug.Log("Enter Player Move State");
         }
@@ -77,6 +78,7 @@ namespace ActionPart
             PlayerInputPart.Instance.EventJumpKeyUp -= JumpKeyUp;
             PlayerInputPart.Instance.EventAttackKeyDown -= AttackKeyDown;
             PlayerInputPart.Instance.EventDashKeyDown -= DashKeyDown;
+            PlayerInputPart.Instance.EventHealKeyDown -= HealKeyDown;
 
 
             player.SetAnimatorBool("isMove", false);
@@ -308,6 +310,12 @@ namespace ActionPart
         void DashKeyDown()
         {
             player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Dash);
+        }
+
+        void HealKeyDown()
+        {
+            if (player.isGrounded)
+                player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Heal);
         }
         #endregion
 

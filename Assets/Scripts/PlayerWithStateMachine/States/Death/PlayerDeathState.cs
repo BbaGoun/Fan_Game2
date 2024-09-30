@@ -32,9 +32,5 @@ namespace ActionPart
             base.PhysicsUpdate();
         }
 
-        public override void AnimationTrigger()
-        {
-            base.AnimationTrigger();
-        }
     }
 }

@@ -8,7 +8,7 @@ namespace ActionPart
     public class HarmfulToPlayer : MonoBehaviour
     {
         [SerializeField]
-        private int damage;
+        private float damage;
         private IDamageAble damageAble;
 
         private void OnCollisionStay2D(Collision2D collision)

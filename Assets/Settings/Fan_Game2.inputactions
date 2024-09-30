@@ -51,9 +51,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill",
+                    "name": "Heal",
                     "type": "Button",
-                    "id": "d6a97279-b16a-4d5d-acbe-37689088b8bf",
+                    "id": "3794e2b4-2f0d-48b1-a8a8-bff6b50e797c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -129,23 +129,23 @@
                 },
                 {
                     "name": "",
-                    "id": "c4969c62-6f55-4730-b258-eda75904b66e",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Skill",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "7f0e8064-4c02-404c-ac1d-f8854311ac5a",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Guard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e9db6e6-74a5-486e-b185-eeee9012408f",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Heal",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -118,11 +118,6 @@ namespace ActionPart
 
         }
 
-        public override void AnimationTrigger()
-        {
-            base.AnimationTrigger();
-        }
-
         void UpdateDashAttackState()
         {
             switch (dashAttackState)

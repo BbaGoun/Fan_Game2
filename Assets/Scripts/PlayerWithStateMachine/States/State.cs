@@ -26,10 +26,5 @@ namespace ActionPart
         {
 
         }
-
-        public virtual void AnimationTrigger()
-        {
-
-        }
     }
 }

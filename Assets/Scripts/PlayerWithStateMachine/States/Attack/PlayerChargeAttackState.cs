@@ -10,6 +10,7 @@ namespace ActionPart
     {
         PlayerWithStateMachine player;
 
+        #region parameter
         [Header("Charge Attack Parameter")]
         [SerializeField]
         private float chargeTime;
@@ -37,6 +38,7 @@ namespace ActionPart
         [SerializeField]
         private GameObject attackObject;
         private AttackEffect attackEffect;
+        #endregion
 
         private void Awake()
         {
@@ -99,11 +101,6 @@ namespace ActionPart
                     break;
             }
             base.PhysicsUpdate();
-        }
-
-        public override void AnimationTrigger()
-        {
-            base.AnimationTrigger();
         }
 
         public void UpdateChargeState()

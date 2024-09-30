@@ -29,41 +29,33 @@ namespace ActionPart
         public event DelArrowKey EventArrowKey;
         public Vector2 inputVec { get; private set; } = Vector2.zero;
 
-        public bool jumpKeyDown { get; private set; }
         public delegate void DelJumpKeyDown();
         public event DelJumpKeyDown EventJumpKeyDown;
-        public bool jumpKeyUp { get; private set; }
         public delegate void DelJumpKeyUp();
         public event DelJumpKeyUp EventJumpKeyUp;
 
-        public bool dashStarted { get; private set; }
         public delegate void DelDashKeyDown();
         public event DelDashKeyDown EventDashKeyDown;
-        public bool dashCanceled { get; private set; }
         public delegate void DelDashKeyUp();
         public event DelDashKeyUp EventDashKeyUp;
 
-        public bool attackStarted { get; private set; }
         public delegate void DelAttackKeyDown();
         public event DelAttackKeyDown EventAttackKeyDown;
-
         public bool attackHolding { get; private set; }
         public delegate void DelAttackKeyHolding();
         public event DelAttackKeyHolding EventAttackKeyHolding;
-        public bool attackCanceled { get; private set; }
         public delegate void DelAttackKeyUp();
         public event DelAttackKeyUp EventAttackKeyUp;
 
-        public bool guardStarted { get; private set; }
         public delegate void DelGuardKeyDown();
         public event DelGuardKeyDown EventGuardKeyDown;
-
-        public bool guardCanceled { get; private set; }
         public delegate void DelGuardKeyUp();
         public event DelGuardKeyUp EventGuardKeyUp;
 
-        public bool skillStarted { get; private set; }
-        public bool skillCanceled { get; private set; }
+        public delegate void DelHealKeyDown();
+        public event DelHealKeyDown EventHealKeyDown;
+        public delegate void DelHealKeyUp();
+        public event DelHealKeyUp EventHealKeyUp;
 
         private void Update()
         {
@@ -126,15 +118,15 @@ namespace ActionPart
             }
         }
 
-        public void ActionSkill(InputAction.CallbackContext context)
+        public void ActionHeal(InputAction.CallbackContext context)
         {
             if (context.started)
             {
-                skillStarted = true;
+                EventHealKeyDown?.Invoke();
             }
             else if (context.canceled)
             {
-                skillStarted = false;
+                EventHealKeyUp?.Invoke();
             }
         }
     }

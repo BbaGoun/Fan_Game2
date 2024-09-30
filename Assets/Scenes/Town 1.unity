@@ -341,6 +341,11 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &180904555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+  m_PrefabInstance: {fileID: 2339304044686255310}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &195451505
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,22 +913,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 614236739}
         m_TargetAssemblyTypeName: PlayerInputPart, Assembly-CSharp
-        m_MethodName: ActionSkill
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d6a97279-b16a-4d5d-acbe-37689088b8bf
-    m_ActionName: Player/Skill[/Keyboard/a]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 614236739}
-        m_TargetAssemblyTypeName: PlayerInputPart, Assembly-CSharp
         m_MethodName: ActionGuard
         m_Mode: 0
         m_Arguments:
@@ -935,6 +924,22 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: d430274a-1533-4547-be63-502ea63947de
+    m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 614236739}
+        m_TargetAssemblyTypeName: ActionPart.PlayerInputPart, Assembly-CSharp
+        m_MethodName: ActionHeal
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3794e2b4-2f0d-48b1-a8a8-bff6b50e797c
     m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
@@ -6532,6 +6537,10 @@ PrefabInstance:
       propertyPath: stiffnessList.Array.data[2].slowTime
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: playerHealState
+      value: 
+      objectReference: {fileID: 8770118516554096223}
     - target: {fileID: 3477904884161359452, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.98
@@ -6619,7 +6628,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      insertIndex: 12
+      addedObject: {fileID: 8770118516554096223}
   m_SourcePrefab: {fileID: 100100000, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
 --- !u!4 &8770118516554096216 stripped
 Transform:
@@ -6631,12 +6643,28 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5089177072131451508, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
   m_PrefabInstance: {fileID: 2339304044686255310}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 180904555}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4879ef2fac2901a489d473f9f29689ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8770118516554096223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180904555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d442e019780ba34c8f76030d47c25a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healTime: 0
+  healAmount: 0
+  moreDamageRate: 0
+  waitTime: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

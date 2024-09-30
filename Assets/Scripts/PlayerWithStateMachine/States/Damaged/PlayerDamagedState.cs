@@ -28,7 +28,7 @@ namespace ActionPart
         private float slowTimer;
 
         private Health health;
-        private int hpDelta;
+        private float hpDelta;
 
         private DamagedState damagedState;
         #endregion
@@ -87,11 +87,6 @@ namespace ActionPart
                     break;
             }
             base.PhysicsUpdate();
-        }
-
-        public override void AnimationTrigger()
-        {
-            base.AnimationTrigger();
         }
 
         public void GetDamageInfo()

@@ -94,11 +94,6 @@ namespace ActionPart
             }
         }
 
-        public override void AnimationTrigger()
-        {
-            base.AnimationTrigger();
-        }
-
         public bool CheckCanDash()
         {
             return (Time.time - lastDashTime > dashCoolTime) && (dashCount > 0);

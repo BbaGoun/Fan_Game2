@@ -37,7 +37,7 @@ namespace ActionPart
         private float parryShakeIntensity;
 
         private Health health;
-        private int hpDelta;
+        private float hpDelta;
 
         [SerializeField]
         private GuardState guardState;
@@ -125,10 +125,6 @@ namespace ActionPart
             base.PhysicsUpdate();
         }
 
-        public override void AnimationTrigger()
-        {
-            base.AnimationTrigger();
-        }
 
         public void GetDamageInfo()
         {

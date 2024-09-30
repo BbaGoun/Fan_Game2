@@ -129,13 +129,13 @@ namespace ActionPart
             currentHP = 0;
         }
 
-        public void Heal(int hpDelta)
+        public void Heal(float hpDelta)
         {
             // 회복에 대해선 아직 코드가 완성되지 않음
             HPIncrement(hpDelta);
         }
 
-        public bool Hurt_Hp(int hpDelta, float invincibleDuration, float waitFlashTime, float flashFrequency, float flashRepetition, float maxFlash)
+        public bool Hurt_Hp(float hpDelta, float invincibleDuration, float waitFlashTime, float flashFrequency, float flashRepetition, float maxFlash)
         {
             if (isInvincible)
                 return false;
@@ -152,7 +152,7 @@ namespace ActionPart
             return true;
         }
 
-        public void Hurt_Stamina(int staminaDelta)
+        public void Hurt_Stamina(float staminaDelta)
         {
             StaminaDecrement(staminaDelta);
 
@@ -162,7 +162,7 @@ namespace ActionPart
             isCanRecoveryStamina = false;
         }
 
-        public void Hurt_StaminaOnlyTo1(int staminaDelta)
+        public void Hurt_StaminaOnlyTo1(float staminaDelta)
         {
             StaminaDecrementOnlyTo1(staminaDelta);
 
