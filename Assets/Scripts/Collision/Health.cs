@@ -57,11 +57,19 @@ namespace ActionPart
         private void OnEnable()
         {
             staminaRecoveryCoroutine = StartCoroutine(IEStaminaRecovery());
+            eventStaminaChange += StaminaRecoveryDelay;
         }
 
         private void OnDisable()
         {
             StopCoroutine(staminaRecoveryCoroutine);
+        }
+
+        private void OnValidate()
+        {
+            eventHPChange?.Invoke();
+
+            eventStaminaChange?.Invoke();
         }
 
         private void HPIncrement(float hpDelta)
@@ -129,10 +137,18 @@ namespace ActionPart
             currentHP = 0;
         }
 
-        public void Heal(float hpDelta)
+        public void Heal_HP(float hpDelta)
         {
-            // 회복에 대해선 아직 코드가 완성되지 않음
             HPIncrement(hpDelta);
+
+            eventHPChange?.Invoke();
+        }
+
+        public void Heal_Stamina(float staminaDelta)
+        {
+            StaminaIncrement(staminaDelta);
+
+            eventStaminaChange?.Invoke();
         }
 
         public bool Hurt_Hp(float hpDelta, float invincibleDuration, float waitFlashTime, float flashFrequency, float flashRepetition, float maxFlash)
@@ -202,8 +218,11 @@ namespace ActionPart
             {
                 if (isCanRecoveryStamina)
                 {
-                    StaminaIncrement(0.7f * currentHP / maxHP + 0.3f);
-                    eventStaminaChangeDot?.Invoke();
+                    if (currentStamina < maxStamina)
+                    {
+                        StaminaIncrement(0.7f * currentHP / maxHP + 0.3f);
+                        eventStaminaChangeDot?.Invoke();
+                    }
                     yield return new WaitForSeconds(0.033f);
                 }
                 else
@@ -214,6 +233,12 @@ namespace ActionPart
                     yield return null;
                 }
             }
+        }
+
+        void StaminaRecoveryDelay()
+        {
+            staminaRecoveryTimer = staminaRecoveryTime - 0.5f;
+            isCanRecoveryStamina = false;
         }
     }
 }

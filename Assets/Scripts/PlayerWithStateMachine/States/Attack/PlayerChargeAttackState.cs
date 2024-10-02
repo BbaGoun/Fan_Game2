@@ -24,7 +24,7 @@ namespace ActionPart
         private float attackTimer;
         private float attackMoveTimer;
         [SerializeField]
-        private float attackWaitTime;
+        private float waitTime;
         [SerializeField]
         private ChargeAttackState chargeAttackState;
         [SerializeField]
@@ -148,7 +148,7 @@ namespace ActionPart
                     break;
                 case ChargeAttackState.PrepareIdle:
                     attackTimer += Time.deltaTime;
-                    if (attackTimer > attackWaitTime)
+                    if (attackTimer > waitTime)
                     {
                         attackTimer = 0f;
                         player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);

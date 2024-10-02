@@ -17,26 +17,33 @@ namespace ActionPart
         private float healAmount;
         [SerializeField]
         private float moreDamageRate;
+        [SerializeField]
         private HealState healState;
         [SerializeField]
         private float waitTime;
         private float waitTimer;
 
+        Health health;
+
+        [SerializeField]
+        HealEffect healEffect;
         // 이펙트 오브젝트 연결
         #endregion
 
         public void Initialize(PlayerWithStateMachine _playerWithStateMachine)
         {
             player = _playerWithStateMachine;
+            health = gameObject.GetComponent<Health>();
         }
 
         public override void EnterState()
         {
             base.EnterState();
-            healState = HealState.PrepareHeal;
+            healState = HealState.PrepareCharge;
             PlayerInputPart.Instance.EventHealKeyUp += HealKeyUp;
-            
-            // 이제 내부 코드, 흐름, 키 입력에 대한 부분을 만들어야함.
+
+            player.SetAnimatorTrigger("isHealStart");
+            healEffect.animator.SetBool("isHealState", true);
         }
 
         public override void ExitState()
@@ -48,10 +55,7 @@ namespace ActionPart
         public override void FrameUpdate()
         {
             #region State Change
-            if (healState == HealState.Idle)
-            {
-                player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
-            }
+
             #endregion
 
             GetDamageInfo();
@@ -81,31 +85,42 @@ namespace ActionPart
         {
             switch(healState)
             {
-                case HealState.Idle:
-                    break;
                 case HealState.PrepareCharge:
                     healTimer = 0f;
                     healState = HealState.Charging;
+                    player.SetAnimatorBool("isHealing", true);
+                    healEffect.animator.SetTrigger("isCharging");
                     break;
                 case HealState.Charging:
-                    healTime += Time.deltaTime;
+                    healTimer += Time.deltaTime;
                     if(healTimer > healTime)
                     {
-                        healState = HealState.PrepareHeal;
+                        healEffect.animator.SetTrigger("isDone");
+                        healState = HealState.Heal;
                     }
                     break;
                 case HealState.Heal:
                     waitTimer = 0f;
                     healState = HealState.PrepareIdle;
+                    health.Heal_HP(healAmount);
+                    health.Heal_Stamina(healAmount);
                     break;
                 case HealState.PrepareIdle:
+                    player.SetAnimatorBool("isHealing", false);
+                    healEffect.animator.SetBool("isHealState", false);
                     waitTimer += Time.deltaTime;
                     if(waitTimer > waitTime)
                     {
-                        healState = HealState.Idle;
+                        player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
                     }
                     break;
             }
+        }
+
+        void ResetCharge()
+        {
+            healEffect.animator.Rebind();
+            healEffect.animator.Update(0f);
         }
 
         #region Key Event
@@ -118,10 +133,8 @@ namespace ActionPart
 
         enum HealState
         {
-            Idle,
             PrepareCharge,
             Charging,
-            PrepareHeal,
             Heal,
             PrepareIdle,
         }
