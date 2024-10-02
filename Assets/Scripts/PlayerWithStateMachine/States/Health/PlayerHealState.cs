@@ -126,8 +126,11 @@ namespace ActionPart
         #region Key Event
         void HealKeyUp()
         {
-            waitTimer = 0f;
-            healState = HealState.PrepareIdle;
+            if (healState != HealState.PrepareIdle)
+            {
+                waitTimer = 0f;
+                healState = HealState.PrepareIdle;
+            }
         }
         #endregion
 

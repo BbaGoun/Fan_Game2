@@ -6792,6 +6792,10 @@ PrefabInstance:
       value: 1.99
       objectReference: {fileID: 0}
     - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: waitTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[0].slowTime
       value: 0.4
       objectReference: {fileID: 0}

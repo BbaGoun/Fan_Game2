@@ -74,14 +74,18 @@ namespace ActionPart
                 case GuardState.Idle:
                 case GuardState.JustGuard:
                     if (!player.isGuard)
-                        player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
+                    {
+                        waitTimer = 0f;
+                        guardState = GuardState.PrepareStateOut;
+                    }
                     break;
                 default:
                     break;
             }
             if (!player.isGrounded && guardState == GuardState.Idle)
             {
-                player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
+                waitTimer = 0f;
+                guardState = GuardState.PrepareStateOut;
             }
             if (guardState == GuardState.StateOut)
             {
