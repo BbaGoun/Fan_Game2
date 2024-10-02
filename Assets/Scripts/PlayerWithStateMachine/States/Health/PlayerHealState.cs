@@ -1,3 +1,4 @@
+using ActionPart.MemoryPool;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -27,6 +28,14 @@ namespace ActionPart
 
         [SerializeField]
         HealEffect healEffect;
+        [SerializeField]
+        GameObject hittedEffect;
+        Coroutine hittedCoroutine;
+
+        [SerializeField]
+        float shakeIntensity;
+        [SerializeField]
+        float shakeFrequency;
         // 이펙트 오브젝트 연결
         #endregion
 
@@ -49,6 +58,7 @@ namespace ActionPart
         public override void ExitState()
         {
             PlayerInputPart.Instance.EventHealKeyUp -= HealKeyUp;
+            VirtualCameraControl.Instance.SetShakeCameraDirect(0f, 0f);
             base.ExitState();
         }
 
@@ -77,6 +87,11 @@ namespace ActionPart
             {
                 player.damageInfo.hpDelta *= moreDamageRate;
 
+                hittedEffect.SetActive(true);
+                if(hittedCoroutine != null)
+                    StopCoroutine(hittedCoroutine);
+                hittedCoroutine = StartCoroutine(IEHittedEffect());
+
                 player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
             }
         }
@@ -88,6 +103,9 @@ namespace ActionPart
                 case HealState.PrepareCharge:
                     healTimer = 0f;
                     healState = HealState.Charging;
+
+                    VirtualCameraControl.Instance.SetShakeCameraDirect(shakeIntensity, shakeFrequency);
+
                     player.SetAnimatorBool("isHealing", true);
                     healEffect.animator.SetTrigger("isCharging");
                     break;
@@ -115,6 +133,22 @@ namespace ActionPart
                     }
                     break;
             }
+        }
+
+        IEnumerator IEHittedEffect()
+        {
+            var timer = 0f;
+            while (true)
+            {
+                timer += Time.deltaTime;
+                if (timer > 0.5f)
+                {
+                    hittedEffect.SetActive(false);
+                    break;
+                }
+                yield return null;
+            }
+            yield return null;
         }
 
         void ResetCharge()

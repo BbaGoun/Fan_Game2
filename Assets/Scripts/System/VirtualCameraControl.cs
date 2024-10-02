@@ -41,6 +41,12 @@ namespace ActionPart
             StartCoroutine(ShakeCameraCoroutine(duration, intensity, frequency));
         }
 
+        public void SetShakeCameraDirect(float intensity, float frequency)
+        {
+            perlinNoise.m_AmplitudeGain = intensity;
+            perlinNoise.m_FrequencyGain = frequency;
+        }
+
         IEnumerator ShakeCameraCoroutine(float duration, float intensity, float frequency = 1f)
         {
             perlinNoise.m_AmplitudeGain = intensity;

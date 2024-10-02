@@ -87,10 +87,6 @@ namespace ActionPart
                 waitTimer = 0f;
                 guardState = GuardState.PrepareStateOut;
             }
-            if (guardState == GuardState.StateOut)
-            {
-                player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
-            }
             if (health.CheckIsGroggy())
             {
                 // 아직 그로기 상태가 준비 안 됌.
@@ -266,7 +262,7 @@ namespace ActionPart
                     if (waitTimer > waitTime)
                     {
                         waitTimer = 0f;
-                        guardState = GuardState.StateOut;
+                        player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
                     }
                     break;
             }
@@ -311,7 +307,6 @@ namespace ActionPart
             KnockBacked,
             PrepareIdle,
             PrepareStateOut,
-            StateOut,
         }
 
         [Serializable]
