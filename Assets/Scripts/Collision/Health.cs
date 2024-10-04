@@ -41,6 +41,8 @@ namespace ActionPart
 
         [SerializeField]
         private bool isCanRecoveryStamina;
+        [SerializeField]
+        private bool isStopRecoveryStamina;
 
         Coroutine invincibleCoroutine;
 
@@ -216,23 +218,37 @@ namespace ActionPart
         {
             while(true)
             {
-                if (isCanRecoveryStamina)
+                if (!isStopRecoveryStamina)
                 {
-                    if (currentStamina < maxStamina)
+                    if (isCanRecoveryStamina)
                     {
-                        StaminaIncrement(0.7f * currentHP / maxHP + 0.3f);
-                        eventStaminaChangeDot?.Invoke();
+                        if (currentStamina < maxStamina)
+                        {
+                            StaminaIncrement(0.7f * currentHP / maxHP + 0.3f);
+                            eventStaminaChangeDot?.Invoke();
+                        }
+                        yield return new WaitForSeconds(0.033f);
                     }
-                    yield return new WaitForSeconds(0.033f);
+                    else
+                    {
+                        staminaRecoveryTimer += Time.deltaTime;
+                        if (staminaRecoveryTimer > staminaRecoveryTime)
+                            isCanRecoveryStamina = true;
+                        yield return null;
+                    }
                 }
-                else
-                {
-                    staminaRecoveryTimer += Time.deltaTime;
-                    if (staminaRecoveryTimer > staminaRecoveryTime)
-                        isCanRecoveryStamina = true;
-                    yield return null;
-                }
+                yield return null;
             }
+        }
+
+        public void StopRecoveryStamina()
+        {
+            isStopRecoveryStamina = true;
+        }
+
+        public void UnStopRecoveryStamina() 
+        {
+            isStopRecoveryStamina = false;
         }
 
         void StaminaRecoveryDelay()

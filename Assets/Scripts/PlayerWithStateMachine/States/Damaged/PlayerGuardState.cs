@@ -89,8 +89,7 @@ namespace ActionPart
             }
             if (health.CheckIsGroggy())
             {
-                // 아직 그로기 상태가 준비 안 됌.
-                //player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Groggy);
+                player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Groggy);
             }
             #endregion
 

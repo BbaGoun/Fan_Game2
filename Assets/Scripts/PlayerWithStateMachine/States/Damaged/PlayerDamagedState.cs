@@ -30,7 +30,10 @@ namespace ActionPart
         private Health health;
         private float hpDelta;
 
+        private IDamageAble.HitType hitType;
+
         private DamagedState damagedState;
+        GameObject hittedEffect;
         #endregion
 
 
@@ -89,18 +92,26 @@ namespace ActionPart
             base.PhysicsUpdate();
         }
 
-        public void GetDamageInfo()
+        void GetDamageInfo()
         {
             hpDelta = player.damageInfo.hpDelta;
+            bool isStiffnessSelected = false;
 
             foreach (Stiffness stiffness in stiffnessList)
             {
                 if (hpDelta <= stiffness.damageThreshold)
                 {
+                    isStiffnessSelected = true;
                     currentStiffness = stiffness;
                     Debug.Log("Stiffness Type : " + currentStiffness.StiffnessName);
                     break;
                 }
+            }
+
+            if(!isStiffnessSelected)
+            {
+                Debug.Log("최대 데미지로 맞음");
+                currentStiffness = stiffnessList[stiffnessList.Count - 1];
             }
 
             if (player.damageInfo.knockbackDirection.x <= 0)
@@ -113,6 +124,8 @@ namespace ActionPart
                 player.LookLeft();
                 knockBackDirection = 1f;
             }
+
+            hitType = player.damageInfo.hitType;
         }
 
         void UpdateDamagedState()
@@ -130,8 +143,17 @@ namespace ActionPart
 
                     player.SetAnimatorTrigger(currentStiffness.animationTriggerName);
 
-                    var hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Effect");
-                    hittedEffect.transform.position = gameObject.transform.position;
+                    switch (hitType)
+                    {
+                        case IDamageAble.HitType.Special:
+                            hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Healing_Hitted_Effect");
+                            hittedEffect.transform.position = gameObject.transform.position;
+                            break;
+                        default:
+                            hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Effect");
+                            hittedEffect.transform.position = gameObject.transform.position;
+                            break;
+                    }
 
                     slowTimer = 0f;
                     TimeController.Instance.SetTimeScale(slowScale);

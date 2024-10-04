@@ -28,9 +28,6 @@ namespace ActionPart
 
         [SerializeField]
         HealEffect healEffect;
-        [SerializeField]
-        GameObject hittedEffect;
-        Coroutine hittedCoroutine;
 
         [SerializeField]
         float shakeIntensity;
@@ -59,6 +56,9 @@ namespace ActionPart
         {
             PlayerInputPart.Instance.EventHealKeyUp -= HealKeyUp;
             VirtualCameraControl.Instance.SetShakeCameraDirect(0f, 0f);
+            healEffect.animator.SetBool("isHealState", false);
+            player.SetAnimatorBool("isHealing", false);
+
             base.ExitState();
         }
 
@@ -87,10 +87,7 @@ namespace ActionPart
             {
                 player.damageInfo.hpDelta *= moreDamageRate;
 
-                hittedEffect.SetActive(true);
-                if(hittedCoroutine != null)
-                    StopCoroutine(hittedCoroutine);
-                hittedCoroutine = StartCoroutine(IEHittedEffect());
+                player.damageInfo.hitType = IDamageAble.HitType.Special;
 
                 player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
             }
@@ -98,7 +95,7 @@ namespace ActionPart
 
         void UpdateHealState()
         {
-            switch(healState)
+            switch (healState)
             {
                 case HealState.PrepareCharge:
                     healTimer = 0f;
@@ -111,7 +108,7 @@ namespace ActionPart
                     break;
                 case HealState.Charging:
                     healTimer += Time.deltaTime;
-                    if(healTimer > healTime)
+                    if (healTimer > healTime)
                     {
                         healEffect.animator.SetTrigger("isDone");
                         healState = HealState.Heal;
@@ -119,36 +116,21 @@ namespace ActionPart
                     break;
                 case HealState.Heal:
                     waitTimer = 0f;
+
+                    healEffect.animator.SetBool("isHealState", false);
+                    player.SetAnimatorBool("isHealing", false);
                     healState = HealState.PrepareIdle;
                     health.Heal_HP(healAmount);
                     health.Heal_Stamina(healAmount);
                     break;
                 case HealState.PrepareIdle:
-                    player.SetAnimatorBool("isHealing", false);
-                    healEffect.animator.SetBool("isHealState", false);
                     waitTimer += Time.deltaTime;
-                    if(waitTimer > waitTime)
+                    if (waitTimer > waitTime)
                     {
                         player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
                     }
                     break;
             }
-        }
-
-        IEnumerator IEHittedEffect()
-        {
-            var timer = 0f;
-            while (true)
-            {
-                timer += Time.deltaTime;
-                if (timer > 0.5f)
-                {
-                    hittedEffect.SetActive(false);
-                    break;
-                }
-                yield return null;
-            }
-            yield return null;
         }
 
         void ResetCharge()
@@ -163,6 +145,8 @@ namespace ActionPart
             if (healState != HealState.PrepareIdle)
             {
                 waitTimer = 0f;
+                healEffect.animator.SetBool("isHealState", false);
+                player.SetAnimatorBool("isHealing", false);
                 healState = HealState.PrepareIdle;
             }
         }

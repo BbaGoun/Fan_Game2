@@ -13,6 +13,12 @@ namespace ActionPart
             public bool isDamaged;
             public float hpDelta;
             public Vector2 knockbackDirection;
+            public HitType hitType;
+        }
+
+        public enum HitType{
+            Normal,
+            Special,
         }
     }
 }

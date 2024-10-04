@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6878356686766347179}
   - component: {fileID: 8706442604540014614}
   - component: {fileID: -6405541090733811672}
+  - component: {fileID: -1321083097097669094}
+  - component: {fileID: -5402246835872134901}
   m_Layer: 0
   m_Name: Player_Healing_Hitted_Effect
   m_TagString: Untagged
@@ -106,3 +108,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-1321083097097669094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944497786430157039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b62524f91a9d7649a506676bc69417f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5402246835872134901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944497786430157039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07548a35dd19214ba945a80b34eeaa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5

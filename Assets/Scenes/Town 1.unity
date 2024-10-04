@@ -4856,6 +4856,9 @@ MonoBehaviour:
   - objectName: Player_Parry_Effect
     perfab: {fileID: 335092984610233948, guid: 38b394836412d9241924143e76e43f3d, type: 3}
     count: 2
+  - objectName: Player_Healing_Hitted_Effect
+    perfab: {fileID: 944497786430157039, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
+    count: 2
 --- !u!1 &1090723026
 GameObject:
   m_ObjectHideFlags: 3
@@ -6159,16 +6162,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 602252950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1946410289 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 944497786430157039, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-  m_PrefabInstance: {fileID: 8486354111211858497}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1946410290 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-  m_PrefabInstance: {fileID: 8486354111211858497}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1951603050
 GameObject:
   m_ObjectHideFlags: 0
@@ -6793,6 +6786,10 @@ PrefabInstance:
       propertyPath: playerHealState
       value: 
       objectReference: {fileID: 8770118516554096223}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: playerGroggyState
+      value: 
+      objectReference: {fileID: 8770118516554096240}
     - target: {fileID: 3477904884161359452, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.98
@@ -6895,75 +6892,14 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1490687791}
-    - targetCorrespondingSourceObject: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1946410290}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       insertIndex: 12
       addedObject: {fileID: 8770118516554096223}
+    - targetCorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      insertIndex: 13
+      addedObject: {fileID: 8770118516554096240}
   m_SourcePrefab: {fileID: 100100000, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
---- !u!1001 &8486354111211858497
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8770118516554096216}
-    m_Modifications:
-    - target: {fileID: 944497786430157039, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_Name
-      value: Player_Healing_Hitted_Effect
-      objectReference: {fileID: 0}
-    - target: {fileID: 944497786430157039, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6878356686766347179, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5b7680df89ed51f4c98d083c66629e30, type: 3}
 --- !u!4 &8770118516554096216 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
@@ -6998,9 +6934,29 @@ MonoBehaviour:
   healState: 0
   waitTime: 0.25
   healEffect: {fileID: 1490687792}
-  hittedEffect: {fileID: 1946410289}
   shakeIntensity: 0.75
   shakeFrequency: 0.5
+--- !u!114 &8770118516554096240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180904555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5c18e2bff9b3e41a12d642bf2f2961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moreDamageRate: 2
+  groggyGauge: 100
+  currentGroggyGauge: 0
+  perGauge: 5
+  keyDelayTime: 0.15
+  canKeyInput: 0
+  isLeftKeyTurn: 0
+  waitTime: 0.75
+  groggyState: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

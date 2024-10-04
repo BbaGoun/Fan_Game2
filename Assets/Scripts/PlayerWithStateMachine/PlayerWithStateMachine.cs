@@ -30,6 +30,8 @@ namespace ActionPart
         PlayerGuardState playerGuardState;
         [SerializeField]
         PlayerHealState playerHealState;
+        [SerializeField]
+        PlayerGroggyState playerGroggyState;
 
         #endregion
 
@@ -71,6 +73,7 @@ namespace ActionPart
             playerDamagedState.Initialize(this);
             playerGuardState.Initialize(this);
             playerHealState.Initialize(this);
+            playerGroggyState.Initialize(this);
 
             PlayerInputPart.Instance.EventGuardKeyDown += playerGuardState.GuardKeyDown;
             PlayerInputPart.Instance.EventGuardKeyUp += playerGuardState.GuardKeyUp;
@@ -146,6 +149,7 @@ namespace ActionPart
             damageInfo.isDamaged = false;
             damageInfo.hpDelta = 0;
             damageInfo.knockbackDirection = Vector2.zero;
+            damageInfo.hitType = IDamageAble.HitType.Normal;
         }
 
         public void LookRight()
@@ -235,6 +239,10 @@ namespace ActionPart
                     stateMachine.ChangeState(playerHealState);
                     playerState = PlayerState.Heal;
                     break;
+                case PlayerState.Groggy:
+                    stateMachine.ChangeState(playerGroggyState);
+                    playerState = PlayerState.Groggy;
+                    break;
                 default:
                     break;
             }
@@ -251,6 +259,7 @@ namespace ActionPart
             Guard,
             Damaged,
             Heal,
+            Groggy,
             Death,
         }
     }
