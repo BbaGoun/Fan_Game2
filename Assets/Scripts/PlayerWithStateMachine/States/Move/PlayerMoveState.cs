@@ -319,6 +319,17 @@ namespace ActionPart
         }
         #endregion
 
+        /*public void JumpTrigger()
+        {// 입력을 기다리는 사이에 끼어들어, 반응을 높히기 위한 함수
+            StartCoroutine(IEJumpTrigger());
+        }
+
+        IEnumerator IEJumpTrigger()
+        {
+            player.isJumped = true;
+            yield return new WaitForSeconds(Time.deltaTime);
+            player.isJumped = false;
+        }*/
 
         enum JumpState
         {

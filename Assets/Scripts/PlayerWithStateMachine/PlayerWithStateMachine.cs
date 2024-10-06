@@ -46,6 +46,7 @@ namespace ActionPart
 
         public bool isCharged;
         public bool isGuard;
+        //public bool isJumped;
         public IDamageAble.DamageInfo damageInfo;
 
         Animator animator;

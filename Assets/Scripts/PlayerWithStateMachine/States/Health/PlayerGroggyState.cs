@@ -1,3 +1,4 @@
+using ActionPart.MemoryPool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,6 +47,8 @@ namespace ActionPart
         public override void EnterState()
         {
             health.StopRecoveryStamina();
+            var hittedEffect = ObjectPoolManager.Instance.GetObject("Player_GuardBreak_Effect");
+            hittedEffect.transform.position = gameObject.transform.position;
             groggyState = GroggyState.GroggyStart;
             base.EnterState();
         }
