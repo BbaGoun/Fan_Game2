@@ -10,6 +10,8 @@ namespace ActionPart
         private float timer;
         [SerializeField]
         private float xMoveScale;
+        [SerializeField]
+        private float frequency = 1;
 
         private void Awake()
         {
@@ -19,7 +21,7 @@ namespace ActionPart
         private void Update()
         {
             timer += Time.deltaTime;
-            transform.position = origin + new Vector3(Mathf.Sin(timer) * xMoveScale, 0f, 0f);
+            transform.position = origin + new Vector3(Mathf.Sin(timer/frequency) * xMoveScale, 0f, 0f);
         }
     }
 }
