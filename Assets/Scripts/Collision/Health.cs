@@ -72,6 +72,9 @@ namespace ActionPart
             eventHPChange?.Invoke();
 
             eventStaminaChange?.Invoke();
+
+            staminaRecoveryTimer = 0f;
+            isCanRecoveryStamina = false;
         }
 
         private void HPIncrement(float hpDelta)

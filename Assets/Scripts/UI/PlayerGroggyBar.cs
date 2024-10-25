@@ -88,7 +88,7 @@ namespace ActionPart
 
         IEnumerator IEChangeTopBar(float changedProgress, float delay)
         {
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay * Time.timeScale);
 
             var start = progress;
             var end = changedProgress;
