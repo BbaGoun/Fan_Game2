@@ -13,9 +13,9 @@ namespace ActionPart
 
         [SerializeField]
         private float moreDamageRate;
-
+        
         [SerializeField]
-        private float groggyGauge;
+        private float groggyGaugeMax;
         [SerializeField]
         private float currentGroggyGauge;
         [SerializeField]
@@ -36,6 +36,8 @@ namespace ActionPart
 
         [SerializeField]
         private GroggyState groggyState;
+        [SerializeField]
+        private PlayerGroggyBar playerGroggyBar;
         #endregion
 
         public void Initialize(PlayerWithStateMachine _playerWithStateMachine)
@@ -57,7 +59,6 @@ namespace ActionPart
         {
             health.Heal_Stamina(health.GetMaxStamina());
             health.UnStopRecoveryStamina();
-            player.SetAnimatorBool("isGroggy", false);
             base.ExitState();
         }
  
@@ -96,20 +97,25 @@ namespace ActionPart
                     keyDelayTimer = 0f;
                     player.SetAnimatorTrigger("isGroggyStart");
                     player.SetAnimatorBool("isGroggy", true);
+                    isLeftKeyTurn = true;
+                    playerGroggyBar.gameObject.SetActive(true);
+                    playerGroggyBar.Reset();
                     groggyState = GroggyState.Grogging;
                     break;
                 case GroggyState.Grogging:
                     CheckArrowKey();
-                    if(currentGroggyGauge >= groggyGauge)
+                    if(currentGroggyGauge >= groggyGaugeMax)
                     {
                         waitTimer = 0f;
                         groggyState = GroggyState.PrepareStateOut;
+                        player.SetAnimatorBool("isGroggy", false);
                     }
                     break;
                 case GroggyState.PrepareStateOut:
                     waitTimer += Time.deltaTime;
                     if(waitTimer > waitTime)
                     {
+                        playerGroggyBar.gameObject.SetActive(false);
                         // 스테미나 풀 회복
                         player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
                     }
@@ -136,12 +142,14 @@ namespace ActionPart
                     currentGroggyGauge += perGauge;
                     isLeftKeyTurn = false;
                     canKeyInput = false;
+                    playerGroggyBar.ChangeProgress(currentGroggyGauge / groggyGaugeMax, isLeftKeyTurn);
                 }
                 else if(!isLeftKeyTurn && arrowKeyX == 1)
                 {
                     currentGroggyGauge += perGauge;
                     isLeftKeyTurn = true;
                     canKeyInput = false;
+                    playerGroggyBar.ChangeProgress(currentGroggyGauge / groggyGaugeMax, isLeftKeyTurn);
                 }
             }
         }

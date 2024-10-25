@@ -53,6 +53,16 @@ namespace ActionPart
         [SerializeField]
         PlayerState playerState;
 
+        private void StartLifeCycle()
+        {
+            StartCoroutine(IELifeCycle());
+        }
+
+        private IEnumerator IELifeCycle()
+        {
+            yield return null;
+        }
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
