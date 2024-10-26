@@ -128,8 +128,11 @@ namespace ActionPart
                     }
                     else // dash
                     {
-                        player.transform.localScale = new Vector3(moveVec.x, 1f, 1f);
-                        VirtualCameraControl.Instance.TurnCamera(moveVec.x);
+                        if(Mathf.Sign(moveVec.x) == 1)
+                            player.LookRight();
+                        else if(Mathf.Sign(moveVec.x) == -1)
+                            player.LookLeft();
+
                         player.SetAnimatorTrigger("isDash");
                         isBackStep = false;
                     }

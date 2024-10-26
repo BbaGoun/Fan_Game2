@@ -944,7 +944,7 @@ Transform:
   m_GameObject: {fileID: 1290360600}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.141445, y: -2.88902, z: -14}
+  m_LocalPosition: {x: 56.490597, y: -2.88111, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1270,6 +1270,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: initialPosition.x
+      value: 62
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: initialPosition.y
+      value: -8
+      objectReference: {fileID: 0}
     - target: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_Name
       value: Player (1)
@@ -1320,19 +1328,19 @@ PrefabInstance:
       objectReference: {fileID: 2136783630}
     - target: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 44.15
+      value: 62.56
       objectReference: {fileID: 0}
     - target: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.12
+      value: -7.98
       objectReference: {fileID: 0}
     - target: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1403,7 +1411,7 @@ Transform:
   m_GameObject: {fileID: 1820509804}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 44.15, y: -7.1199994, z: -14}
+  m_LocalPosition: {x: 62.56, y: -5.9799995, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1746,7 +1754,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3b1067012a9ff0549a320c289195f508, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

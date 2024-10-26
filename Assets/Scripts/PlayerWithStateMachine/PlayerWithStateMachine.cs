@@ -9,6 +9,9 @@ namespace ActionPart
 {
     public class PlayerWithStateMachine : KinematicObject, IWithStateMachine, IDamageAble
     {
+        [SerializeField]
+        Vector3 initialPosition;
+
         StateMachine stateMachine;
 
         #region PlayerState
@@ -53,14 +56,42 @@ namespace ActionPart
         [SerializeField]
         PlayerState playerState;
 
-        private void StartLifeCycle()
+        private void Initialize()
         {
+            transform.localPosition = initialPosition;
             StartCoroutine(IELifeCycle());
         }
 
         private IEnumerator IELifeCycle()
         {
-            yield return null;
+            while (true)
+            {
+                if(Time.timeScale == 0f)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                if (isGrounded)
+                {
+                    delegateGrounded?.Invoke();
+                }
+                switch (playerState)
+                {
+                    case PlayerState.Move:
+                    case PlayerState.Dash:
+                    case PlayerState.Guard:
+                        playerChargeAttackState.UpdateChargeState();
+                        break;
+                    case PlayerState.ChargeAttack:
+                        break;
+                    default:
+                        playerChargeAttackState.ResetCharge();
+                        break;
+                }
+                stateMachine.StateFrameUpdate();
+                yield return null;
+            }
         }
 
         private void Awake()
@@ -97,6 +128,8 @@ namespace ActionPart
             stateMachine.InitState(playerMoveState);
 
             LookRight();
+
+            Initialize();
         }
 
         public void OnDisable()
@@ -106,7 +139,7 @@ namespace ActionPart
 
         private void Update()
         {
-            if (isGrounded)
+            /*if (isGrounded)
             {
                 delegateGrounded?.Invoke();
             }
@@ -123,7 +156,7 @@ namespace ActionPart
                     playerChargeAttackState.ResetCharge();
                     break;
             }
-            stateMachine.StateFrameUpdate();
+            stateMachine.StateFrameUpdate();*/
         }
 
         protected override void ComputeVelocity()
@@ -165,13 +198,23 @@ namespace ActionPart
 
         public void LookRight()
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            var scaleX = transform.localScale.x;
+            
+            if(scaleX < 0)
+                scaleX = -scaleX;
+
+            transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
             VirtualCameraControl.Instance.TurnCamera(1);
         }
 
         public void LookLeft()
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            var scaleX = transform.localScale.x;
+
+            if (scaleX > 0)
+                scaleX = -scaleX;
+
+            transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
             VirtualCameraControl.Instance.TurnCamera(-1);
         }
 

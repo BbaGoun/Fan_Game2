@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -23,7 +24,7 @@ namespace ActionPart
         public bool isGrounded;
         public bool isHeading { get; private set; }
 
-        private BoxCollider2D boxCollider2D;
+        private BoxCollider2D boxCollider;
         private CapsuleCollider2D capsuleCollider;
         private Vector2 colliderSize;
         private Vector2 colliderOffset;
@@ -41,8 +42,10 @@ namespace ActionPart
         protected float coyoteTime;
         private float groundLastTime;
         [SerializeField]
+        protected Vector2 _groundCheckBoxSize;
         protected Vector2 groundCheckBoxSize;
         [SerializeField]
+        protected Vector2 _headingCheckBoxSize;
         protected Vector2 headingCheckBoxSize;
         [SerializeField, Range(0f, 0.999f)]
         protected float maxUnitSlopeY = 0.6f; // 경사로 단위벡터의 최대 Y
@@ -50,16 +53,22 @@ namespace ActionPart
         private float minUnitSlopeY = 0.01f;
 
         [SerializeField]
+        protected float _horizontalSlopeCheckDistance;
         protected float horizontalSlopeCheckDistance;
         [SerializeField]
+        protected float _verticalSlopeCheckDistance;
         protected float verticalSlopeCheckDistance;
         [SerializeField, Min(1f)]
         protected float checkDistanceFactor = 1f;
+
         [SerializeField]
+        protected Vector2 _frontSlopeCheckOffset;
         protected Vector2 frontSlopeCheckOffset;
         [SerializeField]
+        protected Vector2 _downSlopeCheckOffset;
         protected Vector2 downSlopeCheckOffset;
         [SerializeField]
+        protected Vector2 _backSlopeCheckOffset;
         protected Vector2 backSlopeCheckOffset;
         
         private Vector2 frontSlopeVec;
@@ -95,10 +104,8 @@ namespace ActionPart
         protected virtual void OnEnable()
         {
             body = GetComponent<Rigidbody2D>();
-            boxCollider2D = GetComponent<BoxCollider2D>();
+            boxCollider = GetComponent<BoxCollider2D>();
             capsuleCollider = GetComponent<CapsuleCollider2D>();
-            colliderSize = capsuleCollider.size;
-            colliderOffset = capsuleCollider.offset;
             body.isKinematic = true;
 
             velocity = Vector2.zero;
@@ -110,7 +117,7 @@ namespace ActionPart
             contactFilter.useLayerMask = true;
             contactFilter.SetLayerMask(LayerMask.GetMask("Ground"));
 
-            boxCollider2D.enabled = true;
+            boxCollider.enabled = true;
             capsuleCollider.enabled = false;
         }
 
@@ -121,6 +128,19 @@ namespace ActionPart
 
         protected virtual void FixedUpdate()
         {
+            colliderSize = capsuleCollider.size * Mathf.Abs(transform.localScale.x);
+            colliderOffset = capsuleCollider.offset * Mathf.Abs(transform.localScale.x);
+
+            groundCheckBoxSize = _groundCheckBoxSize * Mathf.Abs(transform.localScale.x);
+            headingCheckBoxSize = _headingCheckBoxSize * Mathf.Abs(transform.localScale.x);
+            
+            horizontalSlopeCheckDistance = _horizontalSlopeCheckDistance * Mathf.Abs(transform.localScale.x);
+            verticalSlopeCheckDistance = _verticalSlopeCheckDistance * Mathf.Abs(transform.localScale.x);
+            
+            frontSlopeCheckOffset = _frontSlopeCheckOffset * Mathf.Abs(transform.localScale.x);
+            downSlopeCheckOffset = _downSlopeCheckOffset * Mathf.Abs(transform.localScale.x);
+            backSlopeCheckOffset = _backSlopeCheckOffset * Mathf.Abs(transform.localScale.x);
+
             ComputeVelocity();
 
             ApplyMovement();
@@ -143,13 +163,13 @@ namespace ActionPart
 
                 if (!isOnFrontSlope && !isOnDownSlope && !isOnBackSlope)
                 {
-                    boxCollider2D.enabled = true;
+                    boxCollider.enabled = true;
                     capsuleCollider.enabled = false;
                     move = deltaPosition;
                 }
                 else
                 {
-                    boxCollider2D.enabled = false;
+                    boxCollider.enabled = false;
                     capsuleCollider.enabled = true;
                     if(Mathf.Abs(deltaPosition.x) < minMoveDistance)
                     {

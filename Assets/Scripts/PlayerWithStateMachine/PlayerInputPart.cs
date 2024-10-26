@@ -65,11 +65,17 @@ namespace ActionPart
 
         public void ActionMove(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0)
+                return;
+            
             inputVec = context.ReadValue<Vector2>();
         }
 
         public void ActionJump(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0)
+                return;
+
             if (context.started)
             {
                 EventJumpKeyDown?.Invoke();
@@ -82,6 +88,9 @@ namespace ActionPart
 
         public void ActionDash(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0)
+                return;
+
             if (context.started)
             {
                 EventDashKeyDown?.Invoke();
@@ -94,6 +103,9 @@ namespace ActionPart
 
         public void ActionAttack(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0)
+                return;
+
             if (context.started)
             {
                 EventAttackKeyDown?.Invoke();
@@ -108,6 +120,9 @@ namespace ActionPart
 
         public void ActionGuard(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0)
+                return;
+
             if (context.started)
             {
                 EventGuardKeyDown?.Invoke();
@@ -120,6 +135,9 @@ namespace ActionPart
 
         public void ActionHeal(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0)
+                return;
+
             if (context.started)
             {
                 EventHealKeyDown?.Invoke();

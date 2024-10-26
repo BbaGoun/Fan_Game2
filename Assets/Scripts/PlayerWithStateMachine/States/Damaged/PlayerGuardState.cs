@@ -129,12 +129,12 @@ namespace ActionPart
         {
             if (player.damageInfo.isDamaged)
             {
-                if (player.damageInfo.knockbackDirection.x <= 0f && transform.localScale.x != 1f)
+                if (player.damageInfo.knockbackDirection.x <= 0f && Mathf.Sign(transform.localScale.x) != 1f)
                 {
                     // 오른쪽에서 공격을 당했는데, 오른쪽을 보고있지 않았을 경우
                     player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
                 }
-                else if (player.damageInfo.knockbackDirection.x > 0f && transform.localScale.x != -1f)
+                else if (player.damageInfo.knockbackDirection.x > 0f && Mathf.Sign(transform.localScale.x) != -1f)
                 {
                     // 왼쪽에서 공격을 당했는데, 왼쪽을 보고있지 않았을 경우
                     player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);

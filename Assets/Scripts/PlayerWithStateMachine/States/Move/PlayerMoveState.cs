@@ -154,7 +154,7 @@ namespace ActionPart
         void XControl()
         {
             moveVec = PlayerInputPart.Instance.inputVec;
-            var isLookRight = player.transform.localScale.x == 1;
+            var isLookRight = Mathf.Sign(player.transform.localScale.x) == 1;
 
             if (moveVec.x < -0.01f && isLookRight)
             {
@@ -188,9 +188,14 @@ namespace ActionPart
 
         void Flip(bool isLookRight)
         {
-            var scaleX = isLookRight ? 1 : -1;
-            player.transform.localScale = new Vector3(scaleX, 1, 1);
-            VirtualCameraControl.Instance.TurnCamera(scaleX);
+            if (isLookRight)
+            {
+                player.LookRight();
+            }
+            else
+            {
+                player.LookLeft();
+            }
         }
 
         void YControl()
