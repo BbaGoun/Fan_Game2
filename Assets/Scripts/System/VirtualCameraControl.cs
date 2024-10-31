@@ -10,9 +10,11 @@ namespace ActionPart
         public static VirtualCameraControl Instance { get; private set; }
 
         public float turnTime = 0;
+        public string confinerName;
         CinemachineVirtualCamera cvCamera;
         CinemachineBasicMultiChannelPerlin perlinNoise;
         CinemachineFramingTransposer vcFTposer;
+        CinemachineConfiner2D confiner;
         Coroutine shakeCameraCoroutine;
         Coroutine turnCameraCoroutine;
 
@@ -29,9 +31,18 @@ namespace ActionPart
 
             DontDestroyOnLoad(gameObject);
 
+            confiner = GetComponent<CinemachineConfiner2D>();
+
+            SetConfiner();
+
             cvCamera = GetComponent<CinemachineVirtualCamera>();
             perlinNoise = cvCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             vcFTposer = cvCamera.GetComponentInChildren<CinemachineFramingTransposer>();
+        }
+
+        public void SetConfiner()
+        {
+            confiner.m_BoundingShape2D = GameObject.Find(confinerName).GetComponent<CompositeCollider2D>();
         }
 
         public void ShakeCamera(float duration, float intensity, float frequency = 1f)

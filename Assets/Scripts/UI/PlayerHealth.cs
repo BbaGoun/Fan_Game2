@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +42,8 @@ namespace ActionPart
 
         private void Awake()
         {
+            playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+
             underHP = sliderHP.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
             underStamina = sliderStamina.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
 
