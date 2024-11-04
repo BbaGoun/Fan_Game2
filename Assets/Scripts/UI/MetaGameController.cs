@@ -9,7 +9,7 @@ namespace ActionPart.UI
         /// <summary>
         /// The main UI object which used for the menu.
         /// </summary>
-        public MainMenuController mainMenu;
+        public MainMenuController mainMenuController;
         public InterfaceController interfaceController;
 
         /// <summary>
@@ -35,13 +35,13 @@ namespace ActionPart.UI
         {
             if (show)
             {
-                mainMenu.ToggleMainMenu(true);
+                mainMenuController.ToggleMainMenu(true);
                 foreach (var i in gamePlayCanvases)
                     i.gameObject.SetActive(false);
             }
             else
             {
-                mainMenu.ToggleMainMenu(false);
+                mainMenuController.ToggleMainMenu(false);
                 foreach (var i in gamePlayCanvases)
                     i.gameObject.SetActive(true);
             }

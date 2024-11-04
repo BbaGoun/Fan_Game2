@@ -9,6 +9,7 @@ public static class SettingContainer
     static private float _masterVolume;
     static private float _BGMVolume;
     static private float _effectVolume;
+
     static private int _resolutionIndex;
     static private ScreenMode _screenMode;
     static private int _mainCount;
