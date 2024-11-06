@@ -1,77 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static SettingContainer;
 
-public static class SettingContainer
+public class SettingData
 {
-    static private float _masterVolume;
-    static private float _BGMVolume;
-    static private float _effectVolume;
+    public float masterVolume;
+    public float BGMVolume;
+    public float effectVolume;
 
-    static private int _resolutionIndex;
-    static private ScreenMode _screenMode;
-    static private int _mainCount;
+    public List<Resolution> resolutionList;
+    public int resolutionIndex;
+    public FullScreenMode screenMode;
 
-    static public float masterVolume
-    {
-        get { return _masterVolume; }
-        set { _masterVolume = value; }
-    }
-    static public float BGMVolume
-    {
-        get { return _BGMVolume; }
-        set { _BGMVolume = value; }
-    }
-    static public float effectVolume
-    {
-        get { return _effectVolume; }
-        set { _effectVolume = value; }
-    }
-    static public int resolutionIndex
-    {
-        get { return _resolutionIndex; }
-        set { _resolutionIndex = value; }
-    }
-    static public ScreenMode screenMode
-    {
-        get { return _screenMode; }
-        set { _screenMode = value; }
-    }
-    static public int mainCount
-    {
-        get { return _mainCount; }
-        set { _mainCount = value; }
-    }
-    static public List<Resolution> resolutionList = new List<Resolution>();
+    public int windowResolutionIndex;
+}
 
-    static SettingContainer(){
-        masterVolume = 0.75f;
-        BGMVolume = 0.75f;
-        effectVolume = 0.75f;
-        resolutionList.Add(new Resolution(1280, 720));
-        resolutionList.Add(new Resolution(1600, 900));
-        resolutionList.Add(new Resolution(1920, 1080));
-        mainCount = 0;
-    }
+public class SettingContainer:MonoBehaviour
+{
+    public static SettingContainer instance;
 
-    public enum ScreenMode
+    public SettingData settingData = new SettingData();
+
+    private string dataPath;
+
+    private void Awake()
     {
-        FullScreen,
-        ExclusiveFullScreen,
-        Windowed,
-    };
-
-    [System.Serializable]
-    public class Resolution
-    {
-        public int width, height;
-
-        public Resolution(int _width, int _height)
+        #region Singleton without DontDestroy
+        if (instance == null)
         {
-            width = _width;
-            height = _height;
+            instance = this;
         }
+        else if (instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        #endregion
+
+        dataPath = Application.persistentDataPath + "/setting";
+
+        // 데이터가 있으면 불러오기
+        if (File.Exists(dataPath))
+        {
+            string sData = File.ReadAllText(dataPath);
+            settingData = JsonUtility.FromJson<SettingData>(sData);
+        }
+        // 데이터가 없으면 만들고 저장하기
+        else
+        {
+            settingData.masterVolume = 0.75f;
+            settingData.BGMVolume = 0.75f;
+            settingData.effectVolume = 0.75f;
+
+            Resolution[] reses = Screen.resolutions;
+            foreach (Resolution res in reses)
+            {
+                if (res.width < 1000f)
+                    continue;
+                if (Mathf.Round(res.width * 0.5625f) == res.height)
+                {
+                    settingData.resolutionList.Add(res);
+                }
+            }
+            settingData.resolutionIndex = settingData.resolutionList.Count - 1;
+            settingData.windowResolutionIndex = settingData.resolutionIndex;
+            settingData.screenMode = FullScreenMode.Windowed;
+
+            string sData = JsonUtility.ToJson(settingData);
+            File.WriteAllText(dataPath, sData);
+        }
+    }
+
+    public void SettingChange()
+    {
+        // 데이터 갱신하기
     }
 }

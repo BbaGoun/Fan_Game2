@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ActionPart.UI
 {
@@ -10,12 +11,8 @@ namespace ActionPart.UI
         /// The main UI object which used for the menu.
         /// </summary>
         public MainMenuController mainMenuController;
-        public InterfaceController interfaceController;
-
-        /// <summary>
-        /// A list of canvas objects which are used during gameplay (when the main ui is turned off)
-        /// </summary>
-        public Canvas[] gamePlayCanvases;
+        public GameObject interfaces;
+        public PlayerInput playerInput;
 
         bool showMainCanvas = false;
 
@@ -23,7 +20,7 @@ namespace ActionPart.UI
         /// Turn the main menu on or off.
         /// </summary>
         /// <param name="show"></param>
-        public void ToggleMainMenu(bool show)
+        void ToggleMainMenu(bool show)
         {
             if (this.showMainCanvas != show)
             {
@@ -36,29 +33,25 @@ namespace ActionPart.UI
             if (show)
             {
                 mainMenuController.ToggleMainMenu(true);
-                foreach (var i in gamePlayCanvases)
-                    i.gameObject.SetActive(false);
+                interfaces.SetActive(false);
+                //playerInput.SwitchCurrentActionMap("UI");
             }
             else
             {
                 mainMenuController.ToggleMainMenu(false);
-                foreach (var i in gamePlayCanvases)
-                    i.gameObject.SetActive(true);
+                interfaces.SetActive(true);
+                //playerInput.SwitchCurrentActionMap("Player");
             }
             this.showMainCanvas = show;
         }
 
-        void Update()
+        public void MainMenuButton(InputAction.CallbackContext context)
         {
-            if (Input.GetButtonDown("Menu"))
+            if (context.started)
             {
+                Debug.Log("´­·¶´ç");
                 ToggleMainMenu(show: !showMainCanvas);
             }
-        }
-
-        public void OptionButton()
-        {
-            ToggleMainMenu(show: !showMainCanvas);
         }
     }
 }

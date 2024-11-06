@@ -14,58 +14,80 @@ namespace ActionPart.UI
         public Button[] buttons;
         private GameObject background;
         private GameObject mainMenu;
-        private GameObject mainAlert;
+        private GameObject titleAlert;
         private GameObject quitAlert;
         private GameObject option;
         private GameObject saveGame;
+
         public TMP_Dropdown resolutions, screenModes;
         public Slider master, bgm, effectSound;
         int resolutionIndex;
         int maxScreenIndex;
 
+        private SettingData tmpSettingData = new SettingData();
+
         private void Awake()
         {
-            audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
+            audioController = GameObject.Find("==== Audio ====").GetComponent<AudioController>();
 
             background = transform.GetChild(0).gameObject;
             background.SetActive(false);
+
             mainMenu = transform.GetChild(1).gameObject;
             mainMenu.SetActive(false);
-            mainAlert = mainMenu.transform.GetChild(2).GetChild(5).gameObject;
-            mainAlert.SetActive(false);
+            titleAlert = mainMenu.transform.GetChild(2).GetChild(5).gameObject;
+            titleAlert.SetActive(false);
             quitAlert = mainMenu.transform.GetChild(2).GetChild(6).gameObject;
             quitAlert.SetActive(false);
+
             option = transform.GetChild(2).gameObject;
             option.SetActive(false);
+
             saveGame = transform.GetChild(3).gameObject;
             saveGame.SetActive(false);
+
             master.minValue = 0.001f;
             bgm.minValue = 0.001f;
             effectSound.minValue = 0.001f;
 
-            maxScreenIndex = SettingContainer.resolutionList.Count - 1;
+            maxScreenIndex = SettingContainer.instance.settingData.resolutionList.Count - 1;
 
-            foreach (var resolution in SettingContainer.resolutionList)
+            foreach (var resolution in SettingContainer.instance.settingData.resolutionList)
             {
                 var newOption = new List<string> { $"{resolution.width} * {resolution.height}" };
                 resolutions.AddOptions(newOption);
             }
 
-            resolutions.value = SettingContainer.resolutionIndex;
+            resolutions.value = SettingContainer.instance.settingData.resolutionIndex;
 
-            screenModes.value = (int)SettingContainer.screenMode;
-            resolutions.interactable = SettingContainer.screenMode == SettingContainer.ScreenMode.Windowed;
+            switch (SettingContainer.instance.settingData.screenMode)
+            {
+                case FullScreenMode.FullScreenWindow:
+                    screenModes.value = 0;
+                    break;
+                case FullScreenMode.ExclusiveFullScreen:
+                    screenModes.value = 1;
+                    break;
+                case FullScreenMode.MaximizedWindow:
+                    screenModes.value = 1;
+                    break;
+                case FullScreenMode.Windowed:
+                    screenModes.value = 2;
+                    break;
+            }
 
-            master.value = SettingContainer.masterVolume;
-            bgm.value = SettingContainer.BGMVolume;
-            effectSound.value = SettingContainer.effectVolume;
+            resolutions.interactable = SettingContainer.instance.settingData.screenMode == FullScreenMode.Windowed;
+
+            master.value = SettingContainer.instance.settingData.masterVolume;
+            bgm.value = SettingContainer.instance.settingData.BGMVolume;
+            effectSound.value = SettingContainer.instance.settingData.effectVolume;
         }
 
         private void Start()
         {
-            SetMaster(SettingContainer.masterVolume);
-            SetBGM(SettingContainer.BGMVolume);
-            SetEffectSound(SettingContainer.effectVolume);
+            SetMaster(SettingContainer.instance.settingData.masterVolume);
+            SetBGM(SettingContainer.instance.settingData.BGMVolume);
+            SetEffectSound(SettingContainer.instance.settingData.effectVolume);
         }
 
         public void ToggleMainMenu(bool isShowMenu)
@@ -86,7 +108,7 @@ namespace ActionPart.UI
                 }
                 background.SetActive(false);
                 mainMenu.SetActive(false);
-                mainAlert.SetActive(false);
+                titleAlert.SetActive(false);
                 quitAlert.SetActive(false);
                 option.SetActive(false);
                 saveGame.SetActive(false);
@@ -100,7 +122,7 @@ namespace ActionPart.UI
             {
                 button.interactable = false;
             }
-            mainAlert.SetActive(true);
+            titleAlert.SetActive(true);
         }
 
         public void NoMain()
@@ -110,7 +132,7 @@ namespace ActionPart.UI
             {
                 button.interactable = true;
             }
-            mainAlert.SetActive(false);
+            titleAlert.SetActive(false);
         }
 
         public void YesMain()
@@ -125,7 +147,7 @@ namespace ActionPart.UI
         {
             PlayClickSound();
             mainMenu.SetActive(false);
-            mainAlert.SetActive(false);
+            titleAlert.SetActive(false);
             quitAlert.SetActive(false);
             saveGame.SetActive(true);
         }
@@ -141,7 +163,7 @@ namespace ActionPart.UI
         {
             PlayClickSound();
             mainMenu.SetActive(false);
-            mainAlert.SetActive(false);
+            titleAlert.SetActive(false);
             quitAlert.SetActive(false);
             option.SetActive(true);
         }
@@ -190,58 +212,94 @@ namespace ActionPart.UI
 
         public void ChangeResolution(int index)
         {
-            Screen.SetResolution(SettingContainer.resolutionList[index].width, SettingContainer.resolutionList[index].height, Screen.fullScreenMode);
-            SettingContainer.resolutionIndex = index;
+            var res = SettingContainer.instance.settingData.resolutionList[index];
+            Screen.SetResolution(res.width, res.height, Screen.fullScreenMode);
+            SettingContainer.instance.settingData.resolutionIndex = index;
             resolutionIndex = index;
+            // 창모드 해상도 저장
+            SettingContainer.instance.settingData.windowResolutionIndex = index;
         }
 
         public void ChangeScreenMode(int index)
         {
+            var resMax = SettingContainer.instance.settingData.resolutionList[maxScreenIndex];
             switch (index)
             {
                 case 0:
-                    Screen.SetResolution(SettingContainer.resolutionList[maxScreenIndex].width, SettingContainer.resolutionList[maxScreenIndex].height, FullScreenMode.FullScreenWindow);
+                    Screen.SetResolution(resMax.width, resMax.height, FullScreenMode.FullScreenWindow);
+                    SettingContainer.instance.settingData.screenMode = FullScreenMode.FullScreenWindow;
+                    
                     resolutions.interactable = false;
+
+                    // 창모드 해상도 저장
+                    SettingContainer.instance.settingData.windowResolutionIndex = resolutionIndex;
+
                     resolutionIndex = maxScreenIndex;
-                    SettingContainer.resolutionIndex = maxScreenIndex;
-                    SettingContainer.screenMode = (SettingContainer.ScreenMode)0;
-                    //Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+                    SettingContainer.instance.settingData.resolutionIndex = maxScreenIndex;
+                    resolutions.value = resolutionIndex;
+
                     break;
                 case 1:
-                    Screen.SetResolution(SettingContainer.resolutionList[maxScreenIndex].width, SettingContainer.resolutionList[maxScreenIndex].height, FullScreenMode.ExclusiveFullScreen);
-                    resolutions.interactable = false;
+                    if(Application.platform == RuntimePlatform.WindowsPlayer) // window
+                    {
+                        Screen.SetResolution(resMax.width, resMax.height, FullScreenMode.ExclusiveFullScreen);
+                        SettingContainer.instance.settingData.screenMode = FullScreenMode.ExclusiveFullScreen;
+                    }
+                    else if(Application.platform == RuntimePlatform.OSXPlayer) // macOS
+                    {
+                        Screen.SetResolution(resMax.width, resMax.height, FullScreenMode.MaximizedWindow);
+                        SettingContainer.instance.settingData.screenMode = FullScreenMode.MaximizedWindow;
+                    }
+
+                    resolutions.interactable = false; 
+                    
+                    // 창모드 해상도 저장
+                    SettingContainer.instance.settingData.windowResolutionIndex = resolutionIndex;
+
                     resolutionIndex = maxScreenIndex;
-                    SettingContainer.resolutionIndex = maxScreenIndex;
-                    SettingContainer.screenMode = (SettingContainer.ScreenMode)1;
-                    //Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+                    SettingContainer.instance.settingData.resolutionIndex = maxScreenIndex;
+                    resolutions.value = resolutionIndex;
                     break;
                 case 2:
+                    // 저장해놨던 창모드 해상도를 불러옴
+                    var winIndex = SettingContainer.instance.settingData.windowResolutionIndex;
+                    var winRes = SettingContainer.instance.settingData.resolutionList[winIndex];
+                    Screen.SetResolution(winRes.width, winRes.height, FullScreenMode.Windowed);
+                    
                     resolutions.interactable = true;
-                    Screen.fullScreenMode = FullScreenMode.Windowed;
-                    SettingContainer.screenMode = (SettingContainer.ScreenMode)2;
+
+                    resolutionIndex = winIndex;
+                    SettingContainer.instance.settingData.resolutionIndex = winIndex;
+                    resolutions.value = winIndex;
+                    
                     break;
             }
         }
 
         public void SetMaster(float sliderValue)
         {
-            SettingContainer.masterVolume = sliderValue;
+            SettingContainer.instance.settingData.masterVolume = sliderValue;
             float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
             audioController.SetMasterVolume(volume);
         }
 
         public void SetBGM(float sliderValue)
         {
-            SettingContainer.BGMVolume = sliderValue;
+            SettingContainer.instance.settingData.BGMVolume = sliderValue;
             float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
             audioController.SetBGMVolume(volume);
         }
 
         public void SetEffectSound(float sliderValue)
         {
-            SettingContainer.effectVolume = sliderValue;
+            SettingContainer.instance.settingData.effectVolume = sliderValue;
             float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
             audioController.SetEffectVolume(volume);
+        }
+
+        public void ApplySetting()
+        {
+            // 임시 settingData를 확정시켜 데이터로도 저장시키는 역할
         }
     }
 }
