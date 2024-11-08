@@ -45,13 +45,17 @@ namespace ActionPart.UI
             this.showMainCanvas = show;
         }
 
-        public void MainMenuButton(InputAction.CallbackContext context)
+        public void MainMenuKey(InputAction.CallbackContext context)
         {
             if (context.started)
             {
-                Debug.Log("´­·¶´ç");
                 ToggleMainMenu(show: !showMainCanvas);
             }
+        }
+
+        public void MainMenuButton()
+        {
+            ToggleMainMenu(show: !showMainCanvas);
         }
     }
 }

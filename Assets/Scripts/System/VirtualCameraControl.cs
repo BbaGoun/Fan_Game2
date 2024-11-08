@@ -10,7 +10,7 @@ namespace ActionPart
         public static VirtualCameraControl Instance { get; private set; }
 
         public float turnTime = 0;
-        public string confinerName;
+        public string camAreaName;
         CinemachineVirtualCamera cvCamera;
         CinemachineBasicMultiChannelPerlin perlinNoise;
         CinemachineFramingTransposer vcFTposer;
@@ -42,7 +42,10 @@ namespace ActionPart
 
         public void SetConfiner()
         {
-            confiner.m_BoundingShape2D = GameObject.Find(confinerName).GetComponent<CompositeCollider2D>();
+            // 이건 실험 테스트로 string을 통해 가져오는 중
+            // 다음에는 엑티브 신에서 가져오도록 해야함
+            confiner.m_BoundingShape2D = GameObject.Find(camAreaName).GetComponent<CompositeCollider2D>();
+            confiner.m_BoundingShape2D = GameObject.FindGameObjectWithTag("CamArea").GetComponent<CompositeCollider2D>();
         }
 
         public void ShakeCamera(float duration, float intensity, float frequency = 1f)
@@ -79,6 +82,8 @@ namespace ActionPart
             float refFloat = 0f;
             while (true)
             {
+                if (vcFTposer == null)
+                    Debug.Log("카메라 고장");
                 var current = vcFTposer.m_TrackedObjectOffset.x;
 
                 if (Mathf.Abs(offsetX - current) < 0.001f)

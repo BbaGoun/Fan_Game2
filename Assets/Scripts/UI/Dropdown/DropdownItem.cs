@@ -9,8 +9,8 @@ public class DropdownItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     private bool mouseOver = false;
     private Image back;
-    public Sprite normal;
-    public Sprite hover;
+    //public Sprite normal;
+    //public Sprite hover;
 
     void Awake()
     {
@@ -27,11 +27,13 @@ public class DropdownItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if(mouseOver)
         {
-            back.sprite = hover;
+            back.color = new Color(0f, 0f, 0f, 0.9f);
+            //back.sprite = hover;
         }
         else
         {
-            back.sprite = normal;
+            back.color = new Color(0f, 0f, 0f, 1f);
+            //back.sprite = normal;
         }
     }
 

@@ -9,7 +9,7 @@ public class GameSave : MonoBehaviour
 
     public Button closeButton;
     public GameObject Popup;
-    public SaveSlot slot;
+    public SaveSlot slotMenu;
     int slotNum;
     public AudioClip clickSound;
 
@@ -38,7 +38,7 @@ public class GameSave : MonoBehaviour
         closeButton.interactable = true;
         Popup.SetActive(false);
         Save(slotNum);
-        slot.Refresh();
+        slotMenu.Refresh();
     }
 
     public void NoSave()

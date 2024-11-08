@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,24 +7,32 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using static SettingContainer;
 
+[Serializable]
 public class SettingData
 {
     public float masterVolume;
     public float BGMVolume;
     public float effectVolume;
 
+    [SerializeField]
     public List<Resolution> resolutionList;
     public int resolutionIndex;
     public FullScreenMode screenMode;
 
     public int windowResolutionIndex;
+
+    public SettingData() 
+    {   
+        resolutionList = new List<Resolution>();
+    }
 }
 
 public class SettingContainer:MonoBehaviour
 {
     public static SettingContainer instance;
 
-    public SettingData settingData = new SettingData();
+    [SerializeField]
+    public SettingData m_SettingData = new SettingData();
 
     private string dataPath;
 
@@ -43,17 +52,17 @@ public class SettingContainer:MonoBehaviour
         dataPath = Application.persistentDataPath + "/setting";
 
         // 데이터가 있으면 불러오기
-        if (File.Exists(dataPath))
+        if (File.Exists(dataPath) && false) // 나중에 빌드하면서 확인
         {
             string sData = File.ReadAllText(dataPath);
-            settingData = JsonUtility.FromJson<SettingData>(sData);
+            m_SettingData = JsonUtility.FromJson<SettingData>(sData);
         }
         // 데이터가 없으면 만들고 저장하기
         else
         {
-            settingData.masterVolume = 0.75f;
-            settingData.BGMVolume = 0.75f;
-            settingData.effectVolume = 0.75f;
+            m_SettingData.masterVolume = 0.75f;
+            m_SettingData.BGMVolume = 0.75f;
+            m_SettingData.effectVolume = 0.75f;
 
             Resolution[] reses = Screen.resolutions;
             foreach (Resolution res in reses)
@@ -62,14 +71,14 @@ public class SettingContainer:MonoBehaviour
                     continue;
                 if (Mathf.Round(res.width * 0.5625f) == res.height)
                 {
-                    settingData.resolutionList.Add(res);
+                    m_SettingData.resolutionList.Add(res);
                 }
             }
-            settingData.resolutionIndex = settingData.resolutionList.Count - 1;
-            settingData.windowResolutionIndex = settingData.resolutionIndex;
-            settingData.screenMode = FullScreenMode.Windowed;
+            m_SettingData.resolutionIndex = m_SettingData.resolutionList.Count - 1;
+            m_SettingData.windowResolutionIndex = m_SettingData.resolutionIndex;
+            m_SettingData.screenMode = FullScreenMode.Windowed;
 
-            string sData = JsonUtility.ToJson(settingData);
+            string sData = JsonUtility.ToJson(m_SettingData);
             File.WriteAllText(dataPath, sData);
         }
     }

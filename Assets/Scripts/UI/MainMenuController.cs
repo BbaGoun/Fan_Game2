@@ -50,17 +50,17 @@ namespace ActionPart.UI
             bgm.minValue = 0.001f;
             effectSound.minValue = 0.001f;
 
-            maxScreenIndex = SettingContainer.instance.settingData.resolutionList.Count - 1;
+            maxScreenIndex = SettingContainer.instance.m_SettingData.resolutionList.Count - 1;
 
-            foreach (var resolution in SettingContainer.instance.settingData.resolutionList)
+            foreach (var resolution in SettingContainer.instance.m_SettingData.resolutionList)
             {
                 var newOption = new List<string> { $"{resolution.width} * {resolution.height}" };
                 resolutions.AddOptions(newOption);
             }
 
-            resolutions.value = SettingContainer.instance.settingData.resolutionIndex;
+            resolutions.value = SettingContainer.instance.m_SettingData.resolutionIndex;
 
-            switch (SettingContainer.instance.settingData.screenMode)
+            switch (SettingContainer.instance.m_SettingData.screenMode)
             {
                 case FullScreenMode.FullScreenWindow:
                     screenModes.value = 0;
@@ -76,18 +76,18 @@ namespace ActionPart.UI
                     break;
             }
 
-            resolutions.interactable = SettingContainer.instance.settingData.screenMode == FullScreenMode.Windowed;
+            resolutions.interactable = SettingContainer.instance.m_SettingData.screenMode == FullScreenMode.Windowed;
 
-            master.value = SettingContainer.instance.settingData.masterVolume;
-            bgm.value = SettingContainer.instance.settingData.BGMVolume;
-            effectSound.value = SettingContainer.instance.settingData.effectVolume;
+            master.value = SettingContainer.instance.m_SettingData.masterVolume;
+            bgm.value = SettingContainer.instance.m_SettingData.BGMVolume;
+            effectSound.value = SettingContainer.instance.m_SettingData.effectVolume;
         }
 
         private void Start()
         {
-            SetMaster(SettingContainer.instance.settingData.masterVolume);
-            SetBGM(SettingContainer.instance.settingData.BGMVolume);
-            SetEffectSound(SettingContainer.instance.settingData.effectVolume);
+            SetMaster(SettingContainer.instance.m_SettingData.masterVolume);
+            SetBGM(SettingContainer.instance.m_SettingData.BGMVolume);
+            SetEffectSound(SettingContainer.instance.m_SettingData.effectVolume);
         }
 
         public void ToggleMainMenu(bool isShowMenu)
@@ -115,7 +115,7 @@ namespace ActionPart.UI
             }
         }
 
-        public void ShowMainAlert()
+        public void ShowTitleAlert()
         {
             PlayClickSound();
             foreach (var button in buttons)
@@ -125,7 +125,7 @@ namespace ActionPart.UI
             titleAlert.SetActive(true);
         }
 
-        public void NoMain()
+        public void NoTitle()
         {
             PlayClickSound();
             foreach (var button in buttons)
@@ -135,7 +135,7 @@ namespace ActionPart.UI
             titleAlert.SetActive(false);
         }
 
-        public void YesMain()
+        public void YesTitle()
         {
             PlayClickSound();
             Time.timeScale = 1;
@@ -212,30 +212,30 @@ namespace ActionPart.UI
 
         public void ChangeResolution(int index)
         {
-            var res = SettingContainer.instance.settingData.resolutionList[index];
+            var res = SettingContainer.instance.m_SettingData.resolutionList[index];
             Screen.SetResolution(res.width, res.height, Screen.fullScreenMode);
-            SettingContainer.instance.settingData.resolutionIndex = index;
+            SettingContainer.instance.m_SettingData.resolutionIndex = index;
             resolutionIndex = index;
             // 창모드 해상도 저장
-            SettingContainer.instance.settingData.windowResolutionIndex = index;
+            SettingContainer.instance.m_SettingData.windowResolutionIndex = index;
         }
 
         public void ChangeScreenMode(int index)
         {
-            var resMax = SettingContainer.instance.settingData.resolutionList[maxScreenIndex];
+            var resMax = SettingContainer.instance.m_SettingData.resolutionList[maxScreenIndex];
             switch (index)
             {
                 case 0:
                     Screen.SetResolution(resMax.width, resMax.height, FullScreenMode.FullScreenWindow);
-                    SettingContainer.instance.settingData.screenMode = FullScreenMode.FullScreenWindow;
+                    SettingContainer.instance.m_SettingData.screenMode = FullScreenMode.FullScreenWindow;
                     
                     resolutions.interactable = false;
 
                     // 창모드 해상도 저장
-                    SettingContainer.instance.settingData.windowResolutionIndex = resolutionIndex;
+                    SettingContainer.instance.m_SettingData.windowResolutionIndex = resolutionIndex;
 
                     resolutionIndex = maxScreenIndex;
-                    SettingContainer.instance.settingData.resolutionIndex = maxScreenIndex;
+                    SettingContainer.instance.m_SettingData.resolutionIndex = maxScreenIndex;
                     resolutions.value = resolutionIndex;
 
                     break;
@@ -243,33 +243,33 @@ namespace ActionPart.UI
                     if(Application.platform == RuntimePlatform.WindowsPlayer) // window
                     {
                         Screen.SetResolution(resMax.width, resMax.height, FullScreenMode.ExclusiveFullScreen);
-                        SettingContainer.instance.settingData.screenMode = FullScreenMode.ExclusiveFullScreen;
+                        SettingContainer.instance.m_SettingData.screenMode = FullScreenMode.ExclusiveFullScreen;
                     }
                     else if(Application.platform == RuntimePlatform.OSXPlayer) // macOS
                     {
                         Screen.SetResolution(resMax.width, resMax.height, FullScreenMode.MaximizedWindow);
-                        SettingContainer.instance.settingData.screenMode = FullScreenMode.MaximizedWindow;
+                        SettingContainer.instance.m_SettingData.screenMode = FullScreenMode.MaximizedWindow;
                     }
 
                     resolutions.interactable = false; 
                     
                     // 창모드 해상도 저장
-                    SettingContainer.instance.settingData.windowResolutionIndex = resolutionIndex;
+                    SettingContainer.instance.m_SettingData.windowResolutionIndex = resolutionIndex;
 
                     resolutionIndex = maxScreenIndex;
-                    SettingContainer.instance.settingData.resolutionIndex = maxScreenIndex;
+                    SettingContainer.instance.m_SettingData.resolutionIndex = maxScreenIndex;
                     resolutions.value = resolutionIndex;
                     break;
                 case 2:
                     // 저장해놨던 창모드 해상도를 불러옴
-                    var winIndex = SettingContainer.instance.settingData.windowResolutionIndex;
-                    var winRes = SettingContainer.instance.settingData.resolutionList[winIndex];
+                    var winIndex = SettingContainer.instance.m_SettingData.windowResolutionIndex;
+                    var winRes = SettingContainer.instance.m_SettingData.resolutionList[winIndex];
                     Screen.SetResolution(winRes.width, winRes.height, FullScreenMode.Windowed);
                     
                     resolutions.interactable = true;
 
                     resolutionIndex = winIndex;
-                    SettingContainer.instance.settingData.resolutionIndex = winIndex;
+                    SettingContainer.instance.m_SettingData.resolutionIndex = winIndex;
                     resolutions.value = winIndex;
                     
                     break;
@@ -278,21 +278,21 @@ namespace ActionPart.UI
 
         public void SetMaster(float sliderValue)
         {
-            SettingContainer.instance.settingData.masterVolume = sliderValue;
+            SettingContainer.instance.m_SettingData.masterVolume = sliderValue;
             float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
             audioController.SetMasterVolume(volume);
         }
 
         public void SetBGM(float sliderValue)
         {
-            SettingContainer.instance.settingData.BGMVolume = sliderValue;
+            SettingContainer.instance.m_SettingData.BGMVolume = sliderValue;
             float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
             audioController.SetBGMVolume(volume);
         }
 
         public void SetEffectSound(float sliderValue)
         {
-            SettingContainer.instance.settingData.effectVolume = sliderValue;
+            SettingContainer.instance.m_SettingData.effectVolume = sliderValue;
             float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
             audioController.SetEffectVolume(volume);
         }

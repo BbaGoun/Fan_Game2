@@ -27,12 +27,9 @@ public class LoadingManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }else if(instance != this)
         {
-            Destroy(instance.gameObject);
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(this.gameObject);
         }
         #endregion // Singleton
     }

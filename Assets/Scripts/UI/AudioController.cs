@@ -27,7 +27,7 @@ public class AudioController : MonoBehaviour
 
     public void SetEffectVolume(float volume)
     {
-        audioMixer.SetFloat("SFXVol", volume);
+        audioMixer.SetFloat("SEVol", volume);
     }
 
     public void ChangeBGM(AudioClip audioClip)

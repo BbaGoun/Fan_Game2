@@ -27,26 +27,30 @@ public class DropdownMain : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void Update()
     {
-        if (mouseOver)
-        {
-            dropdownImage.color = new Color(1, 1, 1, 0.4f);
-        }
-        else
-        {
-            dropdownImage.color = new Color(1, 1, 1, 1f);
-        }
-
         if(transform.childCount == 3) // isClosed
         {
+            if (mouseOver)
+            {
+                dropdownImage.color = new Color(0, 0, 0, 0.4f);
+            }
+            else
+            {
+                dropdownImage.color = new Color(0, 0, 0, 1f);
+            }
+
             text.color = new Color(1, 1, 1, 200f / 255);
             arrow.sprite = arrowImages[0];
         }
         else // isOpened
         {
+            dropdownImage.color = new Color(0, 0, 0, 1f);
+
             text.color = new Color(5f / 255, 199f / 255, 242f / 255, 200f / 255);
             arrow.sprite = arrowImages[1];
 
+
             DLText = transform.GetChild(3).GetChild(0).GetChild(0).GetChild(1 + dropdown.value).GetChild(1).GetComponent<TMP_Text>();
+            
             DLText.color = new Color(5f / 255, 199f / 255, 242f / 255, 200f / 255);
         }
     }

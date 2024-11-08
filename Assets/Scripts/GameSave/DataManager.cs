@@ -18,7 +18,6 @@ public class DataManager : MonoBehaviour
     public static DataManager instance;
     public string m_sPath;
     
-    
     public PlayerData m_Data = new PlayerData();
 
 
@@ -28,9 +27,8 @@ public class DataManager : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
-
-        } else if(instance != this)
+        } 
+        else if(instance != this)
         {
             Destroy(instance.gameObject);
         }
