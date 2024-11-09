@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameLoad : MonoBehaviour
+namespace ActionPart
 {
-    public void Load(int Index) 
+    public class GameLoad : MonoBehaviour
     {
-        DataManager.instance.GameLoad(Index - 1);
+        public void Load(int Index)
+        {
+            DataManager.instance.GameLoad(Index - 1);
+        }
     }
 }

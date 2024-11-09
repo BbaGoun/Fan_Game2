@@ -139,8 +139,8 @@ namespace ActionPart.UI
         {
             PlayClickSound();
             Time.timeScale = 1;
-            LoadingManager.Instance.sceneName = "메인 타이틀";
-            LoadingManager.Instance.LoadSceneAsync("일반 로딩");
+            //LoadingManager.Instance.sceneName = "메인 타이틀";
+            LoadingManager.Instance.LoadSceneAsync("메인 타이틀");
         }
 
         public void ToSaveGame()

@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: "Assets/Scenes/\uC601\uAD6C \uC720\uC9C0/\uC601\uAD6C \uC720\uC9C0.unity"
     guid: 2e8d061978d2a024a93105218e599a38
   - enabled: 1
-    path: Assets/Scenes/Town 1.unity
+    path: Assets/Scenes/Town1.unity
     guid: 81a4d2e3733e4e147b88c107a8d70449
   m_configObjects: {}

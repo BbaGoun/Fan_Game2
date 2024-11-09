@@ -20,6 +20,7 @@ namespace ActionPart
 
         private void Awake()
         {
+            #region Singleton
             if (Instance != null && Instance != this)
             {
                 Destroy(this.gameObject);
@@ -28,12 +29,12 @@ namespace ActionPart
             {
                 Instance = this;
             }
+            #endregion
 
-            DontDestroyOnLoad(gameObject);
 
             confiner = GetComponent<CinemachineConfiner2D>();
 
-            SetConfiner();
+            //SetConfiner();
 
             cvCamera = GetComponent<CinemachineVirtualCamera>();
             perlinNoise = cvCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
@@ -44,7 +45,7 @@ namespace ActionPart
         {
             // 이건 실험 테스트로 string을 통해 가져오는 중
             // 다음에는 엑티브 신에서 가져오도록 해야함
-            confiner.m_BoundingShape2D = GameObject.Find(camAreaName).GetComponent<CompositeCollider2D>();
+
             confiner.m_BoundingShape2D = GameObject.FindGameObjectWithTag("CamArea").GetComponent<CompositeCollider2D>();
         }
 
