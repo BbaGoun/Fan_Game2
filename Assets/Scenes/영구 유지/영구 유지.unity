@@ -2625,6 +2625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScene: {fileID: 1554635286}
+  virtualCameraControl: {fileID: 1766588460}
 --- !u!1 &549783697
 GameObject:
   m_ObjectHideFlags: 0

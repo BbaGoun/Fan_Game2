@@ -19,6 +19,7 @@ namespace ActionPart
         }
 
         public LoadingScene loadingScene;
+        public VirtualCameraControl virtualCameraControl;
         private string loadedSceneName;
         private Coroutine coroutine;
 
@@ -36,7 +37,7 @@ namespace ActionPart
             }
             #endregion // Singleton
 
-            LoadSceneAsync("메인 타이틀", mode:TransitionMode.FromLeft, inDelay: 1f, outDelay: 1f);
+            LoadSceneAsync("안휘성 시장", mode:TransitionMode.FromLeft, inDelay: 1f, outDelay: 1f);
         }
 
         public void LoadSceneAsync(string sceneName, TransitionMode mode = TransitionMode.Direct, float inDelay = 0f, float outDelay = 0f)
@@ -86,14 +87,15 @@ namespace ActionPart
 
                         if (async1.progress >= 0.9f)
                         {
-                            // 불러온 씬에 대한 초기화 작업들
                             async1.allowSceneActivation = true;
                         }
 
                         yield return new WaitForSeconds(0.01f); // Wait for the next frame
                     }
+
+                    // 씬 언로드 하면서 해야할 것들
                 }
-                
+
                 // 새 씬 로드
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                 asyncLoad.allowSceneActivation = false;
@@ -106,14 +108,16 @@ namespace ActionPart
                     Debug.Log("로딩 진행도 : " + 0.5f + progress / 2);
 
                     if (asyncLoad.progress >= 0.9f)
-                    {
-                        // 불러온 씬에 대한 초기화 작업들
-                        asyncLoad.allowSceneActivation = true;
+                    {   asyncLoad.allowSceneActivation = true;
                         loadedSceneName = sceneName;
                     }
 
                     yield return new WaitForSeconds(0.01f); // Wait for the next frame
                 }
+
+                // 씬 로딩하면서 초기화해야할 것들
+                // 플레이어를 먼저 소환해야 함
+                virtualCameraControl.SetConfiner();
 
                 yield return new WaitForSeconds(outDelay);
                 loadingScene.LoadingObjectOff();

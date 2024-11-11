@@ -46,7 +46,9 @@ namespace ActionPart
             // 이건 실험 테스트로 string을 통해 가져오는 중
             // 다음에는 엑티브 신에서 가져오도록 해야함
 
+            Debug.Log("아휴");
             confiner.m_BoundingShape2D = GameObject.FindGameObjectWithTag("CamArea").GetComponent<CompositeCollider2D>();
+            confiner.InvalidateCache();
         }
 
         public void ShakeCamera(float duration, float intensity, float frequency = 1f)
