@@ -10,7 +10,7 @@ namespace ActionPart
         
         public void LoadScene()
         {
-            LoadingManager.Instance.LoadSceneAsync(sceneName, LoadingManager.SpawnPoint.Right, LoadingManager.TransitionMode.FromLeft, inDelay: 0.5f, outDelay: 0.5f);
+            LoadingManager.Instance.LoadSceneAsync(sceneName, LoadingManager.SpawnPoint.Left, LoadingManager.TransitionMode.FromLeft, inDelay: 0.5f, outDelay: 0.5f);
         }
     }
 }
