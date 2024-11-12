@@ -65,7 +65,16 @@ namespace ActionPart
         public override void FrameUpdate()
         {
             #region State Change
-
+            if (!PlayerInputPart.Instance.isCanInput)
+            {
+                if (healState != HealState.PrepareIdle)
+                {
+                    waitTimer = 0f;
+                    healEffect.animator.SetBool("isHealState", false);
+                    player.SetAnimatorBool("isHealing", false);
+                    healState = HealState.PrepareIdle;
+                }
+            }
             #endregion
 
             GetDamageInfo();
@@ -119,9 +128,9 @@ namespace ActionPart
 
                     healEffect.animator.SetBool("isHealState", false);
                     player.SetAnimatorBool("isHealing", false);
-                    healState = HealState.PrepareIdle;
                     health.Heal_HP(healAmount);
                     health.Heal_Stamina(healAmount);
+                    healState = HealState.PrepareIdle;
                     break;
                 case HealState.PrepareIdle:
                     waitTimer += Time.deltaTime;

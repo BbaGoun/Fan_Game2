@@ -87,6 +87,15 @@ namespace ActionPart
                 waitTimer = 0f;
                 guardState = GuardState.PrepareStateOut;
             }
+            if (!PlayerInputPart.Instance.isCanInput)
+            {   
+                if (guardState != GuardState.PrepareStateOut)
+                {
+                    player.isGuard = false;
+                    waitTimer = 0f;
+                    guardState = GuardState.PrepareStateOut;
+                }
+            }
             if (health.CheckIsGroggy())
             {
                 player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Groggy);

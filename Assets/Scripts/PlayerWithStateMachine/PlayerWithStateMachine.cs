@@ -72,9 +72,23 @@ namespace ActionPart
                     continue;
                 }
 
+
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    if (!PlayerInputPart.Instance.isCanInput)
+                        PlayerInputPart.Instance.CanInput();
+                    else
+                        PlayerInputPart.Instance.CantInput();
+                }
+
                 if (isGrounded)
                 {
                     delegateGrounded?.Invoke();
+                }
+                if (!PlayerInputPart.Instance.isCanInput)
+                {
+                    ChargeDone();
+                    playerChargeAttackState.ResetCharge();
                 }
                 switch (playerState)
                 {
@@ -90,6 +104,7 @@ namespace ActionPart
                         break;
                 }
                 stateMachine.StateFrameUpdate();
+
                 yield return null;
             }
         }

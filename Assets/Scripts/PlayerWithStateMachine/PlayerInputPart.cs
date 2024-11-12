@@ -25,9 +25,11 @@ namespace ActionPart
             DontDestroyOnLoad(gameObject);
         }
 
+        public bool isCanInput {  get; private set; }
+
         public delegate void DelArrowKey();
         public event DelArrowKey EventArrowKey;
-        public Vector2 inputVec { get; private set; } = Vector2.zero;
+        public Vector2 inputVec { get; private set; }
 
         public delegate void DelJumpKeyDown();
         public event DelJumpKeyDown EventJumpKeyDown;
@@ -63,18 +65,27 @@ namespace ActionPart
                 EventAttackKeyHolding?.Invoke();
         }
 
+        public void CanInput()
+        {
+            isCanInput = true;
+        }
+
+        public void CantInput()
+        {
+            isCanInput = false;
+        }
+
         public void ActionMove(InputAction.CallbackContext context)
         {
-            if (Time.timeScale == 0)
-                return;
-            
             inputVec = context.ReadValue<Vector2>();
         }
 
         public void ActionJump(InputAction.CallbackContext context)
         {
-            if (Time.timeScale == 0)
+            if (Time.timeScale == 0 || !isCanInput)
+            {
                 return;
+            }
 
             if (context.started)
             {
@@ -88,8 +99,10 @@ namespace ActionPart
 
         public void ActionDash(InputAction.CallbackContext context)
         {
-            if (Time.timeScale == 0)
+            if (Time.timeScale == 0 || !isCanInput)
+            {
                 return;
+            }
 
             if (context.started)
             {
@@ -103,8 +116,11 @@ namespace ActionPart
 
         public void ActionAttack(InputAction.CallbackContext context)
         {
-            if (Time.timeScale == 0)
+            if (Time.timeScale == 0 || !isCanInput)
+            {
+                attackHolding = false;
                 return;
+            }
 
             if (context.started)
             {
@@ -120,8 +136,10 @@ namespace ActionPart
 
         public void ActionGuard(InputAction.CallbackContext context)
         {
-            if (Time.timeScale == 0)
+            if (Time.timeScale == 0 || !isCanInput)
+            {
                 return;
+            }
 
             if (context.started)
             {
@@ -135,8 +153,10 @@ namespace ActionPart
 
         public void ActionHeal(InputAction.CallbackContext context)
         {
-            if (Time.timeScale == 0)
+            if (Time.timeScale == 0 || !isCanInput)
+            {
                 return;
+            }
 
             if (context.started)
             {

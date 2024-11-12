@@ -23,7 +23,7 @@ namespace ActionPart
         private float velPower;
         [SerializeField]
         private float frictionAmount;
-        Vector2 moveVec;
+        public Vector2 moveVec;
 
         [Header("Jump Parameter")]
         [SerializeField]
@@ -152,6 +152,9 @@ namespace ActionPart
         void XControl()
         {
             moveVec = PlayerInputPart.Instance.inputVec;
+            if (!PlayerInputPart.Instance.isCanInput || Time.timeScale == 0f)
+                moveVec = Vector2.zero;
+            
             var isLookRight = Mathf.Sign(player.transform.localScale.x) == 1;
 
             if (moveVec.x < -0.01f && isLookRight)
