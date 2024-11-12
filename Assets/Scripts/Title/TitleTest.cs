@@ -6,9 +6,11 @@ namespace ActionPart
 {
     public class TitleTest : MonoBehaviour
     {
+        public string sceneName;
+        
         public void LoadScene()
         {
-            LoadingManager.Instance.LoadSceneAsync("Town1", LoadingManager.TransitionMode.FromRight, inDelay: 0.5f, outDelay: 0.5f);
+            LoadingManager.Instance.LoadSceneAsync(sceneName, LoadingManager.SpawnPoint.Right, LoadingManager.TransitionMode.FromRight, inDelay: 0.5f, outDelay: 0.5f);
         }
     }
 }

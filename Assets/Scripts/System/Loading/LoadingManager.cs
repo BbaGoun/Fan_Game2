@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,11 @@ namespace ActionPart
 
         public LoadingScene loadingScene;
         public VirtualCameraControl virtualCameraControl;
+        public PlayerWithStateMachine player;
+        public bool loadDone { get; private set; }
+
+        private SceneSetting sceneSetting;
+        private ParallaxBackground parallaxBackground;
         private string loadedSceneName;
         private Coroutine coroutine;
 
@@ -37,18 +43,18 @@ namespace ActionPart
             }
             #endregion // Singleton
 
-            LoadSceneAsync("안휘성 시장", mode:TransitionMode.FromLeft, inDelay: 1f, outDelay: 1f);
+            LoadSceneAsync("메인 타이틀", SpawnPoint.None, mode: TransitionMode.FromLeft, inDelay: 0.5f, outDelay: 0.5f);
         }
 
-        public void LoadSceneAsync(string sceneName, TransitionMode mode = TransitionMode.Direct, float inDelay = 0f, float outDelay = 0f)
+        public void LoadSceneAsync(string sceneName, SpawnPoint spawnPoint, TransitionMode mode = TransitionMode.Direct, float inDelay = 0f, float outDelay = 0f)
         {
             if (coroutine != null)
                 StopCoroutine(coroutine);
 
-            coroutine = StartCoroutine(LoadSceneCoroutine(sceneName, mode, inDelay, outDelay));
+            coroutine = StartCoroutine(LoadSceneCoroutine(sceneName, spawnPoint, mode, inDelay, outDelay));
 
 
-            IEnumerator LoadSceneCoroutine(string sceneName, TransitionMode mode, float inDelay, float outDelay)
+            IEnumerator LoadSceneCoroutine(string sceneName, SpawnPoint spawnPoint, TransitionMode mode, float inDelay, float outDelay)
             {
                 // 캐릭터 조작 비활성화
                 switch (mode)
@@ -67,6 +73,8 @@ namespace ActionPart
                         break;
                 }
                 yield return new WaitUntil(loadingScene.CheckisDone);
+
+                loadDone = false;
 
                 loadingScene.LoadingObjectsOn();
                 loadingScene.LoadingProgressApply(0f);
@@ -117,7 +125,33 @@ namespace ActionPart
 
                 // 씬 로딩하면서 초기화해야할 것들
                 // 플레이어를 먼저 소환해야 함
-                virtualCameraControl.SetConfiner();
+                if (!sceneName.Equals("메인 타이틀"))
+                {
+                    // 플레이어 위치 세팅
+                    sceneSetting = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<SceneSetting>();
+                    player.gameObject.SetActive(true);
+                    switch (spawnPoint)
+                    {
+                        case SpawnPoint.None:
+                            break;
+                        case SpawnPoint.Left:
+                            player.transform.localPosition = new Vector3(sceneSetting.LeftPoint.localPosition.x, sceneSetting.LeftPoint.localPosition.y, -4);
+                            player.LookRight();
+                            break;
+                        case SpawnPoint.Right:
+                            player.transform.localPosition = new Vector3(sceneSetting.RightPoint.localPosition.x, sceneSetting.RightPoint.localPosition.y, -4);
+                            player.LookLeft();
+                            break;
+                    }
+                    
+                    virtualCameraControl.SetConfiner();
+                    parallaxBackground = GameObject.FindGameObjectWithTag("Maps").GetComponent<ParallaxBackground>();
+                    parallaxBackground.SetCamera();
+                }
+                else
+                {
+                    player.gameObject.SetActive(false);
+                }
 
                 yield return new WaitForSeconds(outDelay);
                 loadingScene.LoadingObjectOff();
@@ -138,7 +172,9 @@ namespace ActionPart
                         break;
                 }
                 yield return new WaitUntil(loadingScene.CheckisDone);
+
                 // 캐릭터 조작 활성화
+                loadDone = true;
             }
         }
 
@@ -151,6 +187,15 @@ namespace ActionPart
             FadeIn,
             FadeOut,
             Direct,
+        }
+
+        public enum SpawnPoint
+        {
+            Left,
+            Right, 
+            Top, 
+            Bottom,
+            None
         }
     }
 }

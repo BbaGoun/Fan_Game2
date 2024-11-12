@@ -14,7 +14,7 @@ namespace ActionPart
         [SerializeField]
         List<ParallaxLayer> parallaxLayers = new List<ParallaxLayer>();
 
-        private void Awake()
+        public void SetCamera()
         {
             mainCamera = Camera.main;
         }
@@ -26,6 +26,9 @@ namespace ActionPart
 
         void FixedUpdate()
         {
+            if (!LoadingManager.Instance.loadDone)
+                return;
+
             float delta = mainCamera.transform.position.x - cameraBasePosition.x;
 
             Move(delta);

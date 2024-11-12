@@ -67,31 +67,7 @@ namespace ActionPart
 
                 switch (stageName)
                 {
-                    case "포켓몬 배틀":
-                        //LoadingManager.Instance.sceneName = "포켓몬 인트로";
-                        LoadingManager.Instance.LoadSceneAsync("포켓몬 로딩");
-                        break;
-                    case "스타듀 대화1":
-                    case "스타듀 대화2":
-                        //LoadingManager.Instance.sceneName = stageName;
-                        LoadingManager.Instance.LoadSceneAsync("스타듀 로딩");
-                        break;
-                    case "스타듀 낚시":
-                        //LoadingManager.Instance.sceneName = "스타듀 가이드";
-                        LoadingManager.Instance.LoadSceneAsync("스타듀 로딩");
-                        break;
-                    case "반반":
-                    case "반반 엔딩":
-                        //LoadingManager.Instance.sceneName = stageName;
-                        LoadingManager.Instance.LoadSceneAsync("반반 로딩");
-                        break;
-                    case "니디걸 보스전":
-                        //LoadingManager.Instance.sceneName = "니디걸 가이드";
-                        LoadingManager.Instance.LoadSceneAsync("일반 로딩");
-                        break;
                     default:
-                        //LoadingManager.Instance.sceneName = stageName;
-                        LoadingManager.Instance.LoadSceneAsync("일반 로딩");
                         break;
                 }
             }

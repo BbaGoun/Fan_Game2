@@ -8,9 +8,6 @@ namespace ActionPart
 {
     public class PlayerWithStateMachine : KinematicObject, IWithStateMachine, IDamageAble
     {
-        [SerializeField]
-        Vector3 initialPosition;
-
         StateMachine stateMachine;
 
         #region PlayerState
@@ -57,7 +54,6 @@ namespace ActionPart
 
         private void Initialize()
         {
-            transform.localPosition = initialPosition;
             StartCoroutine(IELifeCycle());
         }
 
@@ -65,6 +61,11 @@ namespace ActionPart
         {
             while (true)
             {
+                if (!LoadingManager.Instance.loadDone)
+                {
+                    yield return null;
+                    continue;
+                }
                 if(Time.timeScale == 0f)
                 {
                     yield return null;
@@ -97,11 +98,6 @@ namespace ActionPart
         {
             animator = GetComponent<Animator>();
             health = GetComponent<Health>();
-        }
-
-        protected override void Start()
-        {
-            base.Start();
 
             stateMachine = GetComponent<StateMachine>();
 
@@ -126,9 +122,12 @@ namespace ActionPart
 
             stateMachine.InitState(playerMoveState);
 
-            LookRight();
-
             Initialize();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
         }
 
         public void OnDisable()
@@ -165,6 +164,11 @@ namespace ActionPart
 
         protected override void FixedUpdate()
         {
+            if (!LoadingManager.Instance.loadDone)
+                return;
+            if (Time.timeScale == 0f)
+                return;
+
             base.FixedUpdate();
         }
 

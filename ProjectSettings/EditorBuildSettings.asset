@@ -17,4 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: "Assets/Scenes/\uC548\uD718\uC131 \uC2DC\uC7A5/\uC548\uD718\uC131 \uC2DC\uC7A5.unity"
     guid: c629230ab3a2c1e4ca3a20da3078c35e
+  - enabled: 1
+    path: "Assets/Scenes/\uC548\uD718\uC131 \uC9D1\uBB34\uC2E4/\uC548\uD718\uC131
+      \uC9D1\uBB34\uC2E4.unity"
+    guid: 293870e1002964d4ab8f47ceffe9e43f
   m_configObjects: {}
