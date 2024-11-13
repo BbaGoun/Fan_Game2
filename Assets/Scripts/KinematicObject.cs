@@ -21,7 +21,7 @@ namespace ActionPart
         /// </summary>
 
         [SerializeField]
-        public bool isGrounded;
+        public bool isGrounded = true;
         public bool isHeading { get; private set; }
 
         private BoxCollider2D boxCollider;

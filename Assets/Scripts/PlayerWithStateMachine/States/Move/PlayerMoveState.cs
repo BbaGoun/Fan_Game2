@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Accessibility;
-using static Cinemachine.CinemachineOrbitalTransposer;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace ActionPart
 {
@@ -30,6 +27,7 @@ namespace ActionPart
         private float jumpForce; // 점프력
         [SerializeField]
         private float doubleJumpForce; // 더블 점프력
+        [SerializeField]
         private int remainJump; // 현재 남은 점프 횟수
         [SerializeField]
         private int maxJumpCount; // 최대 점프 횟수
@@ -53,6 +51,9 @@ namespace ActionPart
         [SerializeField]
         private bool jumpCanceled;
         #endregion
+
+        Coroutine moveCoroutine;
+        bool isCoroutineDone;
 
         public void Initialize(PlayerWithStateMachine _playerWithStateMachine)
         {
@@ -280,14 +281,63 @@ namespace ActionPart
                     jumpPerformed = false;
                     jumpCanceled = false;
                     // 착지 관련 행동 추가
-                    remainJump = maxJumpCount;
                     jumpState = JumpState.Grounded;
                     break;
 
                 case JumpState.Grounded:
+                    remainJump = maxJumpCount;
                     player.velocity.y = Physics2D.gravity.y;
                     break;
             }
+        }
+
+        public void MoveXFromTo(Transform from, Transform to)
+        {
+            if (moveCoroutine != null)
+                StopCoroutine(moveCoroutine);
+
+            StartCoroutine(IEMoveXFromTo(from, to));
+            
+            IEnumerator IEMoveXFromTo(Transform from, Transform to)
+            {
+                isCoroutineDone = false;
+                PlayerInputPart.Instance.CantInput();
+                player.isStopped = true;
+
+                this.transform.localPosition = from.localPosition;
+                var direction = Mathf.Sign(to.localPosition.x - from.localPosition.x);
+                if (direction >= 0)
+                    player.LookRight();
+                else
+                    player.LookLeft();
+                player.SetAnimatorBool("isMove", true);
+
+                var moveGap = direction * moveSpeed / 2 * Time.fixedDeltaTime;
+                var moveCount = (to.localPosition.x - from.localPosition.x) / moveGap;
+
+                for(int i = 0; i < moveCount; i++)
+                {
+                    this.transform.localPosition = new Vector3(this.transform.localPosition.x + moveGap, this.transform.localPosition.y, this.transform.localPosition.z);
+                    yield return new WaitForFixedUpdate();
+                }
+
+                player.SetAnimatorBool("isMove", false);
+                PlayerInputPart.Instance.CanInput();
+                player.isStopped = false;
+
+                isCoroutineDone = true;
+            }
+        }
+
+        public bool IsCoroutineDone()
+        {
+            if (isCoroutineDone)
+            {
+                isCoroutineDone = false;
+                return true;
+            }
+            else
+                return false;
         }
 
         #region Key Event

@@ -23,6 +23,8 @@ namespace ActionPart
             }
 
             DontDestroyOnLoad(gameObject);
+
+            isCanInput = true;
         }
 
         public bool isCanInput {  get; private set; }

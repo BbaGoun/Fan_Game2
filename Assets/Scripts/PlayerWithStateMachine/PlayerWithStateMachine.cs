@@ -12,7 +12,7 @@ namespace ActionPart
 
         #region PlayerState
         [SerializeField]
-        PlayerMoveState playerMoveState;
+        public PlayerMoveState playerMoveState;
         [SerializeField]
         PlayerAttackState playerAttackState;
         [SerializeField]
@@ -45,7 +45,7 @@ namespace ActionPart
 
         public bool isCharged;
         public bool isGuard;
-        //public bool isJumped;
+        public bool isStopped;
         public IDamageAble.DamageInfo damageInfo;
 
         Animator animator;
@@ -61,8 +61,16 @@ namespace ActionPart
         {
             while (true)
             {
+                if (isStopped)
+                {
+                    // FixedUpdate는 멈추지 않기 때문에 velocity가 남아있으면 안됨
+                    velocity = Vector2.zero;
+                    yield return null;
+                    continue;
+                }
                 if (!LoadingManager.Instance.loadDone)
                 {
+                    velocity = Vector2.zero;
                     yield return null;
                     continue;
                 }
@@ -150,28 +158,6 @@ namespace ActionPart
 
         }
 
-        private void Update()
-        {
-            /*if (isGrounded)
-            {
-                delegateGrounded?.Invoke();
-            }
-            switch (playerState)
-            {
-                case PlayerState.Move:
-                case PlayerState.Dash:
-                case PlayerState.Guard:
-                    playerChargeAttackState.UpdateChargeState();
-                    break;
-                case PlayerState.ChargeAttack:
-                    break;
-                default:
-                    playerChargeAttackState.ResetCharge();
-                    break;
-            }
-            stateMachine.StateFrameUpdate();*/
-        }
-
         protected override void ComputeVelocity()
         {
             stateMachine.StatePhysicsUpdate();
@@ -179,9 +165,7 @@ namespace ActionPart
 
         protected override void FixedUpdate()
         {
-            if (!LoadingManager.Instance.loadDone)
-                return;
-            if (Time.timeScale == 0f)
+            if (isStopped)
                 return;
 
             base.FixedUpdate();

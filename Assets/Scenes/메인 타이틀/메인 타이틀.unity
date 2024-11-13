@@ -715,7 +715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301ab12e2ec23d147aeeed4993c8f07d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: "\uC548\uD718\uC131 \uC2DC\uC7A5"
+  sceneName: "\uC548\uD718\uC131 \uC9D1\uBB34\uC2E4"
+  spawnPoint: 1
+  withWalkOut: 1
+  transitionMode: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

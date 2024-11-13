@@ -43,18 +43,18 @@ namespace ActionPart
             }
             #endregion // Singleton
 
-            LoadSceneAsync("메인 타이틀", SpawnPoint.None, mode: TransitionMode.FromLeft, inDelay: 0.5f, outDelay: 0.5f);
+            LoadSceneAsync("메인 타이틀", SpawnPoint.None, WithWalkOut.None, mode: TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
 
-        public void LoadSceneAsync(string sceneName, SpawnPoint spawnPoint, TransitionMode mode = TransitionMode.Direct, float inDelay = 0f, float outDelay = 0f)
+        public void LoadSceneAsync(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode = TransitionMode.Direct, float inDelay = 0f, float outDelay = 0f)
         {
             if (coroutine != null)
                 StopCoroutine(coroutine);
 
-            coroutine = StartCoroutine(LoadSceneCoroutine(sceneName, spawnPoint, mode, inDelay, outDelay));
+            coroutine = StartCoroutine(LoadSceneCoroutine(sceneName, spawnPoint, walkOut, mode, inDelay, outDelay));
 
 
-            IEnumerator LoadSceneCoroutine(string sceneName, SpawnPoint spawnPoint, TransitionMode mode, float inDelay, float outDelay)
+            IEnumerator LoadSceneCoroutine(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode, float inDelay, float outDelay)
             {
                 // 캐릭터 조작 비활성화
                 switch (mode)
@@ -135,11 +135,11 @@ namespace ActionPart
                         case SpawnPoint.None:
                             break;
                         case SpawnPoint.Left:
-                            player.transform.localPosition = new Vector3(sceneSetting.LeftPoint.localPosition.x, sceneSetting.LeftPoint.localPosition.y, -4);
+                            player.transform.localPosition = new Vector3(sceneSetting.LeftSpawnPoint.localPosition.x, sceneSetting.LeftSpawnPoint.localPosition.y, -4);
                             player.LookRight();
                             break;
                         case SpawnPoint.Right:
-                            player.transform.localPosition = new Vector3(sceneSetting.RightPoint.localPosition.x, sceneSetting.RightPoint.localPosition.y, -4);
+                            player.transform.localPosition = new Vector3(sceneSetting.RightSpawnPoint.localPosition.x, sceneSetting.RightSpawnPoint.localPosition.y, -4);
                             player.LookLeft();
                             break;
                     }
@@ -171,7 +171,19 @@ namespace ActionPart
                         loadingScene.DirectOut();
                         break;
                 }
+                // 걸어나오는 기능 추가
+                switch (walkOut)
+                {
+                    case WithWalkOut.Left:
+                        break;
+                    case WithWalkOut.Right:
+                        player.playerMoveState.MoveXFromTo(sceneSetting.RightSpawnPoint, sceneSetting.RightWalkOutPoint);
+                        break;
+                    case WithWalkOut.None:
+                        break;
+                }
                 yield return new WaitUntil(loadingScene.CheckisDone);
+                yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);
 
                 // 캐릭터 조작 활성화
                 loadDone = true;
@@ -195,6 +207,13 @@ namespace ActionPart
             Right, 
             Top, 
             Bottom,
+            None
+        }
+
+        public enum WithWalkOut
+        {
+            Left,
+            Right,
             None
         }
     }

@@ -6,7 +6,10 @@ namespace ActionPart
 {
     public class SceneSetting : MonoBehaviour
     {
-        public Transform LeftPoint;
-        public Transform RightPoint;
+        public Transform LeftSpawnPoint;
+        public Transform LeftWalkOutPoint;
+
+        public Transform RightSpawnPoint;
+        public Transform RightWalkOutPoint;
     }
 }
