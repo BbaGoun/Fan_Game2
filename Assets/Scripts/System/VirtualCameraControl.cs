@@ -41,6 +41,11 @@ namespace ActionPart
             vcFTposer = cvCamera.GetComponentInChildren<CinemachineFramingTransposer>();
         }
 
+        public void SetCamSize(float value)
+        {
+            cvCamera.m_Lens.OrthographicSize = value;
+        }
+
         public void SetConfiner()
         {
             // 이건 실험 테스트로 string을 통해 가져오는 중

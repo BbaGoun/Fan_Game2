@@ -19,10 +19,14 @@ namespace ActionPart
             }
         }
 
-        public LoadingScene loadingScene;
-        public VirtualCameraControl virtualCameraControl;
-        public PlayerWithStateMachine player;
-        public bool loadDone { get; private set; }
+        [SerializeField]
+        private LoadingScene loadingScene;
+        [SerializeField]
+        private VirtualCameraControl virtualCameraControl;
+        [SerializeField]
+        private PlayerWithStateMachine player;
+        private bool isLoadDone;
+        private bool isCamSetDone;
 
         private SceneSetting sceneSetting;
         private ParallaxBackground parallaxBackground;
@@ -46,7 +50,17 @@ namespace ActionPart
             LoadSceneAsync("메인 타이틀", SpawnPoint.None, WithWalkOut.None, mode: TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
 
-        public void LoadSceneAsync(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode = TransitionMode.Direct, float inDelay = 0f, float outDelay = 0f)
+        public bool CheckIsLoadDone()
+        {
+            return isLoadDone;
+        }
+
+        public bool CheckIsCamSetDone()
+        {
+            return isCamSetDone;
+        }
+
+        public void LoadSceneAsync(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode = TransitionMode.Direct, float inDelay = 0.25f, float outDelay = 0.25f)
         {
             if (coroutine != null)
                 StopCoroutine(coroutine);
@@ -56,7 +70,8 @@ namespace ActionPart
 
             IEnumerator LoadSceneCoroutine(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode, float inDelay, float outDelay)
             {
-                // 캐릭터 조작 비활성화
+                // 캐릭터 조작 비활성화 추가 필요?
+
                 switch (mode)
                 {
                     case TransitionMode.FromLeft:
@@ -74,7 +89,9 @@ namespace ActionPart
                 }
                 yield return new WaitUntil(loadingScene.CheckisDone);
 
-                loadDone = false;
+                // 씬 세팅 전 초기화
+                isLoadDone = false;
+                isCamSetDone = false;
 
                 loadingScene.LoadingObjectsOn();
                 loadingScene.LoadingProgressApply(0f);
@@ -101,7 +118,7 @@ namespace ActionPart
                         yield return new WaitForSeconds(0.01f); // Wait for the next frame
                     }
 
-                    // 씬 언로드 하면서 해야할 것들
+                    // 씬 언로드 하면서 해야할 것들 추가 필요?
                 }
 
                 // 새 씬 로드
@@ -123,13 +140,26 @@ namespace ActionPart
                     yield return new WaitForSeconds(0.01f); // Wait for the next frame
                 }
 
-                // 씬 로딩하면서 초기화해야할 것들
-                // 플레이어를 먼저 소환해야 함
+                // 씬 로딩하면서 초기화해야할 것들 추가 필요?
                 if (!sceneName.Equals("메인 타이틀"))
                 {
                     // 플레이어 위치 세팅
                     sceneSetting = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<SceneSetting>();
+
+                    // 플레이어를 먼저 소환해야 함
                     player.gameObject.SetActive(true);
+                    // 플레이어 크기 조정 + 카메라 크기 조정
+                    if (sceneName.Equals("안휘성 시장"))
+                    {
+                        player.transform.localScale = new Vector3(2, 2, 1);
+                        virtualCameraControl.SetCamSize(10f);
+                    }
+                    else
+                    {
+                        player.transform.localScale = Vector3.one;
+                        virtualCameraControl.SetCamSize(5f);
+                    }
+
                     switch (spawnPoint)
                     {
                         case SpawnPoint.None:
@@ -147,6 +177,8 @@ namespace ActionPart
                     virtualCameraControl.SetConfiner();
                     parallaxBackground = GameObject.FindGameObjectWithTag("Maps").GetComponent<ParallaxBackground>();
                     parallaxBackground.SetCamera();
+                    // 카메라 세팅 끝
+                    isCamSetDone = true;
                 }
                 else
                 {
@@ -171,10 +203,11 @@ namespace ActionPart
                         loadingScene.DirectOut();
                         break;
                 }
-                // 걸어나오는 기능 추가
+                // 걸어나오는 기능 추가함
                 switch (walkOut)
                 {
                     case WithWalkOut.Left:
+                        player.playerMoveState.MoveXFromTo(sceneSetting.LeftSpawnPoint, sceneSetting.LeftWalkOutPoint);
                         break;
                     case WithWalkOut.Right:
                         player.playerMoveState.MoveXFromTo(sceneSetting.RightSpawnPoint, sceneSetting.RightWalkOutPoint);
@@ -185,8 +218,8 @@ namespace ActionPart
                 yield return new WaitUntil(loadingScene.CheckisDone);
                 yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);
 
-                // 캐릭터 조작 활성화
-                loadDone = true;
+                // 캐릭터 조작 활성화 추가 필요?
+                isLoadDone = true;
             }
         }
 

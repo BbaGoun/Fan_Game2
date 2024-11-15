@@ -26,7 +26,7 @@ namespace ActionPart
 
         void FixedUpdate()
         {
-            if (!LoadingManager.Instance.loadDone)
+            if (!LoadingManager.Instance.CheckIsCamSetDone())
                 return;
 
             float delta = mainCamera.transform.position.x - cameraBasePosition.x;

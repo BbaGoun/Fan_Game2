@@ -68,7 +68,7 @@ namespace ActionPart
                     yield return null;
                     continue;
                 }
-                if (!LoadingManager.Instance.loadDone)
+                if (!LoadingManager.Instance.CheckIsLoadDone())
                 {
                     velocity = Vector2.zero;
                     yield return null;

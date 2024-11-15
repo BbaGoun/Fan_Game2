@@ -6,25 +6,31 @@ namespace ActionPart
 {
     public class SceneSideEnd : MonoBehaviour
     {
-        public Transform outPoint;
-        public SideDirection sideDirection;
+        [SerializeField]
+        private Transform outPoint;
+        [SerializeField]
+        private string nextSceneName;
+        [SerializeField]
+        private LoadingManager.SpawnPoint nextSpawnPoint;
+        [SerializeField]
+        private LoadingManager.WithWalkOut walkOut;
+        [SerializeField]
+        private LoadingManager.TransitionMode transitionMode;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Player"))
             {
-                if (PlayerInputPart.Instance.isCanInput)
+                if (LoadingManager.Instance.CheckIsLoadDone())
                 {
                     var player = collision.GetComponent<PlayerWithStateMachine>();
+
                     player.playerMoveState.MoveXFromTo(player.transform, outPoint);
+                    while (player.playerMoveState.IsCoroutineDone()) ;
+
+                    LoadingManager.Instance.LoadSceneAsync(nextSceneName, nextSpawnPoint, walkOut, transitionMode);
                 }
             }
-        }
-
-        public enum SideDirection
-        {
-            Left,
-            Right,
         }
     }
 }

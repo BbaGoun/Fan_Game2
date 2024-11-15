@@ -8,7 +8,7 @@ namespace ActionPart
     {
         public Transform LeftSpawnPoint;
         public Transform LeftWalkOutPoint;
-
+        
         public Transform RightSpawnPoint;
         public Transform RightWalkOutPoint;
     }
