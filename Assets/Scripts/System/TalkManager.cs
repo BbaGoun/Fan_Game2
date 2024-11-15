@@ -10,23 +10,28 @@ namespace ActionPart
 {
     public class TalkManager : MonoBehaviour
     {
-        public TextAsset csvFile;
-        public AudioSource audioSource;
-        public AudioClip typingSound;
-        public GameObject talkBox;
-        public TMP_Text speaker;
-        public TMP_Text content;
-        public Image image;
+        [SerializeField]
+        private TextAsset[] csvFiles;
+        [SerializeField]
+        private AudioSource audioSource;
+        [SerializeField]
+        private AudioClip typingSound;
+        [SerializeField]
+        private TalkUI talkUI;
         
         Dictionary<string, TalkEvent> talkDictionary = new Dictionary<string, TalkEvent>();
         [SerializeField]
         List<TalkEvent> talkEventList;
 
-        public TalkEvent currentTalkEvent = null;
+        [SerializeField]
+        private TalkEvent currentTalkEvent = null;
         int currentTalkDataIndex;
         int currentContextIndex;
-        public int letterTypeSpeed = 10;
-        public bool istalking { get; private set; }
+        [SerializeField]
+        int letterTypeSpeed = 10;
+
+        [SerializeField]
+        bool istalking;
         bool isTypingStarted;
         bool isTypingDone;
         Coroutine coroutine;
@@ -37,6 +42,7 @@ namespace ActionPart
         {
             public string name;
             public string[] contexts;
+            public string[] faces;   
         }
 
         [System.Serializable]
@@ -57,8 +63,7 @@ namespace ActionPart
         private void Awake()
         {
             istalking = false;
-            talkBox.SetActive(false);
-            audioSource = talkBox.GetComponent<AudioSource>();
+            talkUI.SetTalkBoxOff();
             SetTalkDictionary();
             SetDebugTalkEvents();
         }
@@ -84,7 +89,7 @@ namespace ActionPart
                 var talkData = currentTalkEvent.talkDatas[currentTalkDataIndex];
                 var context = talkData.contexts[currentContextIndex];
                 var name = talkData.name;
-                speaker.text = name;
+                talkUI.SetSpeaker(name);
 
                 if (isTypingStarted && !isTypingDone)
                 {
@@ -93,7 +98,8 @@ namespace ActionPart
                         if (isCoroutine)
                         {
                             StopCoroutine(coroutine);
-                            content.text = context;
+                            talkUI.SetContext(context);
+                            //표정도 바꾸는거 추가하기
                             //Schedule<TextTyping>();
                             isTypingDone = true;
                             return;
@@ -122,7 +128,7 @@ namespace ActionPart
                                 currentTalkEvent = null;
                                 currentTalkDataIndex = 0;
                                 currentContextIndex = 0;
-                                talkBox.SetActive(false);
+                                talkUI.SetTalkBoxOff();
                             }
                         }
                     }
@@ -152,46 +158,55 @@ namespace ActionPart
 
         void SetTalkDictionary()
         {
-            // 아래 한 줄 빼기
-            string text = csvFile.text.Substring(0, csvFile.text.Length - 1);
-            // 줄바꿈(한 줄)을 기준으로 csv 파일을 쪼개서 string배열에 줄 순서대로 담음
-            string[] rows = text.Split(new char[] { '\n' });
-
-            // 엑셀 파일 1번째 줄은 편의를 위한 분류이므로 i = 1부터 시작
-            for (int i = 1; i < rows.Length; i++)
+            foreach (var csvFile in csvFiles)
             {
-                // A, B, C, D열을 쪼개서 배열에 담음
-                string[] rowValues = rows[i].Split(new char[] { '|' });
+                // 아래 한 줄 빼기
+                //string text = csvFile.text.Substring(0, csvFile.text.Length - 1);
 
-                // 유효한 이벤트 이름이 나올때까지 반복
-                if (rowValues[0].Trim() == "" || rowValues[0].Trim() == "end") continue;
+                string text = csvFile.text;
+                // 줄바꿈(한 줄)을 기준으로 csv 파일을 쪼개서 string배열에 줄 순서대로 담음
+                string[] rows = text.Split(new char[] { '\n' });
 
-                string eventName = rowValues[0].Trim();
-                List<TalkData> talkDataList = new List<TalkData>();
-
-                while (rowValues[0].Trim() != "end") // talkDataList 하나를 만드는 반복문
+                // 엑셀 파일 1번째 줄은 편의를 위한 분류이므로 i = 1부터 시작
+                for (int i = 1; i < rows.Length; i++)
                 {
-                    // 캐릭터가 한번에 치는 대사의 길이를 모르므로 리스트로 선언
-                    List<string> contextList = new List<string>();
+                    // A, B, C, D, E열을 쪼개서 배열에 담음
+                    string[] rowValues = rows[i].Split(new char[] { '|' });
 
-                    TalkData talkData = new TalkData();
-                    talkData.name = rowValues[1].Trim(); // 캐릭터 이름이 있는 B열
+                    // 유효한 이벤트 이름이 나올때까지 반복
+                    if (rowValues[0].Trim() == "" || rowValues[0].Trim() == "end") continue;
 
-                    do // talkData 하나를 만드는 반복문
+                    string eventName = rowValues[0].Trim();
+                    List<TalkData> talkDataList = new List<TalkData>();
+
+                    while (rowValues[0].Trim() != "end") // talkDataList 하나를 만드는 반복문
                     {
-                        contextList.Add(rowValues[2].ToString().Trim());
-                        if (++i < rows.Length)
-                            rowValues = rows[i].Split(new char[] { '|' });
-                        else break;
-                    } while (rowValues[1] == "" && rowValues[0] != "end");
+                        // 캐릭터가 한번에 치는 대사의 길이를 모르므로 리스트로 선언
+                        List<string> contextList = new List<string>();
+                        List<string> faceList = new List<string>();
 
-                    talkData.contexts = contextList.ToArray();
-                    talkDataList.Add(talkData);
+                        TalkData talkData = new TalkData();
+                        var name = rowValues[1].Trim();
+                        talkData.name = name; // 캐릭터 이름이 있는 B열
+
+                        do // talkData 하나를 만드는 반복문
+                        {
+                            contextList.Add(rowValues[2].ToString().Trim());
+                            faceList.Add(rowValues[3].ToString().Trim());
+                            if (++i < rows.Length)
+                                rowValues = rows[i].Split(new char[] { '|' });
+                            else break;
+                        } while (!name.Equals(rowValues[1]) && rowValues[0] != "end");
+
+                        talkData.contexts = contextList.ToArray();
+                        talkData.faces = faceList.ToArray();
+                        talkDataList.Add(talkData);
+                    }
+                    string nextEvent = rowValues[3].Trim();
+
+                    TalkEvent talkEvent = new TalkEvent(eventName, talkDataList.ToArray(), nextEvent);
+                    talkDictionary.Add(eventName, talkEvent);
                 }
-                string nextEvent = rowValues[3].Trim();
-
-                TalkEvent talkEvent = new TalkEvent(eventName, talkDataList.ToArray(), nextEvent);
-                talkDictionary.Add(eventName, talkEvent);
             }
         }
 
@@ -199,14 +214,13 @@ namespace ActionPart
         {
             if (talkDictionary.ContainsKey(eventName))
             {
-                talkBox.SetActive(true);
+                talkUI.SetTalkBoxOn();
                 currentTalkEvent = talkDictionary[eventName];
                 currentTalkDataIndex = 0;
                 currentContextIndex = 0;
                 istalking = true;
                 isTypingStarted = false;
                 isTypingDone = false;
-                //Schedule<TalkStart>();
             }
             else
                 Debug.LogWarning("찾을 수 없는 이벤트 이름 : " + eventName);
@@ -216,11 +230,10 @@ namespace ActionPart
         {
             isCoroutine = true;
             isTypingStarted = true;
-            content.text = "";
+            talkUI.SetContext("");
             foreach (var letter in dialog.ToCharArray())
             {
-                content.text += letter;
-                //Schedule<TextTyping>();
+                talkUI.AddContextChar(letter);
                 yield return new WaitForSeconds(1f / letterTypeSpeed);
             }
             isTypingDone = true;
