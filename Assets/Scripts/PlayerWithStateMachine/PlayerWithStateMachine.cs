@@ -8,6 +8,8 @@ namespace ActionPart
 {
     public class PlayerWithStateMachine : KinematicObject, IWithStateMachine, IDamageAble
     {
+        public static PlayerWithStateMachine Instance;
+
         StateMachine stateMachine;
 
         #region PlayerState
@@ -46,6 +48,8 @@ namespace ActionPart
         public bool isCharged;
         public bool isGuard;
         public bool isStopped;
+        private bool isInTalkArea;
+        private bool isReadyTalk;
         public IDamageAble.DamageInfo damageInfo;
 
         Animator animator;
@@ -119,6 +123,20 @@ namespace ActionPart
 
         private void Awake()
         {
+            #region Singleton
+            if(Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                if(Instance != this)
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+            #endregion
+
             animator = GetComponent<Animator>();
             health = GetComponent<Health>();
 
@@ -137,6 +155,8 @@ namespace ActionPart
 
             PlayerInputPart.Instance.EventGuardKeyDown += playerGuardState.GuardKeyDown;
             PlayerInputPart.Instance.EventGuardKeyUp += playerGuardState.GuardKeyUp;
+            PlayerInputPart.Instance.EventTalkKeyDown += TalkKeyDown;
+            PlayerInputPart.Instance.EventGuardKeyUp += TalkKeyUp;
 
             delegateGrounded += playerDashState.ResetDashCount;
             delegateGrounded += playerJumpAttackState.ResetCanJumpAttack;
@@ -303,6 +323,47 @@ namespace ActionPart
                     break;
             }
         }
+
+        #region External bool control
+        public void InTalkArea()
+        {
+            isInTalkArea = true;
+        }
+
+        public void OutTalkArea()
+        {
+            isInTalkArea = false;
+            isReadyTalk = false;
+        }
+
+        public bool CheckReadyTalk()
+        {
+            if (isReadyTalk)
+            {
+                isReadyTalk = false;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        #endregion
+
+        #region Key Event
+        public void TalkKeyDown()
+        {
+            if (isInTalkArea)
+            {
+                isReadyTalk = true;
+            }
+        }
+
+        public void TalkKeyUp()
+        {
+            isReadyTalk = false;
+        }
+
+        #endregion
 
         public enum PlayerState
         {

@@ -296,7 +296,7 @@ namespace ActionPart
             if (moveCoroutine != null)
                 StopCoroutine(moveCoroutine);
 
-            StartCoroutine(IEMoveXFromTo(from, to));
+            moveCoroutine = StartCoroutine(IEMoveXFromTo(from, to));
             
             IEnumerator IEMoveXFromTo(Transform from, Transform to)
             {

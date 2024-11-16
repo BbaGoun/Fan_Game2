@@ -5,11 +5,14 @@ using static UnityEngine.Rendering.DebugUI.Table;
 using TMPro;
 using UnityEngine.UI;
 using Unity.Jobs.LowLevel.Unsafe;
+using UnityEngine.InputSystem;
 
 namespace ActionPart
 {
     public class TalkManager : MonoBehaviour
     {
+        public static TalkManager Instance;
+
         [SerializeField]
         private TextAsset[] csvFiles;
         [SerializeField]
@@ -31,11 +34,13 @@ namespace ActionPart
         int letterTypeSpeed = 10;
 
         [SerializeField]
-        bool istalking;
+        bool isTalking;
         bool isTypingStarted;
         bool isTypingDone;
-        Coroutine coroutine;
-        bool isCoroutine;
+        Coroutine typeingCoroutine;
+        bool isTalkNext;
+
+        private NPCTalk npc;
 
         [System.Serializable]
         public class TalkData
@@ -62,7 +67,22 @@ namespace ActionPart
 
         private void Awake()
         {
-            istalking = false;
+            #region Singleton
+            if(Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                if(Instance != this)
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+
+            #endregion
+
+            isTalking = false;
             talkUI.SetTalkBoxOff();
             SetTalkDictionary();
             SetDebugTalkEvents();
@@ -70,7 +90,7 @@ namespace ActionPart
         
         private void Update()
         {
-            if (istalking && Time.timeScale != 0)
+            if (isTalking && Time.timeScale != 0)
             {
                 // for debug
                 /*
@@ -91,40 +111,41 @@ namespace ActionPart
                 var name = talkData.name;
                 talkUI.SetSpeaker(name);
 
-                if (isTypingStarted && !isTypingDone)
+                /*if (isTypingStarted && !isTypingDone)
                 {
-                    if (Input.GetButtonDown("Attack") || Input.GetMouseButtonDown(0) || Input.GetButtonDown("Jump"))
+                    if (isTalkNext || Input.GetMouseButtonDown(0))
                     {
                         if (isCoroutine)
                         {
                             StopCoroutine(coroutine);
                             talkUI.SetContext(context);
-                            //표정도 바꾸는거 추가하기
-                            //Schedule<TextTyping>();
                             isTypingDone = true;
                             return;
                         }
                         else
                             Debug.Log("텍스트 넘기기 뭔가 잘못됨");
                     }
-                }
+                }*/
 
                 if (!isTypingStarted)
-                    coroutine = StartCoroutine(TypeDialog(context));
+                {
+                    typeingCoroutine = StartCoroutine(TypeDialog(context));
+                    // 표정 바꾸기 넣어야 함
+                }
                 else if (isTypingDone)
                 {
-                    if(Input.GetButtonDown("Attack") || Input.GetMouseButtonDown(0) || Input.GetButtonDown("Jump"))
+                    if(isTalkNext || Input.GetMouseButtonDown(0))
                     {
                         isTypingStarted = false;
                         isTypingDone = false;
-                        coroutine = null;
+                        StopCoroutine(typeingCoroutine);
                         if(++currentContextIndex >= talkData.contexts.Length)
                         {
                             currentContextIndex = 0;
                             if(++currentTalkDataIndex >= currentTalkEvent.talkDatas.Length)
                             {
                                 TalkNextEvent(currentTalkEvent.nextEvent);
-                                istalking = false;
+                                isTalking = false;
                                 currentTalkEvent = null;
                                 currentTalkDataIndex = 0;
                                 currentContextIndex = 0;
@@ -151,7 +172,13 @@ namespace ActionPart
                     //Schedule<GameEnding>();
                     break;
                 default:
-                    //Schedule<PlayerTalkEnd>();
+                    PlayerInputPart.Instance.CanInput();
+                    if (npc != null)
+                    {
+                        npc.SetIsTalking(false);
+                        npc = null;
+                    }
+
                     break;
             }
         }
@@ -210,25 +237,33 @@ namespace ActionPart
             }
         }
 
-        public void TalkStart(string eventName)
+        public void TalkStart(string eventName, NPCTalk _npc)
         {
-            if (talkDictionary.ContainsKey(eventName))
+            if (!isTalking)
             {
-                talkUI.SetTalkBoxOn();
-                currentTalkEvent = talkDictionary[eventName];
-                currentTalkDataIndex = 0;
-                currentContextIndex = 0;
-                istalking = true;
-                isTypingStarted = false;
-                isTypingDone = false;
+                if (talkDictionary.ContainsKey(eventName))
+                {
+                    if(_npc != null)
+                    {
+                        npc = _npc;
+                        npc.SetIsTalking(true);
+                    }
+                    PlayerInputPart.Instance.CantInput();
+                    talkUI.SetTalkBoxOn();
+                    currentTalkEvent = talkDictionary[eventName];
+                    currentTalkDataIndex = 0;
+                    currentContextIndex = 0;
+                    isTalking = true;
+                    isTypingStarted = false;
+                    isTypingDone = false;
+                }
+                else
+                    Debug.LogWarning("찾을 수 없는 이벤트 이름 : " + eventName);
             }
-            else
-                Debug.LogWarning("찾을 수 없는 이벤트 이름 : " + eventName);
         }
 
         IEnumerator TypeDialog(string dialog)
         {
-            isCoroutine = true;
             isTypingStarted = true;
             talkUI.SetContext("");
             foreach (var letter in dialog.ToCharArray())
@@ -244,5 +279,21 @@ namespace ActionPart
         {
             talkEventList = new List<TalkEvent>(talkDictionary.Values);
         }
+
+        #region Key Event
+        public void ActionTalkConfirm(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                if(isTypingDone)
+                    isTalkNext = true;
+            }
+            else if (context.canceled)
+            {
+                isTalkNext = false;
+            } 
+        }
+
+        #endregion
     }
 }

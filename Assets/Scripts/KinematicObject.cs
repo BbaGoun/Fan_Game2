@@ -15,6 +15,7 @@ namespace ActionPart
         /// </summary>
         [SerializeField]
         public Vector2 velocity;
+        private float speedMultiplier;
 
         /// <summary>
         /// Is the entity currently sitting on a surface?
@@ -121,6 +122,11 @@ namespace ActionPart
             capsuleCollider.enabled = false;
         }
 
+        public void SetSpeedMultiplier(float _speedMultiplier)
+        {
+            speedMultiplier = _speedMultiplier;
+        }
+
         protected virtual void ComputeVelocity()
         {
             // 상속 클래스에서 구현
@@ -155,9 +161,10 @@ namespace ActionPart
             GroundCheck();
             HeadingCheck();
 
+            deltaPosition = velocity * speedMultiplier * Time.deltaTime;
+
             if (isGrounded && velocity.y <= 0f)
             {
-                deltaPosition = velocity * Time.deltaTime;
 
                 CheckSlope();
 
@@ -186,8 +193,6 @@ namespace ActionPart
                 isOnFrontSlope = false;
                 isOnDownSlope = false;
                 isOnBackSlope = false;
-
-                deltaPosition = velocity * Time.deltaTime;
 
                 move = deltaPosition;
             }

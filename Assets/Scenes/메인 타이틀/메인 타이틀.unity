@@ -716,9 +716,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: "\uC548\uD718\uC131 \uC9D1\uBB34\uC2E4"
-  spawnPoint: 1
-  withWalkOut: 1
-  transitionMode: 0
+  spawnPoint: 0
+  withWalkOut: 0
+  transitionMode: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

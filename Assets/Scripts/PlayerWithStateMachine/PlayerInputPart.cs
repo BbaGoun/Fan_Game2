@@ -61,6 +61,11 @@ namespace ActionPart
         public delegate void DelHealKeyUp();
         public event DelHealKeyUp EventHealKeyUp;
 
+        public delegate void DelTalkKeyDown();
+        public event DelTalkKeyDown EventTalkKeyDown;
+        public delegate void DelTalkKeyUp();
+        public event DelTalkKeyUp EventTalkKeyUp;
+
         private void Update()
         {
             if (attackHolding)
@@ -167,6 +172,23 @@ namespace ActionPart
             else if (context.canceled)
             {
                 EventHealKeyUp?.Invoke();
+            }
+        }
+
+        public void ActionTalk(InputAction.CallbackContext context)
+        {
+            if (Time.timeScale == 0 || !isCanInput)
+            {
+                return;
+            }
+
+            if (context.started)
+            {
+                EventTalkKeyDown?.Invoke();
+            }
+            else if (context.canceled)
+            {
+                EventTalkKeyUp?.Invoke();
             }
         }
     }

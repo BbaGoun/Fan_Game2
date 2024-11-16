@@ -34,13 +34,13 @@ namespace ActionPart.UI
             {
                 mainMenuController.ToggleMainMenu(true);
                 interfaces.SetActive(false);
-                //playerInput.SwitchCurrentActionMap("UI");
+                playerInput.SwitchCurrentActionMap("UI");
             }
             else
             {
                 mainMenuController.ToggleMainMenu(false);
                 interfaces.SetActive(true);
-                //playerInput.SwitchCurrentActionMap("Player");
+                playerInput.SwitchCurrentActionMap("Player");
             }
             this.showMainCanvas = show;
         }
