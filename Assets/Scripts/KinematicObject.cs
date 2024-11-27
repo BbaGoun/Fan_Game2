@@ -484,8 +484,10 @@ namespace ActionPart
 
             move = moveX.normalized * distanceX + moveY.normalized * distanceY;
             Debug.DrawRay(body.position, move * 100, Color.white);
-            
-            body.position = body.position + move;
+
+            var targetPosition = body.position + move;
+            body.MovePosition(targetPosition);
+            //body.position = body.position + move;
             finalMove = move;
         }
     }

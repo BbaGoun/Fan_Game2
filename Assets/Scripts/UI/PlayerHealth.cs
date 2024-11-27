@@ -42,7 +42,8 @@ namespace ActionPart
 
         private void Awake()
         {
-            playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+            if(playerHealth == null)
+                playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
 
             underHP = sliderHP.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
             underStamina = sliderStamina.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
