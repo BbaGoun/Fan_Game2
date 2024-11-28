@@ -6,7 +6,7 @@ namespace ActionPart
 {
     public class Mob : KinematicObject, IWithStateMachine, IDamageAble
     {
-        StateMachine stateMachine;
+        public StateMachine stateMachine;
         public Health health;
         public Animator animator;
 
@@ -17,12 +17,40 @@ namespace ActionPart
         #endregion
 
         public IDamageAble.DamageInfo damageInfo;
+        public MobState state;
+        public MobRole role;
+
+        public float distance;
 
         private void Awake()
         {
             stateMachine = GetComponent<StateMachine>();
             health = GetComponent<Health>();
             animator = GetComponent<Animator>();
+        }
+
+        public float GetDistance()
+        {
+            distance = Mathf.Abs(PlayerWithStateMachine.Instance.transform.localPosition.x - transform.localPosition.x);
+            return distance;
+        }
+
+        public void ReadyAttack()
+        {
+            switch (state)
+            {
+                case MobState.Move:
+                case MobState.Guard:
+                    Attack();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        protected virtual void Attack()
+        {
+
         }
 
         public void GetDamage(float _hpDelta, Vector2 _direction)
@@ -51,15 +79,31 @@ namespace ActionPart
             animator.Update(0f);
         }
 
+        public virtual void ChangeStateOfStateMachine(MobState state)
+        {
+            switch (state)
+            {
+                case MobState.Move:
+                    //stateMachine.ChangeState();
+                    //playerState = PlayerState.Move;
+                    break;
+            }
+        }
+
         public enum MobState
         {
             Move,
-            ForwardAttack,
-            SupportAttack,
+            Attack,
             Guard,
             Damaged,
             Groggy,
             Death,
+        }
+
+        public enum MobRole
+        {
+            Forward,
+            Support,
         }
     }
 }

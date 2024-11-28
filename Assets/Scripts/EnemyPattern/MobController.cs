@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ActionPart
@@ -7,7 +8,7 @@ namespace ActionPart
     public class MobController : MonoBehaviour
     {
         [SerializeField]
-        private List<Mob> mobs = new List<Mob>();
+        private List<Mob> mobs;
 
         [SerializeField]
         private float attackInterval;
@@ -16,8 +17,10 @@ namespace ActionPart
 
         Coroutine coroutine;
 
-        public void Initialize()
+        public void Start()
         {
+            mobs = new List<Mob>(GetComponentsInChildren<Mob>());
+            
             timer = 0f;
             coroutine = StartCoroutine(IELifeCycle());
         }
@@ -26,11 +29,50 @@ namespace ActionPart
         {
             while (true)
             {
+                if (mobs.Count <= 0)
+                    break;
+
+                for(int i=mobs.Count-1; i>=0; i--)
+                {
+                    if (mobs[i] == null)
+                    {
+                        Debug.Log("뭔데");
+                    }
+                    if (mobs[i].health == null)
+                    {
+                        Debug.Log("시발");
+                    }
+                    if (!mobs[i].health.CheckIsAlive())
+                    {
+                        mobs.Remove(mobs[i]);
+                    }
+                }
+
+                foreach (Mob mob in mobs)
+                {
+                    mob.GetDistance();
+                }
+
+                mobs = mobs.OrderBy(mob => mob.distance).ToList();
+
+                int forwardCount = (int)Mathf.Ceil(mobs.Count * 0.66f);
+                for(int i=0; i<forwardCount; i++)
+                {
+                    var mob = mobs[i];
+                    mob.role = Mob.MobRole.Forward;
+                }
+                for(int j=forwardCount; j<mobs.Count; j++)
+                {
+                    var mob = mobs[j];
+                    mob.role = Mob.MobRole.Support;
+                }
+
                 timer += Time.deltaTime;
                 if (timer > attackInterval)
                 {
                     timer = 0f;
-                    // 몹들에게 공격 신호 보내기    
+                    foreach (Mob mob in mobs)
+                        mob.ReadyAttack();
                 }
                 yield return null;
             }
