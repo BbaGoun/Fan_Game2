@@ -6,6 +6,7 @@ namespace ActionPart
 {
     public class ParallaxLayer : MonoBehaviour
     {
+        [Range(-1f, 1f)]
         public float parallaxFactor;
         private Vector3 basePosition;
 

@@ -24,7 +24,7 @@ namespace ActionPart
         /// 먼 것이 더 느리게 움직인다 -> 캐릭터를 따라온다.
         /// </summary>
 
-        void FixedUpdate()
+        void LateUpdate()
         {
             if (!LoadingManager.Instance.CheckIsCamSetDone())
                 return;

@@ -12,13 +12,26 @@ EditorBuildSettings:
     path: "Assets/Scenes/\uC601\uAD6C \uC720\uC9C0/\uC601\uAD6C \uC720\uC9C0.unity"
     guid: 2e8d061978d2a024a93105218e599a38
   - enabled: 1
-    path: Assets/Scenes/Town1.unity
-    guid: 81a4d2e3733e4e147b88c107a8d70449
-  - enabled: 1
-    path: "Assets/Scenes/\uC548\uD718\uC131 \uC2DC\uC7A5/\uC548\uD718\uC131 \uC2DC\uC7A5.unity"
+    path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC2DC\uC7A5/\uC548\uD718\uC131
+      \uC2DC\uC7A5.unity"
     guid: c629230ab3a2c1e4ca3a20da3078c35e
   - enabled: 1
-    path: "Assets/Scenes/\uC548\uD718\uC131 \uC9D1\uBB34\uC2E4/\uC548\uD718\uC131
+    path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC9D1\uBB34\uC2E4/\uC548\uD718\uC131
       \uC9D1\uBB34\uC2E4.unity"
     guid: 293870e1002964d4ab8f47ceffe9e43f
+  - enabled: 1
+    path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uBCF5\uB3C4/\uC548\uD718\uC131
+      \uBCF5\uB3C4.unity"
+    guid: fae970e8d985f314a915557e6eb8fd90
+  - enabled: 1
+    path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5
+      \uAC00\uB294 \uAE38/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5 \uAC00\uB294 \uAE38.unity"
+    guid: 245fa87de4e1f6049bf7f46d13acb5c3
+  - enabled: 1
+    path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
+      \uC5F0\uBB34\uC7A5.unity"
+    guid: 6f8a9d1176b8e5d4681fb26ff7a64cc3
+  - enabled: 1
+    path: "Assets/Scenes/\uC548\uD718\uC131/\uCC3D\uCC9C\uAC1D\uC794/\uCC3D\uCC9C\uAC1D\uC794.unity"
+    guid: 1f2ff1933129bf441b263ecc61940492
   m_configObjects: {}
