@@ -20,6 +20,10 @@ namespace ActionPart.UI
         private GameObject saveGame;
 
         public TMP_Dropdown resolutions, screenModes;
+        public Image fullScreen, windowScreen;
+        public Sprite[] fullScreenImages = new Sprite[2];
+        public Sprite[] windowScreenImages = new Sprite[2];
+        public TMP_Text resolution;
         public Slider master, bgm, effectSound;
         int resolutionIndex;
         int maxScreenIndex;
@@ -54,29 +58,34 @@ namespace ActionPart.UI
 
             foreach (var resolution in SettingContainer.instance.m_SettingData.resolutionList)
             {
-                var newOption = new List<string> { $"{resolution.width} * {resolution.height}" };
-                resolutions.AddOptions(newOption);
+                //var newOption = new List<string> { $"{resolution.width} * {resolution.height}" };
+                //resolutions.AddOptions(newOption);
             }
 
-            resolutions.value = SettingContainer.instance.m_SettingData.resolutionIndex;
+            Resolution res = SettingContainer.instance.m_SettingData.resolutionList[SettingContainer.instance.m_SettingData.resolutionIndex];
+            resolution.text = $"{res.width} * {res.height}";
+            //resolutions.value = SettingContainer.instance.m_SettingData.resolutionIndex;
 
             switch (SettingContainer.instance.m_SettingData.screenMode)
             {
-                case FullScreenMode.FullScreenWindow:
-                    screenModes.value = 0;
-                    break;
                 case FullScreenMode.ExclusiveFullScreen:
-                    screenModes.value = 1;
+                    fullScreen.sprite = fullScreenImages[1];
+                    windowScreen.sprite = windowScreenImages[0];
+                    //screenModes.value = 1;
                     break;
                 case FullScreenMode.MaximizedWindow:
-                    screenModes.value = 1;
+                    fullScreen.sprite = fullScreenImages[1];
+                    windowScreen.sprite = windowScreenImages[0];
+                    //screenModes.value = 1;
                     break;
                 case FullScreenMode.Windowed:
-                    screenModes.value = 2;
+                    fullScreen.sprite = fullScreenImages[0];
+                    windowScreen.sprite = windowScreenImages[1];
+                    //screenModes.value = 2;
                     break;
             }
 
-            resolutions.interactable = SettingContainer.instance.m_SettingData.screenMode == FullScreenMode.Windowed;
+            //resolutions.interactable = SettingContainer.instance.m_SettingData.screenMode == FullScreenMode.Windowed;
 
             master.value = SettingContainer.instance.m_SettingData.masterVolume;
             bgm.value = SettingContainer.instance.m_SettingData.BGMVolume;

@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 99966044}
   - component: {fileID: 99966043}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3630,7 +3630,7 @@ GameObject:
   - component: {fileID: 526344237}
   - component: {fileID: 526344236}
   m_Layer: 5
-  m_Name: Button
+  m_Name: FullScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3674,7 +3674,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4971,7 +4971,7 @@ GameObject:
   - component: {fileID: 621731996}
   - component: {fileID: 621731995}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Resolution
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6199,7 +6199,7 @@ GameObject:
   - component: {fileID: 820504062}
   - component: {fileID: 820504061}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: WindowScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6243,7 +6243,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -12074,7 +12074,7 @@ GameObject:
   - component: {fileID: 1705241585}
   - component: {fileID: 1705241584}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12268,8 +12268,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1410205711}
-  - {fileID: 621731994}
   - {fileID: 1705241583}
+  - {fileID: 621731994}
   - {fileID: 99966042}
   m_Father: {fileID: 1359262760}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12664,9 +12664,18 @@ MonoBehaviour:
   - {fileID: 331274407}
   resolutions: {fileID: 0}
   screenModes: {fileID: 0}
-  master: {fileID: 0}
-  bgm: {fileID: 0}
-  effectSound: {fileID: 0}
+  fullScreen: {fileID: 526344237}
+  windowScreen: {fileID: 820504062}
+  fullScreenImages:
+  - {fileID: 21300000, guid: 7e04130dc1db8c8489f1eb8365826e8e, type: 3}
+  - {fileID: 21300000, guid: bcdcb2a16e003b9458de2dba1c0dd6aa, type: 3}
+  windowScreenImages:
+  - {fileID: 21300000, guid: b1cba30dd006a4f4d8c6e1242b402cba, type: 3}
+  - {fileID: 21300000, guid: 2249d18f04d572a498a916bb83a86fe7, type: 3}
+  resolution: {fileID: 621731995}
+  master: {fileID: 147084038}
+  bgm: {fileID: 1239057570}
+  effectSound: {fileID: 1990338766}
 --- !u!1 &1811679824
 GameObject:
   m_ObjectHideFlags: 0
