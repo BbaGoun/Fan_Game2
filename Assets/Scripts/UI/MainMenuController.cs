@@ -17,6 +17,9 @@ namespace ActionPart.UI
         private GameObject titleAlert;
         private GameObject quitAlert;
         private GameObject option;
+        private GameObject graphic;
+        private GameObject sound;
+        private GameObject control;
         private GameObject saveGame;
 
         public TMP_Dropdown resolutions, screenModes;
@@ -28,7 +31,7 @@ namespace ActionPart.UI
         int resolutionIndex;
         int maxScreenIndex;
 
-        private SettingData tmpSettingData = new SettingData();
+        private SettingData tmpSettingData;
 
         private void Awake()
         {
@@ -46,13 +49,19 @@ namespace ActionPart.UI
 
             option = transform.GetChild(2).gameObject;
             option.SetActive(false);
+            graphic = option.transform.GetChild(0).gameObject;
+            graphic.SetActive(false);
+            sound = option.transform.GetChild(1).gameObject;
+            sound.SetActive(false);
+            control = option.transform.GetChild(2).gameObject;
+            control.SetActive(false);
 
             saveGame = transform.GetChild(3).gameObject;
             saveGame.SetActive(false);
 
-            master.minValue = 0.001f;
-            bgm.minValue = 0.001f;
-            effectSound.minValue = 0.001f;
+            //master.minValue = 0.001f;
+            //bgm.minValue = 0.001f;
+            //effectSound.minValue = 0.001f;
 
             maxScreenIndex = SettingContainer.instance.m_SettingData.resolutionList.Count - 1;
 
@@ -90,13 +99,8 @@ namespace ActionPart.UI
             master.value = SettingContainer.instance.m_SettingData.masterVolume;
             bgm.value = SettingContainer.instance.m_SettingData.BGMVolume;
             effectSound.value = SettingContainer.instance.m_SettingData.effectVolume;
-        }
 
-        private void Start()
-        {
-            SetMaster(SettingContainer.instance.m_SettingData.masterVolume);
-            SetBGM(SettingContainer.instance.m_SettingData.BGMVolume);
-            SetEffectSound(SettingContainer.instance.m_SettingData.effectVolume);
+            tmpSettingData = new SettingData(SettingContainer.instance.m_SettingData);
         }
 
         public void ToggleMainMenu(bool isShowMenu)
@@ -120,10 +124,13 @@ namespace ActionPart.UI
                 titleAlert.SetActive(false);
                 quitAlert.SetActive(false);
                 option.SetActive(false);
+                graphic.SetActive(false);
+                sound.SetActive(false);
                 saveGame.SetActive(false);
             }
         }
 
+        #region Title
         public void ShowTitleAlert()
         {
             PlayClickSound();
@@ -148,26 +155,11 @@ namespace ActionPart.UI
         {
             PlayClickSound();
             Time.timeScale = 1;
-            //LoadingManager.Instance.sceneName = "메인 타이틀";
-            //LoadingManager.Instance.LoadSceneAsync("메인 타이틀");
+            LoadingManager.Instance.LoadSceneAsync("메인 타이틀", LoadingManager.SpawnPoint.None, LoadingManager.WithWalkOut.None, mode: LoadingManager.TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
+        #endregion
 
-        public void ToSaveGame()
-        {
-            PlayClickSound();
-            mainMenu.SetActive(false);
-            titleAlert.SetActive(false);
-            quitAlert.SetActive(false);
-            saveGame.SetActive(true);
-        }
-
-        public void CloseSaveGame()
-        {
-            PlayClickSound();
-            mainMenu.SetActive(true);
-            saveGame.SetActive(false);
-        }
-
+        #region Option
         public void ToOption()
         {
             PlayClickSound();
@@ -175,6 +167,32 @@ namespace ActionPart.UI
             titleAlert.SetActive(false);
             quitAlert.SetActive(false);
             option.SetActive(true);
+            graphic.SetActive(true);
+            sound.SetActive(false);
+            control.SetActive(false);
+
+            Resolution res = SettingContainer.instance.m_SettingData.resolutionList[SettingContainer.instance.m_SettingData.resolutionIndex];
+            resolution.text = $"{res.width} * {res.height}";
+            //resolutions.value = SettingContainer.instance.m_SettingData.resolutionIndex;
+
+            switch (SettingContainer.instance.m_SettingData.screenMode)
+            {
+                case FullScreenMode.ExclusiveFullScreen:
+                    fullScreen.sprite = fullScreenImages[1];
+                    windowScreen.sprite = windowScreenImages[0];
+                    //screenModes.value = 1;
+                    break;
+                case FullScreenMode.MaximizedWindow:
+                    fullScreen.sprite = fullScreenImages[1];
+                    windowScreen.sprite = windowScreenImages[0];
+                    //screenModes.value = 1;
+                    break;
+                case FullScreenMode.Windowed:
+                    fullScreen.sprite = fullScreenImages[0];
+                    windowScreen.sprite = windowScreenImages[1];
+                    //screenModes.value = 2;
+                    break;
+            }
         }
 
         public void CloseOption()
@@ -182,8 +200,102 @@ namespace ActionPart.UI
             PlayClickSound();
             mainMenu.SetActive(true);
             option.SetActive(false);
+            graphic.SetActive(false);
+            sound.SetActive(false);
+            control.SetActive(false);
         }
 
+        public void ToOptionGraphic()
+        {
+            PlayClickSound();
+            graphic.SetActive(true);
+            sound.SetActive(false);
+            control.SetActive(false);
+
+            Resolution res = SettingContainer.instance.m_SettingData.resolutionList[SettingContainer.instance.m_SettingData.resolutionIndex];
+            resolution.text = $"{res.width} * {res.height}";
+            //resolutions.value = SettingContainer.instance.m_SettingData.resolutionIndex;
+
+            switch (SettingContainer.instance.m_SettingData.screenMode)
+            {
+                case FullScreenMode.ExclusiveFullScreen:
+                    fullScreen.sprite = fullScreenImages[1];
+                    windowScreen.sprite = windowScreenImages[0];
+                    //screenModes.value = 1;
+                    break;
+                case FullScreenMode.MaximizedWindow:
+                    fullScreen.sprite = fullScreenImages[1];
+                    windowScreen.sprite = windowScreenImages[0];
+                    //screenModes.value = 1;
+                    break;
+                case FullScreenMode.Windowed:
+                    fullScreen.sprite = fullScreenImages[0];
+                    windowScreen.sprite = windowScreenImages[1];
+                    //screenModes.value = 2;
+                    break;
+            }
+        }
+
+        public void ToOptionSound()
+        {
+            PlayClickSound();
+            graphic.SetActive(false);
+            sound.SetActive(true);
+            control.SetActive(false);
+            // Graphic 관련 tmpSetting 초기화
+        }
+        
+        public void ToOptionControl()
+        {
+            PlayClickSound();
+            graphic.SetActive(false);
+            sound.SetActive(false);
+            control.SetActive(true);
+            // Graphic 관련 tmpSetting 초기화
+        }
+
+        public void SelectFullScreen()
+        {
+            if (Application.platform == RuntimePlatform.WindowsPlayer) // window
+            {
+                tmpSettingData.screenMode = FullScreenMode.ExclusiveFullScreen;
+            }
+            else if (Application.platform == RuntimePlatform.OSXPlayer) // macOS
+            {
+                tmpSettingData.screenMode = FullScreenMode.MaximizedWindow;
+            }
+            fullScreen.sprite = fullScreenImages[1];
+            windowScreen.sprite = windowScreenImages[0];
+        }
+
+        public void SelectWindowScreen()
+        {
+            tmpSettingData.screenMode = FullScreenMode.Windowed;
+            fullScreen.sprite = fullScreenImages[0];
+            windowScreen.sprite = windowScreenImages[1];
+        }
+
+        public void ResolutionDown()
+        {
+            tmpSettingData.resolutionIndex = Mathf.Max(0, tmpSettingData.resolutionIndex - 1);
+            var res = tmpSettingData.resolutionList[tmpSettingData.resolutionIndex];
+            resolution.text = $"{res.width} * {res.height}";
+        }
+
+        public void ResolutionUp()
+        {
+            tmpSettingData.resolutionIndex = Mathf.Min(maxScreenIndex, tmpSettingData.resolutionIndex + 1);
+            var res = tmpSettingData.resolutionList[tmpSettingData.resolutionIndex];
+            resolution.text = $"{res.width} * {res.height}";
+        }
+
+        public void ApplyGraphic()
+        {
+            // tmpSetting을 적용
+        }
+        #endregion
+
+        #region Quit
         public void ShowQuitAlert()
         {
             PlayClickSound();
@@ -210,6 +322,25 @@ namespace ActionPart.UI
             // 저장 추가
             Application.Quit();
         }
+        #endregion
+
+        #region Save
+        public void ToSaveGame()
+        {
+            PlayClickSound();
+            mainMenu.SetActive(false);
+            titleAlert.SetActive(false);
+            quitAlert.SetActive(false);
+            saveGame.SetActive(true);
+        }
+
+        public void CloseSaveGame()
+        {
+            PlayClickSound();
+            mainMenu.SetActive(true);
+            saveGame.SetActive(false);
+        }
+        #endregion
 
         private void PlayClickSound()
         {
@@ -304,11 +435,6 @@ namespace ActionPart.UI
             SettingContainer.instance.m_SettingData.effectVolume = sliderValue;
             float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
             audioController.SetEffectVolume(volume);
-        }
-
-        public void ApplySetting()
-        {
-            // 임시 settingData를 확정시켜 데이터로도 저장시키는 역할
         }
     }
 }

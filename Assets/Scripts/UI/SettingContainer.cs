@@ -15,15 +15,28 @@ public class SettingData
     public float effectVolume;
 
     [SerializeField]
-    public List<Resolution> resolutionList;
+    public List<Resolution> resolutionList = new List<Resolution>();
     public int resolutionIndex;
     public FullScreenMode screenMode;
 
     public int windowResolutionIndex;
 
     public SettingData() 
+    {
+        this.resolutionList = new List<Resolution>();
+    }
+
+    public SettingData(SettingData other) 
     {   
-        resolutionList = new List<Resolution>();
+        this.masterVolume = other.masterVolume;
+        this.BGMVolume = other.BGMVolume;
+        this.effectVolume = other.effectVolume;
+
+        this.resolutionList.AddRange(other.resolutionList);
+        this.resolutionIndex = other.resolutionIndex;
+        this.screenMode = other.screenMode;
+
+        this.windowResolutionIndex = other.windowResolutionIndex;
     }
 }
 
@@ -72,6 +85,7 @@ public class SettingContainer:MonoBehaviour
                 if (Mathf.Round(res.width * 0.5625f) == res.height)
                 {
                     m_SettingData.resolutionList.Add(res);
+                    //Debug.Log(res.ToString());
                 }
             }
             m_SettingData.resolutionIndex = m_SettingData.resolutionList.Count - 1;
