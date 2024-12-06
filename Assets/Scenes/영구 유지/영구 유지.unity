@@ -920,8 +920,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mousePressedColor: {r: 0, g: 0, b: 0, a: 0.25490198}
-  mouseOnColor: {r: 1, g: 1, b: 1, a: 0.6862745}
+  mousePressedColor: {r: 1, g: 1, b: 1, a: 0.5882353}
+  mouseOnColor: {r: 1, g: 1, b: 1, a: 0.78431374}
   mouseOffColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &100196171
 GameObject:
@@ -13298,8 +13298,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mousePressedColor: {r: 1, g: 1, b: 1, a: 0.25490198}
-  mouseOnColor: {r: 1, g: 1, b: 1, a: 0.6862745}
+  mousePressedColor: {r: 1, g: 1, b: 1, a: 0.5882353}
+  mouseOnColor: {r: 1, g: 1, b: 1, a: 0.78431374}
   mouseOffColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1734309036
 GameObject:

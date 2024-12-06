@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonTextImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonTextImage : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Color mousePressedColor;
     public Color mouseOnColor;
@@ -61,12 +61,10 @@ public class ButtonTextImage : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerDown(PointerEventData eventData)
     {
         mousePressed = true;
-        Debug.Log("¿¨");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         mousePressed = false;
-        Debug.Log("À×");
     }
 }
