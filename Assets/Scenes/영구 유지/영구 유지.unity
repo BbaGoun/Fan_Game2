@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4480877}
   - component: {fileID: 4480876}
   m_Layer: 5
-  m_Name: Button
+  m_Name: VolumeDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,8 +182,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -203,7 +203,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4480877}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1784898753}
+        m_TargetAssemblyTypeName: ActionPart.UI.MainMenuController, Assembly-CSharp
+        m_MethodName: DownBGM
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4480877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,6 +785,7 @@ GameObject:
   m_Component:
   - component: {fileID: 99966042}
   - component: {fileID: 99966045}
+  - component: {fileID: 99966046}
   - component: {fileID: 99966044}
   - component: {fileID: 99966043}
   m_Layer: 5
@@ -895,6 +908,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99966041}
   m_CullTransparentMesh: 1
+--- !u!114 &99966046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99966041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0, g: 0, b: 0, a: 0.25490198}
+  mouseOnColor: {r: 1, g: 1, b: 1, a: 0.6862745}
+  mouseOffColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &100196171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,6 +1374,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85ed67ea4af15740b8a9a10629b861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0.10524208, g: 0.33344945, b: 0.5188679, a: 1}
+  mouseOnColor: {r: 0.23529412, g: 0.54901963, b: 0.8039216, a: 1}
+  mouseOffColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  mouseOver: 0
+  mousePressed: 0
 --- !u!1 &154447700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,7 +1667,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: 385d9008a54bf954897f25617f68ff3f, type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 385d9008a54bf954897f25617f68ff3f, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 385d9008a54bf954897f25617f68ff3f, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1649,7 +1682,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1784898753}
         m_TargetAssemblyTypeName: ActionPart.UI.MainMenuController, Assembly-CSharp
-        m_MethodName: CloseOption
+        m_MethodName: ApplyGraphic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1888,6 +1921,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85ed67ea4af15740b8a9a10629b861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0.10524208, g: 0.33344945, b: 0.5188679, a: 1}
+  mouseOnColor: {r: 0.23529412, g: 0.54901963, b: 0.8039216, a: 1}
+  mouseOffColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  mouseOver: 0
+  mousePressed: 0
 --- !u!1 &188890111
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,6 +2072,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0, g: 0, b: 0, a: 0}
+  mouseOnColor: {r: 0.019607844, g: 0.78039217, b: 0.9490196, a: 0.78431374}
+  mouseOffColor: {r: 1, g: 1, b: 1, a: 0.78431374}
 --- !u!1 &193740112
 GameObject:
   m_ObjectHideFlags: 0
@@ -2047,7 +2088,7 @@ GameObject:
   - component: {fileID: 193740115}
   - component: {fileID: 193740114}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: VolumeUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2094,8 +2135,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2115,7 +2156,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 193740115}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1784898753}
+        m_TargetAssemblyTypeName: ActionPart.UI.MainMenuController, Assembly-CSharp
+        m_MethodName: UpBGM
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &193740115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2586,7 +2639,7 @@ GameObject:
   - component: {fileID: 299088986}
   - component: {fileID: 299088985}
   m_Layer: 5
-  m_Name: Button
+  m_Name: VolumeDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2633,8 +2686,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2654,7 +2707,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 299088986}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1784898753}
+        m_TargetAssemblyTypeName: ActionPart.UI.MainMenuController, Assembly-CSharp
+        m_MethodName: DownMaster
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &299088986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3107,6 +3172,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0, g: 0, b: 0, a: 0}
+  mouseOnColor: {r: 0.019607844, g: 0.78039217, b: 0.9490196, a: 0.78431374}
+  mouseOffColor: {r: 1, g: 1, b: 1, a: 0.78431374}
 --- !u!1 &331444152
 GameObject:
   m_ObjectHideFlags: 0
@@ -4524,6 +4592,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0, g: 0, b: 0, a: 0}
+  mouseOnColor: {r: 0.019607844, g: 0.78039217, b: 0.9490196, a: 0.78431374}
+  mouseOffColor: {r: 1, g: 1, b: 1, a: 0.78431374}
 --- !u!1 &578565315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4715,6 +4786,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85ed67ea4af15740b8a9a10629b861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0.10524208, g: 0.33344945, b: 0.5188679, a: 1}
+  mouseOnColor: {r: 0.23529412, g: 0.54901963, b: 0.8039216, a: 1}
+  mouseOffColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  mouseOver: 0
+  mousePressed: 0
 --- !u!1 &599624039
 GameObject:
   m_ObjectHideFlags: 0
@@ -4867,7 +4943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &600860095
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6946,7 +7022,7 @@ GameObject:
   - component: {fileID: 860756574}
   - component: {fileID: 860756573}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: VolumeUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6993,8 +7069,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -7014,7 +7090,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 860756574}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1784898753}
+        m_TargetAssemblyTypeName: ActionPart.UI.MainMenuController, Assembly-CSharp
+        m_MethodName: UpMaster
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &860756574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7303,6 +7391,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85ed67ea4af15740b8a9a10629b861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0.10524208, g: 0.33344945, b: 0.5188679, a: 1}
+  mouseOnColor: {r: 0.23529412, g: 0.54901963, b: 0.8039216, a: 1}
+  mouseOffColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  mouseOver: 0
+  mousePressed: 0
 --- !u!1 &913010274
 GameObject:
   m_ObjectHideFlags: 0
@@ -7751,7 +7844,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: 385d9008a54bf954897f25617f68ff3f, type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 385d9008a54bf954897f25617f68ff3f, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 385d9008a54bf954897f25617f68ff3f, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -8617,6 +8710,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0, g: 0, b: 0, a: 0}
+  mouseOnColor: {r: 0.019607844, g: 0.78039217, b: 0.9490196, a: 0.78431374}
+  mouseOffColor: {r: 1, g: 1, b: 1, a: 0.78431374}
 --- !u!1 &1161078406
 GameObject:
   m_ObjectHideFlags: 0
@@ -9434,6 +9530,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85ed67ea4af15740b8a9a10629b861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0.10524208, g: 0.33344945, b: 0.5188679, a: 1}
+  mouseOnColor: {r: 0.23529412, g: 0.54901963, b: 0.8039216, a: 1}
+  mouseOffColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  mouseOver: 0
+  mousePressed: 0
 --- !u!1 &1239057568
 GameObject:
   m_ObjectHideFlags: 0
@@ -9679,7 +9780,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: 385d9008a54bf954897f25617f68ff3f, type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 385d9008a54bf954897f25617f68ff3f, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 385d9008a54bf954897f25617f68ff3f, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -9694,7 +9795,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1784898753}
         m_TargetAssemblyTypeName: ActionPart.UI.MainMenuController, Assembly-CSharp
-        m_MethodName: CloseOption
+        m_MethodName: ApplySound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11003,6 +11104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0, g: 0, b: 0, a: 0}
+  mouseOnColor: {r: 0.019607844, g: 0.78039217, b: 0.9490196, a: 0.78431374}
+  mouseOffColor: {r: 1, g: 1, b: 1, a: 0.78431374}
 --- !u!1 &1396048063
 GameObject:
   m_ObjectHideFlags: 0
@@ -11775,7 +11879,7 @@ GameObject:
   - component: {fileID: 1505938065}
   - component: {fileID: 1505938064}
   m_Layer: 5
-  m_Name: Button
+  m_Name: VolumeDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11822,8 +11926,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -11843,7 +11947,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1505938065}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1784898753}
+        m_TargetAssemblyTypeName: ActionPart.UI.MainMenuController, Assembly-CSharp
+        m_MethodName: DownEffectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1505938065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13047,6 +13163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1705241583}
   - component: {fileID: 1705241586}
+  - component: {fileID: 1705241587}
   - component: {fileID: 1705241585}
   - component: {fileID: 1705241584}
   m_Layer: 5
@@ -13169,6 +13286,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705241582}
   m_CullTransparentMesh: 1
+--- !u!114 &1705241587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705241582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mousePressedColor: {r: 1, g: 1, b: 1, a: 0.25490198}
+  mouseOnColor: {r: 1, g: 1, b: 1, a: 0.6862745}
+  mouseOffColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1734309036
 GameObject:
   m_ObjectHideFlags: 0
@@ -13660,10 +13792,19 @@ MonoBehaviour:
   windowScreenImages:
   - {fileID: 21300000, guid: b1cba30dd006a4f4d8c6e1242b402cba, type: 3}
   - {fileID: 21300000, guid: 2249d18f04d572a498a916bb83a86fe7, type: 3}
+  resolutionDown: {fileID: 1705241584}
+  resolutionUp: {fileID: 99966043}
   resolution: {fileID: 621731995}
   master: {fileID: 147084038}
   bgm: {fileID: 1239057570}
   effectSound: {fileID: 1990338766}
+  tmpSettingData:
+    masterVolume: 0
+    BGMVolume: 0
+    effectVolume: 0
+    resolutionIndex: 0
+    screenMode: 0
+    windowResolutionIndex: 0
 --- !u!1 &1811679824
 GameObject:
   m_ObjectHideFlags: 0
@@ -13996,7 +14137,7 @@ GameObject:
   - component: {fileID: 1826023972}
   - component: {fileID: 1826023971}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: VolumeUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14043,8 +14184,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -14064,7 +14205,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1826023972}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1784898753}
+        m_TargetAssemblyTypeName: ActionPart.UI.MainMenuController, Assembly-CSharp
+        m_MethodName: UpEffectSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1826023972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15381,6 +15534,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85ed67ea4af15740b8a9a10629b861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePressedColor: {r: 0.10524208, g: 0.33344945, b: 0.5188679, a: 1}
+  mouseOnColor: {r: 0.23529412, g: 0.54901963, b: 0.8039216, a: 1}
+  mouseOffColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  mouseOver: 0
+  mousePressed: 0
 --- !u!1 &2124636011
 GameObject:
   m_ObjectHideFlags: 0

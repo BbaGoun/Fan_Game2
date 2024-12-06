@@ -90,7 +90,14 @@ public class SettingContainer:MonoBehaviour
             }
             m_SettingData.resolutionIndex = m_SettingData.resolutionList.Count - 1;
             m_SettingData.windowResolutionIndex = m_SettingData.resolutionIndex;
-            m_SettingData.screenMode = FullScreenMode.Windowed;
+            if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) // window
+            {
+                m_SettingData.screenMode = FullScreenMode.ExclusiveFullScreen;
+            }
+            else if (Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXEditor) // macOS
+            {
+                m_SettingData.screenMode = FullScreenMode.MaximizedWindow;
+            }
 
             string sData = JsonUtility.ToJson(m_SettingData);
             File.WriteAllText(dataPath, sData);

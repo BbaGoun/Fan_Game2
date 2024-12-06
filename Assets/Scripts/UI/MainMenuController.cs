@@ -26,12 +26,13 @@ namespace ActionPart.UI
         public Image fullScreen, windowScreen;
         public Sprite[] fullScreenImages = new Sprite[2];
         public Sprite[] windowScreenImages = new Sprite[2];
+        public Button resolutionDown, resolutionUp;
         public TMP_Text resolution;
         public Slider master, bgm, effectSound;
         int resolutionIndex;
-        int maxScreenIndex;
+        int maxResolutionIndex;
 
-        private SettingData tmpSettingData;
+        public SettingData tmpSettingData;
 
         private void Awake()
         {
@@ -63,44 +64,16 @@ namespace ActionPart.UI
             //bgm.minValue = 0.001f;
             //effectSound.minValue = 0.001f;
 
-            maxScreenIndex = SettingContainer.instance.m_SettingData.resolutionList.Count - 1;
+            maxResolutionIndex = SettingContainer.instance.m_SettingData.resolutionList.Count - 1;
 
-            foreach (var resolution in SettingContainer.instance.m_SettingData.resolutionList)
-            {
-                //var newOption = new List<string> { $"{resolution.width} * {resolution.height}" };
-                //resolutions.AddOptions(newOption);
-            }
+            tmpSettingData = new SettingData(SettingContainer.instance.m_SettingData);
 
-            Resolution res = SettingContainer.instance.m_SettingData.resolutionList[SettingContainer.instance.m_SettingData.resolutionIndex];
-            resolution.text = $"{res.width} * {res.height}";
-            //resolutions.value = SettingContainer.instance.m_SettingData.resolutionIndex;
-
-            switch (SettingContainer.instance.m_SettingData.screenMode)
-            {
-                case FullScreenMode.ExclusiveFullScreen:
-                    fullScreen.sprite = fullScreenImages[1];
-                    windowScreen.sprite = windowScreenImages[0];
-                    //screenModes.value = 1;
-                    break;
-                case FullScreenMode.MaximizedWindow:
-                    fullScreen.sprite = fullScreenImages[1];
-                    windowScreen.sprite = windowScreenImages[0];
-                    //screenModes.value = 1;
-                    break;
-                case FullScreenMode.Windowed:
-                    fullScreen.sprite = fullScreenImages[0];
-                    windowScreen.sprite = windowScreenImages[1];
-                    //screenModes.value = 2;
-                    break;
-            }
-
-            //resolutions.interactable = SettingContainer.instance.m_SettingData.screenMode == FullScreenMode.Windowed;
+            ApplyGraphic();
 
             master.value = SettingContainer.instance.m_SettingData.masterVolume;
             bgm.value = SettingContainer.instance.m_SettingData.BGMVolume;
             effectSound.value = SettingContainer.instance.m_SettingData.effectVolume;
 
-            tmpSettingData = new SettingData(SettingContainer.instance.m_SettingData);
         }
 
         public void ToggleMainMenu(bool isShowMenu)
@@ -167,30 +140,26 @@ namespace ActionPart.UI
             titleAlert.SetActive(false);
             quitAlert.SetActive(false);
             option.SetActive(true);
+
             graphic.SetActive(true);
             sound.SetActive(false);
             control.SetActive(false);
 
+            ResetTmpSettingData();
+
             Resolution res = SettingContainer.instance.m_SettingData.resolutionList[SettingContainer.instance.m_SettingData.resolutionIndex];
             resolution.text = $"{res.width} * {res.height}";
-            //resolutions.value = SettingContainer.instance.m_SettingData.resolutionIndex;
 
             switch (SettingContainer.instance.m_SettingData.screenMode)
             {
                 case FullScreenMode.ExclusiveFullScreen:
-                    fullScreen.sprite = fullScreenImages[1];
-                    windowScreen.sprite = windowScreenImages[0];
-                    //screenModes.value = 1;
+                    DoWhenFullScreen();
                     break;
                 case FullScreenMode.MaximizedWindow:
-                    fullScreen.sprite = fullScreenImages[1];
-                    windowScreen.sprite = windowScreenImages[0];
-                    //screenModes.value = 1;
+                    DoWhenFullScreen();
                     break;
                 case FullScreenMode.Windowed:
-                    fullScreen.sprite = fullScreenImages[0];
-                    windowScreen.sprite = windowScreenImages[1];
-                    //screenModes.value = 2;
+                    DoWhenWindowScreen();
                     break;
             }
         }
@@ -203,8 +172,11 @@ namespace ActionPart.UI
             graphic.SetActive(false);
             sound.SetActive(false);
             control.SetActive(false);
+
+            ResetTmpSettingData();
         }
 
+        #region Graphic
         public void ToOptionGraphic()
         {
             PlayClickSound();
@@ -212,67 +184,68 @@ namespace ActionPart.UI
             sound.SetActive(false);
             control.SetActive(false);
 
+            ResetTmpSettingData();
+
             Resolution res = SettingContainer.instance.m_SettingData.resolutionList[SettingContainer.instance.m_SettingData.resolutionIndex];
             resolution.text = $"{res.width} * {res.height}";
-            //resolutions.value = SettingContainer.instance.m_SettingData.resolutionIndex;
 
             switch (SettingContainer.instance.m_SettingData.screenMode)
             {
                 case FullScreenMode.ExclusiveFullScreen:
-                    fullScreen.sprite = fullScreenImages[1];
-                    windowScreen.sprite = windowScreenImages[0];
-                    //screenModes.value = 1;
+                    DoWhenFullScreen();
                     break;
                 case FullScreenMode.MaximizedWindow:
-                    fullScreen.sprite = fullScreenImages[1];
-                    windowScreen.sprite = windowScreenImages[0];
-                    //screenModes.value = 1;
+                    DoWhenFullScreen();
                     break;
                 case FullScreenMode.Windowed:
-                    fullScreen.sprite = fullScreenImages[0];
-                    windowScreen.sprite = windowScreenImages[1];
-                    //screenModes.value = 2;
+                    DoWhenWindowScreen();
                     break;
             }
-        }
-
-        public void ToOptionSound()
-        {
-            PlayClickSound();
-            graphic.SetActive(false);
-            sound.SetActive(true);
-            control.SetActive(false);
-            // Graphic 관련 tmpSetting 초기화
-        }
-        
-        public void ToOptionControl()
-        {
-            PlayClickSound();
-            graphic.SetActive(false);
-            sound.SetActive(false);
-            control.SetActive(true);
-            // Graphic 관련 tmpSetting 초기화
         }
 
         public void SelectFullScreen()
         {
-            if (Application.platform == RuntimePlatform.WindowsPlayer) // window
+            if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) // window
             {
                 tmpSettingData.screenMode = FullScreenMode.ExclusiveFullScreen;
             }
-            else if (Application.platform == RuntimePlatform.OSXPlayer) // macOS
+            else if (Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXEditor) // macOS
             {
                 tmpSettingData.screenMode = FullScreenMode.MaximizedWindow;
             }
+            DoWhenFullScreen();
+
+            tmpSettingData.resolutionIndex = maxResolutionIndex;
+            Resolution res = SettingContainer.instance.m_SettingData.resolutionList[maxResolutionIndex];
+            resolution.text = $"{res.width} * {res.height}";
+        }
+
+        private void DoWhenFullScreen()
+        {
             fullScreen.sprite = fullScreenImages[1];
             windowScreen.sprite = windowScreenImages[0];
+            resolutionDown.interactable = false;
+            resolutionUp.interactable = false;
+            resolution.color = new Color(150 / 255f, 150 / 255f, 150 / 255f, 1f);
         }
 
         public void SelectWindowScreen()
         {
             tmpSettingData.screenMode = FullScreenMode.Windowed;
+            DoWhenWindowScreen();
+
+            tmpSettingData.resolutionIndex = SettingContainer.instance.m_SettingData.windowResolutionIndex;
+            Resolution res = SettingContainer.instance.m_SettingData.resolutionList[tmpSettingData.resolutionIndex];
+            resolution.text = $"{res.width} * {res.height}";
+        }
+
+        private void DoWhenWindowScreen()
+        {
             fullScreen.sprite = fullScreenImages[0];
             windowScreen.sprite = windowScreenImages[1];
+            resolutionDown.interactable = true;
+            resolutionUp.interactable = true;
+            resolution.color = new Color(50 / 255f, 50 / 255f, 50 / 255f, 1f);
         }
 
         public void ResolutionDown()
@@ -284,14 +257,102 @@ namespace ActionPart.UI
 
         public void ResolutionUp()
         {
-            tmpSettingData.resolutionIndex = Mathf.Min(maxScreenIndex, tmpSettingData.resolutionIndex + 1);
+            tmpSettingData.resolutionIndex = Mathf.Min(maxResolutionIndex, tmpSettingData.resolutionIndex + 1);
             var res = tmpSettingData.resolutionList[tmpSettingData.resolutionIndex];
             resolution.text = $"{res.width} * {res.height}";
         }
 
         public void ApplyGraphic()
         {
-            // tmpSetting을 적용
+            Debug.Log("적용");
+            var res = tmpSettingData.resolutionList[tmpSettingData.resolutionIndex];
+            switch (tmpSettingData.screenMode)
+            {
+                case FullScreenMode.ExclusiveFullScreen:
+                    Screen.SetResolution(res.width, res.height, FullScreenMode.ExclusiveFullScreen);
+                    SettingContainer.instance.m_SettingData.screenMode = FullScreenMode.ExclusiveFullScreen;
+                    break;
+
+                case FullScreenMode.MaximizedWindow:
+                    Screen.SetResolution(res.width, res.height, FullScreenMode.MaximizedWindow);
+                    SettingContainer.instance.m_SettingData.screenMode = FullScreenMode.MaximizedWindow;
+                    break;
+
+                case FullScreenMode.Windowed:
+                    Screen.SetResolution(res.width, res.height, FullScreenMode.Windowed);
+                    SettingContainer.instance.m_SettingData.screenMode = FullScreenMode.Windowed;
+
+                    SettingContainer.instance.m_SettingData.windowResolutionIndex = tmpSettingData.resolutionIndex;
+                    break;
+            }
+            SettingContainer.instance.m_SettingData.resolutionIndex = tmpSettingData.resolutionIndex;
+        }
+        #endregion
+
+        #region Sound
+        public void ToOptionSound()
+        {
+            PlayClickSound();
+            graphic.SetActive(false);
+            sound.SetActive(true);
+            control.SetActive(false);
+
+            ResetTmpSettingData();
+
+            master.value = SettingContainer.instance.m_SettingData.masterVolume;
+            bgm.value = SettingContainer.instance.m_SettingData.BGMVolume;
+            effectSound.value = SettingContainer.instance.m_SettingData.effectVolume;
+        }
+
+        public void SetMaster(float sliderValue) => tmpSettingData.masterVolume = sliderValue;
+        public void SetBGM(float sliderValue) => tmpSettingData.BGMVolume = sliderValue;
+        public void SetEffectSound(float sliderValue) => tmpSettingData.effectVolume = sliderValue;
+        public void DownMaster() => master.value -= 5f;
+        public void UpMaster() => master.value += 5f;
+        public void DownBGM() => bgm.value -= 5f;
+        public void UpBGM() => bgm.value += 5f;
+        public void DownEffectSound() => effectSound.value -= 5f;
+        public void UpEffectSound() => effectSound.value += 5f;
+        public void ApplySound()
+        {
+            float masterVolume = tmpSettingData.masterVolume;
+            SettingContainer.instance.m_SettingData.masterVolume = masterVolume;
+            masterVolume = Mathf.Log10(masterVolume) * 20; // Convert slider value to decibels
+            audioController.SetMasterVolume(masterVolume);
+
+            float BGMVolume = tmpSettingData.BGMVolume;
+            SettingContainer.instance.m_SettingData.BGMVolume = BGMVolume;
+            BGMVolume = Mathf.Log10(BGMVolume) * 20; // Convert slider value to decibels
+            audioController.SetBGMVolume(BGMVolume);
+
+            float effectVolume = tmpSettingData.effectVolume;
+            SettingContainer.instance.m_SettingData.effectVolume = effectVolume;
+            effectVolume = Mathf.Log10(effectVolume) * 20; // Convert slider value to decibels
+            audioController.SetEffectVolume(effectVolume);
+        }
+        #endregion
+
+        public void ToOptionControl()
+        {
+            PlayClickSound();
+            graphic.SetActive(false);
+            sound.SetActive(false);
+            control.SetActive(true);
+
+            ResetTmpSettingData();
+        }
+
+
+        private void ResetTmpSettingData()
+        {
+            tmpSettingData.masterVolume = SettingContainer.instance.m_SettingData.masterVolume;
+            tmpSettingData.BGMVolume = SettingContainer.instance.m_SettingData.BGMVolume;
+            tmpSettingData.effectVolume = SettingContainer.instance.m_SettingData.effectVolume;
+
+            tmpSettingData.resolutionIndex = SettingContainer.instance.m_SettingData.resolutionIndex;
+            tmpSettingData.screenMode = SettingContainer.instance.m_SettingData.screenMode;
+
+            tmpSettingData.windowResolutionIndex = SettingContainer.instance.m_SettingData.windowResolutionIndex;
         }
         #endregion
 
@@ -350,91 +411,6 @@ namespace ActionPart.UI
             }
         }
 
-        public void ChangeResolution(int index)
-        {
-            var res = SettingContainer.instance.m_SettingData.resolutionList[index];
-            Screen.SetResolution(res.width, res.height, Screen.fullScreenMode);
-            SettingContainer.instance.m_SettingData.resolutionIndex = index;
-            resolutionIndex = index;
-            // 창모드 해상도 저장
-            SettingContainer.instance.m_SettingData.windowResolutionIndex = index;
-        }
-
-        public void ChangeScreenMode(int index)
-        {
-            var resMax = SettingContainer.instance.m_SettingData.resolutionList[maxScreenIndex];
-            switch (index)
-            {
-                case 0:
-                    Screen.SetResolution(resMax.width, resMax.height, FullScreenMode.FullScreenWindow);
-                    SettingContainer.instance.m_SettingData.screenMode = FullScreenMode.FullScreenWindow;
-                    
-                    resolutions.interactable = false;
-
-                    // 창모드 해상도 저장
-                    SettingContainer.instance.m_SettingData.windowResolutionIndex = resolutionIndex;
-
-                    resolutionIndex = maxScreenIndex;
-                    SettingContainer.instance.m_SettingData.resolutionIndex = maxScreenIndex;
-                    resolutions.value = resolutionIndex;
-
-                    break;
-                case 1:
-                    if(Application.platform == RuntimePlatform.WindowsPlayer) // window
-                    {
-                        Screen.SetResolution(resMax.width, resMax.height, FullScreenMode.ExclusiveFullScreen);
-                        SettingContainer.instance.m_SettingData.screenMode = FullScreenMode.ExclusiveFullScreen;
-                    }
-                    else if(Application.platform == RuntimePlatform.OSXPlayer) // macOS
-                    {
-                        Screen.SetResolution(resMax.width, resMax.height, FullScreenMode.MaximizedWindow);
-                        SettingContainer.instance.m_SettingData.screenMode = FullScreenMode.MaximizedWindow;
-                    }
-
-                    resolutions.interactable = false; 
-                    
-                    // 창모드 해상도 저장
-                    SettingContainer.instance.m_SettingData.windowResolutionIndex = resolutionIndex;
-
-                    resolutionIndex = maxScreenIndex;
-                    SettingContainer.instance.m_SettingData.resolutionIndex = maxScreenIndex;
-                    resolutions.value = resolutionIndex;
-                    break;
-                case 2:
-                    // 저장해놨던 창모드 해상도를 불러옴
-                    var winIndex = SettingContainer.instance.m_SettingData.windowResolutionIndex;
-                    var winRes = SettingContainer.instance.m_SettingData.resolutionList[winIndex];
-                    Screen.SetResolution(winRes.width, winRes.height, FullScreenMode.Windowed);
-                    
-                    resolutions.interactable = true;
-
-                    resolutionIndex = winIndex;
-                    SettingContainer.instance.m_SettingData.resolutionIndex = winIndex;
-                    resolutions.value = winIndex;
-                    
-                    break;
-            }
-        }
-
-        public void SetMaster(float sliderValue)
-        {
-            SettingContainer.instance.m_SettingData.masterVolume = sliderValue;
-            float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
-            audioController.SetMasterVolume(volume);
-        }
-
-        public void SetBGM(float sliderValue)
-        {
-            SettingContainer.instance.m_SettingData.BGMVolume = sliderValue;
-            float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
-            audioController.SetBGMVolume(volume);
-        }
-
-        public void SetEffectSound(float sliderValue)
-        {
-            SettingContainer.instance.m_SettingData.effectVolume = sliderValue;
-            float volume = Mathf.Log10(sliderValue) * 20; // Convert slider value to decibels
-            audioController.SetEffectVolume(volume);
-        }
+        
     }
 }
