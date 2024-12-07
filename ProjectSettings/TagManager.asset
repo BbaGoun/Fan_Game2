@@ -7,6 +7,7 @@ TagManager:
   - CamArea
   - Maps
   - SceneSetting
+  - GameMenu
   layers:
   - Default
   - TransparentFX

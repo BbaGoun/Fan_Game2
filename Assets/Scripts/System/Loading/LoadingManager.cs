@@ -50,6 +50,11 @@ namespace ActionPart
             LoadSceneAsync("메인 타이틀", SpawnPoint.None, WithWalkOut.None, mode: TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
 
+        public string GetLoadedSceneName()
+        {
+            return loadedSceneName;
+        }
+
         public bool CheckIsLoadDone()
         {
             return isLoadDone;

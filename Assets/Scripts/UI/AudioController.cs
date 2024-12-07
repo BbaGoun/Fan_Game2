@@ -5,12 +5,26 @@ using UnityEngine.Audio;
 
 public class AudioController : MonoBehaviour
 {
+    public static AudioController instance;
+
     public AudioMixer audioMixer;
     public AudioSource BGM;
     public AudioSource effectSound;
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            if(instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+
         BGM = transform.GetChild(0).GetComponent<AudioSource>();
         effectSound = transform.GetChild(1).GetComponent<AudioSource>();
     }

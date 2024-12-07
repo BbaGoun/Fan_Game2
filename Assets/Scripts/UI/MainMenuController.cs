@@ -22,21 +22,19 @@ namespace ActionPart.UI
         private GameObject control;
         private GameObject saveGame;
 
-        public TMP_Dropdown resolutions, screenModes;
         public Image fullScreen, windowScreen;
         public Sprite[] fullScreenImages = new Sprite[2];
         public Sprite[] windowScreenImages = new Sprite[2];
         public Button resolutionDown, resolutionUp;
         public TMP_Text resolution;
         public Slider master, bgm, effectSound;
-        int resolutionIndex;
         int maxResolutionIndex;
 
         public SettingData tmpSettingData;
 
         private void Awake()
         {
-            audioController = GameObject.Find("==== Audio ====").GetComponent<AudioController>();
+            audioController = AudioController.instance;
 
             background = transform.GetChild(0).gameObject;
             background.SetActive(false);
@@ -59,10 +57,6 @@ namespace ActionPart.UI
 
             saveGame = transform.GetChild(3).gameObject;
             saveGame.SetActive(false);
-
-            //master.minValue = 0.001f;
-            //bgm.minValue = 0.001f;
-            //effectSound.minValue = 0.001f;
 
             maxResolutionIndex = SettingContainer.instance.m_SettingData.resolutionList.Count - 1;
 
@@ -205,6 +199,7 @@ namespace ActionPart.UI
 
         public void SelectFullScreen()
         {
+            PlayClickSound();
             if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) // window
             {
                 tmpSettingData.screenMode = FullScreenMode.ExclusiveFullScreen;
@@ -231,6 +226,7 @@ namespace ActionPart.UI
 
         public void SelectWindowScreen()
         {
+            PlayClickSound();
             tmpSettingData.screenMode = FullScreenMode.Windowed;
             DoWhenWindowScreen();
 
@@ -250,6 +246,7 @@ namespace ActionPart.UI
 
         public void ResolutionDown()
         {
+            PlayClickSound();
             tmpSettingData.resolutionIndex = Mathf.Max(0, tmpSettingData.resolutionIndex - 1);
             var res = tmpSettingData.resolutionList[tmpSettingData.resolutionIndex];
             resolution.text = $"{res.width} * {res.height}";
@@ -257,6 +254,7 @@ namespace ActionPart.UI
 
         public void ResolutionUp()
         {
+            PlayClickSound();
             tmpSettingData.resolutionIndex = Mathf.Min(maxResolutionIndex, tmpSettingData.resolutionIndex + 1);
             var res = tmpSettingData.resolutionList[tmpSettingData.resolutionIndex];
             resolution.text = $"{res.width} * {res.height}";
@@ -264,7 +262,7 @@ namespace ActionPart.UI
 
         public void ApplyGraphic()
         {
-            Debug.Log("Àû¿ë");
+            PlayClickSound();
             var res = tmpSettingData.resolutionList[tmpSettingData.resolutionIndex];
             switch (tmpSettingData.screenMode)
             {
@@ -307,14 +305,40 @@ namespace ActionPart.UI
         public void SetMaster(float sliderValue) => tmpSettingData.masterVolume = sliderValue;
         public void SetBGM(float sliderValue) => tmpSettingData.BGMVolume = sliderValue;
         public void SetEffectSound(float sliderValue) => tmpSettingData.effectVolume = sliderValue;
-        public void DownMaster() => master.value -= 5f;
-        public void UpMaster() => master.value += 5f;
-        public void DownBGM() => bgm.value -= 5f;
-        public void UpBGM() => bgm.value += 5f;
-        public void DownEffectSound() => effectSound.value -= 5f;
-        public void UpEffectSound() => effectSound.value += 5f;
+        public void DownMaster()
+        {
+            PlayClickSound();
+            master.value -= 0.05f;
+        }
+        public void UpMaster()
+        {
+            PlayClickSound();
+            master.value += 0.05f;
+        }
+        public void DownBGM()
+        {
+            PlayClickSound();
+            bgm.value -= 0.05f;
+        }
+
+        public void UpBGM()
+        {
+            PlayClickSound();
+            bgm.value += 0.05f;
+        }
+        public void DownEffectSound()
+        {
+            PlayClickSound();
+            effectSound.value -= 0.05f;
+        }
+        public void UpEffectSound()
+        {
+            PlayClickSound();
+            effectSound.value += 0.05f;
+        }
         public void ApplySound()
         {
+            PlayClickSound();
             float masterVolume = tmpSettingData.masterVolume;
             SettingContainer.instance.m_SettingData.masterVolume = masterVolume;
             masterVolume = Mathf.Log10(masterVolume) * 20; // Convert slider value to decibels
