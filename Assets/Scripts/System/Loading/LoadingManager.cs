@@ -33,7 +33,7 @@ namespace ActionPart
         private string loadedSceneName;
         private Coroutine coroutine;
 
-        private void Awake()
+        public void Initialize()
         {
             #region Singleton
 
@@ -189,6 +189,8 @@ namespace ActionPart
                 }
                 else
                 {
+                    var titleController = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<TitleController>();
+                    titleController.Initialize();
                     player.gameObject.SetActive(false);
                 }
 

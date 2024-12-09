@@ -23,7 +23,7 @@ namespace ActionPart
         public PlayerData m_Data = new PlayerData();
 
 
-        private void Awake()
+        public void Initialize()
         {
             #region Singleton 
 

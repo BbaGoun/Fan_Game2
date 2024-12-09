@@ -10,7 +10,7 @@ namespace ActionPart
     {
         public static PlayerInputPart Instance { get; private set; }
 
-        private void Awake()
+        public void Initialize()
         {
             if (Instance != null)
             {
@@ -21,8 +21,6 @@ namespace ActionPart
             {
                 Instance = this;
             }
-
-            DontDestroyOnLoad(gameObject);
 
             isCanInput = true;
         }

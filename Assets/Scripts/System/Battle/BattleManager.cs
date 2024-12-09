@@ -6,6 +6,9 @@ namespace ActionPart
 {
     public class BattleManager : MonoBehaviour
     {
-        
+        public void Initialize()
+        {
+
+        }
     }
 }

@@ -11,7 +11,8 @@ namespace ActionPart
         [SerializeField, Range(0f, 2f)]
         private float timeScale;
 
-        private void Awake()
+
+        public void Initialize()
         {
             if (Instance != null && Instance != this)
             {
@@ -21,8 +22,6 @@ namespace ActionPart
             {
                 Instance = this;
             }
-
-            DontDestroyOnLoad(gameObject);
         }
 
         private void Update()

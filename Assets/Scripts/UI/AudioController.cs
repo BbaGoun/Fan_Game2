@@ -11,7 +11,7 @@ public class AudioController : MonoBehaviour
     public AudioSource BGM;
     public AudioSource effectSound;
 
-    private void Awake()
+    public void Initialize()
     {
         if (instance == null)
         {

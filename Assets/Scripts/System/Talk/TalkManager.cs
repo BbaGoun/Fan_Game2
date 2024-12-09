@@ -65,7 +65,7 @@ namespace ActionPart
             }
         }
 
-        private void Awake()
+        public void Initialize()
         {
             #region Singleton
             if(Instance == null)

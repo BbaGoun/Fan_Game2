@@ -1,3 +1,4 @@
+using ActionPart;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ public class SettingData
     public float effectVolume;
 
     [SerializeField]
-    public List<Resolution> resolutionList = new List<Resolution>();
+    public List<Resolution> resolutionList;
     public int resolutionIndex;
     public FullScreenMode screenMode;
 
@@ -32,6 +33,7 @@ public class SettingData
         this.BGMVolume = other.BGMVolume;
         this.effectVolume = other.effectVolume;
 
+        this.resolutionList = new List<Resolution>();
         this.resolutionList.AddRange(other.resolutionList);
         this.resolutionIndex = other.resolutionIndex;
         this.screenMode = other.screenMode;
@@ -45,11 +47,12 @@ public class SettingContainer:MonoBehaviour
     public static SettingContainer instance;
 
     [SerializeField]
-    public SettingData m_SettingData = new SettingData();
+    public SettingData m_SettingData;
+    public bool isAwakeDone;
 
     private string dataPath;
 
-    private void Awake()
+    public void Initialize()
     {
         #region Singleton without DontDestroy
         if (instance == null)
@@ -73,21 +76,41 @@ public class SettingContainer:MonoBehaviour
         // 데이터가 없으면 만들고 저장하기
         else
         {
+            m_SettingData = new SettingData();
+            m_SettingData.resolutionList = new List<Resolution>();
+
             m_SettingData.masterVolume = 0.75f;
             m_SettingData.BGMVolume = 0.75f;
             m_SettingData.effectVolume = 0.75f;
 
             Resolution[] reses = Screen.resolutions;
+            var resList = m_SettingData.resolutionList;
             foreach (Resolution res in reses)
             {
                 if (res.width < 1000f)
                     continue;
                 if (Mathf.Round(res.width * 0.5625f) == res.height)
                 {
-                    m_SettingData.resolutionList.Add(res);
-                    //Debug.Log(res.ToString());
+                    if (resList.Count > 0)
+                    {
+                        var lastRes = resList[resList.Count - 1];
+                        if (lastRes.height == res.height && lastRes.refreshRateRatio.value < res.refreshRateRatio.value)
+                            resList[resList.Count - 1] = res;
+                        else
+                            resList.Add(res);
+                    }
+                    else
+                    {
+                        resList.Add(res);
+                    }
                 }
             }
+
+            foreach(Resolution res in resList)
+            {
+                Debug.Log(res.ToString());
+            }
+
             m_SettingData.resolutionIndex = m_SettingData.resolutionList.Count - 1;
             m_SettingData.windowResolutionIndex = m_SettingData.resolutionIndex;
             if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) // window
@@ -98,14 +121,12 @@ public class SettingContainer:MonoBehaviour
             {
                 m_SettingData.screenMode = FullScreenMode.MaximizedWindow;
             }
+            //m_SettingData.screenMode = FullScreenMode.Windowed;
 
             string sData = JsonUtility.ToJson(m_SettingData);
             File.WriteAllText(dataPath, sData);
         }
-    }
 
-    public void SettingChange()
-    {
-        // 데이터 갱신하기
+        isAwakeDone = true;
     }
 }

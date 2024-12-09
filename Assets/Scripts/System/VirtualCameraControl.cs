@@ -28,13 +28,11 @@ namespace ActionPart
             else
             {
                 Instance = this;
-            }
+            }   
             #endregion
 
 
             confiner = GetComponent<CinemachineConfiner2D>();
-
-            //SetConfiner();
 
             cvCamera = GetComponent<CinemachineVirtualCamera>();
             perlinNoise = cvCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();

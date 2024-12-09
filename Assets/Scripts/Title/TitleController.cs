@@ -37,8 +37,6 @@ namespace ActionPart
 
         private void Awake()
         {
-            audioController = AudioController.instance;
-
             background = transform.GetChild(1).gameObject;
             background.SetActive(false);
 
@@ -53,12 +51,15 @@ namespace ActionPart
 
             loadGame = transform.GetChild(3).gameObject;
             loadGame.SetActive(false);
+        }
+
+        public void Initialize()
+        {
+            audioController = AudioController.instance;
 
             maxResolutionIndex = SettingContainer.instance.m_SettingData.resolutionList.Count - 1;
 
             tmpSettingData = new SettingData(SettingContainer.instance.m_SettingData);
-
-            ApplyGraphic();
 
             master.value = SettingContainer.instance.m_SettingData.masterVolume;
             bgm.value = SettingContainer.instance.m_SettingData.BGMVolume;

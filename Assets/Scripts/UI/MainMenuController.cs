@@ -34,8 +34,6 @@ namespace ActionPart.UI
 
         private void Awake()
         {
-            audioController = AudioController.instance;
-
             background = transform.GetChild(0).gameObject;
             background.SetActive(false);
 
@@ -57,17 +55,21 @@ namespace ActionPart.UI
 
             saveGame = transform.GetChild(3).gameObject;
             saveGame.SetActive(false);
+        }
+
+        public void Initialize()
+        {
+            audioController = AudioController.instance;
 
             maxResolutionIndex = SettingContainer.instance.m_SettingData.resolutionList.Count - 1;
 
             tmpSettingData = new SettingData(SettingContainer.instance.m_SettingData);
-
+             
             ApplyGraphic();
 
             master.value = SettingContainer.instance.m_SettingData.masterVolume;
             bgm.value = SettingContainer.instance.m_SettingData.BGMVolume;
             effectSound.value = SettingContainer.instance.m_SettingData.effectVolume;
-
         }
 
         public void ToggleMainMenu(bool isShowMenu)
