@@ -108,7 +108,7 @@ public class SettingContainer:MonoBehaviour
 
             foreach(Resolution res in resList)
             {
-                Debug.Log(res.ToString());
+                //Debug.Log(res.ToString());
             }
 
             m_SettingData.resolutionIndex = m_SettingData.resolutionList.Count - 1;

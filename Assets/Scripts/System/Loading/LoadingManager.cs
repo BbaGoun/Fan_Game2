@@ -25,6 +25,8 @@ namespace ActionPart
         private VirtualCameraControl virtualCameraControl;
         [SerializeField]
         private PlayerWithStateMachine player;
+        [SerializeField]
+        private AudioController audioController;
         private bool isLoadDone;
         private bool isCamSetDone;
 
@@ -94,6 +96,8 @@ namespace ActionPart
                 }
                 yield return new WaitUntil(loadingScene.CheckisDone);
 
+                audioController.PauseBGM();
+
                 // 씬 세팅 전 초기화
                 isLoadDone = false;
                 isCamSetDone = false;
@@ -145,12 +149,11 @@ namespace ActionPart
                     yield return new WaitForSeconds(0.01f); // Wait for the next frame
                 }
 
+                sceneSetting = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<SceneSetting>();
+                
                 // 씬 로딩하면서 초기화해야할 것들 추가 필요?
                 if (!sceneName.Equals("메인 타이틀"))
                 {
-                    // 플레이어 위치 세팅
-                    sceneSetting = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<SceneSetting>();
-
                     // 플레이어를 먼저 소환해야 함
                     player.gameObject.SetActive(true);
                     // 플레이어 크기 조정 + 카메라 크기 조정
@@ -224,6 +227,9 @@ namespace ActionPart
                     case WithWalkOut.None:
                         break;
                 }
+                audioController.ChangeBGM(sceneSetting.bgmClip);
+                Debug.Log(sceneSetting.bgmClip.name);
+
                 yield return new WaitUntil(loadingScene.CheckisDone);
                 yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);
 

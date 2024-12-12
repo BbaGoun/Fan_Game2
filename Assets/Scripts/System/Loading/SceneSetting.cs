@@ -11,5 +11,7 @@ namespace ActionPart
         
         public Transform RightSpawnPoint;
         public Transform RightWalkOutPoint;
+
+        public AudioClip bgmClip;
     }
 }

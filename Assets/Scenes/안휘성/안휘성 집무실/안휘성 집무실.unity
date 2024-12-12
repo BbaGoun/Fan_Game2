@@ -463,7 +463,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 27.83567, y: 11.05}
+    oldSize: {x: 27.83, y: 11.05}
     newSize: {x: 27.83567, y: 11.05}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1661,6 +1661,7 @@ MonoBehaviour:
   LeftWalkOutPoint: {fileID: 73509251}
   RightSpawnPoint: {fileID: 1376634199}
   RightWalkOutPoint: {fileID: 1799590846}
+  bgmClip: {fileID: 8300000, guid: faaab25489939f34ea679d012bbe3b2e, type: 3}
 --- !u!1 &4460789334039696199
 GameObject:
   m_ObjectHideFlags: 0

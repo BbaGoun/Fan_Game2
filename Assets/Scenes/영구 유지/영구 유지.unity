@@ -1778,7 +1778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.9411765}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1938,6 +1938,7 @@ MonoBehaviour:
   loadingScene: {fileID: 1554635286}
   virtualCameraControl: {fileID: 1766588460}
   player: {fileID: 8770118516554096234}
+  audioController: {fileID: 1366983827}
 --- !u!1 &549783697
 GameObject:
   m_ObjectHideFlags: 0
@@ -7195,9 +7196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c012e4caab4664da64bafd235e200b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wipe: {fileID: 1961514659}
+  wipe: {fileID: 1961514660}
   loadingMascot: {fileID: 1998773903}
   loadingBar: {fileID: 1383656694}
+  wipeOpacity: 1
 --- !u!1 &1582312222
 GameObject:
   m_ObjectHideFlags: 0
@@ -9117,7 +9119,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
