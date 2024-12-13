@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 050ae4ee2bf4fa94c90cd8929be2fabf
+guid: 4033d218b5990fe40bc119197ba42b13
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Groggy_0
+      name: "\uBC29\uC5B4_\uAC00\uC774\uB4DC_0"
       rect:
         serializedVersion: 2
-        x: 35
-        y: 0
-        width: 200
-        height: 200
+        x: 55
+        y: 335
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,134 +111,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7c80da5df8fc4d42836845ae860f1ff
-      internalID: 1949352656
+      spriteID: 5bdd07a9e4273a7448e5315e911276fc
+      internalID: -477742574
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Groggy_1
+      name: "\uBC29\uC5B4_\uAC00\uC774\uB4DC_1"
       rect:
         serializedVersion: 2
-        x: 259
-        y: 0
-        width: 200
-        height: 200
+        x: 355
+        y: 335
+        width: 300
+        height: 300
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e8c05a884c181a41b81cceed60aeb9f
-      internalID: -541504391
+      spriteID: 3b3cdf30980a502439558cfb0ccb2e89
+      internalID: 1027071825
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Groggy_2
+      name: "\uBC29\uC5B4_\uAC00\uC774\uB4DC_2"
       rect:
         serializedVersion: 2
-        x: 477
-        y: 0
-        width: 200
-        height: 200
+        x: 655
+        y: 335
+        width: 300
+        height: 300
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e3e9101f0b95564ea504895906f19d8
-      internalID: 114104839
+      spriteID: 0b3468d2500bfed459b033a584550578
+      internalID: -1394654884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Groggy_3
+      name: "\uBC29\uC5B4_\uAC00\uC774\uB4DC_3"
       rect:
         serializedVersion: 2
-        x: 674
-        y: 0
-        width: 200
-        height: 200
+        x: 955
+        y: 335
+        width: 300
+        height: 300
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: feb1cf3b24854e2468459ac4fde43317
-      internalID: 634923056
+      spriteID: 959a40187bf47a3438a238a3fc2c07db
+      internalID: 1054918842
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Groggy_4
+      name: "\uBC29\uC5B4_\uAC00\uC774\uB4DC_4"
       rect:
         serializedVersion: 2
-        x: 874
-        y: 0
-        width: 200
-        height: 200
+        x: 1255
+        y: 335
+        width: 300
+        height: 300
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b041c453bb4ec94cbf78a0a3151ae47
-      internalID: -527771779
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Groggy_5
-      rect:
-        serializedVersion: 2
-        x: 1086
-        y: 0
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 031aa1e2fa36d57488d3865f9226996a
-      internalID: -129069258
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Groggy_6
-      rect:
-        serializedVersion: 2
-        x: 1289
-        y: 0
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 58d510178a021b74f817d5dcde1e746c
-      internalID: -1392082177
+      spriteID: 57f97cf421e5d9945837df2339abdf23
+      internalID: -1474671223
       vertices: []
       indices: 
       edges: []
@@ -254,13 +212,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Groggy_0: 1949352656
-      Groggy_1: -541504391
-      Groggy_2: 114104839
-      Groggy_3: 634923056
-      Groggy_4: -527771779
-      Groggy_5: -129069258
-      Groggy_6: -1392082177
+      "\uBC29\uC5B4_\uAC00\uC774\uB4DC_0": -477742574
+      "\uBC29\uC5B4_\uAC00\uC774\uB4DC_1": 1027071825
+      "\uBC29\uC5B4_\uAC00\uC774\uB4DC_2": -1394654884
+      "\uBC29\uC5B4_\uAC00\uC774\uB4DC_3": 1054918842
+      "\uBC29\uC5B4_\uAC00\uC774\uB4DC_4": -1474671223
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

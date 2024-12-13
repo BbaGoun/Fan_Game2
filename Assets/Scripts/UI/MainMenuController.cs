@@ -407,7 +407,19 @@ namespace ActionPart.UI
         {
             PlayClickSound();
             // 저장 추가
-            Application.Quit();
+            // 타이틀로 이동하는 걸로 바꾸자
+            Time.timeScale = 1;
+
+            background.SetActive(false);
+            mainMenu.SetActive(false);
+            titleAlert.SetActive(false);
+            quitAlert.SetActive(false);
+            option.SetActive(false);
+            graphic.SetActive(false);
+            sound.SetActive(false);
+            saveGame.SetActive(false);
+
+            LoadingManager.Instance.LoadSceneAsync("메인 타이틀", LoadingManager.SpawnPoint.None, LoadingManager.WithWalkOut.None, mode: LoadingManager.TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
         #endregion
 
