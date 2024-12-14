@@ -27,6 +27,8 @@ namespace ActionPart
         private PlayerWithStateMachine player;
         [SerializeField]
         private AudioController audioController;
+        [SerializeField]
+        private GameObject interfaces;
         private bool isLoadDone;
         private bool isCamSetDone;
 
@@ -154,6 +156,8 @@ namespace ActionPart
                 // 씬 로딩하면서 초기화해야할 것들 추가 필요?
                 if (!sceneName.Equals("메인 타이틀"))
                 {
+                    interfaces.SetActive(true);
+
                     // 플레이어를 먼저 소환해야 함
                     player.gameObject.SetActive(true);
                     // 플레이어 크기 조정 + 카메라 크기 조정
@@ -192,6 +196,7 @@ namespace ActionPart
                 }
                 else
                 {
+                    interfaces.SetActive(false);
                     var titleController = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<TitleController>();
                     titleController.Initialize();
                     player.gameObject.SetActive(false);

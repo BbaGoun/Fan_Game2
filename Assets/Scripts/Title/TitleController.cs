@@ -282,18 +282,22 @@ namespace ActionPart
         }
         public void ApplySound()
         {
+            Debug.Log("¾Æ¾Æ¾Æ");
             PlayClickSound();
             float masterVolume = tmpSettingData.masterVolume;
+            Debug.Log("¸¶½ºÅÍ º¼·ý : " + masterVolume);
             SettingContainer.instance.m_SettingData.masterVolume = masterVolume;
             masterVolume = Mathf.Log10(masterVolume) * 20; // Convert slider value to decibels
             audioController.SetMasterVolume(masterVolume);
 
             float BGMVolume = tmpSettingData.BGMVolume;
+            Debug.Log("ºñÁö¿¥ º¼·ý : " + BGMVolume);
             SettingContainer.instance.m_SettingData.BGMVolume = BGMVolume;
             BGMVolume = Mathf.Log10(BGMVolume) * 20; // Convert slider value to decibels
             audioController.SetBGMVolume(BGMVolume);
 
             float effectVolume = tmpSettingData.effectVolume;
+            Debug.Log("ÀÌÆåÆ® º¼·ý : " + effectVolume);
             SettingContainer.instance.m_SettingData.effectVolume = effectVolume;
             effectVolume = Mathf.Log10(effectVolume) * 20; // Convert slider value to decibels
             audioController.SetEffectVolume(effectVolume);
