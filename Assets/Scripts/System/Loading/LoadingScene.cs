@@ -8,7 +8,9 @@ namespace ActionPart
     public class LoadingScene : MonoBehaviour
     {
         [SerializeField]
-        private Image wipe;
+        private Image wipeLeft;
+        [SerializeField]
+        private Image wipeRight;
         [SerializeField]
         private Animator loadingMascot;
         [SerializeField]
@@ -51,13 +53,13 @@ namespace ActionPart
 
         public void DirectIn()
         {
-            wipe.rectTransform.anchoredPosition = new Vector2(0f, 0f);
+            wipeLeft.rectTransform.anchoredPosition = new Vector2(0f, 0f);
             isDone = true;
         }
 
         public void DirectOut()
         {
-            wipe.rectTransform.anchoredPosition = new Vector2(1920f, 0f);
+            wipeLeft.rectTransform.anchoredPosition = new Vector2(-2500f, 0f);
             isDone = true;
         }
 
@@ -73,19 +75,13 @@ namespace ActionPart
 
             IEnumerator IEFromLeftWipeIn(float duration)
             {
+                wipeLeft.rectTransform.anchoredPosition = new Vector2(-2500f, 0f);
 
-                wipe.rectTransform.anchoredPosition = new Vector2(-1920f, 0f);
-                wipe.color = new Color(0f, 0f, 0f, wipeOpacity);
-
-                var opacity = wipeOpacity;
-                var opacityGap = (1 - wipeOpacity) / 100f;
-                var moveGap = 1920 / 100f;
+                var moveGap = 2500 / 100f;
                 var timeGap = duration / 100f;
                 for (int i = 0; i < 100; i++)
                 {
-                    opacity += opacityGap;
-                    wipe.rectTransform.anchoredPosition += Vector2.right * moveGap;
-                    wipe.color = new Color(0f, 0f, 0f, opacity);
+                    wipeLeft.rectTransform.anchoredPosition += Vector2.right * moveGap;
                     yield return new WaitForSeconds(timeGap);
                 }
                 isDone = true;
@@ -105,18 +101,13 @@ namespace ActionPart
             IEnumerator IEFromRightWipeIn(float duration)
             {
 
-                wipe.rectTransform.anchoredPosition = new Vector2(1920f, 0f);
-                wipe.color = new Color(0f, 0f, 0f, wipeOpacity);
+                wipeRight.rectTransform.anchoredPosition = new Vector2(0f, 0f);
 
-                var opacity = wipeOpacity;
-                var opacityGap = (1 - wipeOpacity) / 100f;
-                var moveGap = 1920 / 100f;
+                var moveGap = 2500 / 100f;
                 var timeGap = duration / 100f;
                 for (int i = 0; i < 100; i++)
                 {
-                    opacity += opacityGap;
-                    wipe.rectTransform.anchoredPosition -= Vector2.right * moveGap;
-                    wipe.color = new Color(0f, 0f, 0f, opacity);
+                    wipeRight.rectTransform.anchoredPosition -= Vector2.right * moveGap;
                     yield return new WaitForSeconds(timeGap);
                 }
                 isDone = true;
@@ -136,18 +127,13 @@ namespace ActionPart
             IEnumerator IEToLeftWipeOut(float duration)
             {
 
-                wipe.rectTransform.anchoredPosition = new Vector2(0f, 0f);
-                wipe.color = new Color(0f, 0f, 0f, 1f);
+                wipeLeft.rectTransform.anchoredPosition = new Vector2(0f, 0f);
 
-                var opacity = 1f;
-                var opacityGap = (1-wipeOpacity) / 100f;
-                var moveGap = 1920 / 100f;
+                var moveGap = 2500 / 100f;
                 var timeGap = duration / 100f;
                 for (int i = 0; i < 100; i++)
                 {
-                    opacity -= opacityGap;
-                    wipe.rectTransform.anchoredPosition -= Vector2.right * moveGap;
-                    wipe.color = new Color(0f, 0f, 0f, opacity);
+                    wipeLeft.rectTransform.anchoredPosition -= Vector2.right * moveGap;
                     yield return new WaitForSeconds(timeGap);
                 }
                 isDone = true;
@@ -167,18 +153,13 @@ namespace ActionPart
             IEnumerator IEToRightWipeOut(float duration)
             {
 
-                wipe.rectTransform.anchoredPosition = new Vector2(0f, 0f);
-                wipe.color = new Color(0f, 0f, 0f, 1f);
+                wipeRight.rectTransform.anchoredPosition = new Vector2(-2500f, 0f);
 
-                var opacity = 1f;
-                var opacityGap = (1-wipeOpacity) / 100f;
-                var moveGap = 1920 / 100f;
+                var moveGap = 2500 / 100f;
                 var timeGap = duration / 100f;
                 for (int i = 0; i < 100; i++)
                 {
-                    opacity -= opacityGap;
-                    wipe.rectTransform.anchoredPosition += Vector2.right * moveGap;
-                    wipe.color = new Color(0f, 0f, 0f, opacity);
+                    wipeRight.rectTransform.anchoredPosition += Vector2.right * moveGap;
                     yield return new WaitForSeconds(timeGap);
                 }
                 isDone = true;
