@@ -16,6 +16,8 @@ namespace ActionPart
         [SerializeField]
         private Slider loadingBar;
         [SerializeField]
+        private float wipeWidth;
+        [SerializeField]
         private float wipeOpacity;
 
         private Coroutine coroutine;
@@ -59,7 +61,7 @@ namespace ActionPart
 
         public void DirectOut()
         {
-            wipeLeft.rectTransform.anchoredPosition = new Vector2(-2500f, 0f);
+            wipeLeft.rectTransform.anchoredPosition = new Vector2(-wipeWidth, 0f);
             isDone = true;
         }
 
@@ -75,9 +77,9 @@ namespace ActionPart
 
             IEnumerator IEFromLeftWipeIn(float duration)
             {
-                wipeLeft.rectTransform.anchoredPosition = new Vector2(-2500f, 0f);
+                wipeLeft.rectTransform.anchoredPosition = new Vector2(-wipeWidth, 0f);
 
-                var moveGap = 2500 / 100f;
+                var moveGap = wipeWidth / 100f;
                 var timeGap = duration / 100f;
                 for (int i = 0; i < 100; i++)
                 {
@@ -103,7 +105,7 @@ namespace ActionPart
 
                 wipeRight.rectTransform.anchoredPosition = new Vector2(0f, 0f);
 
-                var moveGap = 2500 / 100f;
+                var moveGap = wipeWidth / 100f;
                 var timeGap = duration / 100f;
                 for (int i = 0; i < 100; i++)
                 {
@@ -129,7 +131,7 @@ namespace ActionPart
 
                 wipeLeft.rectTransform.anchoredPosition = new Vector2(0f, 0f);
 
-                var moveGap = 2500 / 100f;
+                var moveGap = wipeWidth / 100f;
                 var timeGap = duration / 100f;
                 for (int i = 0; i < 100; i++)
                 {
@@ -153,9 +155,9 @@ namespace ActionPart
             IEnumerator IEToRightWipeOut(float duration)
             {
 
-                wipeRight.rectTransform.anchoredPosition = new Vector2(-2500f, 0f);
+                wipeRight.rectTransform.anchoredPosition = new Vector2(-wipeWidth, 0f);
 
-                var moveGap = 2500 / 100f;
+                var moveGap = wipeWidth / 100f;
                 var timeGap = duration / 100f;
                 for (int i = 0; i < 100; i++)
                 {

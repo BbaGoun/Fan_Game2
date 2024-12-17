@@ -8,6 +8,7 @@ TagManager:
   - Maps
   - SceneSetting
   - GameMenu
+  - CutScene
   layers:
   - Default
   - TransparentFX
