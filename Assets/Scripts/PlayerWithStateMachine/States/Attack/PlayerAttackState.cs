@@ -8,6 +8,9 @@ namespace ActionPart
     {
         PlayerWithStateMachine player;
 
+        [SerializeField]
+        AudioClip attackAudio;
+
         [Header("Attack Parameter")]
         [SerializeField]
         private bool attackStarted;
@@ -292,6 +295,13 @@ namespace ActionPart
             attackObject3.SetActive(false);
             attackState = AttackState.PrepareIdle;
             //Debug.Log("attackObject3 Off");
+        }
+        #endregion
+
+        #region
+        public void AttackAudio()
+        {
+            player.playerAudioSource.PlayOneShot(attackAudio, 1f);
         }
         #endregion
 

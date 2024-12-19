@@ -10,6 +10,9 @@ namespace ActionPart
     {
         PlayerWithStateMachine player;
 
+        [SerializeField]
+        AudioClip healAudio;
+
         #region parameters
         [SerializeField]
         private float healTime;
@@ -140,6 +143,11 @@ namespace ActionPart
                     }
                     break;
             }
+        }
+
+        public void HealAudio()
+        {
+            player.playerAudioSource.PlayOneShot(healAudio, 1f);
         }
 
         void ResetCharge()

@@ -11,6 +11,9 @@ namespace ActionPart
     {
         PlayerWithStateMachine player;
 
+        [SerializeField]
+        AudioClip guardAudio;
+
         #region parameters
         [Header("Stiffness Parameter")]
         [SerializeField]
@@ -288,6 +291,15 @@ namespace ActionPart
             guardState = GuardState.PrepareIdle;
             waitTimer = 0f;
         }
+        #endregion
+
+        #region Audio Event
+
+        public void GuardAudio()
+        {
+            player.playerAudioSource.PlayOneShot(guardAudio, 1f);
+        }
+
         #endregion
 
         #region Key Event

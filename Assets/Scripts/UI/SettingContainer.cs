@@ -79,9 +79,9 @@ public class SettingContainer:MonoBehaviour
             m_SettingData = new SettingData();
             m_SettingData.resolutionList = new List<Resolution>();
 
-            m_SettingData.masterVolume = 0.75f;
-            m_SettingData.BGMVolume = 0.75f;
-            m_SettingData.effectVolume = 0.75f;
+            m_SettingData.masterVolume = 1f;
+            m_SettingData.BGMVolume = 1f;
+            m_SettingData.effectVolume = 1f;
 
             Resolution[] reses = Screen.resolutions;
             var resList = m_SettingData.resolutionList;

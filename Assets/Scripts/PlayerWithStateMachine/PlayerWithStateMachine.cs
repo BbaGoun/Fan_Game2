@@ -34,6 +34,8 @@ namespace ActionPart
         [SerializeField]
         PlayerGroggyState playerGroggyState;
 
+        public AudioSource playerAudioSource;
+
         #endregion
 
         #region Else Scripts
@@ -164,6 +166,8 @@ namespace ActionPart
             delegateJump += playerJumpAttackState.ResetCanJumpAttack;
 
             stateMachine.InitState(playerMoveState);
+
+            playerAudioSource = GetComponent<AudioSource>();
 
             Initialize();
         }

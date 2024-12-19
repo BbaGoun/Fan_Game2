@@ -343,17 +343,17 @@ namespace ActionPart.UI
             PlayClickSound();
             float masterVolume = tmpSettingData.masterVolume;
             SettingContainer.instance.m_SettingData.masterVolume = masterVolume;
-            masterVolume = Mathf.Log10(masterVolume) * 20; // Convert slider value to decibels
+            masterVolume = Mathf.Log10(masterVolume) * 20 - 5f; // Convert slider value to decibels
             audioController.SetMasterVolume(masterVolume);
 
             float BGMVolume = tmpSettingData.BGMVolume;
             SettingContainer.instance.m_SettingData.BGMVolume = BGMVolume;
-            BGMVolume = Mathf.Log10(BGMVolume) * 20; // Convert slider value to decibels
+            BGMVolume = Mathf.Log10(BGMVolume) * 20 - 5f; // Convert slider value to decibels
             audioController.SetBGMVolume(BGMVolume);
 
             float effectVolume = tmpSettingData.effectVolume;
             SettingContainer.instance.m_SettingData.effectVolume = effectVolume;
-            effectVolume = Mathf.Log10(effectVolume) * 20; // Convert slider value to decibels
+            effectVolume = Mathf.Log10(effectVolume) * 20 + 10f; // Convert slider value to decibels
             audioController.SetEffectVolume(effectVolume);
         }
         #endregion

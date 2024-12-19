@@ -8,6 +8,13 @@ namespace ActionPart
     {
         PlayerWithStateMachine player;
 
+        [SerializeField]
+        AudioClip runAudio;
+        [SerializeField]
+        AudioClip jumpAudio;
+        [SerializeField]
+        AudioClip landAudio;
+
         #region parameters
         [Header("Speed Parameter")]
         [SerializeField]
@@ -339,6 +346,21 @@ namespace ActionPart
             else
                 return false;
         }
+
+        #region Audio Event
+        public void RunAudio()
+        {
+            player.playerAudioSource.PlayOneShot(runAudio, 1f);
+        }
+        public void JumpAudio()
+        {
+            player.playerAudioSource.PlayOneShot(jumpAudio, 1f);
+        }
+        public void LandAudio()
+        {
+            player.playerAudioSource.PlayOneShot(landAudio, 1f);
+        }
+        #endregion
 
         #region Key Event
         void JumpKeyDown()
