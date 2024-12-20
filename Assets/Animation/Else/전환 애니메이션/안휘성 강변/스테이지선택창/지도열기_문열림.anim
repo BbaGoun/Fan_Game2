@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\uBB38\uC5F4\uB9BC"
+  m_Name: "\uC9C0\uB3C4\uC5F4\uAE30_\uBB38\uC5F4\uB9BC"
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -328,7 +328,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.8333333
-    functionName: CloseDoor
+    functionName: MapOn_OpenDoor
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
