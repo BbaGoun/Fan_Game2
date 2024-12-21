@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ActionPart
+namespace ActionPart.UI
 {
     public class ElevatorLever : MonoBehaviour
     {
@@ -34,6 +34,7 @@ namespace ActionPart
                 if (player.CheckReadyTalk() && player.isGrounded)
                 {
                     upArrow.SetActive(false);
+                    MetaGameController.instance.DisShowInterface();
                     door.SetActive(true);
                 }
             }

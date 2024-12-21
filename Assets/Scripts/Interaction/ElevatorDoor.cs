@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ActionPart
+namespace ActionPart.UI
 {
     public class ElevatorDoor : MonoBehaviour
     {
@@ -42,6 +42,7 @@ namespace ActionPart
 
         public void MapOff_OpenDoor()
         {
+            MetaGameController.instance.ShowInterface();
             this.gameObject.SetActive(false);
         }
     }

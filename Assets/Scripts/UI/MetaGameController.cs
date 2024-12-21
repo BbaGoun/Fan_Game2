@@ -7,6 +7,7 @@ namespace ActionPart.UI
 {
     public class MetaGameController : MonoBehaviour
     {
+        public static MetaGameController instance;
         /// <summary>
         /// The main UI object which used for the menu.
         /// </summary>
@@ -15,6 +16,20 @@ namespace ActionPart.UI
         public PlayerInput playerInput;
 
         bool showMainCanvas = false;
+
+        private void Awake()
+        {
+            #region Singleton
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else if(instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+            #endregion
+        }
 
         /// <summary>
         /// Turn the main menu on or off.
@@ -43,6 +58,16 @@ namespace ActionPart.UI
                 playerInput.SwitchCurrentActionMap("Player");
             }
             this.showMainCanvas = show;
+        }
+
+        public void ShowInterface()
+        {
+            interfaces.SetActive(true);
+        }
+
+        public void DisShowInterface()
+        {
+            interfaces.SetActive(false);
         }
 
         public void MainMenuKey(InputAction.CallbackContext context)
