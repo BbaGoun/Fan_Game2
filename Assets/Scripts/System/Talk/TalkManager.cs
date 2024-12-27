@@ -241,6 +241,11 @@ namespace ActionPart
         {
             if (!isTalking)
             {
+                if (eventName.Equals("프롤로그 만화컷"))
+                {
+                    LoadingManager.Instance.LoadCartoonSceneAsync("프롤로그 만화컷1", LoadingManager.TransitionMode.FadeIn, 0f, 0f);
+                    return;
+                }
                 if (talkDictionary.ContainsKey(eventName))
                 {
                     if(_npc != null)

@@ -9,6 +9,7 @@ TagManager:
   - SceneSetting
   - GameMenu
   - CutScene
+  - CartoonSetting
   layers:
   - Default
   - TransparentFX

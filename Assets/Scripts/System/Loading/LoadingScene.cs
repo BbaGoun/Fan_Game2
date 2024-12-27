@@ -167,5 +167,59 @@ namespace ActionPart
                 isDone = true;
             }
         }
+
+        public void FadeIn(float duration)
+        {
+            isDone = false;
+
+            if (coroutine != null)
+                StopCoroutine(coroutine);
+
+            coroutine = StartCoroutine(IEFadeIn(duration));
+
+
+            IEnumerator IEFadeIn(float duration)
+            {
+
+                wipeLeft.rectTransform.anchoredPosition = new Vector2(0f, 0f);
+                wipeLeft.color = new Color(0f, 0f, 0f, 0f);
+
+                var opacityGap = 255 / 100f;
+                var timeGap = duration / 100f;
+                for (int i = 0; i < 100; i++)
+                {
+                    wipeLeft.color = new Color(0f, 0f, 0f, wipeLeft.color.a + opacityGap);
+                    yield return new WaitForSeconds(timeGap);
+                }
+                isDone = true;
+            }
+        }
+
+        public void FadeOut(float duration)
+        {
+            isDone = false;
+
+            if (coroutine != null)
+                StopCoroutine(coroutine);
+
+            coroutine = StartCoroutine(IEFadeOut(duration));
+
+
+            IEnumerator IEFadeOut(float duration)
+            {
+
+                wipeLeft.rectTransform.anchoredPosition = new Vector2(0f, 0f);
+                wipeLeft.color = new Color(0f, 0f, 0f, 1f);
+
+                var opacityGap = 255 / 100f;
+                var timeGap = duration / 100f;
+                for (int i = 0; i < 100; i++)
+                {
+                    wipeLeft.color = new Color(0f, 0f, 0f, wipeLeft.color.a - opacityGap);
+                    yield return new WaitForSeconds(timeGap);
+                }
+                isDone = true;
+            }
+        }
     }
 }

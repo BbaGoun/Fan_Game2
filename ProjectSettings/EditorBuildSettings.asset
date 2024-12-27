@@ -38,4 +38,10 @@ EditorBuildSettings:
     path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uAC15\uBCC0/\uC548\uD718\uC131
       \uAC15\uBCC0.unity"
     guid: 500432b873d3e7d4a9fc231b627d09f8
+  - enabled: 1
+    path: "Assets/Scenes/\uB9CC\uD654\uCEF7/\uD504\uB864\uB85C\uADF8 \uB9CC\uD654\uCEF7.unity"
+    guid: 087a8d204a094134d8ab52c4e3f721e3
+  - enabled: 1
+    path: "Assets/Scenes/\uB9CC\uD654\uCEF7/\uD504\uB864\uB85C\uADF8 \uB9CC\uD654\uCEF71.unity"
+    guid: 9719a4ab9c82b5840a2dd2c5df0ee985
   m_configObjects: {}

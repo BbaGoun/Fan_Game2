@@ -86,15 +86,6 @@ namespace ActionPart
                     continue;
                 }
 
-
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    if (!PlayerInputPart.Instance.isCanInput)
-                        PlayerInputPart.Instance.CanInput();
-                    else
-                        PlayerInputPart.Instance.CantInput();
-                }
-
                 if (isGrounded)
                 {
                     delegateGrounded?.Invoke();

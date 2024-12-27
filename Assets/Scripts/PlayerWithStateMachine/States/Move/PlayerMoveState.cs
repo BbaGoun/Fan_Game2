@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ActionPart
@@ -61,6 +62,7 @@ namespace ActionPart
 
         Coroutine moveCoroutine;
         bool isCoroutineDone;
+        bool noLandSound;
 
         public void Initialize(PlayerWithStateMachine _playerWithStateMachine)
         {
@@ -304,6 +306,8 @@ namespace ActionPart
                 StopCoroutine(moveCoroutine);
 
             moveCoroutine = StartCoroutine(IEMoveXFromTo(from, to));
+
+            noLandSound = true;
             
             IEnumerator IEMoveXFromTo(Transform from, Transform to)
             {
@@ -317,6 +321,7 @@ namespace ActionPart
                     player.LookRight();
                 else
                     player.LookLeft();
+                
                 player.SetAnimatorBool("isMove", true);
 
                 var moveGap = direction * moveSpeed / 2 * Time.fixedDeltaTime;
@@ -358,6 +363,11 @@ namespace ActionPart
         }
         public void LandAudio()
         {
+            if (noLandSound)
+            {
+                noLandSound = false;
+                return;
+            }
             player.playerAudioSource.PlayOneShot(landAudio, 1f);
         }
         #endregion

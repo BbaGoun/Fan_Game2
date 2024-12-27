@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,6 +36,7 @@ namespace ActionPart
         private SceneSetting sceneSetting;
         private ParallaxBackground parallaxBackground;
         private string loadedSceneName;
+        private string loadedCartoonSceneName;
         private Coroutine coroutine;
 
         public void Initialize()
@@ -79,7 +81,8 @@ namespace ActionPart
 
             IEnumerator LoadSceneCoroutine(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode, float inDelay, float outDelay)
             {
-                // 캐릭터 조작 비활성화 추가 필요?
+                // 캐릭터 조작 비활성화
+                PlayerInputPart.Instance.CantInput();
 
                 switch (mode)
                 {
@@ -90,7 +93,7 @@ namespace ActionPart
                         loadingScene.FromRightWipeIn(0.5f);
                         break;
                     case TransitionMode.FadeIn:
-                        // 페이드인 함수 만들어야함
+                        loadingScene.FadeIn(0.5f);
                         break;
                     case TransitionMode.Direct:
                         loadingScene.DirectIn();
@@ -109,8 +112,8 @@ namespace ActionPart
                 yield return new WaitForSeconds(inDelay);
 
                 // 이전 씬 언로드 필요
-                if(loadedSceneName != null)
-                {   
+                if (loadedSceneName != null)
+                {
                     AsyncOperation async1 = SceneManager.UnloadSceneAsync(loadedSceneName);
                     async1.allowSceneActivation = false;
 
@@ -144,7 +147,7 @@ namespace ActionPart
                     Debug.Log("로딩 진행도 : " + 0.5f + progress / 2);
 
                     if (asyncLoad.progress >= 0.9f)
-                    {   asyncLoad.allowSceneActivation = true;
+                    { asyncLoad.allowSceneActivation = true;
                         loadedSceneName = sceneName;
                     }
 
@@ -152,9 +155,9 @@ namespace ActionPart
                 }
 
                 sceneSetting = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<SceneSetting>();
-                
+
                 // 씬 로딩하면서 초기화해야할 것들 추가 필요?
-                if (!sceneName.Equals("메인 타이틀"))
+                if (!sceneName.Equals("메인 타이틀") && !sceneName.Equals("프롤로그 만화컷"))
                 {
                     interfaces.SetActive(true);
 
@@ -194,11 +197,16 @@ namespace ActionPart
                     // 카메라 세팅 끝
                     isCamSetDone = true;
                 }
-                else
+                else if(sceneName.Equals("메인 타이틀"))
                 {
                     interfaces.SetActive(false);
                     var titleController = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<TitleController>();
                     titleController.Initialize();
+                    player.gameObject.SetActive(false);
+                }
+                else if(sceneName.Equals("프롤로그 만화컷"))
+                {
+                    interfaces.SetActive(false);
                     player.gameObject.SetActive(false);
                 }
 
@@ -230,6 +238,7 @@ namespace ActionPart
                         player.playerMoveState.MoveXFromTo(sceneSetting.RightSpawnPoint, sceneSetting.RightWalkOutPoint);
                         break;
                     case WithWalkOut.None:
+                        PlayerInputPart.Instance.CanInput();
                         break;
                 }
                 audioController.ChangeBGM(sceneSetting.bgmClip);
@@ -238,7 +247,161 @@ namespace ActionPart
                 yield return new WaitUntil(loadingScene.CheckisDone);
                 yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);
 
-                // 캐릭터 조작 활성화 추가 필요?
+                isLoadDone = true;
+            }
+        }
+
+        public void LoadCartoonSceneAsync(string sceneName, TransitionMode mode = TransitionMode.Direct, float inDelay = 0.25f, float outDelay = 0.25f)
+        {
+            if (coroutine != null)
+                StopCoroutine(coroutine);
+
+            coroutine = StartCoroutine(LoadCartoonSceneCoroutine(sceneName, mode, inDelay, outDelay));
+
+
+            IEnumerator LoadCartoonSceneCoroutine(string sceneName, TransitionMode mode, float inDelay, float outDelay)
+            {
+                // 캐릭터 조작 비활성화
+                // 컷신이 끝날 때 조작 활성화 시킬 예정
+                PlayerInputPart.Instance.CantInput();
+                interfaces.SetActive(false);
+
+                switch (mode)
+                {
+                    case TransitionMode.FromLeft:
+                        loadingScene.FromLeftWipeIn(0.5f);
+                        break;
+                    case TransitionMode.FromRight:
+                        loadingScene.FromRightWipeIn(0.5f);
+                        break;
+                    case TransitionMode.FadeIn:
+                        loadingScene.FadeIn(0.5f);
+                        break;
+                    case TransitionMode.Direct:
+                        loadingScene.DirectIn();
+                        break;
+                }
+                yield return new WaitUntil(loadingScene.CheckisDone);
+
+                audioController.PauseBGM();
+
+                yield return new WaitForSeconds(inDelay);
+
+                // 새 씬 로드
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                asyncLoad.allowSceneActivation = false;
+
+                while (!asyncLoad.isDone)
+                {
+                    if (asyncLoad.progress >= 0.9f)
+                    {
+                        asyncLoad.allowSceneActivation = true;
+                        loadedCartoonSceneName = sceneName;
+                    }
+
+                    yield return new WaitForSeconds(0.01f); // Wait for the next frame
+                }
+
+                var cartoonSetting = GameObject.FindGameObjectWithTag("CartoonSetting").GetComponent<CartoonSetting>();
+                Debug.Log(cartoonSetting.name);
+
+                yield return new WaitForSeconds(outDelay);
+                loadingScene.LoadingObjectOff();
+
+                switch (mode)
+                {
+                    case TransitionMode.FromLeft:
+                        loadingScene.ToLeftWipeOut(0.5f);
+                        break;
+                    case TransitionMode.FromRight:
+                        loadingScene.ToRightWipeOut(0.5f);
+                        break;
+                    case TransitionMode.FadeIn:
+                        loadingScene.FadeOut(0.5f);
+                        break;
+                    case TransitionMode.Direct:
+                        loadingScene.DirectOut();
+                        break;
+                }
+                
+                audioController.ChangeBGM(cartoonSetting.bgmClip);
+
+                yield return new WaitUntil(loadingScene.CheckisDone);
+
+                isLoadDone = true;
+            }
+        }
+
+        public void UnLoadCartoonSceneAsync(TransitionMode mode = TransitionMode.Direct, float inDelay = 0.25f, float outDelay = 0.25f)
+        {
+            if (coroutine != null)
+                StopCoroutine(coroutine);
+
+            coroutine = StartCoroutine(UnLoadSceneCoroutine(mode, inDelay, outDelay));
+
+
+            IEnumerator UnLoadSceneCoroutine(TransitionMode mode, float inDelay, float outDelay)
+            {
+                switch (mode)
+                {
+                    case TransitionMode.FromLeft:
+                        loadingScene.FromLeftWipeIn(0.5f);
+                        break;
+                    case TransitionMode.FromRight:
+                        loadingScene.FromRightWipeIn(0.5f);
+                        break;
+                    case TransitionMode.FadeIn:
+                        loadingScene.FadeIn(0.5f);
+                        break;
+                    case TransitionMode.Direct:
+                        loadingScene.DirectIn();
+                        break;
+                }
+                yield return new WaitUntil(loadingScene.CheckisDone);
+
+                audioController.PauseBGM();
+
+                yield return new WaitForSeconds(inDelay);
+
+                //만화컷 언 로드
+                AsyncOperation asyncUnLoad = SceneManager.UnloadSceneAsync(loadedCartoonSceneName);
+                asyncUnLoad.allowSceneActivation = false;
+
+                while (!asyncUnLoad.isDone)
+                {
+                    if (asyncUnLoad.progress >= 0.9f)
+                    {
+                        asyncUnLoad.allowSceneActivation = true;
+                    }
+
+                    yield return new WaitForSeconds(0.01f); // Wait for the next frame
+                }
+
+                yield return new WaitForSeconds(outDelay);
+                loadingScene.LoadingObjectOff();
+
+                switch (mode)
+                {
+                    case TransitionMode.FromLeft:
+                        loadingScene.ToLeftWipeOut(0.5f);
+                        break;
+                    case TransitionMode.FromRight:
+                        loadingScene.ToRightWipeOut(0.5f);
+                        break;
+                    case TransitionMode.FadeIn:
+                        loadingScene.FadeOut(0.5f);
+                        break;
+                    case TransitionMode.Direct:
+                        loadingScene.DirectOut();
+                        break;
+                }
+
+                audioController.ChangeBGM(sceneSetting.bgmClip);
+                PlayerInputPart.Instance.CanInput();
+                interfaces.SetActive(true);
+
+                yield return new WaitUntil(loadingScene.CheckisDone);
+
                 isLoadDone = true;
             }
         }
@@ -247,10 +410,7 @@ namespace ActionPart
         {
             FromLeft,
             FromRight,
-            ToLeft,
-            ToRight,
             FadeIn,
-            FadeOut,
             Direct,
         }
 
