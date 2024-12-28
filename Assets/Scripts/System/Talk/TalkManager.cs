@@ -159,8 +159,12 @@ namespace ActionPart
 
         void TalkNextEvent(string nextEvent)
         {
+            Debug.Log(nextEvent);
             switch(nextEvent)
             {
+                case "튜토리얼_게임 시작":
+                    TimelineController.instance.PlayTimeline(nextEvent);
+                    break;
                 case "전투 시작":
                     //Schedule<BossBattleStart>();
                     //Schedule<PlayerTalkEnd>();
@@ -229,7 +233,7 @@ namespace ActionPart
                         talkData.faces = faceList.ToArray();
                         talkDataList.Add(talkData);
                     }
-                    string nextEvent = rowValues[3].Trim();
+                    string nextEvent = rowValues[4].Trim();
 
                     TalkEvent talkEvent = new TalkEvent(eventName, talkDataList.ToArray(), nextEvent);
                     talkDictionary.Add(eventName, talkEvent);

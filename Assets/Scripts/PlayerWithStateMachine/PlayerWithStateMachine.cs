@@ -256,6 +256,33 @@ namespace ActionPart
             animator.Update(0f);
         }
 
+        public void PauseAnimator()
+        {
+            animator.Rebind();
+            animator.Update(0f);
+            animator.speed = 0f;
+        }
+
+        public void PlayAnimator()
+        {
+            animator.Rebind();
+            animator.Update(0f);
+            animator.speed = 1f;
+        }
+
+        public void ApplyRootMotionTemp()
+        {
+            animator.applyRootMotion = true;
+
+            StartCoroutine(IEUnApplyRootMotion());
+
+            IEnumerator IEUnApplyRootMotion()
+            {
+                yield return null;
+                animator.applyRootMotion = false;
+            }
+        }
+
         public void ChangeStateOfStateMachine(PlayerState state)
         {
             switch (state)

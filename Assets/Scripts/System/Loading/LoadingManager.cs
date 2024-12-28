@@ -122,7 +122,6 @@ namespace ActionPart
                     {
                         float progress = Mathf.Clamp01(async1.progress / 0.9f); // Normalize progress between 0 and 1
                         loadingScene.LoadingProgressApply(progress / 2);
-                        Debug.Log("로딩 진행도 : " + progress / 2);
 
                         if (async1.progress >= 0.9f)
                         {
@@ -144,7 +143,6 @@ namespace ActionPart
                 {
                     float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f); // Normalize progress between 0 and 1
                     loadingScene.LoadingProgressApply(0.5f + progress / 2);
-                    Debug.Log("로딩 진행도 : " + 0.5f + progress / 2);
 
                     if (asyncLoad.progress >= 0.9f)
                     { asyncLoad.allowSceneActivation = true;
@@ -242,7 +240,6 @@ namespace ActionPart
                         break;
                 }
                 audioController.ChangeBGM(sceneSetting.bgmClip);
-                Debug.Log(sceneSetting.bgmClip.name);
 
                 yield return new WaitUntil(loadingScene.CheckisDone);
                 yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);

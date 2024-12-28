@@ -17,22 +17,24 @@ namespace ActionPart
         public BattleManager _battleManager;
         public MainMenuController _mainMenuController;
         public AudioController _audioController;
-        public ForDebug forDebug;
+        public ForDebug _forDebug;
+        public TimelineController _timelineController;
         
         private void Awake()
         {
             // 별 상관 없는 것들
-            forDebug.Initialize();
+            _timelineController.Initialize();
+            _forDebug.Initialize();
             _timeController.Initialize();
-            _playerInputPart.Initialize();
             _battleManager.Initialize();
-            _audioController.Initialize();
 
             // 먼저 해야 하는 것들
             _settingContainer.Initialize();
             _dataManager.Initialize();
             _talkManager.Initialize();
-            
+            _audioController.Initialize();
+            _playerInputPart.Initialize();
+
             // 이후 해야 하는 것들
             _mainMenuController.Initialize();
             _loadingManager.Initialize();

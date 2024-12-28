@@ -63,6 +63,7 @@ namespace ActionPart
         Coroutine moveCoroutine;
         bool isCoroutineDone;
         bool noLandSound;
+        int count = 0;
 
         public void Initialize(PlayerWithStateMachine _playerWithStateMachine)
         {
@@ -355,6 +356,7 @@ namespace ActionPart
         #region Audio Event
         public void RunAudio()
         {
+            Debug.Log("count" + ++count);
             player.playerAudioSource.PlayOneShot(runAudio, 1f);
         }
         public void JumpAudio()
