@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,13 @@ using UnityEngine.Timeline;
 
 namespace ActionPart
 {
-    public class TimelineController : MonoBehaviour
+    public class GlobalTimelineController : MonoBehaviour
     {
-        public static TimelineController instance;
+        public static GlobalTimelineController instance;
+
         PlayableDirector playableDirector;
         public List<TimelineAsset> timeAssets;
+        public LocalTimelineController currentLocalTimelineController;
 
         public void Initialize()
         {
@@ -25,23 +28,28 @@ namespace ActionPart
             }
             #endregion
 
-            playableDirector = gameObject.GetComponent<PlayableDirector>();
+            playableDirector = GetComponent<PlayableDirector>();
+        }
 
-            foreach (var asset in timeAssets)
-            {
-                Debug.Log(asset.name);
-            }
+        public void ChangeCurrentLocalTimelineController(LocalTimelineController other)
+        {
+            currentLocalTimelineController = other;
+        }
+
+        public void PlayLocalTimeline(string timelineName)
+        {
+            PlayTimeline(timelineName);
+            currentLocalTimelineController.PlayTimeline(timelineName);
         }
 
         public void PlayTimeline(string timelineName)
         {
             foreach (TimelineAsset asset in timeAssets)
             {
-                Debug.Log(asset.name + " " + timelineName);
                 if (asset.name.Equals(timelineName))
                 {
                     playableDirector.Play(asset);
-                    PlayerWithStateMachine.Instance.PauseAnimator();
+                    //PlayerWithStateMachine.Instance.PauseAnimator();
                     PlayerInputPart.Instance.CantInput();
                     break;
                 }
@@ -53,6 +61,14 @@ namespace ActionPart
             PlayerWithStateMachine.Instance.ApplyRootMotionTemp();
             PlayerWithStateMachine.Instance.PlayAnimator();
             PlayerInputPart.Instance.CanInput();
+        }
+
+        public void PlayerMoveXTo(float x)
+        {
+            var transformFrom = PlayerWithStateMachine.Instance.transform.localPosition;
+            var transformTo = new Vector3(x, transformFrom.y, transformFrom.z);
+
+            PlayerWithStateMachine.Instance.playerMoveState.MoveXFromTo(transformFrom, transformTo);
         }
     }
 }

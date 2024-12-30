@@ -25,12 +25,17 @@ namespace ActionPart
                 {
                     var player = collision.GetComponent<PlayerWithStateMachine>();
 
-                    player.playerMoveState.MoveXFromTo(player.transform, outPoint);
+                    player.playerMoveState.MoveXFromTo(player.transform.localPosition, outPoint.localPosition);
                     while (player.playerMoveState.IsCoroutineDone()) ;
 
                     LoadingManager.Instance.LoadSceneAsync(nextSceneName, nextSpawnPoint, walkOut, transitionMode);
                 }
             }
+        }
+
+        public void ChangeNextScene(string other)
+        {
+            nextSceneName = other;
         }
     }
 }

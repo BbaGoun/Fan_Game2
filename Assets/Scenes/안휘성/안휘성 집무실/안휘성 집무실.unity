@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2cb2273bc55a4c4582898c403c62015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talkEventName: "\uC624\uD504\uB2DD"
+  talkEventName: "\uD29C\uD1A0\uB9AC\uC5BC1"
 --- !u!1 &291786496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,6 +1466,72 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 40, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1796297149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1796297150}
+  - component: {fileID: 1796297151}
+  - component: {fileID: 1796297152}
+  m_Layer: 0
+  m_Name: ==== Local Timeline Controller ====
+  m_TagString: LocalTimelineController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1796297150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796297149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7902980061743130021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &1796297151
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796297149}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 0e40c74cb88608b43b8fa29f6d21ed9a, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -8251238672007108224, guid: 0e40c74cb88608b43b8fa29f6d21ed9a, type: 2}
+    value: {fileID: 6866244366341414529}
+  m_ExposedReferences:
+    m_References: []
+--- !u!114 &1796297152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796297149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce568e63c8b3064aa408cbf2ccd39dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeAssets:
+  - {fileID: 11400000, guid: 0e40c74cb88608b43b8fa29f6d21ed9a, type: 2}
 --- !u!1 &1799590845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,6 +2054,7 @@ GameObject:
   - component: {fileID: 6866244366341414528}
   - component: {fileID: 5217849095127350860}
   - component: {fileID: 6455603044159786585}
+  - component: {fileID: 6866244366341414529}
   m_Layer: 0
   m_Name: Right End
   m_TagString: Untagged
@@ -2072,6 +2139,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 303996327}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6866244366341414529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4460789334039696199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: cd82d4e58d39a074399f27c01b5c4bf9, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6455603044159786585}
+          m_TargetAssemblyTypeName: ActionPart.SceneSideEnd, Assembly-CSharp
+          m_MethodName: ChangeNextScene
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5 \uAC00\uB294
+              \uAE38"
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &6909115212509079280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2096,7 +2194,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1796297150}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7919241765495390592

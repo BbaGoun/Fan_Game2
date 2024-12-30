@@ -10,6 +10,7 @@ TagManager:
   - GameMenu
   - CutScene
   - CartoonSetting
+  - LocalTimelineController
   layers:
   - Default
   - TransparentFX

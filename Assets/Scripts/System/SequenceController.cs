@@ -18,7 +18,7 @@ namespace ActionPart
         public MainMenuController _mainMenuController;
         public AudioController _audioController;
         public ForDebug _forDebug;
-        public TimelineController _timelineController;
+        public GlobalTimelineController _timelineController;
         
         private void Awake()
         {

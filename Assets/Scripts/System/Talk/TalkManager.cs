@@ -162,8 +162,8 @@ namespace ActionPart
             Debug.Log(nextEvent);
             switch(nextEvent)
             {
-                case "튜토리얼_게임 시작":
-                    TimelineController.instance.PlayTimeline(nextEvent);
+                case "튜토리얼_연무장 이동":
+                    GlobalTimelineController.instance.PlayLocalTimeline(nextEvent);
                     break;
                 case "전투 시작":
                     //Schedule<BossBattleStart>();
@@ -227,7 +227,7 @@ namespace ActionPart
                             if (++i < rows.Length)
                                 rowValues = rows[i].Split(new char[] { '|' });
                             else break;
-                        } while (!name.Equals(rowValues[1]) && rowValues[0] != "end");
+                        } while (name.Equals(rowValues[1]) && rowValues[0] != "end");
 
                         talkData.contexts = contextList.ToArray();
                         talkData.faces = faceList.ToArray();

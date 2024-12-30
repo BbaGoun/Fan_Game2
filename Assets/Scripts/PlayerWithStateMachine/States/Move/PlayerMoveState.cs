@@ -63,7 +63,6 @@ namespace ActionPart
         Coroutine moveCoroutine;
         bool isCoroutineDone;
         bool noLandSound;
-        int count = 0;
 
         public void Initialize(PlayerWithStateMachine _playerWithStateMachine)
         {
@@ -301,7 +300,7 @@ namespace ActionPart
             }
         }
 
-        public void MoveXFromTo(Transform from, Transform to)
+        public void MoveXFromTo(Vector3 from, Vector3 to)
         {
             if (moveCoroutine != null)
                 StopCoroutine(moveCoroutine);
@@ -310,14 +309,14 @@ namespace ActionPart
 
             noLandSound = true;
             
-            IEnumerator IEMoveXFromTo(Transform from, Transform to)
+            IEnumerator IEMoveXFromTo(Vector3 from, Vector3 to)
             {
                 isCoroutineDone = false;
                 PlayerInputPart.Instance.CantInput();
                 player.isStopped = true;
 
-                this.transform.localPosition = from.localPosition;
-                var direction = Mathf.Sign(to.localPosition.x - from.localPosition.x);
+                this.transform.localPosition = from;
+                var direction = Mathf.Sign(to.x - from.x);
                 if (direction >= 0)
                     player.LookRight();
                 else
@@ -326,7 +325,7 @@ namespace ActionPart
                 player.SetAnimatorBool("isMove", true);
 
                 var moveGap = direction * moveSpeed / 2 * Time.fixedDeltaTime;
-                var moveCount = (to.localPosition.x - from.localPosition.x) / moveGap;
+                var moveCount = (to.x - from.x) / moveGap;
 
                 for(int i = 0; i < moveCount; i++)
                 {
@@ -356,7 +355,6 @@ namespace ActionPart
         #region Audio Event
         public void RunAudio()
         {
-            Debug.Log("count" + ++count);
             player.playerAudioSource.PlayOneShot(runAudio, 1f);
         }
         public void JumpAudio()

@@ -34,6 +34,7 @@ namespace ActionPart
         private bool isCamSetDone;
 
         private SceneSetting sceneSetting;
+        private LocalTimelineController localTimelineController;
         private ParallaxBackground parallaxBackground;
         private string loadedSceneName;
         private string loadedCartoonSceneName;
@@ -194,6 +195,9 @@ namespace ActionPart
                     parallaxBackground.SetCamera();
                     // 카메라 세팅 끝
                     isCamSetDone = true;
+
+                    localTimelineController = GameObject.FindGameObjectWithTag("LocalTimelineController").GetComponent<LocalTimelineController>();
+                    GlobalTimelineController.instance.ChangeCurrentLocalTimelineController(localTimelineController);
                 }
                 else if(sceneName.Equals("메인 타이틀"))
                 {
@@ -230,10 +234,10 @@ namespace ActionPart
                 switch (walkOut)
                 {
                     case WithWalkOut.Left:
-                        player.playerMoveState.MoveXFromTo(sceneSetting.LeftSpawnPoint, sceneSetting.LeftWalkOutPoint);
+                        player.playerMoveState.MoveXFromTo(sceneSetting.LeftSpawnPoint.localPosition, sceneSetting.LeftWalkOutPoint.localPosition);
                         break;
                     case WithWalkOut.Right:
-                        player.playerMoveState.MoveXFromTo(sceneSetting.RightSpawnPoint, sceneSetting.RightWalkOutPoint);
+                        player.playerMoveState.MoveXFromTo(sceneSetting.RightSpawnPoint.localPosition, sceneSetting.RightWalkOutPoint.localPosition);
                         break;
                     case WithWalkOut.None:
                         PlayerInputPart.Instance.CanInput();
