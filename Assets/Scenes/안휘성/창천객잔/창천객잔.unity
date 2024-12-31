@@ -652,8 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce568e63c8b3064aa408cbf2ccd39dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeAssets:
-  - {fileID: 11400000, guid: 0e40c74cb88608b43b8fa29f6d21ed9a, type: 2}
+  timeAssets: []
 --- !u!320 &1083781887
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -663,7 +662,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1083781884}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 0e40c74cb88608b43b8fa29f6d21ed9a, type: 2}
+  m_PlayableAsset: {fileID: 0}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
