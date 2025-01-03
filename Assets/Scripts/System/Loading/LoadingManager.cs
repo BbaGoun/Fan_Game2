@@ -165,7 +165,7 @@ namespace ActionPart
                     // 플레이어 크기 조정 + 카메라 크기 조정
                     if (sceneName.Equals("안휘성 시장"))
                     {
-                        player.SetSpeedMultiplier(1.25f);
+                        player.SetSpeedMultiplier(1.5f);
                         player.transform.localScale = new Vector3(2, 2, 1);
                         virtualCameraControl.SetCamSize(10f);
                     }

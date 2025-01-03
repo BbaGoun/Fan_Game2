@@ -1515,7 +1515,7 @@ PlayableDirector:
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: -8251238672007108224, guid: 0e40c74cb88608b43b8fa29f6d21ed9a, type: 2}
-    value: {fileID: 6866244366341414529}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &1796297152
@@ -1532,6 +1532,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeAssets:
   - {fileID: 11400000, guid: 0e40c74cb88608b43b8fa29f6d21ed9a, type: 2}
+  leftEnd: {fileID: 0}
+  rightEnd: {fileID: 6455603044159786585}
 --- !u!1 &1799590845
 GameObject:
   m_ObjectHideFlags: 0
@@ -2054,7 +2056,6 @@ GameObject:
   - component: {fileID: 6866244366341414528}
   - component: {fileID: 5217849095127350860}
   - component: {fileID: 6455603044159786585}
-  - component: {fileID: 6866244366341414529}
   m_Layer: 0
   m_Name: Right End
   m_TagString: Untagged
@@ -2139,37 +2140,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 303996327}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6866244366341414529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4460789334039696199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: cd82d4e58d39a074399f27c01b5c4bf9, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6455603044159786585}
-          m_TargetAssemblyTypeName: ActionPart.SceneSideEnd, Assembly-CSharp
-          m_MethodName: ChangeNextScene
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5 \uAC00\uB294
-              \uAE38"
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &6909115212509079280
 MonoBehaviour:
   m_ObjectHideFlags: 0

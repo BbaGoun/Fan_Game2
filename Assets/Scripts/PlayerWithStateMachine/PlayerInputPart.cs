@@ -82,6 +82,10 @@ namespace ActionPart
 
         public void ActionMove(InputAction.CallbackContext context)
         {
+            //이걸 멈추면 오히려 계속 앞으로 나아가네
+            /*if (Time.timeScale == 0 || !isCanInput)
+                return;
+            */
             inputVec = context.ReadValue<Vector2>();
         }
 

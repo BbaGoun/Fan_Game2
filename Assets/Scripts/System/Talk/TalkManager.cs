@@ -163,7 +163,7 @@ namespace ActionPart
             switch(nextEvent)
             {
                 case "튜토리얼_연무장 이동":
-                    GlobalTimelineController.instance.PlayLocalTimeline(nextEvent);
+                    GlobalTimelineController.instance.PlayTimeline(nextEvent);
                     break;
                 case "전투 시작":
                     //Schedule<BossBattleStart>();

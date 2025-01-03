@@ -10,23 +10,39 @@ namespace ActionPart
     {
         PlayableDirector playableDirector;
         public List<TimelineAsset> timeAssets;
+        public SceneSideEnd leftEnd;
+        public SceneSideEnd rightEnd;
 
         private void Awake()
         {
             playableDirector = GetComponent<PlayableDirector>();
         }
 
-        public void PlayTimeline(string timelineName)
+        public void PlayLocalTimeline(string timelineName)
         {
-            foreach (TimelineAsset asset in timeAssets)
+            StartCoroutine(IEPlayLocalTimeline(timelineName));
+
+            IEnumerator IEPlayLocalTimeline(string timelineName)
             {
-                if (asset.name.Equals(timelineName))
+                switch (timelineName)
                 {
-                    playableDirector.Play(asset);
-                    //PlayerWithStateMachine.Instance.PauseAnimator();
-                    PlayerInputPart.Instance.CantInput();
-                    break;
+                    case "튜토리얼_연무장 이동":
+                        rightEnd.ChangeNextScene("안휘성 연무장 가는 길");
+                        break;
                 }
+
+
+                /*foreach (TimelineAsset asset in timeAssets)
+                {
+                    if (asset.name.Equals(timelineName))
+                    {
+                        playableDirector.Play(asset);
+                        //PlayerWithStateMachine.Instance.PauseAnimator();
+                        PlayerInputPart.Instance.CantInput();
+                        break;
+                    }
+                }*/
+                yield return null;
             }
         }
     }

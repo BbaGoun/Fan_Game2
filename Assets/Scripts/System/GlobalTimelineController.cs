@@ -11,8 +11,7 @@ namespace ActionPart
     {
         public static GlobalTimelineController instance;
 
-        PlayableDirector playableDirector;
-        public List<TimelineAsset> timeAssets;
+        public TimelineBars timelineBars;
         public LocalTimelineController currentLocalTimelineController;
 
         public void Initialize()
@@ -27,8 +26,6 @@ namespace ActionPart
                 Destroy(this.gameObject);
             }
             #endregion
-
-            playableDirector = GetComponent<PlayableDirector>();
         }
 
         public void ChangeCurrentLocalTimelineController(LocalTimelineController other)
@@ -36,23 +33,25 @@ namespace ActionPart
             currentLocalTimelineController = other;
         }
 
-        public void PlayLocalTimeline(string timelineName)
-        {
-            PlayTimeline(timelineName);
-            currentLocalTimelineController.PlayTimeline(timelineName);
-        }
-
         public void PlayTimeline(string timelineName)
         {
-            foreach (TimelineAsset asset in timeAssets)
+            StartCoroutine(IEPlayTimeline(timelineName));
+
+            IEnumerator IEPlayTimeline(string timelineName)
             {
-                if (asset.name.Equals(timelineName))
+                timelineBars.BarsOn();
+
+                switch (timelineName)
                 {
-                    playableDirector.Play(asset);
-                    //PlayerWithStateMachine.Instance.PauseAnimator();
-                    PlayerInputPart.Instance.CantInput();
-                    break;
+                    case "튜토리얼_연무장 이동":
+                        PlayerMoveXTo(14);
+                        currentLocalTimelineController.PlayLocalTimeline(timelineName);
+                        yield return new WaitUntil(PlayerWithStateMachine.Instance.playerMoveState.IsCoroutineDone);
+                        PlayerCanMove();
+                        break;
                 }
+
+                timelineBars.BarsOff();
             }
         }
 

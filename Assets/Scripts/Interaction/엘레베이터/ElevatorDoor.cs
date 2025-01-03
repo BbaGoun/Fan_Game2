@@ -6,6 +6,8 @@ namespace ActionPart.UI
 {
     public class ElevatorDoor : MonoBehaviour
     {
+        public Elevator elevator;
+
         [SerializeField]
         GameObject background;
         [SerializeField]
@@ -42,8 +44,11 @@ namespace ActionPart.UI
 
         public void MapOff_OpenDoor()
         {
+            PlayerInputPart.Instance.CanInput();
             MetaGameController.instance.ShowInterface();
             this.gameObject.SetActive(false);
+
+            elevator.ElevatorDown();
         }
     }
 
