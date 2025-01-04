@@ -36,11 +36,11 @@ namespace ActionPart
                 {
                     if (mobs[i] == null)
                     {
-                        Debug.Log("뭔데");
+                        Debug.Log("모브가 없단다");
                     }
                     if (mobs[i].health == null)
                     {
-                        Debug.Log("시발");
+                        Debug.Log("모브한테 체력을 안 넣어줬단다");
                     }
                     if (!mobs[i].health.CheckIsAlive())
                     {

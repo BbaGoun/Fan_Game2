@@ -43,15 +43,12 @@ namespace ActionPart
 
                 switch (timelineName)
                 {
-                    case "튜토리얼_연무장 이동":
-                        PlayerMoveXTo(14);
-                        currentLocalTimelineController.PlayLocalTimeline(timelineName);
-                        yield return new WaitUntil(PlayerWithStateMachine.Instance.playerMoveState.IsCoroutineDone);
-                        PlayerCanMove();
+                    default:
                         break;
                 }
 
                 timelineBars.BarsOff();
+                yield return null;
             }
         }
 

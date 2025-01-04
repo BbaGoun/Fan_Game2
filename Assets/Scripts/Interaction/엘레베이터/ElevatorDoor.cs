@@ -44,11 +44,11 @@ namespace ActionPart.UI
 
         public void MapOff_OpenDoor()
         {
+            elevator.ElevatorDown();
+
             PlayerInputPart.Instance.CanInput();
             MetaGameController.instance.ShowInterface();
             this.gameObject.SetActive(false);
-
-            elevator.ElevatorDown();
         }
     }
 

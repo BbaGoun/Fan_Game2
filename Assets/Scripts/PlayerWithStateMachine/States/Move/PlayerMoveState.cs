@@ -300,7 +300,7 @@ namespace ActionPart
             }
         }
 
-        public void MoveXFromTo(Vector3 from, Vector3 to)
+        public void MoveXFromTo(Vector3 from, Vector3 to, float speedMultiplier = 0.5f)
         {
             if (moveCoroutine != null)
                 StopCoroutine(moveCoroutine);
@@ -322,12 +322,56 @@ namespace ActionPart
                 else
                     player.LookLeft();
                 
+                player.ResetAnimator();
                 player.SetAnimatorBool("isMove", true);
 
-                var moveGap = direction * moveSpeed / 2 * Time.fixedDeltaTime;
+                var moveGap = direction * moveSpeed * speedMultiplier * Time.fixedDeltaTime;
                 var moveCount = (to.x - from.x) / moveGap;
 
                 for(int i = 0; i < moveCount; i++)
+                {
+                    this.transform.localPosition = new Vector3(this.transform.localPosition.x + moveGap, this.transform.localPosition.y, this.transform.localPosition.z);
+                    yield return new WaitForFixedUpdate();
+                }
+
+                player.ResetAnimator();
+                player.SetAnimatorBool("isMove", false);
+                PlayerInputPart.Instance.CanInput();
+                player.isStopped = false;
+
+                isCoroutineDone = true;
+            }
+        }
+
+        public void MoveYFromTo(Vector3 from, Vector3 to, float speedMultiplier = 0.5f)
+        {
+            if (moveCoroutine != null)
+                StopCoroutine(moveCoroutine);
+
+            moveCoroutine = StartCoroutine(IEMoveYFromTo(from, to));
+
+            noLandSound = true;
+
+            IEnumerator IEMoveYFromTo(Vector3 from, Vector3 to)
+            {
+                isCoroutineDone = false;
+                PlayerInputPart.Instance.CantInput();
+                player.isStopped = true;
+
+                this.transform.localPosition = from;
+                var direction = Mathf.Sign(to.x - from.x);
+                if (direction >= 0)
+                    player.LookRight();
+                else
+                    player.LookLeft();
+
+
+                player.SetAnimatorBool("isMove", true);
+
+                var moveGap = direction * moveSpeed * speedMultiplier * Time.fixedDeltaTime;
+                var moveCount = (to.x - from.x) / moveGap;
+
+                for (int i = 0; i < moveCount; i++)
                 {
                     this.transform.localPosition = new Vector3(this.transform.localPosition.x + moveGap, this.transform.localPosition.y, this.transform.localPosition.z);
                     yield return new WaitForFixedUpdate();
