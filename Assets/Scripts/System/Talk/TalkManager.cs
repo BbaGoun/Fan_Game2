@@ -162,9 +162,6 @@ namespace ActionPart
             Debug.Log(nextEvent);
             switch(nextEvent)
             {
-                case "튜토리얼_연무장 이동":
-                    GlobalTimelineController.instance.PlayTimeline(nextEvent);
-                    break;
                 case "전투 시작":
                     //Schedule<BossBattleStart>();
                     //Schedule<PlayerTalkEnd>();

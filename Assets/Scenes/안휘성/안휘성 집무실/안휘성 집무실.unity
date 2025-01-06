@@ -2121,7 +2121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outPoint: {fileID: 1376634199}
-  nextSceneName: "\uC548\uD718\uC131 \uBCF5\uB3C4"
+  nextSceneName: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
   nextSpawnPoint: 0
   walkOut: 0
   transitionMode: 1

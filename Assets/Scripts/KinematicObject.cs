@@ -114,6 +114,7 @@ namespace ActionPart
 
         protected virtual void Start()
         {
+            speedMultiplier = 1f;
             contactFilter.useTriggers = false;
             contactFilter.useLayerMask = true;
             contactFilter.SetLayerMask(LayerMask.GetMask("Ground"));
@@ -411,6 +412,10 @@ namespace ActionPart
             Vector2 moveX = Vector2.right * move.x;
             Vector2 moveY = Vector2.up * move.y;
 
+
+            Debug.Log(gameObject.name + "moveX : " + moveX);
+            Debug.Log(gameObject.name + "moveY : " + moveY);
+
             var distanceX = moveX.magnitude;
             var distanceY = moveY.magnitude;
             var distance = move.magnitude;
@@ -419,9 +424,14 @@ namespace ActionPart
             RaycastHit2D hitPoint = new RaycastHit2D();
             bool isHit = false;
 
+
+
             if (distanceX > minMoveDistance)
             {
                 var countX = body.Cast(moveX, contactFilter, hitBuffer, distanceX + shellRadius);
+
+
+                Debug.Log(gameObject.name + "countX : " + countX);
 
                 for (var i = 0; i < countX; i++)
                 {
@@ -437,6 +447,9 @@ namespace ActionPart
             {
                 var countY = body.Cast(moveY, contactFilter, hitBuffer, distanceY + shellRadius);
 
+
+                Debug.Log(gameObject.name + "countY : " + countY);
+
                 for (var i = 0; i < countY; i++)
                 {
                     var modifiedDistanceY = hitBuffer[i].distance - shellRadius;
@@ -449,6 +462,9 @@ namespace ActionPart
             if (distance > minMoveDistance)
             {
                 var count = body.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
+
+
+                Debug.Log(gameObject.name + "count : " + count);
 
                 for (var i = 0; i < count; i++)
                 {
@@ -464,6 +480,9 @@ namespace ActionPart
 
                 if(isHit)
                 {
+
+                    Debug.Log(gameObject.name + "isHit");
+
                     // move의 방향에서 만난 벽이 수직벽이 아닌 경우 (X방향과 Y 방향)
                     if (Mathf.Abs(moveNormalVec.y) < 1 - minUnitSlopeY && Mathf.Abs(moveNormalVec.y) > minUnitSlopeY)
                     {
@@ -482,13 +501,17 @@ namespace ActionPart
                 }
             }
 
+
+
             move = moveX.normalized * distanceX + moveY.normalized * distanceY;
+            Debug.Log(gameObject.name + "move : " + move);
             Debug.DrawRay(body.position, move * 100, Color.white);
 
             var targetPosition = body.position + move;
             body.MovePosition(targetPosition);
             //body.position = body.position + move;
             finalMove = move;
+
         }
     }
 }

@@ -53,6 +53,26 @@ namespace ActionPart
 
         }
 
+        public void LookRight()
+        {
+            var scaleX = transform.localScale.x;
+
+            if (scaleX < 0)
+                scaleX = -scaleX;
+
+            transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+        }
+
+        public void LookLeft()
+        {
+            var scaleX = transform.localScale.x;
+
+            if (scaleX > 0)
+                scaleX = -scaleX;
+
+            transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+        }
+
         public void GetDamage(float _hpDelta, Vector2 _direction)
         {
 
