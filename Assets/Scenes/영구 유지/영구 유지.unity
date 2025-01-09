@@ -2768,7 +2768,7 @@ Transform:
   m_GameObject: {fileID: 614757061}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.65, y: -8.18, z: -14}
+  m_LocalPosition: {x: 8.53, y: -2.1699998, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7990,7 +7990,7 @@ Transform:
   m_GameObject: {fileID: 1766588455}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.65, y: -8.18, z: -14}
+  m_LocalPosition: {x: 8.53, y: -2.1699998, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9767,6 +9767,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 489412128, guid: a3e354c66092b324e96a0cd63fd33f1b, type: 3}
     - target: {fileID: 172533533232718376, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 172533533232718376, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
@@ -9860,11 +9864,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.65
+      value: 8.53
       objectReference: {fileID: 0}
     - target: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.18
+      value: -3.17
       objectReference: {fileID: 0}
     - target: {fileID: 5660161726221003986, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalPosition.z

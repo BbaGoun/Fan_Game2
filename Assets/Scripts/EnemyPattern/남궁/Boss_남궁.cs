@@ -12,6 +12,8 @@ namespace ActionPart
         [SerializeField]
         Boss_남궁_MoveState moveState;
         // 공격
+        public RangeArea InRange;
+        public RangeArea OutRange;
         // 피격
         // 그로기
         // 사망

@@ -412,10 +412,6 @@ namespace ActionPart
             Vector2 moveX = Vector2.right * move.x;
             Vector2 moveY = Vector2.up * move.y;
 
-
-            Debug.Log(gameObject.name + "moveX : " + moveX);
-            Debug.Log(gameObject.name + "moveY : " + moveY);
-
             var distanceX = moveX.magnitude;
             var distanceY = moveY.magnitude;
             var distance = move.magnitude;
@@ -430,9 +426,6 @@ namespace ActionPart
             {
                 var countX = body.Cast(moveX, contactFilter, hitBuffer, distanceX + shellRadius);
 
-
-                Debug.Log(gameObject.name + "countX : " + countX);
-
                 for (var i = 0; i < countX; i++)
                 {
                     var modifiedDistanceX = hitBuffer[i].distance - shellRadius;
@@ -446,9 +439,6 @@ namespace ActionPart
             if(distanceY > minMoveDistance)
             {
                 var countY = body.Cast(moveY, contactFilter, hitBuffer, distanceY + shellRadius);
-
-
-                Debug.Log(gameObject.name + "countY : " + countY);
 
                 for (var i = 0; i < countY; i++)
                 {
@@ -504,7 +494,6 @@ namespace ActionPart
 
 
             move = moveX.normalized * distanceX + moveY.normalized * distanceY;
-            Debug.Log(gameObject.name + "move : " + move);
             Debug.DrawRay(body.position, move * 100, Color.white);
 
             var targetPosition = body.position + move;

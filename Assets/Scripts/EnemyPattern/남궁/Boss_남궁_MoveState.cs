@@ -50,8 +50,14 @@ namespace ActionPart
 
         void XControl()
         {
-            moveVec = new Vector2(Mathf.Sign(boss.player.transform.position.x - this.transform.position.x), 0);
-            if(boss.isStopped || Time.timeScale == 0f)
+            if(!boss.InRange.isPlayerIn)
+                moveVec = new Vector2(Mathf.Sign(boss.player.transform.position.x - this.transform.position.x), 0);
+            else if(boss.InRange.isPlayerIn && !boss.OutRange.isPlayerIn)
+                moveVec = new Vector2(Mathf.Sign(Random.Range(-1, 1)), 0);
+            else if(boss.OutRange.isPlayerIn)
+                moveVec = new Vector2(-Mathf.Sign(boss.player.transform.position.x - this.transform.position.x), 0);
+
+            if (boss.isStopped || Time.timeScale == 0f)
                 moveVec = Vector2.zero;
 
             var isLookRight = Mathf.Sign(transform.localScale.x) == 1;
@@ -100,15 +106,42 @@ namespace ActionPart
 
         public override void PhysicsUpdate()
         {
-            float targetSpeed = moveVec.x * moveSpeed;
+            if (!boss.InRange.isPlayerIn)
+            {
+                float targetSpeed = moveVec.x * moveSpeed;
 
-            float speedDif = targetSpeed - boss.velocity.x;
+                float speedDif = targetSpeed - boss.velocity.x;
 
-            float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
+                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
 
-            float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+                float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
 
-            boss.velocity.x += movement * Time.deltaTime;
+                boss.velocity.x += movement * Time.deltaTime;
+            }
+            else if (boss.InRange.isPlayerIn && !boss.OutRange.isPlayerIn)
+            {
+                float targetSpeed = moveVec.x * moveSpeed / 2;
+
+                float speedDif = targetSpeed - boss.velocity.x;
+
+                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
+
+                float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+
+                boss.velocity.x += movement * Time.deltaTime;
+            }
+            else if (boss.OutRange.isPlayerIn)
+            {
+                float targetSpeed = moveVec.x * moveSpeed;
+
+                float speedDif = targetSpeed - boss.velocity.x;
+
+                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
+
+                float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+
+                boss.velocity.x += movement * Time.deltaTime;
+            }
 
             boss.velocity.y = Physics2D.gravity.y;
         }
