@@ -20,7 +20,7 @@ namespace ActionPart
                 if (damageAble == null)
                     damageAble = player.GetComponent<IDamageAble>();
 
-                Vector2 direction = (player.transform.position - transform.position).normalized;
+                Vector2 direction = player.transform.position - transform.position;
 
                 damageAble.GetDamage(damage, direction);
             }

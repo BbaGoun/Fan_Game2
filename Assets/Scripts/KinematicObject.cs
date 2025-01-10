@@ -453,9 +453,6 @@ namespace ActionPart
             {
                 var count = body.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
 
-
-                Debug.Log(gameObject.name + "count : " + count);
-
                 for (var i = 0; i < count; i++)
                 {
                     var modifiedDistance = hitBuffer[i].distance - shellRadius;
@@ -470,9 +467,6 @@ namespace ActionPart
 
                 if(isHit)
                 {
-
-                    Debug.Log(gameObject.name + "isHit");
-
                     // move의 방향에서 만난 벽이 수직벽이 아닌 경우 (X방향과 Y 방향)
                     if (Mathf.Abs(moveNormalVec.y) < 1 - minUnitSlopeY && Mathf.Abs(moveNormalVec.y) > minUnitSlopeY)
                     {

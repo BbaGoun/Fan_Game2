@@ -65,7 +65,6 @@ namespace ActionPart
             attackObject.SetActive(false);
 
             dashAttackState = DashAttackState.Idle;
-            player.ResetAnimator();
 
             playerDashState.SetLastDashTime();
             playerAttackState.SetLastAttackTime();

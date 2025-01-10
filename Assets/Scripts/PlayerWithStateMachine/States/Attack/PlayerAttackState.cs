@@ -91,7 +91,6 @@ namespace ActionPart
             attackObject2.SetActive(false);
             attackObject3.SetActive(false);
             attackState = AttackState.Idle;
-            player.ResetAnimator();
 
             SetLastAttackTime();
             isAttackHit = false;
@@ -159,6 +158,7 @@ namespace ActionPart
                     break;
                 case AttackState.PrepareAttack2:
                 case AttackState.PrepareAttack3:
+                case AttackState.PrepareIdle:
                     player.velocity.x = 0f;
                     player.velocity.y = Physics2D.gravity.y;
                     break;

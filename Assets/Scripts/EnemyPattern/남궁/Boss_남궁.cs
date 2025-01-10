@@ -11,32 +11,48 @@ namespace ActionPart
         #region states
         [SerializeField]
         Boss_남궁_MoveState moveState;
-        // 공격
-        public RangeArea InRange;
-        public RangeArea OutRange;
+        [SerializeField]
+        Boss_남궁_AttackState attackState;
+        [SerializeField]
+        Boss_남궁_DamagedState damagedState;
         // 피격
         // 그로기
         // 사망
         #endregion
 
+        public RangeArea InRange;
+        public RangeArea OutRange;
+
         public StateMachine stateMachine;
-        public Health health;
+        public EnemyHealth enemyHealth;
         public Animator animator;
         public AudioSource audioSource;
 
         public bool isStopped;
+        public bool isAttackSuperArmour;
+        public bool isDamageSuperArmour;
+        public int damageCountThreshold;
+        private int damageCount;
+        public int attackCountThreshold;
+        private int attackCount;
 
         public IDamageAble.DamageInfo damageInfo;
+
+        public BossState currentState;
+        public float attackTimer;
+        private float timer;
 
         private void Awake()
         {
             stateMachine = GetComponent<StateMachine>();
-            health = GetComponent<Health>();
+            enemyHealth = GetComponent<EnemyHealth>();
             animator = GetComponent<Animator>();
 
             player = PlayerWithStateMachine.Instance;
 
             moveState.Inintialize(this);
+            attackState.Initialize(this);
+            damagedState.Initialize(this);
 
             stateMachine.InitState(moveState);
 
@@ -73,6 +89,15 @@ namespace ActionPart
                 {
                     yield return null;
                     continue;
+                }
+
+                if(currentState == BossState.Move)
+                  timer += Time.deltaTime;
+                if(timer > attackTimer)
+                {
+                    timer = 0f;
+                    if (InRange.isPlayerIn)
+                        ChangeStateOfStateMachine(BossState.Attack);
                 }
 
                 stateMachine.StateFrameUpdate();
@@ -114,9 +139,26 @@ namespace ActionPart
             transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
         }
 
-        public void GetDamage(float _hpDelta, Vector2 _direction)
+        public override void GetDamage(float _hpDelta, Vector2 _direction)
         {
+            Debug.Log("아우 시발");
 
+            var isInvincible = enemyHealth.CheckInvincible();
+            if (isInvincible)
+            {
+                return;
+            }
+
+            if (CheckIsSuperArmour())
+            {
+                damagedState.JustDamage();
+            }
+            else
+            {
+                damageInfo.isDamaged = true;
+                damageInfo.hpDelta = _hpDelta;
+                damageInfo.knockbackDirection = _direction;
+            }
         }
 
         public void ResetDamage()
@@ -148,15 +190,59 @@ namespace ActionPart
             animator.Update(0f);
         }
 
-        /*public virtual void ChangeStateOfStateMachine(MobState state)
+        public virtual void ChangeStateOfStateMachine(BossState state)
         {
             switch (state)
             {
-                case MobState.Move:
-                    //stateMachine.ChangeState();
-                    //playerState = PlayerState.Move;
+                case BossState.Move:
+                    stateMachine.ChangeState(moveState);
+                    break;
+                case BossState.Attack:
+                    stateMachine.ChangeState(attackState);
+                    isAttackSuperArmour = true;
+                    break;
+                case BossState.Damaged:
+                    stateMachine.ChangeState(damagedState);
                     break;
             }
-        }*/
+            if(state != BossState.Attack)
+            {
+                isAttackSuperArmour = false;
+            }
+        }
+
+        public void UpAttackCount()
+        {
+            // 공격을 몇 번 수행한 후 슈퍼아머가 풀림
+            attackCount += 1;
+            if(attackCount >= attackCountThreshold)
+            {
+                damageCount = 0;
+                isDamageSuperArmour = false;
+                attackCount = 0;
+            }
+        }
+
+        public void UpDamageCount()
+        {
+            // 몇 대 이상 맞으면 슈퍼아머
+            damageCount += 1;
+            if (damageCount >= damageCountThreshold)
+                isDamageSuperArmour = true;
+        }
+
+        public bool CheckIsSuperArmour()
+        {
+            return isAttackSuperArmour || isDamageSuperArmour;
+        }
+
+        public enum BossState
+        {
+            Move,
+            Attack,
+            Damaged,
+            Groggy,
+            Death
+        }
     }
 }

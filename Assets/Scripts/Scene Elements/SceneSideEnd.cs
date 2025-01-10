@@ -16,6 +16,7 @@ namespace ActionPart
         private LoadingManager.WithWalkOut walkOut;
         [SerializeField]
         private LoadingManager.TransitionMode transitionMode;
+        bool alreadyDid;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -23,12 +24,23 @@ namespace ActionPart
             {
                 if (LoadingManager.Instance.CheckIsLoadDone())
                 {
-                    var player = collision.GetComponent<PlayerWithStateMachine>();
+                    if (!alreadyDid)
+                    {
+                        alreadyDid = true;
 
-                    player.playerMoveState.MoveXFromTo(player.transform.localPosition, outPoint.localPosition);
-                    while (player.playerMoveState.IsCoroutineDone()) ;
+                        var player = collision.GetComponent<PlayerWithStateMachine>();
 
-                    LoadingManager.Instance.LoadSceneAsync(nextSceneName, nextSpawnPoint, walkOut, transitionMode);
+                        StartCoroutine(IEF());
+
+                        IEnumerator IEF()
+                        {
+                            player.playerMoveState.MoveXFromTo(player.transform.localPosition, outPoint.localPosition);
+                            yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);
+
+                            LoadingManager.Instance.LoadSceneAsync(nextSceneName, nextSpawnPoint, walkOut, transitionMode);
+                            yield return null;
+                        }
+                    }
                 }
             }
         }

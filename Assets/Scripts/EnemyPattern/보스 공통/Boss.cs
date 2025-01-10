@@ -6,7 +6,7 @@ namespace ActionPart
 {
     public class Boss : KinematicObject, IWithStateMachine, IDamageAble
     {
-        public void GetDamage(float _hpDelta, Vector2 _direction)
+        public virtual void GetDamage(float _hpDelta, Vector2 _direction)
         {
 
         }

@@ -51,7 +51,6 @@ namespace ActionPart
             lastDashTime = Time.time;
             dashTimer = 0f;
             dashState = DashState.Idle;
-            player.ResetAnimator();
 
             base.ExitState();
         }
@@ -82,7 +81,7 @@ namespace ActionPart
                     timePer = Mathf.Clamp01(timePer);
                     var rate = 1 - Mathf.Pow(timePer, 2);
                     var lookDirection = 1 * Mathf.Sign(gameObject.transform.localScale.x);
-                    lookDirection *= moveVec.x == 0 ? -1 : 1;
+                    lookDirection *= isBackStep ? -1 : 1;
 
                     player.velocity.x = lookDirection * dashSpeed * rate;
                     player.velocity.y = 0f;

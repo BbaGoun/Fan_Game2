@@ -7,6 +7,9 @@ namespace ActionPart
 {
     public class AttackEffect : MonoBehaviour
     {
+        [SerializeField]
+        private float damage;
+
         private float shakeDuration;
         private float shakeIntensity;
 
@@ -60,6 +63,10 @@ namespace ActionPart
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
+                var enemy = collision.gameObject;
+
+                var damageAble = enemy.GetComponent<IDamageAble>();
+
                 var playerPos = new Vector2(player.transform.position.x, transform.position.y);
                 var closestHitPoint = collision.collider.ClosestPoint(playerPos);
                 bool isOnRight = playerPos.x < closestHitPoint.x;
@@ -95,6 +102,10 @@ namespace ActionPart
                 VirtualCameraControl.Instance.ShakeCamera(shakeDuration, shakeIntensity);
 
                 eventAttackHit?.Invoke();
+
+                Vector2 dir = enemy.transform.position - player.transform.position;
+
+                damageAble.GetDamage(damage, dir);
             }
         }
     }

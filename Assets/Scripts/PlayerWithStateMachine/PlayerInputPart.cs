@@ -25,7 +25,7 @@ namespace ActionPart
             isCanInput = true;
         }
 
-        public bool isCanInput {  get; private set; }
+        public bool isCanInput;
 
         public delegate void DelArrowKey();
         public event DelArrowKey EventArrowKey;

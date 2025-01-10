@@ -74,6 +74,10 @@ namespace ActionPart
 
         public void LoadSceneAsync(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode = TransitionMode.Direct, float inDelay = 0.25f, float outDelay = 0.25f)
         {
+            // 캐릭터 조작 비활성화
+            PlayerInputPart.Instance.CantInput();
+            Debug.Log("2");
+
             if (coroutine != null)
                 StopCoroutine(coroutine);
 
@@ -82,9 +86,6 @@ namespace ActionPart
 
             IEnumerator LoadSceneCoroutine(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode, float inDelay, float outDelay)
             {
-                // 캐릭터 조작 비활성화
-                PlayerInputPart.Instance.CantInput();
-
                 switch (mode)
                 {
                     case TransitionMode.FromLeft:

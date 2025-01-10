@@ -23,8 +23,12 @@ namespace ActionPart
         private float velPower;
         [SerializeField]
         private float frictionAmount;
+        [SerializeField]
+        private float slowMultiplier;
         public Vector2 moveVec;
         #endregion
+
+        MoveState moveState;
 
         public void Inintialize(Boss_남궁 _boss)
         {
@@ -45,17 +49,18 @@ namespace ActionPart
 
         public override void FrameUpdate()
         {
+            if (boss.damageInfo.isDamaged)
+            {
+                boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Damaged);
+            }
+
             XControl();
+            UpdateMoveState();
         }
 
         void XControl()
         {
-            if(!boss.InRange.isPlayerIn)
-                moveVec = new Vector2(Mathf.Sign(boss.player.transform.position.x - this.transform.position.x), 0);
-            else if(boss.InRange.isPlayerIn && !boss.OutRange.isPlayerIn)
-                moveVec = new Vector2(Mathf.Sign(Random.Range(-1, 1)), 0);
-            else if(boss.OutRange.isPlayerIn)
-                moveVec = new Vector2(-Mathf.Sign(boss.player.transform.position.x - this.transform.position.x), 0);
+            moveVec = new Vector2(Mathf.Sign(boss.player.transform.position.x - this.transform.position.x), 0);
 
             if (boss.isStopped || Time.timeScale == 0f)
                 moveVec = Vector2.zero;
@@ -104,33 +109,23 @@ namespace ActionPart
             }
         }
 
-        public override void PhysicsUpdate()
+        void UpdateMoveState()
         {
             if (!boss.InRange.isPlayerIn)
             {
-                float targetSpeed = moveVec.x * moveSpeed;
-
-                float speedDif = targetSpeed - boss.velocity.x;
-
-                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
-
-                float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
-
-                boss.velocity.x += movement * Time.deltaTime;
+                moveState = MoveState.InRangeOut;
+                // 플레이어에게 다가오기
             }
             else if (boss.InRange.isPlayerIn && !boss.OutRange.isPlayerIn)
             {
-                float targetSpeed = moveVec.x * moveSpeed / 2;
-
-                float speedDif = targetSpeed - boss.velocity.x;
-
-                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
-
-                float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
-
-                boss.velocity.x += movement * Time.deltaTime;
+                moveState = MoveState.InRangeIn;
+                // 느리게 머뭇거리기
             }
-            else if (boss.OutRange.isPlayerIn)
+        }
+
+        public override void PhysicsUpdate()
+        {
+            if (moveState == MoveState.InRangeOut)
             {
                 float targetSpeed = moveVec.x * moveSpeed;
 
@@ -142,8 +137,26 @@ namespace ActionPart
 
                 boss.velocity.x += movement * Time.deltaTime;
             }
+            else if (moveState == MoveState.InRangeIn)
+            {
+                float targetSpeed = moveVec.x * moveSpeed * slowMultiplier;
 
+                float speedDif = targetSpeed - boss.velocity.x;
+
+                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
+
+                float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+
+                boss.velocity.x += movement * Time.deltaTime;
+            }
+            
             boss.velocity.y = Physics2D.gravity.y;
+        }
+
+        enum MoveState
+        {
+            InRangeOut,
+            InRangeIn,
         }
     }
 }

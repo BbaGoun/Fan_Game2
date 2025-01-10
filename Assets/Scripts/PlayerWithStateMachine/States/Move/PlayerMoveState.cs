@@ -302,6 +302,12 @@ namespace ActionPart
 
         public void MoveXFromTo(Vector3 from, Vector3 to, float speedMultiplier = 0.5f)
         {
+            isCoroutineDone = false;
+            PlayerInputPart.Instance.CantInput();
+            player.isStopped = true;
+
+            player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
+            
             if (moveCoroutine != null)
                 StopCoroutine(moveCoroutine);
 
@@ -311,10 +317,6 @@ namespace ActionPart
             
             IEnumerator IEMoveXFromTo(Vector3 from, Vector3 to)
             {
-                isCoroutineDone = false;
-                PlayerInputPart.Instance.CantInput();
-                player.isStopped = true;
-
                 this.transform.localPosition = from;
                 var direction = Mathf.Sign(to.x - from.x);
                 if (direction >= 0)
@@ -345,6 +347,8 @@ namespace ActionPart
 
         public void MoveYFromTo(Vector3 from, Vector3 to, float speedMultiplier = 0.5f)
         {
+            player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
+
             if (moveCoroutine != null)
                 StopCoroutine(moveCoroutine);
 
@@ -365,7 +369,7 @@ namespace ActionPart
                 else
                     player.LookLeft();
 
-
+                player.ResetAnimator();
                 player.SetAnimatorBool("isMove", true);
 
                 var moveGap = direction * moveSpeed * speedMultiplier * Time.fixedDeltaTime;
@@ -377,6 +381,7 @@ namespace ActionPart
                     yield return new WaitForFixedUpdate();
                 }
 
+                player.ResetAnimator();
                 player.SetAnimatorBool("isMove", false);
                 PlayerInputPart.Instance.CanInput();
                 player.isStopped = false;
