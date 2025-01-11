@@ -76,7 +76,6 @@ namespace ActionPart
         {
             // 캐릭터 조작 비활성화
             PlayerInputPart.Instance.CantInput();
-            Debug.Log("2");
 
             if (coroutine != null)
                 StopCoroutine(coroutine);
