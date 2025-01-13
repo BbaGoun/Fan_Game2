@@ -15,8 +15,7 @@ namespace ActionPart
         Boss_남궁_AttackState attackState;
         [SerializeField]
         Boss_남궁_DamagedState damagedState;
-        // 피격
-        // 그로기
+        Boss_남궁_GroggyState groggyState;
         // 사망
         #endregion
 
@@ -53,6 +52,7 @@ namespace ActionPart
             moveState.Inintialize(this);
             attackState.Initialize(this);
             damagedState.Initialize(this);
+            groggyState.Initialize(this);
 
             stateMachine.InitState(moveState);
 

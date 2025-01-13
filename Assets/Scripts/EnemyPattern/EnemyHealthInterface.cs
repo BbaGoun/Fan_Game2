@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,16 +17,14 @@ namespace ActionPart
         [SerializeField]
         private float underDelay;
 
+        [SerializeField, ReadOnly(false)]
         RectTransform underHP;
+        [SerializeField, ReadOnly(false)]
         RectTransform underStamina;
 
-        [SerializeField]
         private float startUnderHP;
-        [SerializeField]
         private float endUnderHP;
-        [SerializeField]
         private float startUnderStamina;
-        [SerializeField]
         private float endUnderStamina;
 
         private float currentHP;
@@ -41,9 +40,9 @@ namespace ActionPart
             underHP = sliderHP.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
             underStamina = sliderStamina.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
 
-            startUnderHP = Utility.GetRectRight(underHP);
+            startUnderHP = sliderHP.GetComponent<RectTransform>().rect.width;
             endUnderHP = 0f;
-            startUnderStamina = Utility.GetRectRight(underStamina);
+            startUnderStamina = sliderStamina.GetComponent<RectTransform>().rect.width;
             endUnderStamina = 0f;
 
             sliderHP.maxValue = enemyHealth.GetMaxHp();
@@ -165,11 +164,13 @@ namespace ActionPart
             else
                 multiplier = 35f;
 
+            sliderHP.value = start;
+
             var gap = (end - start) / multiplier;
             for (int i = 0; i < multiplier; i++)
             {
                 sliderHP.value += gap;
-                yield return new WaitForSeconds(0.01f * Time.timeScale);
+                yield return null;
             }
         }
 
@@ -190,7 +191,7 @@ namespace ActionPart
             {
                 current = current + gap;
                 SetUnderHPBar(current);
-                yield return new WaitForSeconds(0.01f * Time.timeScale);
+                yield return null;
             }
         }
 
@@ -205,11 +206,13 @@ namespace ActionPart
             else
                 multiplier = 35f;
 
+            sliderStamina.value = start;
+
             var gap = (end - start) / multiplier;
             for (int i = 0; i < multiplier; i++)
             {
                 sliderStamina.value += gap;
-                yield return new WaitForSeconds(0.01f * Time.timeScale);
+                yield return null;
             }
         }
 
@@ -230,7 +233,7 @@ namespace ActionPart
             {
                 current = current + gap;
                 SetUnderStaminaBar(current);
-                yield return new WaitForSeconds(0.01f * Time.timeScale);
+                yield return null;
             }
         }
     }
