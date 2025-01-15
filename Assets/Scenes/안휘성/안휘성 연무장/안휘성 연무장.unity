@@ -243,6 +243,8 @@ MonoBehaviour:
   sliderHP: {fileID: 407017815}
   sliderStamina: {fileID: 1094473517}
   underDelay: 0.3
+  firstDivider: 25
+  followDivider: 20
   underHP: {fileID: 0}
   underStamina: {fileID: 0}
 --- !u!1 &12437685

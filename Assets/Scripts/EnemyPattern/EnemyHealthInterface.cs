@@ -17,9 +17,14 @@ namespace ActionPart
         [SerializeField]
         private float underDelay;
 
-        [SerializeField, ReadOnly(false)]
+        [SerializeField]
+        float firstDivider;
+        [SerializeField]
+        float followDivider;
+
+        [SerializeField, ReadOnly(true)]
         RectTransform underHP;
-        [SerializeField, ReadOnly(false)]
+        [SerializeField, ReadOnly(true)]
         RectTransform underStamina;
 
         private float startUnderHP;
@@ -160,9 +165,9 @@ namespace ActionPart
             float multiplier;
 
             if (delay == 0f)
-                multiplier = 50f;
+                multiplier = firstDivider;
             else
-                multiplier = 35f;
+                multiplier = followDivider;
 
             sliderHP.value = start;
 
@@ -181,9 +186,9 @@ namespace ActionPart
             float multiplier;
 
             if (delay == 0f)
-                multiplier = 50f;
+                multiplier = firstDivider;
             else
-                multiplier = 35f;
+                multiplier = followDivider;
 
             var current = start;
             var gap = (end - start) / multiplier;
@@ -202,9 +207,9 @@ namespace ActionPart
             float multiplier;
 
             if (delay == 0f)
-                multiplier = 50f;
+                multiplier = firstDivider;
             else
-                multiplier = 35f;
+                multiplier = followDivider;
 
             sliderStamina.value = start;
 
@@ -223,9 +228,9 @@ namespace ActionPart
             float multiplier;
 
             if (delay == 0f)
-                multiplier = 50f;
+                multiplier = firstDivider;
             else
-                multiplier = 35f;
+                multiplier = followDivider;
 
             var current = start;
             var gap = (end - start) / multiplier;

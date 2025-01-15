@@ -20,16 +20,19 @@ namespace ActionPart
         [SerializeField]
         private float underDelay;
 
+        [SerializeField]
+        float firstDivider;
+        [SerializeField]
+        float followDivider;
+
+        [SerializeField, ReadOnly(true)]
         RectTransform underHP;
+        [SerializeField, ReadOnly(true)]
         RectTransform underStamina;
 
-        [SerializeField]
         private float startUnderHP;
-        [SerializeField]
         private float endUnderHP;
-        [SerializeField]
         private float startUnderStamina;
-        [SerializeField]
         private float endUnderStamina;
 
         private float currentHP;
@@ -42,15 +45,12 @@ namespace ActionPart
 
         private void Awake()
         {
-            if(playerHealth == null)
-                playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-
             underHP = sliderHP.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
             underStamina = sliderStamina.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
 
-            startUnderHP = Utility.GetRectRight(underHP);
+            startUnderHP = sliderHP.GetComponent<RectTransform>().rect.width;
             endUnderHP = 0f;
-            startUnderStamina = Utility.GetRectRight(underStamina);
+            startUnderStamina = sliderStamina.GetComponent<RectTransform>().rect.width;
             endUnderStamina = 0f;
 
             sliderHP.maxValue = playerHealth.GetMaxHp();
@@ -168,15 +168,17 @@ namespace ActionPart
             float multiplier;
 
             if (delay == 0f)
-                multiplier = 50f;
+                multiplier = firstDivider;
             else
-                multiplier = 35f;
+                multiplier = followDivider;
+
+            sliderHP.value = start;
 
             var gap = (end - start) / multiplier;
             for(int i = 0; i < multiplier; i++)
             {
                 sliderHP.value += gap;
-                yield return new WaitForSeconds(0.01f * Time.timeScale);
+                yield return null;
             }
         }
 
@@ -187,9 +189,9 @@ namespace ActionPart
             float multiplier;
 
             if (delay == 0f)
-                multiplier = 50f;
+                multiplier = firstDivider;
             else
-                multiplier = 35f;
+                multiplier = followDivider;
 
             var current = start;
             var gap = (end - start) / multiplier;
@@ -197,7 +199,7 @@ namespace ActionPart
             {
                 current = current + gap;
                 SetUnderHPBar(current);
-                yield return new WaitForSeconds(0.01f * Time.timeScale);
+                yield return null;
             }
         }
 
@@ -208,15 +210,17 @@ namespace ActionPart
             float multiplier;
 
             if (delay == 0f)
-                multiplier = 50f;
+                multiplier = firstDivider;
             else
-                multiplier = 35f;
+                multiplier = followDivider;
+
+            sliderStamina.value = start;
 
             var gap = (end - start) / multiplier;
             for (int i = 0; i < multiplier; i++)
             {
                 sliderStamina.value += gap;
-                yield return new WaitForSeconds(0.01f * Time.timeScale);
+                yield return null;
             }
         }
 
@@ -227,9 +231,9 @@ namespace ActionPart
             float multiplier;
 
             if (delay == 0f)
-                multiplier = 50f;
+                multiplier = firstDivider;
             else
-                multiplier = 35f;
+                multiplier = followDivider;
 
             var current = start;
             var gap = (end - start) / multiplier;
@@ -237,7 +241,7 @@ namespace ActionPart
             {
                 current = current + gap;
                 SetUnderStaminaBar(current);
-                yield return new WaitForSeconds(0.01f * Time.timeScale);
+                yield return null;
             }
         }
     }
