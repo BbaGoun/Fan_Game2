@@ -133,14 +133,14 @@ namespace ActionPart
                 {
                     isStiffnessSelected = true;
                     currentStiffness = stiffness;
-                    Debug.Log("Stiffness Type : " + currentStiffness.StiffnessName);
+                    //Debug.Log("Stiffness Type : " + currentStiffness.StiffnessName);
                     break;
                 }
             }
 
             if (!isStiffnessSelected)
             {
-                Debug.Log("최대 데미지로 맞음");
+                //Debug.Log("최대 데미지로 맞음");
                 currentStiffness = stiffnessList[stiffnessList.Count - 1];
             }
 

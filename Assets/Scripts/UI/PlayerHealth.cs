@@ -194,6 +194,7 @@ namespace ActionPart
                 multiplier = followDivider;
 
             var current = start;
+            SetUnderHPBar(current);
             var gap = (end - start) / multiplier;
             for(int i = 1; i<= multiplier; i++)
             {
@@ -236,6 +237,7 @@ namespace ActionPart
                 multiplier = followDivider;
 
             var current = start;
+            SetUnderStaminaBar(current);
             var gap = (end - start) / multiplier;
             for (int i = 1; i <= multiplier; i++)
             {

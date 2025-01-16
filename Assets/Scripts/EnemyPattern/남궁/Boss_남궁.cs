@@ -15,6 +15,7 @@ namespace ActionPart
         Boss_남궁_AttackState attackState;
         [SerializeField]
         Boss_남궁_DamagedState damagedState;
+        [SerializeField]
         Boss_남궁_GroggyState groggyState;
         // 사망
         #endregion
@@ -151,6 +152,7 @@ namespace ActionPart
 
             if (CheckIsSuperArmour())
             {
+                damageInfo.hpDelta = _hpDelta;
                 damagedState.JustDamage();
             }
             else
