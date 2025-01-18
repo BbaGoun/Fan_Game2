@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace ActionPart
@@ -17,7 +19,8 @@ namespace ActionPart
         Boss_남궁_DamagedState damagedState;
         [SerializeField]
         Boss_남궁_GroggyState groggyState;
-        // 사망
+        [SerializeField]
+        Boss_남궁_DeathState deathState;
         #endregion
 
         public RangeArea InRange;
@@ -31,6 +34,9 @@ namespace ActionPart
         public bool isStopped;
         public bool isAttackSuperArmour;
         public bool isDamageSuperArmour;
+
+        public bool isDeath;
+        public bool isGroggy;
         public int damageCountThreshold;
         private int damageCount;
         public int attackCountThreshold;
@@ -40,6 +46,7 @@ namespace ActionPart
 
         public BossState currentState;
         public float attackTimer;
+        [SerializeField, ReadOnly(true)]
         private float timer;
 
         private void Awake()
@@ -54,6 +61,7 @@ namespace ActionPart
             attackState.Initialize(this);
             damagedState.Initialize(this);
             groggyState.Initialize(this);
+            deathState.Initialize(this);
 
             stateMachine.InitState(moveState);
 
@@ -92,13 +100,24 @@ namespace ActionPart
                     continue;
                 }
 
-                if(currentState == BossState.Move)
-                  timer += Time.deltaTime;
-                if(timer > attackTimer)
+                if (!enemyHealth.CheckIsAlive())
                 {
-                    timer = 0f;
-                    if (InRange.isPlayerIn)
-                        ChangeStateOfStateMachine(BossState.Attack);
+                    isDeath = true;
+                }
+                if (enemyHealth.CheckIsGroggy())
+                {
+                    isGroggy = true;
+                }
+
+                if (currentState == BossState.Move)
+                {
+                    timer += Time.deltaTime;
+                    if (timer > attackTimer)
+                    {
+                        timer = 0f;
+                        if (InRange.isPlayerIn)
+                            ChangeStateOfStateMachine(BossState.Attack);
+                    }
                 }
 
                 stateMachine.StateFrameUpdate();
@@ -142,8 +161,6 @@ namespace ActionPart
 
         public override void GetDamage(float _hpDelta, Vector2 _direction)
         {
-            Debug.Log("아우 시발");
-
             var isInvincible = enemyHealth.CheckInvincible();
             if (isInvincible)
             {
@@ -197,14 +214,25 @@ namespace ActionPart
             switch (state)
             {
                 case BossState.Move:
+                    currentState = BossState.Move; 
                     stateMachine.ChangeState(moveState);
                     break;
                 case BossState.Attack:
+                    currentState = BossState.Attack;
                     stateMachine.ChangeState(attackState);
                     isAttackSuperArmour = true;
                     break;
                 case BossState.Damaged:
+                    currentState = BossState.Damaged;
                     stateMachine.ChangeState(damagedState);
+                    break;
+                case BossState.Groggy:
+                    currentState = BossState.Groggy;
+                    stateMachine.ChangeState(groggyState);
+                    break;
+                case BossState.Death:
+                    currentState = BossState.Death;
+                    stateMachine.ChangeState(deathState);
                     break;
             }
             if(state != BossState.Attack)
@@ -235,7 +263,7 @@ namespace ActionPart
 
         public bool CheckIsSuperArmour()
         {
-            return isAttackSuperArmour || isDamageSuperArmour;
+            return isAttackSuperArmour || isDamageSuperArmour || isGroggy;
         }
 
         public enum BossState

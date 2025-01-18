@@ -33,6 +33,8 @@ namespace ActionPart
         PlayerHealState playerHealState;
         [SerializeField]
         PlayerGroggyState playerGroggyState;
+        
+        //µ¥½º
 
         public AudioSource playerAudioSource;
 

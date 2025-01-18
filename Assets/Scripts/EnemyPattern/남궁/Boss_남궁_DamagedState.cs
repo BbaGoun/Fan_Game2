@@ -66,6 +66,14 @@ namespace ActionPart
                 boss.ResetDamage();
                 damagedState = DamagedState.Damaged;
             }
+            if (boss.isGroggy)
+            {
+                boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Groggy);
+            }
+            if (boss.isDeath)
+            {
+                boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Death);
+            }
             #endregion
 
             UpdateDamagedState();
@@ -83,6 +91,7 @@ namespace ActionPart
                     knockBackTimer = 0f;
                     var canHurt = health.Hurt_Hp(hpDelta, currentStiffness.invincibleDuration,
                         currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
+                    health.Hurt_Stamina(hpDelta);
 
                     boss.SetAnimatorTrigger(currentStiffness.animationTriggerName);
 
@@ -167,6 +176,7 @@ namespace ActionPart
 
             var canHurt = health.Hurt_Hp(hpDelta, currentStiffness.invincibleDuration,
                 currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
+            health.Hurt_Stamina(hpDelta);
 
             switch (hitType)
             {

@@ -80,6 +80,14 @@ namespace ActionPart
             {
                 // 보스가 쓰러짐
             }
+            if (boss.isGroggy)
+            {
+                boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Groggy);
+            }
+            if (boss.isDeath)
+            {
+                boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Death);
+            }
             #endregion
 
             attackEffect1.SetShakeDuration(shakeDuration);

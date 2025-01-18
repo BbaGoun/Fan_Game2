@@ -4386,6 +4386,7 @@ GameObject:
   - component: {fileID: 2058913826}
   - component: {fileID: 2058913828}
   - component: {fileID: 2058913830}
+  - component: {fileID: 2058913831}
   - component: {fileID: 2058913822}
   - component: {fileID: 2058913827}
   - component: {fileID: 2058913829}
@@ -4678,6 +4679,7 @@ MonoBehaviour:
   attackState: {fileID: 2058913826}
   damagedState: {fileID: 2058913828}
   groggyState: {fileID: 2058913830}
+  deathState: {fileID: 2058913831}
   InRange: {fileID: 1128409121}
   OutRange: {fileID: 1333306459}
   stateMachine: {fileID: 0}
@@ -4687,10 +4689,13 @@ MonoBehaviour:
   isStopped: 0
   isAttackSuperArmour: 0
   isDamageSuperArmour: 0
-  damageCountThreshold: 3
+  isDeath: 0
+  isGroggy: 0
+  damageCountThreshold: 2
   attackCountThreshold: 2
   currentState: 0
   attackTimer: 1.5
+  timer: 0
 --- !u!114 &2058913826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4729,7 +4734,7 @@ MonoBehaviour:
   currentHP: 100
   maxStamina: 100
   currentStamina: 100
-  staminaRecoveryTime: 0
+  staminaRecoveryTime: 3
   isCanRecoveryStamina: 0
   isStopRecoveryStamina: 0
 --- !u!114 &2058913828
@@ -4783,8 +4788,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e8240bd3e0a594a901486c1735dafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 10
+  waitTime: 5
+  waitTimer: 0
   groggyState: 0
+--- !u!114 &2058913831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058913814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951d44dbbaf8f4d44bd8a8c094a5801b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2092788869
 GameObject:
   m_ObjectHideFlags: 0

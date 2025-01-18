@@ -53,6 +53,14 @@ namespace ActionPart
             {
                 boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Damaged);
             }
+            if (boss.isGroggy)
+            {
+                boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Groggy);
+            }
+            if (boss.isDeath)
+            {
+                boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Death);
+            }
 
             XControl();
             UpdateMoveState();

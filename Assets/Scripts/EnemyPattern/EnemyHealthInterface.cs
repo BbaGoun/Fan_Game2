@@ -86,7 +86,10 @@ namespace ActionPart
 
         void ChangeHP()
         {
+            Debug.Log("currentHP: " + currentHP);
             var changedHP = enemyHealth.GetCurrentHp();
+            Debug.Log("changedHP: " + changedHP);
+
 
             if (coroutineHP != null)
                 StopCoroutine(coroutineHP);
@@ -99,7 +102,7 @@ namespace ActionPart
                 coroutineHPUnder = StartCoroutine(IEChangeUnderHP(currentHP, changedHP, 0f));
                 coroutineHP = StartCoroutine(IEChangeHP(currentHP, changedHP, underDelay));
             }
-            else if (currentHP > changedHP)
+            else
             {
                 // 피해를 받았을 때
                 coroutineHP = StartCoroutine(IEChangeHP(currentHP, changedHP, 0f));
@@ -191,6 +194,7 @@ namespace ActionPart
                 multiplier = followDivider;
 
             var current = start;
+            SetUnderHPBar(current);
             var gap = (end - start) / multiplier;
             for (int i = 1; i <= multiplier; i++)
             {
@@ -233,6 +237,7 @@ namespace ActionPart
                 multiplier = followDivider;
 
             var current = start;
+            SetUnderStaminaBar(current);
             var gap = (end - start) / multiplier;
             for (int i = 1; i <= multiplier; i++)
             {

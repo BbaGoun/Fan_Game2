@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 namespace ActionPart
@@ -12,6 +13,7 @@ namespace ActionPart
 
         [SerializeField]
         private float waitTime;
+        [SerializeField, ReadOnly(true)]
         private float waitTimer;
 
         [SerializeField]
@@ -29,18 +31,20 @@ namespace ActionPart
             enemyHealth.StopRecoveryStamina();
             
             groggyState = GroggyState.GroggyStart;
-            base.EnterState();
         }
 
         public override void ExitState()
         {
             enemyHealth.Heal_Stamina(enemyHealth.GetMaxStamina());
             enemyHealth.UnStopRecoveryStamina();
-            base.ExitState();
         }
 
         public override void FrameUpdate()
         {
+            if (boss.isDeath)
+            {
+                boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Death);
+            }
             UpdateGroggyState();
         }
 
@@ -68,6 +72,8 @@ namespace ActionPart
                     waitTimer += Time.deltaTime;
                     if (waitTimer > waitTime)
                     {
+                        waitTimer = 0;
+                        boss.isGroggy = false;
                         boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Move);
                     }
                     break;
