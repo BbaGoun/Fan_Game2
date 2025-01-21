@@ -177,14 +177,6 @@ namespace ActionPart
             var canHurt = health.Hurt_Hp(hpDelta, currentStiffness.invincibleDuration,
                 currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
             health.Hurt_Stamina(hpDelta);
-
-            switch (hitType)
-            {
-                default:
-                    hittedEffect = ObjectPoolManager.Instance.GetObject("Enemy_Hitted_Effect");
-                    hittedEffect.transform.position = gameObject.transform.position;
-                    break;
-            }
         }
         
 

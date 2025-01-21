@@ -9,6 +9,8 @@ namespace ActionPart
     {
         [SerializeField]
         private float damage;
+        [SerializeField]
+        private string hitEffectName;
 
         private float shakeDuration;
         private float shakeIntensity;
@@ -92,7 +94,7 @@ namespace ActionPart
                     }
                 }*/
 
-                var hitEffect = ObjectPoolManager.Instance.GetObject("Hit_Effect");
+                var hitEffect = ObjectPoolManager.Instance.GetObject(hitEffectName);
                 hitEffect.transform.position = new Vector3(closestHitPoint.x, closestHitPoint.y, -5f);
                 if (isOnRight)
                     hitEffect.transform.localScale = new Vector3(1f, 1f, 1f);
