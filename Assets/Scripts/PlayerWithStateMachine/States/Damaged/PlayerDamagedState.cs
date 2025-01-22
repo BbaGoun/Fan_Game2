@@ -103,7 +103,7 @@ namespace ActionPart
                 {
                     isStiffnessSelected = true;
                     currentStiffness = stiffness;
-                    Debug.Log("Stiffness Type : " + currentStiffness.StiffnessName);
+                    Debug.Log("Stiffness Type : " + currentStiffness.stiffnessName);
                     break;
                 }
             }
@@ -150,8 +150,22 @@ namespace ActionPart
                             hittedEffect.transform.position = gameObject.transform.position;
                             break;
                         default:
-                            hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Effect");
-                            hittedEffect.transform.position = gameObject.transform.position;
+                            if (currentStiffness.stiffnessName.Equals("Big"))
+                            {
+                                hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Strong");
+                                hittedEffect.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -5);
+                                hittedEffect.transform.localScale = new Vector3(Mathf.Sign(transform.localScale.x), 1, 1);
+                            }
+                            else if (currentStiffness.stiffnessName.Equals("Small"))
+                            {
+                                hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Weak");
+                                hittedEffect.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -5);
+                                hittedEffect.transform.localScale = new Vector3(Mathf.Sign(transform.localScale.x), 1, 1);
+                            }
+                            else
+                            {
+                                Debug.Log("stiffnessName : " + currentStiffness.stiffnessName);
+                            }
                             break;
                     }
 
@@ -199,7 +213,7 @@ namespace ActionPart
         [Serializable]
         struct Stiffness
         {
-            public string StiffnessName;
+            public string stiffnessName;
             public float damageThreshold;
             public Vector2 knockBackVector;
 

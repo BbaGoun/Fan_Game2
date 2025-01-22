@@ -49,8 +49,11 @@ namespace ActionPart
         public override void EnterState()
         {
             health.StopRecoveryStamina();
-            //var hittedEffect = ObjectPoolManager.Instance.GetObject("Player_GuardBreak_Effect");
-            //hittedEffect.transform.position = gameObject.transform.position;
+            var hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Groggy");
+            hittedEffect.transform.position = player.transform.position + new Vector3(transform.localScale.x * 0.5f, 0.5f, 0f);
+            hittedEffect.transform.localScale = new Vector3(transform.localScale.x, 1, 1);
+
+
             groggyState = GroggyState.GroggyStart;
             base.EnterState();
         }

@@ -52,14 +52,14 @@ namespace ActionPart
             PlayerInputPart.Instance.EventHealKeyUp += HealKeyUp;
 
             player.SetAnimatorTrigger("isHealStart");
-            healEffect.animator.SetBool("isHealState", true);
+            healEffect.animator.SetBool("isDone", false);
         }
 
         public override void ExitState()
         {
             PlayerInputPart.Instance.EventHealKeyUp -= HealKeyUp;
             VirtualCameraControl.Instance.SetShakeCameraDirect(0f, 0f);
-            healEffect.animator.SetBool("isHealState", false);
+            healEffect.animator.SetBool("isDone", true);
             player.SetAnimatorBool("isHealing", false);
 
             base.ExitState();
@@ -122,17 +122,19 @@ namespace ActionPart
                     healTimer += Time.deltaTime;
                     if (healTimer > healTime)
                     {
-                        healEffect.animator.SetTrigger("isDone");
                         healState = HealState.Heal;
                     }
                     break;
                 case HealState.Heal:
                     waitTimer = 0f;
 
-                    healEffect.animator.SetBool("isHealState", false);
+                    healEffect.animator.SetBool("isDone", true);
                     player.SetAnimatorBool("isHealing", false);
                     health.Heal_HP(healAmount);
                     health.Heal_Stamina(healAmount);
+
+                    HealAudio();
+                    
                     healState = HealState.PrepareIdle;
                     break;
                 case HealState.PrepareIdle:
@@ -162,7 +164,7 @@ namespace ActionPart
             if (healState != HealState.PrepareIdle)
             {
                 waitTimer = 0f;
-                healEffect.animator.SetBool("isHealState", false);
+                healEffect.animator.SetBool("isDone", true);
                 player.SetAnimatorBool("isHealing", false);
                 healState = HealState.PrepareIdle;
             }

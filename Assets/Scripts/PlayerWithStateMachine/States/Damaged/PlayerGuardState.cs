@@ -208,7 +208,7 @@ namespace ActionPart
                     health.Hurt_StaminaOnlyTo1(hpDelta);
                     health.OnInvincible(parryInvincibleTime);
                     // 적 스테미나 감소 시키기 필요
-                    var parryEffect = ObjectPoolManager.Instance.GetObject("Player_Parry_Effect");
+                    var parryEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Parry");
                     parryEffect.transform.position = player.transform.position + new Vector3(-1 * knockBackDirection * 1f, 0.5f, 0f);
                     parryEffect.transform.localScale = new Vector3(-1 * knockBackDirection, 1, 1);
 
@@ -244,6 +244,10 @@ namespace ActionPart
 
                     player.SetAnimatorTrigger("isGuardDamaged");
 
+                    var hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Guard");
+                    hittedEffect.transform.position = player.transform.position + new Vector3(-1 * knockBackDirection * 1f, 0.5f, 0f);
+                    hittedEffect.transform.localScale = new Vector3(-1 * knockBackDirection, 1, 1);
+                    
                     slowTimer = 0f;
                     TimeController.Instance.SetTimeScale(slowScale);
 

@@ -58,7 +58,7 @@ namespace ActionPart
             {
                 upArrow.SetActive(false);
                 talkBalloon.SetActive(false);
-                player.OutTalkArea();
+                player?.OutTalkArea();
             }
         }
     }
