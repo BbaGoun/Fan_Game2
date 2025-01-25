@@ -300,6 +300,12 @@ namespace ActionPart
             }
         }
 
+
+        public void OnIsCoroutineDone()
+        {
+            isCoroutineDone = true;
+        }
+
         public void MoveXFromTo(Vector3 from, Vector3 to, float speedMultiplier = 0.5f)
         {
             isCoroutineDone = false;

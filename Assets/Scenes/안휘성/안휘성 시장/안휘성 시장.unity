@@ -466,6 +466,7 @@ MonoBehaviour:
   LeftWalkOutPoint: {fileID: 1712211323}
   RightSpawnPoint: {fileID: 1569465688}
   RightWalkOutPoint: {fileID: 1166373032}
+  NoneSpawnPoint: {fileID: 1968242700}
   bgmClip: {fileID: 8300000, guid: c321511d8d47ca746a11ca07d2091051, type: 3}
 --- !u!4 &201553848
 Transform:
@@ -2161,6 +2162,7 @@ Transform:
   - {fileID: 1712211323}
   - {fileID: 1569465688}
   - {fileID: 1166373032}
+  - {fileID: 1968242700}
   m_Father: {fileID: 1592869406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1320943102
@@ -4295,6 +4297,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1968242699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1968242700}
+  m_Layer: 0
+  m_Name: NoneSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1968242700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968242699}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -39.25, y: -8.075, z: -4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1286258902}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1970232381
 PrefabInstance:
   m_ObjectHideFlags: 0

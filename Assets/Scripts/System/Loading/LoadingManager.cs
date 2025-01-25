@@ -179,6 +179,8 @@ namespace ActionPart
                     switch (spawnPoint)
                     {
                         case SpawnPoint.None:
+                            player.transform.localPosition = new Vector3(sceneSetting.NoneSpawnPoint.localPosition.x, sceneSetting.NoneSpawnPoint.localPosition.y, -4);
+                            player.LookRight();
                             break;
                         case SpawnPoint.Left:
                             player.transform.localPosition = new Vector3(sceneSetting.LeftSpawnPoint.localPosition.x, sceneSetting.LeftSpawnPoint.localPosition.y, -4);
@@ -240,6 +242,7 @@ namespace ActionPart
                         player.playerMoveState.MoveXFromTo(sceneSetting.RightSpawnPoint.localPosition, sceneSetting.RightWalkOutPoint.localPosition);
                         break;
                     case WithWalkOut.None:
+                        player.playerMoveState.OnIsCoroutineDone();
                         PlayerInputPart.Instance.CanInput();
                         break;
                 }
