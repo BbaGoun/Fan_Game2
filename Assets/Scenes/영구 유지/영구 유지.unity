@@ -6011,6 +6011,9 @@ MonoBehaviour:
   - objectName: Player_Hitted_Groggy
     perfab: {fileID: 2132805837656999731, guid: c65d1086e7d01fb4089ecc3f6e483400, type: 3}
     count: 2
+  - objectName: Player_Death_Effect
+    perfab: {fileID: 2132805837656999731, guid: b37eaaebb5d33de45b8836ed32dd01fd, type: 3}
+    count: 2
 --- !u!1 &1353876377 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
@@ -9988,6 +9991,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].maxFlash
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[0].StiffnessName
       value: Weak
       objectReference: {fileID: 0}
@@ -9997,7 +10008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[1].stiffnessName
-      value: Medium
+      value: Big
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[2].StiffnessName
@@ -10006,6 +10017,30 @@ PrefabInstance:
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[2].stiffnessName
       value: Big
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].shakeIntensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].damageThreshold
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].damageThreshold
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].knockBackVector.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].knockBackVector.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].animationTriggerName
+      value: isBigDamaged
       objectReference: {fileID: 0}
     - target: {fileID: 1888716653118863052, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: healTime
@@ -10031,6 +10066,10 @@ PrefabInstance:
       propertyPath: changeDelay
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: playerDeathState
+      value: 
+      objectReference: {fileID: 8770118516554096265}
     - target: {fileID: 2590279981471532679, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.5
@@ -10264,6 +10303,9 @@ PrefabInstance:
       addedObject: {fileID: 2019968633}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      insertIndex: 14
+      addedObject: {fileID: 8770118516554096265}
+    - targetCorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8770118516554096247}
     - targetCorrespondingSourceObject: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
@@ -10428,6 +10470,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &8770118516554096265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353876377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2cd14d1fbc3a548b6c8d720272cdc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowTime: 0.5
+  slowScale: 0.4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

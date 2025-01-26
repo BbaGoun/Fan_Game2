@@ -33,8 +33,9 @@ namespace ActionPart
         PlayerHealState playerHealState;
         [SerializeField]
         PlayerGroggyState playerGroggyState;
+        [SerializeField]
+        PlayerDeathState playerDeathState;
         
-        //µ¥½º
 
         public AudioSource playerAudioSource;
 
@@ -147,6 +148,7 @@ namespace ActionPart
             playerGuardState.Initialize(this);
             playerHealState.Initialize(this);
             playerGroggyState.Initialize(this);
+            playerDeathState.Initialize(this);
 
             PlayerInputPart.Instance.EventGuardKeyDown += playerGuardState.GuardKeyDown;
             PlayerInputPart.Instance.EventGuardKeyUp += playerGuardState.GuardKeyUp;
@@ -342,6 +344,10 @@ namespace ActionPart
                 case PlayerState.Groggy:
                     stateMachine.ChangeState(playerGroggyState);
                     playerState = PlayerState.Groggy;
+                    break;
+                case PlayerState.Death:
+                    stateMachine.ChangeState(playerDeathState);
+                    playerState = PlayerState.Death;
                     break;
                 default:
                     break;

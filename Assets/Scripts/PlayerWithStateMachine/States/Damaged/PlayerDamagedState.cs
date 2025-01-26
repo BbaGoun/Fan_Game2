@@ -141,6 +141,12 @@ namespace ActionPart
 
                     VirtualCameraControl.Instance.ShakeCamera(currentStiffness.shakeDuration, currentStiffness.shakeIntensity);
 
+                    if(!health.CheckIsAlive())
+                    {
+                        player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Death);
+                        return;
+                    }
+
                     player.SetAnimatorTrigger(currentStiffness.animationTriggerName);
 
                     switch (hitType)
