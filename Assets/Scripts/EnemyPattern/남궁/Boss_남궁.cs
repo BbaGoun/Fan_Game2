@@ -139,11 +139,16 @@ namespace ActionPart
             base.FixedUpdate();
         }
 
+        public float GetDirection()
+        {
+            return -transform.localScale.x;
+        }
+
         public void LookRight()
         {
             var scaleX = transform.localScale.x;
 
-            if (scaleX < 0)
+            if (scaleX > 0)
                 scaleX = -scaleX;
 
             transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
@@ -153,7 +158,7 @@ namespace ActionPart
         {
             var scaleX = transform.localScale.x;
 
-            if (scaleX > 0)
+            if (scaleX < 0)
                 scaleX = -scaleX;
 
             transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);

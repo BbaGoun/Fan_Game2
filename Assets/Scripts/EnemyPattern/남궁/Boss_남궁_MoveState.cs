@@ -73,14 +73,14 @@ namespace ActionPart
             if (boss.isStopped || Time.timeScale == 0f)
                 moveVec = Vector2.zero;
 
-            var isLookRight = Mathf.Sign(transform.localScale.x) == 1;
+            var isLookRight = Mathf.Sign(boss.GetDirection()) == 1;
 
             if (moveVec.x < -0.01f && isLookRight)
             {
                 //왼쪽으로 돌기
                 //Debug.Log("왼쪽으로 돌기");
-                /*if (player.isGrounded)
-                    player.SetAnimatorTrigger("isTurn");*/
+                if (boss.isGrounded)
+                    boss.SetAnimatorTrigger("isTurn");
                 boss.SetAnimatorBool("isMove", false);
                 Flip(!isLookRight);
             }
@@ -88,8 +88,8 @@ namespace ActionPart
             {
                 //오른쪽으로 돌기
                 //Debug.Log("오른쪽으로 돌기");
-                /*if (player.isGrounded)
-                    player.SetAnimatorTrigger("isTurn");*/
+                if (boss.isGrounded)
+                    boss.SetAnimatorTrigger("isTurn");
                 boss.SetAnimatorBool("isMove", false);
                 Flip(!isLookRight);
             }

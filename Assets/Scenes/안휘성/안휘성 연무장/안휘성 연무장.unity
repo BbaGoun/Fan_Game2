@@ -930,7 +930,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
+    oldSize: {x: 20.32, y: 12.27}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3967,6 +3967,7 @@ MonoBehaviour:
   LeftWalkOutPoint: {fileID: 580803622}
   RightSpawnPoint: {fileID: 12437686}
   RightWalkOutPoint: {fileID: 647286053}
+  NoneSpawnPoint: {fileID: 0}
   bgmClip: {fileID: 8300000, guid: 1b8ba3c46df4d4d479d916f7ece1e196, type: 3}
 --- !u!4 &1916225658
 Transform:
@@ -4459,8 +4460,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: ff0b21e74d08ec244a4de07b3a0820f9, type: 3}
-  m_Color: {r: 0, g: 0, b: 1, a: 1}
+  m_Sprite: {fileID: 1159480846, guid: fc669d66bbd2bda46b8c40122439ae3a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4502,8 +4503,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
+  m_Offset: {x: 0, y: -0.2}
+  m_Size: {x: 1, y: 1.55}
   m_Direction: 0
 --- !u!61 &2058913819
 BoxCollider2D:
@@ -4537,18 +4538,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 3, y: 3}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.55}
   m_EdgeRadius: 0
 --- !u!50 &2058913820
 Rigidbody2D:
@@ -4711,9 +4712,9 @@ MonoBehaviour:
   attackAudio: {fileID: 0}
   attackState: 0
   attackWaitTime: 0.15
-  attackMoveSpeed: 25
-  attackMoveDelayFrame: 5
-  attackMoveFrame: 10
+  attackMoveSpeed: 10
+  attackMoveDelayFrame: 12
+  attackMoveFrame: 12
   isAttackHit: 0
   attackObject1: {fileID: 572878420}
   shakeDuration: 0.25

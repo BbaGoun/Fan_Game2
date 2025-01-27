@@ -134,7 +134,7 @@ namespace ActionPart
                         float timePer = (attackMoveTimer - delay) / duration;
                         timePer = Mathf.Clamp01(timePer);
                         float rate = 1 - Mathf.Pow(timePer, 3);
-                        float lookDirection = 1 * Mathf.Sign(gameObject.transform.localScale.x);
+                        float lookDirection = 1 * Mathf.Sign(boss.GetDirection());
 
                         boss.velocity.x = lookDirection * attackMoveSpeed * rate;
                         boss.velocity.y = 0f;

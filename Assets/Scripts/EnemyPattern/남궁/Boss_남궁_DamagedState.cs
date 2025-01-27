@@ -93,6 +93,12 @@ namespace ActionPart
                         currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
                     health.Hurt_Stamina(hpDelta);
 
+                    if (!health.CheckIsAlive())
+                    {
+                        boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Death);
+                        return;
+                    }
+
                     boss.SetAnimatorTrigger(currentStiffness.animationTriggerName);
 
                     damagedState = DamagedState.KnockBacked;
@@ -177,6 +183,12 @@ namespace ActionPart
             var canHurt = health.Hurt_Hp(hpDelta, currentStiffness.invincibleDuration,
                 currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
             health.Hurt_Stamina(hpDelta);
+
+            if (!health.CheckIsAlive())
+            {
+                boss.ChangeStateOfStateMachine(Boss_남궁.BossState.Death);
+                return;
+            }
         }
         
 

@@ -17,6 +17,7 @@ namespace ActionPart
         public override void EnterState()
         {
             // 사밍 시 할 거
+            boss.SetAnimatorTrigger("isDead");
         }
 
         public override void ExitState()
