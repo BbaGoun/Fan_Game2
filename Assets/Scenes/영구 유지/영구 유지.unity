@@ -642,6 +642,7 @@ MonoBehaviour:
   _audioController: {fileID: 1366983827}
   _forDebug: {fileID: 301695934}
   _timelineController: {fileID: 1882747178}
+  _playerWithStateMachine: {fileID: 8770118516554096234}
 --- !u!1 &128839233
 GameObject:
   m_ObjectHideFlags: 0
@@ -10246,6 +10247,14 @@ PrefabInstance:
       propertyPath: attackAudio
       value: 
       objectReference: {fileID: 8300000, guid: 4f8cfef66545a5648808b7d084887248, type: 3}
+    - target: {fileID: 6768893537139379640, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: attackCoolTime
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768893537139379640, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: attackWaitTime
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 6768893537139379640, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: attackMoveFrame
       value: 20

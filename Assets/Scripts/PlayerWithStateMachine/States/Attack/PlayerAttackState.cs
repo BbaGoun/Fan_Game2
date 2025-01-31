@@ -267,7 +267,9 @@ namespace ActionPart
         void Attack1Done()
         {
             attackObject1.SetActive(false);
-            attackState = AttackState.PrepareAttack2;
+            //attackState = AttackState.PrepareAttack2;
+            attackState = AttackState.PrepareIdle;
+            
             //Debug.Log("attackObject1 Off");
         }
 

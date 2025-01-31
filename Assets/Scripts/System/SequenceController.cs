@@ -19,6 +19,7 @@ namespace ActionPart
         public AudioController _audioController;
         public ForDebug _forDebug;
         public GlobalTimelineController _timelineController;
+        public PlayerWithStateMachine _playerWithStateMachine;
         
         private void Awake()
         {
@@ -38,6 +39,7 @@ namespace ActionPart
             // 이후 해야 하는 것들
             _mainMenuController.Initialize();
             _loadingManager.Initialize();
+            _playerWithStateMachine.Initialize();
         }
     }
 }

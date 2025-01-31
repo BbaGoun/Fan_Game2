@@ -61,72 +61,16 @@ namespace ActionPart
         [SerializeField]
         PlayerState playerState;
 
-        private void Initialize()
-        {
-            StartCoroutine(IELifeCycle());
-        }
-
-        private IEnumerator IELifeCycle()
-        {
-            while (true)
-            {
-                if (isStopped)
-                {
-                    // FixedUpdate는 멈추지 않기 때문에 velocity가 남아있으면 안됨
-                    velocity = Vector2.zero;
-                    yield return null;
-                    continue;
-                }
-                if (!LoadingManager.Instance.CheckIsLoadDone())
-                {
-                    velocity = Vector2.zero;
-                    yield return null;
-                    continue;
-                }
-                if(Time.timeScale == 0f)
-                {
-                    yield return null;
-                    continue;
-                }
-
-                if (isGrounded)
-                {
-                    delegateGrounded?.Invoke();
-                }
-                if (!PlayerInputPart.Instance.isCanInput)
-                {
-                    ChargeDone();
-                    playerChargeAttackState.ResetCharge();
-                }
-                switch (playerState)
-                {
-                    case PlayerState.Move:
-                    case PlayerState.Dash:
-                    case PlayerState.Guard:
-                        playerChargeAttackState.UpdateChargeState();
-                        break;
-                    case PlayerState.ChargeAttack:
-                        break;
-                    default:
-                        playerChargeAttackState.ResetCharge();
-                        break;
-                }
-                stateMachine.StateFrameUpdate();
-
-                yield return null;
-            }
-        }
-
-        private void Awake()
+        public void Initialize()
         {
             #region Singleton
-            if(Instance == null)
+            if (Instance == null)
             {
                 Instance = this;
             }
             else
             {
-                if(Instance != this)
+                if (Instance != this)
                 {
                     Destroy(this.gameObject);
                 }
@@ -163,13 +107,69 @@ namespace ActionPart
             stateMachine.InitState(playerMoveState);
 
             playerAudioSource = GetComponent<AudioSource>();
+        }
 
-            Initialize();
+        private IEnumerator IELifeCycle()
+        {
+            while (true)
+            {
+                if (isStopped)
+                {
+                    // FixedUpdate는 멈추지 않기 때문에 velocity가 남아있으면 안됨
+                    velocity = Vector2.zero;
+                    yield return null;
+                    continue;
+                }
+                if (!LoadingManager.Instance.CheckIsLoadDone())
+                {
+                    velocity = Vector2.zero;
+                    yield return null;
+                    continue;
+                }
+                if(Time.timeScale == 0f)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                if (isGrounded)
+                {
+                    delegateGrounded?.Invoke();
+                }
+                /*
+                if (!PlayerInputPart.Instance.isCanInput)
+                {
+                    ChargeDone();
+                    playerChargeAttackState.ResetCharge();
+                }
+                switch (playerState)
+                {
+                    case PlayerState.Move:
+                    case PlayerState.Dash:
+                    case PlayerState.Guard:
+                        playerChargeAttackState.UpdateChargeState();
+                        break;
+                    case PlayerState.ChargeAttack:
+                        break;
+                    default:
+                        playerChargeAttackState.ResetCharge();
+                        break;
+                }
+                */
+                stateMachine.StateFrameUpdate();
+
+                yield return null;
+            }
         }
 
         protected override void Start()
         {
             base.Start();
+        }
+
+        private void Awake()
+        {
+            StartCoroutine(IELifeCycle());
         }
 
         public void OnDisable()

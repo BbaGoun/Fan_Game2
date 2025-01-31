@@ -35,6 +35,7 @@ namespace ActionPart
         public SettingData tmpSettingData;
         #endregion
 
+        bool started = false;
         private void Awake()
         {
             background = transform.GetChild(1).gameObject;
@@ -69,7 +70,11 @@ namespace ActionPart
 
         public void LoadScene()
         {
-            LoadingManager.Instance.LoadSceneAsync(sceneName, spawnPoint, withWalkOut, transitionMode, inDelay: 0.25f, outDelay: 0.25f);
+            if (!started)
+            {
+                started = true;
+                LoadingManager.Instance.LoadSceneAsync(sceneName, spawnPoint, withWalkOut, transitionMode, inDelay: 0.25f, outDelay: 0.25f);
+            }
         }
 
         #region Option

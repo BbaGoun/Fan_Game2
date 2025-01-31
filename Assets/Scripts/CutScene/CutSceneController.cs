@@ -32,13 +32,16 @@ namespace ActionPart
 
         public void Update()
         {
-            if(Input.GetMouseButtonDown(0))
+            if (LoadingManager.Instance.CheckIsLoadDone())
             {
-                if (!isCoroutineRunning)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    StartCoroutine(IEShowScene());
+                    if (!isCoroutineRunning)
+                    {
+                        StartCoroutine(IEShowScene());
+                    }
                 }
-            }    
+            }
         }
 
         public IEnumerator IEShowScene()
