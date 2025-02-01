@@ -533,6 +533,7 @@ MonoBehaviour:
   LeftWalkOutPoint: {fileID: 1938399324}
   RightSpawnPoint: {fileID: 436352086}
   RightWalkOutPoint: {fileID: 1521381936}
+  NoneSpawnPoint: {fileID: 0}
   bgmClip: {fileID: 8300000, guid: e33163e6d28464641a5b63ee140acc58, type: 3}
 --- !u!4 &257743835
 Transform:
@@ -576,8 +577,8 @@ Transform:
   m_GameObject: {fileID: 410032817}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.19, y: -4, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 7.8, y: -4.25, z: -1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1431677496}
@@ -1904,8 +1905,8 @@ Transform:
   m_GameObject: {fileID: 1209653401}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.49, y: -2.85, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -9.3, y: -3.4, z: -1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1431677496}
