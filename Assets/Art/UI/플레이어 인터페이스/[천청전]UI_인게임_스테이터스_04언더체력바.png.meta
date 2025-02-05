@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4f9c53965b6d2aa4e91889c3517f0b61
+guid: 13303b58b4dc0e445aca181685ad3361
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,49 +95,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: "[\uCC9C\uCCAD\uC804]UI_\uC778\uAC8C\uC784_\uC2A4\uD14C\uC774\uD130\uC2A4_02\uAC8C\uC774\uC9C0\uBC14_\uAE30\uBCF8_0"
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 209
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 5, y: 0, z: 5, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2c046563805699140b0137e9d1ca954c
-      internalID: 824436303
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "[\uCC9C\uCCAD\uC804]UI_\uC778\uAC8C\uC784_\uC2A4\uD14C\uC774\uD130\uC2A4_02\uAC8C\uC774\uC9C0\uBC14_\uAE30\uBCF8_1"
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 10
-        width: 252
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 12, y: 0, z: 12, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c528de389b0db594e94548b8b8ebc38e
-      internalID: 1222028744
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -148,9 +106,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      "[\uCC9C\uCCAD\uC804]UI_\uC778\uAC8C\uC784_\uC2A4\uD14C\uC774\uD130\uC2A4_02\uAC8C\uC774\uC9C0\uBC14_\uAE30\uBCF8_0": 824436303
-      "[\uCC9C\uCCAD\uC804]UI_\uC778\uAC8C\uC784_\uC2A4\uD14C\uC774\uD130\uC2A4_02\uAC8C\uC774\uC9C0\uBC14_\uAE30\uBCF8_1": 1222028744
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
