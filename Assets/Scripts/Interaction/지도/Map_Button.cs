@@ -16,7 +16,7 @@ namespace ActionPart
         {
             rectTransform = GetComponent<RectTransform>();
             image = GetComponent<Image>();
-            image.alphaHitTestMinimumThreshold = 0.01f;
+            image.alphaHitTestMinimumThreshold = 0.5f;
             Color tempColor = Color.white;
             tempColor.a = 0f;
             image.color = tempColor;

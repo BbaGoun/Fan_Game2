@@ -49,9 +49,9 @@ namespace ActionPart
             underStamina = sliderStamina.transform.GetChild(1).GetChild(0).GetComponent<RectTransform>();
 
             startUnderHP = sliderHP.GetComponent<RectTransform>().rect.width;
-            endUnderHP = 0f;
+            endUnderHP = 2f;
             startUnderStamina = sliderStamina.GetComponent<RectTransform>().rect.width;
-            endUnderStamina = 0f;
+            endUnderStamina = 2f;
 
             sliderHP.maxValue = playerHealth.GetMaxHp();
             sliderStamina.maxValue = playerHealth.GetMaxStamina();
