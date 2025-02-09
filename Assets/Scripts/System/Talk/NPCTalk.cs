@@ -9,6 +9,8 @@ namespace ActionPart
         public string talkEventName;
 
         private GameObject talkBalloon;
+        private GameObject willTalk;
+        private GameObject talking;
         private GameObject upArrow;
         private PlayerWithStateMachine player;
         private bool isTalking;
@@ -16,7 +18,12 @@ namespace ActionPart
         private void Awake()
         {
             talkBalloon = transform.GetChild(0).gameObject;
-            talkBalloon.SetActive(false);
+            
+            willTalk = transform.GetChild(0).GetChild(0).gameObject;
+            willTalk.SetActive(false);
+
+            talking = transform.GetChild(0).GetChild(1).gameObject;
+            talking.SetActive(false);
 
             upArrow = transform.GetChild(1).gameObject;
             upArrow.SetActive(false);
@@ -33,12 +40,15 @@ namespace ActionPart
             {
                 upArrow.SetActive(false);
                 talkBalloon.SetActive(true);
+                talking.SetActive(true);
             }
             else if (collision.tag.Equals("Player"))
             {
                 upArrow.SetActive(true);
                 talkBalloon.SetActive(false);
-                if(player == null)
+                willTalk.SetActive(false);
+                talking.SetActive(false);
+                if (player == null)
                     player = collision.GetComponent<PlayerWithStateMachine>();
                 player.InTalkArea();
 
@@ -46,6 +56,7 @@ namespace ActionPart
                 {
                     upArrow.SetActive(false);
                     talkBalloon.SetActive(true);
+                    talking.SetActive(true);
                     this.transform.localScale = new Vector3(-1 * Mathf.Abs(transform.localScale.x) * Mathf.Sign(player.transform.localPosition.x - this.transform.localPosition.x), this.transform.localScale.y, this.transform.localScale.z);
                     TalkManager.Instance.TalkStart(talkEventName, this);
                 }
@@ -58,6 +69,7 @@ namespace ActionPart
             {
                 upArrow.SetActive(false);
                 talkBalloon.SetActive(false);
+                talking.SetActive(false);
                 player?.OutTalkArea();
             }
         }
