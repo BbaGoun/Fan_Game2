@@ -421,7 +421,6 @@ namespace ActionPart
             bool isHit = false;
 
 
-
             if (distanceX > minMoveDistance)
             {
                 var countX = body.Cast(moveX, contactFilter, hitBuffer, distanceX + shellRadius);
@@ -484,7 +483,6 @@ namespace ActionPart
 
                 }
             }
-
 
 
             move = moveX.normalized * distanceX + moveY.normalized * distanceY;

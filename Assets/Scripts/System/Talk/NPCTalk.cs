@@ -54,10 +54,12 @@ namespace ActionPart
 
                 if (player.CheckReadyTalk() && player.isGrounded)
                 {
+                    this.transform.localScale = new Vector3(-1 * Mathf.Abs(transform.localScale.x) * Mathf.Sign(player.transform.localPosition.x - this.transform.localPosition.x), this.transform.localScale.y, this.transform.localScale.z);
                     upArrow.SetActive(false);
+                    talkBalloon.transform.localScale = new Vector3(this.transform.localScale.x < 0 ? -1 * Mathf.Sign(talkBalloon.transform.localScale.x) * talkBalloon.transform.localScale.x : Mathf.Sign(talkBalloon.transform.localScale.x) * talkBalloon.transform.localScale.x, 
+                        talkBalloon.transform.localScale.y, talkBalloon.transform.localScale.z);
                     talkBalloon.SetActive(true);
                     talking.SetActive(true);
-                    this.transform.localScale = new Vector3(-1 * Mathf.Abs(transform.localScale.x) * Mathf.Sign(player.transform.localPosition.x - this.transform.localPosition.x), this.transform.localScale.y, this.transform.localScale.z);
                     TalkManager.Instance.TalkStart(talkEventName, this);
                 }
             }
