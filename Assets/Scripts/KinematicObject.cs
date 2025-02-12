@@ -91,6 +91,11 @@ namespace ActionPart
         [SerializeField]
         protected bool canWalkOnSlope;
 
+        // 바닥으로부터 떨어져있을 거리
+        public float _groundOffsetY;
+        private float groundOffsetY;
+        private float highestGroundY;
+
         /// <summary>
         /// Teleport to some position.
         /// </summary>
@@ -147,6 +152,8 @@ namespace ActionPart
             frontSlopeCheckOffset = _frontSlopeCheckOffset * Mathf.Abs(transform.localScale.x);
             downSlopeCheckOffset = _downSlopeCheckOffset * Mathf.Abs(transform.localScale.x);
             backSlopeCheckOffset = _backSlopeCheckOffset * Mathf.Abs(transform.localScale.x);
+
+            groundOffsetY = _groundOffsetY * Mathf.Abs(transform.localScale.x);
 
             ComputeVelocity();
 
@@ -207,44 +214,61 @@ namespace ActionPart
         /// </summary>
         private void GroundCheck()
         {
-            direction = transform.localScale.x;
-            Vector2 checkPos = transform.position - new Vector3(direction * -colliderOffset.x, colliderSize.y / 2 - colliderOffset.y);
-            int count = 10;
-            int hitCount = 0;
-            for (int i = 0; i<=count; i++)
+            if (velocity.y > 0f)
             {
-                var deltaX = groundCheckBoxSize.x * 0.1f * (i - 5);
-                var checkY = groundCheckBoxSize.y;
-                if (isOnFrontSlope || isOnDownSlope || isOnBackSlope)
-                    checkY *= 5f;
-                var deltaY = checkY * 0.5f;
-
-                var originX = checkPos.x + deltaX;
-                var originY = checkPos.y + deltaY;
-                Vector2 origin = new Vector2(originX, originY);
-                var hit = Physics2D.Raycast(origin, Vector2.down, checkY, contactFilter.layerMask);
-                Debug.DrawRay(origin, Vector2.down * checkY, Color.green);
-                
-                if (hit)
+                isGrounded = false;
+            }
+            else if (velocity.y <= 0)
+            {
+                direction = transform.localScale.x;
+                Vector2 checkPos = transform.position - new Vector3(direction * -colliderOffset.x, colliderSize.y / 2 - colliderOffset.y);
+                int count = 10;
+                int hitCount = 0;
+                for (int i = 0; i <= count; i++)
                 {
-                    Debug.DrawRay(hit.point, hit.normal.normalized * 5, Color.red);
-                    var perpendicular = -Vector2.Perpendicular(hit.normal.normalized);
-                    if (Mathf.Abs(perpendicular.y) < 1f)
+                    var deltaX = groundCheckBoxSize.x * 0.1f * (i - 5);
+                    var checkY = groundCheckBoxSize.y;
+                    if (isOnFrontSlope || isOnDownSlope || isOnBackSlope)
+                        checkY *= 5f;
+                    var deltaY = checkY * 0.5f;
+
+                    var originX = checkPos.x + deltaX;
+                    var originY = checkPos.y + deltaY;
+                    Vector2 origin = new Vector2(originX, originY);
+                    var hit = Physics2D.Raycast(origin, Vector2.down, checkY, contactFilter.layerMask);
+                    Debug.DrawRay(origin, Vector2.down * checkY, Color.green);
+
+                    if (hit)
                     {
-                        hitCount++;
-                        isGrounded = true;
-                        groundLastTime = Time.time;
+                        Debug.DrawRay(hit.point, hit.normal.normalized * 5, Color.red);
+                        var perpendicular = -Vector2.Perpendicular(hit.normal.normalized);
+                        if (Mathf.Abs(perpendicular.y) < 1f)
+                        {
+                            if (hitCount == 0)
+                                highestGroundY = hit.point.y;
+                            else
+                            {
+                                if (highestGroundY < hit.point.y)
+                                {
+                                    highestGroundY = hit.point.y;
+                                    Debug.Log("높이 갱신 : " + highestGroundY);
+                                }
+                            }
+                            hitCount++;
+                            isGrounded = true;
+                            groundLastTime = Time.time;
+                        }
                     }
                 }
+
+                if (hitCount == 0)
+                {
+                    if (isGrounded && velocity.y < 0f && Time.time - groundLastTime < coyoteTime)
+                        isGrounded = true;
+                    else
+                        isGrounded = false;
+                }
             }
-            
-            if(hitCount == 0)
-            {
-                if (isGrounded && velocity.y < 0f && Time.time - groundLastTime < coyoteTime)
-                    isGrounded = true;
-                else
-                    isGrounded = false;
-            }   
         }
 
         private void HeadingCheck()
@@ -412,6 +436,12 @@ namespace ActionPart
             Vector2 moveX = Vector2.right * move.x;
             Vector2 moveY = Vector2.up * move.y;
 
+            if (isGrounded && (highestGroundY + groundOffsetY < body.position.y) && move.y > 0)
+            {
+                moveY = Vector2.down * move.y;
+                Debug.Log("이젠 내려가거라");
+            }
+
             var distanceX = moveX.magnitude;
             var distanceY = moveY.magnitude;
             var distance = move.magnitude;
@@ -450,7 +480,8 @@ namespace ActionPart
             }
             if (distance > minMoveDistance)
             {
-                var count = body.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
+                int count = 0;
+                count = body.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
 
                 for (var i = 0; i < count; i++)
                 {
@@ -484,6 +515,12 @@ namespace ActionPart
                 }
             }
 
+            if((Mathf.Abs(moveY.y) > minMoveDistance && Mathf.Abs(moveX.x) < minMoveDistance) 
+                    && (isOnFrontSlope || isOnDownSlope || isOnBackSlope))
+            {
+                Debug.Log("내려가지말아다오");
+                distanceY = 0f;
+            }
 
             move = moveX.normalized * distanceX + moveY.normalized * distanceY;
             Debug.DrawRay(body.position, move * 100, Color.white);

@@ -10144,6 +10144,10 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: _groundOffsetY
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: playerDeathState
       value: 
       objectReference: {fileID: 8770118516554096265}
