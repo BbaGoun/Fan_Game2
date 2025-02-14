@@ -87,7 +87,7 @@ namespace ActionPart
             playerDashState.Initialize(this);
             playerDashAttackState.Initialize(this, playerDashState, playerAttackState);
             playerJumpAttackState.Initialize(this);
-            playerChargeAttackState.Initialize(this);
+            //playerChargeAttackState.Initialize(this);
             playerDamagedState.Initialize(this);
             playerGuardState.Initialize(this);
             playerHealState.Initialize(this);
@@ -325,10 +325,10 @@ namespace ActionPart
                         playerState = PlayerState.JumpAttack;
                     }
                     break;
-                case PlayerState.ChargeAttack:
+                /*case PlayerState.ChargeAttack:
                     stateMachine.ChangeState(playerChargeAttackState);
                     playerState = PlayerState.ChargeAttack;
-                    break;
+                    break;*/
                 case PlayerState.Damaged:
                     stateMachine.ChangeState(playerDamagedState);
                     playerState = PlayerState.Damaged;
@@ -350,6 +350,7 @@ namespace ActionPart
                     playerState = PlayerState.Death;
                     break;
                 default:
+                    Debug.Log("¾ø´Â »óÅÂ ÀÎµª¼î?");
                     break;
             }
         }

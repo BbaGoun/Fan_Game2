@@ -38,6 +38,7 @@ namespace ActionPart
         bool isTypingStarted;
         bool isTypingDone;
         Coroutine typeingCoroutine;
+        bool nextKeyDown;
         bool isTalkNext;
 
         private NPCTalk npc;
@@ -136,6 +137,7 @@ namespace ActionPart
                 {
                     if(isTalkNext || Input.GetMouseButtonDown(0))
                     {
+                        isTalkNext = false;
                         isTypingStarted = false;
                         isTypingDone = false;
                         StopCoroutine(typeingCoroutine);
@@ -291,12 +293,16 @@ namespace ActionPart
         {
             if (context.started)
             {
-                if(isTypingDone)
-                    isTalkNext = true;
+                if (isTypingDone)
+                    nextKeyDown = true;
             }
             else if (context.canceled)
             {
-                isTalkNext = false;
+                if (nextKeyDown)
+                {
+                    nextKeyDown = false;
+                    isTalkNext = true;
+                }
             } 
         }
 

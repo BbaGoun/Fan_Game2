@@ -48,6 +48,7 @@ namespace ActionPart
                     if (player.CheckReadyTalk() && player.isGrounded)
                     {
                         upArrow.SetActive(false);
+                        isTalking = true;
                         LoadingManager.Instance.LoadSceneAsync(nextSceneName, nextSpawnPoint, walkOut, transitionMode);
                     }
                 }

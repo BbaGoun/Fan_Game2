@@ -251,7 +251,7 @@ namespace ActionPart
                                 if (highestGroundY < hit.point.y)
                                 {
                                     highestGroundY = hit.point.y;
-                                    Debug.Log("높이 갱신 : " + highestGroundY);
+                                    //Debug.Log("높이 갱신 : " + highestGroundY);
                                 }
                             }
                             hitCount++;
@@ -380,8 +380,8 @@ namespace ActionPart
         {
             direction = transform.localScale.x;
 
-            Vector2 backCheckPos = transform.position - new Vector3(direction * (-backSlopeCheckOffset.x - colliderOffset.x), colliderSize.y / 2 - backSlopeCheckOffset.y - colliderOffset.y);
             RaycastHit2D backHit = new RaycastHit2D();
+            Vector2 backCheckPos = transform.position - new Vector3(direction * (-backSlopeCheckOffset.x - colliderOffset.x), colliderSize.y / 2 - backSlopeCheckOffset.y - colliderOffset.y);
             if (isOnBackSlope)
                 backHit = Physics2D.Raycast(backCheckPos, direction * Vector2.left, horizontalSlopeCheckDistance * checkDistanceFactor, contactFilter.layerMask);
             else
@@ -439,7 +439,7 @@ namespace ActionPart
             if (isGrounded && (highestGroundY + groundOffsetY < body.position.y) && move.y > 0)
             {
                 moveY = Vector2.down * move.y;
-                Debug.Log("이젠 내려가거라");
+                //Debug.Log("이젠 내려가거라");
             }
 
             var distanceX = moveX.magnitude;
@@ -518,7 +518,7 @@ namespace ActionPart
             if((Mathf.Abs(moveY.y) > minMoveDistance && Mathf.Abs(moveX.x) < minMoveDistance) 
                     && (isOnFrontSlope || isOnDownSlope || isOnBackSlope))
             {
-                Debug.Log("내려가지말아다오");
+                //Debug.Log("내려가지말아다오");
                 distanceY = 0f;
             }
 
@@ -529,7 +529,7 @@ namespace ActionPart
             body.MovePosition(targetPosition);
             //body.position = body.position + move;
             finalMove = move;
-
+            Debug.Log(finalMove);
         }
     }
 }
