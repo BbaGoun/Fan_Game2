@@ -180,6 +180,16 @@ namespace ActionPart
                 {
                     boxCollider.enabled = true;
                     capsuleCollider.enabled = false;
+
+                    // 가만히 있는데 낑기는지 확인
+                    var countX = body.Cast(Vector2.zero, contactFilter, hitBuffer, 0f);
+                    if (countX > 0)
+                    {
+                        Debug.Log("낑기니까 바꿔줄게");
+                        boxCollider.enabled = false;
+                        capsuleCollider.enabled = true;
+                    }
+
                     move = deltaPosition;
                 }
                 else
@@ -436,6 +446,8 @@ namespace ActionPart
             Vector2 moveX = Vector2.right * move.x;
             Vector2 moveY = Vector2.up * move.y;
 
+            Debug.Log("before move: " + move);
+
             if (isGrounded && (highestGroundY + groundOffsetY < body.position.y) && move.y > 0)
             {
                 moveY = Vector2.down * move.y;
@@ -515,6 +527,11 @@ namespace ActionPart
                 }
             }
 
+            if (distanceX < 0)
+                distanceX = 0;
+            if (distanceY < 0)
+                distanceY = 0;
+
             if((Mathf.Abs(moveY.y) > minMoveDistance && Mathf.Abs(moveX.x) < minMoveDistance) 
                     && (isOnFrontSlope || isOnDownSlope || isOnBackSlope))
             {
@@ -524,12 +541,12 @@ namespace ActionPart
 
             move = moveX.normalized * distanceX + moveY.normalized * distanceY;
             Debug.DrawRay(body.position, move * 100, Color.white);
+            Debug.Log("After move: " + move);
 
             var targetPosition = body.position + move;
             body.MovePosition(targetPosition);
             //body.position = body.position + move;
             finalMove = move;
-            Debug.Log(finalMove);
         }
     }
 }
