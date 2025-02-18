@@ -64,6 +64,9 @@ namespace ActionPart
         public delegate void DelTalkKeyUp();
         public event DelTalkKeyUp EventTalkKeyUp;
 
+        public delegate void DelKeyUpConfirm();
+        public event DelKeyUpConfirm EventKeyUpConfirm;
+
         private void Update()
         {
             if (attackHolding)
@@ -191,6 +194,14 @@ namespace ActionPart
             else if (context.canceled)
             {
                 EventTalkKeyUp?.Invoke();
+            }
+        }
+
+        public void KeyUpConfirm(InputAction.CallbackContext context)
+        {
+            if (context.canceled)
+            {
+                EventKeyUpConfirm?.Invoke();
             }
         }
     }

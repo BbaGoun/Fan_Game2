@@ -78,7 +78,9 @@ namespace ActionPart.UI
                 if (loadedSceneName == null)
                     return;
                 else if (loadedSceneName.Equals("메인 타이틀"))
-                    return;    
+                    return;
+                else if (loadedSceneName.Contains("만화컷"))
+                    return;
                 ToggleMainMenu(show: !showMainCanvas);
             }
         }

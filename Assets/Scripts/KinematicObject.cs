@@ -443,16 +443,16 @@ namespace ActionPart
 
         private void PerformMovement(Vector2 move)
         {
-            Vector2 moveX = Vector2.right * move.x;
-            Vector2 moveY = Vector2.up * move.y;
-
             Debug.Log("before move: " + move);
 
             if (isGrounded && (highestGroundY + groundOffsetY < body.position.y) && move.y > 0)
             {
-                moveY = Vector2.down * move.y;
+                move.y = -move.y;
                 //Debug.Log("이젠 내려가거라");
             }
+
+            Vector2 moveX = Vector2.right * move.x;
+            Vector2 moveY = Vector2.up * move.y;
 
             var distanceX = moveX.magnitude;
             var distanceY = moveY.magnitude;

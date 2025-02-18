@@ -2654,6 +2654,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f9394fcb-1ec2-45cd-b024-18587b4cdf26
     m_ActionName: Player/Talk Confirm[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 614236739}
+        m_TargetAssemblyTypeName: ActionPart.PlayerInputPart, Assembly-CSharp
+        m_MethodName: KeyUpConfirm
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a30786a1-9a6e-43b1-a405-20fa27a26a9f
+    m_ActionName: Player/KeyUp Confirm[/Keyboard/a]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

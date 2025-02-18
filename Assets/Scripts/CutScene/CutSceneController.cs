@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace ActionPart
@@ -20,6 +21,7 @@ namespace ActionPart
 
         bool isCoroutineRunning;
         bool isAlreadyClicked;
+        bool isNext;
 
         public void Awake()
         {
@@ -28,18 +30,33 @@ namespace ActionPart
             background.gameObject.SetActive(true);
             blur.gameObject.SetActive(true);
             background.color = new Color(0f, 0f, 0f, backgroundOpacity);
+
+            PlayerInputPart.Instance.EventKeyUpConfirm += CutSceneConfirm;
+        }
+
+        public void OnDisable()
+        {
+            PlayerInputPart.Instance.EventKeyUpConfirm -= CutSceneConfirm;
+        }
+
+        public void CutSceneConfirm()
+        {
+            Debug.Log("¹¹Áö");
+            isNext = true;
         }
 
         public void Update()
         {
             if (LoadingManager.Instance.CheckIsLoadDone())
             {
-                if (Input.GetMouseButtonDown(0))
+                if (isNext)
                 {
                     if (!isCoroutineRunning)
                     {
                         StartCoroutine(IEShowScene());
                     }
+
+                    isNext = false;
                 }
             }
         }

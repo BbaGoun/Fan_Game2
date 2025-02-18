@@ -38,7 +38,6 @@ namespace ActionPart
         bool isTypingStarted;
         bool isTypingDone;
         Coroutine typeingCoroutine;
-        bool nextKeyDown;
         bool isTalkNext;
 
         private NPCTalk npc;
@@ -135,7 +134,7 @@ namespace ActionPart
                 }
                 else if (isTypingDone)
                 {
-                    if(isTalkNext || Input.GetMouseButtonDown(0))
+                    if(isTalkNext)
                     {
                         isTalkNext = false;
                         isTypingStarted = false;
@@ -291,18 +290,10 @@ namespace ActionPart
         #region Key Event
         public void ActionTalkConfirm(InputAction.CallbackContext context)
         {
-            if (context.started)
+            if (context.canceled)
             {
                 if (isTypingDone)
-                    nextKeyDown = true;
-            }
-            else if (context.canceled)
-            {
-                if (nextKeyDown)
-                {
-                    nextKeyDown = false;
                     isTalkNext = true;
-                }
             } 
         }
 
