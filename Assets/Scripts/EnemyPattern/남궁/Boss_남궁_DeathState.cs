@@ -18,6 +18,7 @@ namespace ActionPart
         {
             // 사밍 시 할 거
             boss.SetAnimatorTrigger("isDead");
+            boss.harmfulToPlayer.SetIsWork(false);
         }
 
         public override void ExitState()

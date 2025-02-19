@@ -13,6 +13,7 @@ namespace ActionPart.UI
         [SerializeField]
         GameObject map;
         Animator animator;
+        int mapIndex = 7;
 
 
         private void Awake()
@@ -31,8 +32,9 @@ namespace ActionPart.UI
 
         }
 
-        public void MapOff_Button()
+        public void MapOff_Button(int index)
         {
+            mapIndex = index;
             animator.SetTrigger("isClosed");
         }
 
@@ -44,7 +46,14 @@ namespace ActionPart.UI
 
         public void MapOff_OpenDoor()
         {
-            elevator.ElevatorDown();
+            if (mapIndex == 7)
+            {
+                elevator.SetIsInteracting(false);
+            }
+            else
+            {
+                elevator.ElevatorDown(mapIndex);
+            }
 
             PlayerInputPart.Instance.CanInput();
             MetaGameController.instance.ShowInterface();

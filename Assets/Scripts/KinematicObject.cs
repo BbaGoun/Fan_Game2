@@ -443,7 +443,7 @@ namespace ActionPart
 
         private void PerformMovement(Vector2 move)
         {
-            Debug.Log("before move: " + move);
+            //Debug.Log("before move: " + move);
 
             if (isGrounded && (highestGroundY + groundOffsetY < body.position.y) && move.y > 0)
             {
@@ -541,7 +541,7 @@ namespace ActionPart
 
             move = moveX.normalized * distanceX + moveY.normalized * distanceY;
             Debug.DrawRay(body.position, move * 100, Color.white);
-            Debug.Log("After move: " + move);
+            //Debug.Log("After move: " + move);
 
             var targetPosition = body.position + move;
             body.MovePosition(targetPosition);

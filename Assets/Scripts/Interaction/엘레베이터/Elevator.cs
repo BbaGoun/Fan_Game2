@@ -14,6 +14,7 @@ namespace ActionPart.UI
 
         public Transform elevator;
         public Animator elevatorAnim;
+        public SceneSideEnd sceneSideEnd;
 
         private void Awake()
         {
@@ -26,25 +27,35 @@ namespace ActionPart.UI
             isInteracting = _isInteracting;
         }
 
-        public void ElevatorDown()
+        public void ElevatorDown(int index)
         {
+            switch (index)
+            {
+                case 0:
+                    sceneSideEnd.ChangeNextScene("√¢√µ∞¥¿‹");
+                    break;                        
+                case 1:                           
+                    sceneSideEnd.ChangeNextScene("√¢√µ∞¥¿‹");
+                    break;                        
+                case 2:                           
+                    sceneSideEnd.ChangeNextScene("√¢√µ∞¥¿‹");
+                    break;                        
+                case 3:                           
+                    sceneSideEnd.ChangeNextScene("√¢√µ∞¥¿‹");
+                    break;                        
+                case 4:                           
+                    sceneSideEnd.ChangeNextScene("√¢√µ∞¥¿‹");
+                    break;                        
+                case 5:                           
+                    sceneSideEnd.ChangeNextScene("√¢√µ∞¥¿‹");
+                    break;                        
+                case 6:                           
+                    sceneSideEnd.ChangeNextScene("√¢√µ∞¥¿‹");
+                    break;
+            }
+
             SetIsInteracting(true);
             elevatorAnim.SetTrigger("Down");
-        }
-
-        public void ElevatorDownGo()
-        {
-            StartCoroutine(IEElevatorDownGo());
-
-            IEnumerator IEElevatorDownGo()
-            {
-                var gap = 3.625f / 40f;
-                for(int i = 0; i < 40; i++)
-                {
-                    elevator.localPosition = new Vector3(elevator.localPosition.x, elevator.localPosition.y - gap, elevator.localPosition.z);
-                    yield return new WaitForFixedUpdate();
-                }
-            }
         }
 
         private void OnTriggerStay2D(Collider2D collision)

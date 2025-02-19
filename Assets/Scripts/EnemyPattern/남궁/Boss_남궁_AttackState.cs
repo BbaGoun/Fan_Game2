@@ -27,10 +27,7 @@ namespace ActionPart
         private float attackMoveTimer;
 
         [SerializeField]
-        private bool isAttackHit;
-        [SerializeField]
         private GameObject attackObject1;
-        private AttackEffect attackEffect1;
         [SerializeField]
         private float shakeDuration;
         [SerializeField]
@@ -38,7 +35,6 @@ namespace ActionPart
 
         private void Awake()
         {
-            attackEffect1 = attackObject1.GetComponent<AttackEffect>();
         }
 
         public void Initialize(Boss_남궁 _boss)
@@ -48,7 +44,6 @@ namespace ActionPart
 
         public override void EnterState()
         {
-            attackEffect1.eventAttackHit += OnAttackHit;
 
             base.EnterState();
 
@@ -58,13 +53,10 @@ namespace ActionPart
 
         public override void ExitState()
         {
-            attackEffect1.eventAttackHit -= OnAttackHit;
 
             attackObject1.SetActive(false);
             attackState = AttackState.Idle;
             boss.ResetAnimator();
-
-            isAttackHit = false;
 
             base.ExitState();
         }
@@ -90,9 +82,6 @@ namespace ActionPart
             }
             #endregion
 
-            attackEffect1.SetShakeDuration(shakeDuration);
-            attackEffect1.SetShakeIntensity(shakeIntensity);
-
             UpdateAttackState();
         }
 
@@ -104,7 +93,6 @@ namespace ActionPart
                     boss.SetAnimatorTrigger("isAttack");
                     attackTimer = 0f;
                     attackMoveTimer = 0f;
-                    isAttackHit = false;
                     //Debug.Log("공격1 애니메이션 시작");
                     attackState = AttackState.Attacking1;
                     break;
@@ -143,11 +131,6 @@ namespace ActionPart
             }
         }
         
-
-        void OnAttackHit()
-        {
-            isAttackHit = true;
-        }
 
         #region Animation Events
         void Attack1()

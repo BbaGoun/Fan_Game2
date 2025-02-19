@@ -41,7 +41,7 @@ namespace ActionPart
 
         public void CutSceneConfirm()
         {
-            Debug.Log("¹¹Áö");
+            //Debug.Log("¹¹Áö");
             isNext = true;
         }
 

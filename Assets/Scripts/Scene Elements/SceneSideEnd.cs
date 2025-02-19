@@ -34,8 +34,11 @@ namespace ActionPart
 
                         IEnumerator IEF()
                         {
-                            player.playerMoveState.MoveXFromTo(player.transform.localPosition, outPoint.localPosition);
-                            yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);
+                            if (outPoint != null)
+                            {
+                                player.playerMoveState.MoveXFromTo(player.transform.localPosition, outPoint.localPosition);
+                                yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);
+                            }
 
                             LoadingManager.Instance.LoadSceneAsync(nextSceneName, nextSpawnPoint, walkOut, transitionMode);
                             yield return null;

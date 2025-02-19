@@ -203,7 +203,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11331207}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_Yes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &11331207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -916,7 +928,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 950045013}
         m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
-        m_MethodName: SelectLocal
+        m_MethodName: PopUpOn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1185,7 +1197,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 117888079}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_Yes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &117888079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1305,7 +1329,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 120483829}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_No
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &120483829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1612,7 +1648,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 950045013}
         m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
-        m_MethodName: SelectLocal
+        m_MethodName: PopUpOn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1958,7 +1994,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 190160135}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_Yes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &190160135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2233,7 +2281,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 950045013}
         m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
-        m_MethodName: SelectLocal
+        m_MethodName: PopUpOn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2445,7 +2493,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 312502547}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_No
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &312502547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3220,7 +3280,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 950045013}
         m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
-        m_MethodName: SelectLocal
+        m_MethodName: PopUpOn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3476,7 +3536,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 950045013}
         m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
-        m_MethodName: SelectLocal
+        m_MethodName: PopUpOn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3791,7 +3851,6 @@ GameObject:
   m_Component:
   - component: {fileID: 499936008}
   - component: {fileID: 499936009}
-  - component: {fileID: 499936010}
   m_Layer: 0
   m_Name: "\uC5D8\uB808\uBCA0\uC774\uD130\uB4E4"
   m_TagString: Untagged
@@ -3840,19 +3899,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &499936010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499936007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 202cba170d448ce448a0e86e7b33b42b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  elevator: {fileID: 876646179}
 --- !u!1 &504479742
 GameObject:
   m_ObjectHideFlags: 0
@@ -5126,7 +5172,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 825876574}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_No
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &825876574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5246,7 +5304,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 831809027}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_No
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &831809027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5719,6 +5789,7 @@ MonoBehaviour:
   door: {fileID: 376839260}
   elevator: {fileID: 876646174}
   elevatorAnim: {fileID: 499936009}
+  sceneSideEnd: {fileID: 1896304657}
 --- !u!1 &886791193
 GameObject:
   m_ObjectHideFlags: 0
@@ -6361,6 +6432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e716dc3f8a8ad154aa2a578da787bf95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  elevatorDoor: {fileID: 376839266}
   locals:
   - {fileID: 446745255}
   - {fileID: 1692358775}
@@ -6370,6 +6442,14 @@ MonoBehaviour:
   - {fileID: 454651478}
   - {fileID: 1625274486}
   - {fileID: 941821600}
+  popUps:
+  - {fileID: 647752016}
+  - {fileID: 374828225}
+  - {fileID: 1826977775}
+  - {fileID: 867579137}
+  - {fileID: 918959494}
+  - {fileID: 1670656287}
+  - {fileID: 27326269}
 --- !u!1 &954074417
 GameObject:
   m_ObjectHideFlags: 0
@@ -6688,7 +6768,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 950045013}
         m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
-        m_MethodName: SelectLocal
+        m_MethodName: PopUpOn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7293,7 +7373,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1215556365}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_Yes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1215556365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7448,7 +7540,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1270762202}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_Yes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1270762202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8181,7 +8285,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1350192885}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_No
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1350192885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8693,7 +8809,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1462564127}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_No
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1462564127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9572,7 +9700,7 @@ Transform:
   m_GameObject: {fileID: 1645662642}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0.4, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9648,7 +9776,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 13}
+  m_Size: {x: 1, y: 18}
   m_EdgeRadius: 0
 --- !u!1 &1670656287
 GameObject:
@@ -10068,7 +10196,7 @@ Transform:
   m_GameObject: {fileID: 1709870137}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.85, y: 0.05, z: 0}
+  m_LocalPosition: {x: -2.85, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10133,7 +10261,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -2}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -11206,13 +11334,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 376839266}
-        m_TargetAssemblyTypeName: ActionPart.ElevatorDoor, Assembly-CSharp
+        m_TargetAssemblyTypeName: ActionPart.UI.ElevatorDoor, Assembly-CSharp
         m_MethodName: MapOff_Button
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -11317,7 +11445,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -11349,7 +11477,7 @@ MonoBehaviour:
   nextSceneName: 
   nextSpawnPoint: 0
   walkOut: 0
-  transitionMode: 0
+  transitionMode: 1
 --- !u!1 &1898118923
 GameObject:
   m_ObjectHideFlags: 0
@@ -11431,7 +11559,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1898118926}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_No
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1898118926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11685,7 +11825,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1977558281}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_Yes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1977558281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11810,7 +11962,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 950045013}
         m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
-        m_MethodName: SelectLocal
+        m_MethodName: PopUpOn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12311,7 +12463,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2118160914}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950045013}
+        m_TargetAssemblyTypeName: ActionPart.Map_Interaction, Assembly-CSharp
+        m_MethodName: PopUp_Yes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2118160914
 MonoBehaviour:
   m_ObjectHideFlags: 0

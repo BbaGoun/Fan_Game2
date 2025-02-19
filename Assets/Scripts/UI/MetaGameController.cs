@@ -75,12 +75,16 @@ namespace ActionPart.UI
             if (context.started)
             {
                 var loadedSceneName = LoadingManager.Instance.GetLoadedSceneName();
+
                 if (loadedSceneName == null)
                     return;
                 else if (loadedSceneName.Equals("메인 타이틀"))
                     return;
                 else if (loadedSceneName.Contains("만화컷"))
                     return;
+                else if (LoadingManager.Instance.CheckCartoonOn())
+                    return;
+
                 ToggleMainMenu(show: !showMainCanvas);
             }
         }

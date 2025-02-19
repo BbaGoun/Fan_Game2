@@ -369,6 +369,7 @@ namespace ActionPart
 
                 //만화컷 언 로드
                 AsyncOperation asyncUnLoad = SceneManager.UnloadSceneAsync(loadedCartoonSceneName);
+                loadedCartoonSceneName = null;
                 asyncUnLoad.allowSceneActivation = false;
 
                 while (!asyncUnLoad.isDone)
@@ -408,6 +409,14 @@ namespace ActionPart
 
                 isLoadDone = true;
             }
+        }
+
+        public bool CheckCartoonOn()
+        {
+            if (loadedCartoonSceneName == null)
+                return false;
+            else
+                return true;
         }
 
         public enum TransitionMode

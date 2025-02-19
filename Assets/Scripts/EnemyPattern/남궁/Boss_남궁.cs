@@ -49,11 +49,13 @@ namespace ActionPart
         [SerializeField, ReadOnly(true)]
         private float timer;
 
+        public HarmfulToPlayer harmfulToPlayer;
         private void Awake()
         {
             stateMachine = GetComponent<StateMachine>();
             enemyHealth = GetComponent<EnemyHealth>();
             animator = GetComponent<Animator>();
+            harmfulToPlayer = GetComponent<HarmfulToPlayer>();
 
             player = PlayerWithStateMachine.Instance;
 
