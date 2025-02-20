@@ -54,4 +54,36 @@ public class AudioController : MonoBehaviour
     {
         BGM.Pause();
     }
+
+    public void FadeOutBGM(float duration)
+    {
+        StartCoroutine(IEFadeOutBGM());
+
+        IEnumerator IEFadeOutBGM()
+        {
+            var step = 50f;
+            var timeGap = duration / step;
+            for(int i = (int)step; i >= 0; i--)
+            {
+                BGM.volume = i * 1 / step;
+                yield return new WaitForSeconds(timeGap);
+            }
+        }
+    }
+
+    public void FadeInBGM(float duration)
+    {
+        StartCoroutine(IEFadeInBGM());
+
+        IEnumerator IEFadeInBGM()
+        {
+            var step = 50f;
+            var timeGap = duration / step;
+            for (int i = 0; i<=step; i++)
+            {
+                BGM.volume = i * 1 / step;
+                yield return new WaitForSeconds(timeGap);
+            }
+        }
+    }
 }

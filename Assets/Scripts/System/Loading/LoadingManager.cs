@@ -100,9 +100,10 @@ namespace ActionPart
                         loadingScene.DirectIn();
                         break;
                 }
+                audioController.FadeOutBGM(0.5f);
                 yield return new WaitUntil(loadingScene.CheckisDone);
 
-                audioController.PauseBGM();
+                //audioController.PauseBGM();
 
                 // 씬 세팅 전 초기화
                 isLoadDone = false;
@@ -247,9 +248,12 @@ namespace ActionPart
                         break;
                 }
                 audioController.ChangeBGM(sceneSetting.bgmClip);
+                audioController.FadeInBGM(0.5f);
 
                 yield return new WaitUntil(loadingScene.CheckisDone);
                 yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);
+
+                CheckEnterEvent(sceneName);
 
                 isLoadDone = true;
             }
@@ -285,9 +289,10 @@ namespace ActionPart
                         loadingScene.DirectIn();
                         break;
                 }
+                audioController.FadeOutBGM(0.5f);
                 yield return new WaitUntil(loadingScene.CheckisDone);
 
-                audioController.PauseBGM();
+                //audioController.PauseBGM();
 
                 yield return new WaitForSeconds(inDelay);
 
@@ -329,6 +334,7 @@ namespace ActionPart
                 }
                 
                 audioController.ChangeBGM(cartoonSetting.bgmClip);
+                audioController.FadeInBGM(0.5f);
 
                 yield return new WaitUntil(loadingScene.CheckisDone);
 
@@ -361,6 +367,7 @@ namespace ActionPart
                         loadingScene.DirectIn();
                         break;
                 }
+                audioController.FadeOutBGM(0.5f);
                 yield return new WaitUntil(loadingScene.CheckisDone);
 
                 audioController.PauseBGM();
@@ -402,6 +409,8 @@ namespace ActionPart
                 }
 
                 audioController.ChangeBGM(sceneSetting.bgmClip);
+                audioController.FadeInBGM(0.5f);
+
                 PlayerInputPart.Instance.CanInput();
                 interfaces.SetActive(true);
 
@@ -417,6 +426,15 @@ namespace ActionPart
                 return false;
             else
                 return true;
+        }
+
+        public void CheckEnterEvent(string sceneName)
+        {
+            switch (sceneName)
+            {
+                default:
+                    break;
+            }
         }
 
         public enum TransitionMode
