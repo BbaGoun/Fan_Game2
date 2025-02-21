@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace ActionPart
 {
     public class PlayerGroggyState : State
@@ -53,6 +54,8 @@ namespace ActionPart
             hittedEffect.transform.position = player.transform.position + new Vector3(transform.localScale.x * 0.5f, 0.5f, 0f);
             hittedEffect.transform.localScale = new Vector3(transform.localScale.x, 1, 1);
 
+            playerGroggyBar.GetComponent<RectTransform>().localScale = new Vector3(this.transform.localScale.x < 0 ? -1 * Mathf.Sign(playerGroggyBar.transform.localScale.x) * playerGroggyBar.transform.localScale.x : Mathf.Sign(playerGroggyBar.transform.localScale.x) * playerGroggyBar.transform.localScale.x,
+                        playerGroggyBar.transform.localScale.y, playerGroggyBar.transform.localScale.z);
 
             groggyState = GroggyState.GroggyStart;
             base.EnterState();
@@ -60,6 +63,9 @@ namespace ActionPart
 
         public override void ExitState()
         {
+            playerGroggyBar.Reset();
+            playerGroggyBar.gameObject.SetActive(false);
+
             health.Heal_Stamina(health.GetMaxStamina());
             health.UnStopRecoveryStamina();
             base.ExitState();

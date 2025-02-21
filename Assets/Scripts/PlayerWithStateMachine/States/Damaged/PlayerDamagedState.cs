@@ -153,7 +153,8 @@ namespace ActionPart
                     {
                         case IDamageAble.HitType.Special:
                             hittedEffect = ObjectPoolManager.Instance.GetObject("Player_Healing_Hitted_Effect");
-                            hittedEffect.transform.position = gameObject.transform.position;
+                            hittedEffect.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -5);
+                            hittedEffect.transform.localScale = new Vector3(Mathf.Sign(transform.localScale.x), 1, 1);
                             break;
                         default:
                             if (currentStiffness.stiffnessName.Equals("Big"))

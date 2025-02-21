@@ -184,7 +184,7 @@ namespace ActionPart
 
         protected override void FixedUpdate()
         {
-            if (isStopped)
+            if (isStopped || !LoadingManager.Instance.CheckIsLoadDone())
                 return;
 
             base.FixedUpdate();

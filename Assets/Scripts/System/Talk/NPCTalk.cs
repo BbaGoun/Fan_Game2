@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ActionPart
 {
-    public class NPCTalk : MonoBehaviour
+    public class NPCTalk : MonoBehaviour, ITalkAble 
     {
         public string talkEventName;
 
@@ -29,7 +29,17 @@ namespace ActionPart
             upArrow.SetActive(false);
         }
 
-        public void SetIsTalking(bool value)
+        public void TalkStart()
+        {
+            SetIsTalking(true);
+        }
+
+        public void TalkDone()
+        {
+            SetIsTalking(false);
+        }
+
+        private void SetIsTalking(bool value)
         {
             isTalking = value;
         }

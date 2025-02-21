@@ -6,7 +6,8 @@ namespace ActionPart
 {
     public class EventRemember : MonoBehaviour
     {
-        public int æ»»÷∫πµµCount;
+        public bool æ»»÷∫πµµFirst = true;
+        public bool æ»»÷º∫BossKilled = false;
 
         static public EventRemember Instance;
         private void Awake()

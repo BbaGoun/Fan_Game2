@@ -10,5 +10,7 @@ namespace ActionPart
         {
 
         }
+
+        public virtual void Initialize() { }
     }
 }

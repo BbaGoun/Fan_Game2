@@ -432,6 +432,13 @@ namespace ActionPart
         {
             switch (sceneName)
             {
+                case "æ»»÷º∫ ∫πµµ":
+                    if (EventRemember.Instance.æ»»÷∫πµµFirst)
+                    {
+                        EventRemember.Instance.æ»»÷∫πµµFirst = false;
+                        TalkManager.Instance.TalkStart("∆©≈‰∏ÆæÛ_SC1-1.", null);
+                    }
+                    break;
                 default:
                     break;
             }

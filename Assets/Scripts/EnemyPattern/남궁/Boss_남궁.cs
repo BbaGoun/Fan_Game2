@@ -21,7 +21,11 @@ namespace ActionPart
         Boss_남궁_GroggyState groggyState;
         [SerializeField]
         Boss_남궁_DeathState deathState;
+        [SerializeField]
+        BossTalkArea bossTalkArea;
         #endregion
+
+        public GameObject bossWall;
 
         public RangeArea InRange;
         public RangeArea OutRange;
@@ -52,6 +56,7 @@ namespace ActionPart
         public HarmfulToPlayer harmfulToPlayer;
         private void Awake()
         {
+            bossWall?.SetActive(true);
             stateMachine = GetComponent<StateMachine>();
             enemyHealth = GetComponent<EnemyHealth>();
             animator = GetComponent<Animator>();
@@ -64,18 +69,18 @@ namespace ActionPart
             damagedState.Initialize(this);
             groggyState.Initialize(this);
             deathState.Initialize(this);
+            bossTalkArea.Initialize(this);
 
             stateMachine.InitState(moveState);
-
-            Initialize();
         }
         protected override void Start()
         {
             base.Start();
         }
 
-        private void Initialize()
+        public override void Initialize()
         {
+            bossWall?.SetActive(false);
             StartCoroutine(IELifeCycle());
         }
 

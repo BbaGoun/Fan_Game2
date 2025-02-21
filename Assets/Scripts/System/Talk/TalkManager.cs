@@ -40,7 +40,7 @@ namespace ActionPart
         Coroutine typeingCoroutine;
         bool isTalkNext;
 
-        private NPCTalk npc;
+        private ITalkAble npc;
 
         [System.Serializable]
         public class TalkData
@@ -177,7 +177,7 @@ namespace ActionPart
                     PlayerInputPart.Instance.CanInput();
                     if (npc != null)
                     {
-                        npc.SetIsTalking(false);
+                        npc.TalkDone();
                         npc = null;
                     }
 
@@ -239,7 +239,7 @@ namespace ActionPart
             }
         }
 
-        public void TalkStart(string eventName, NPCTalk _npc)
+        public void TalkStart(string eventName, ITalkAble _npc)
         {
             if (!isTalking)
             {
@@ -253,7 +253,7 @@ namespace ActionPart
                     if(_npc != null)
                     {
                         npc = _npc;
-                        npc.SetIsTalking(true);
+                        npc.TalkStart();
                     }
                     PlayerInputPart.Instance.CantInput();
                     talkUI.SetTalkBoxOn();

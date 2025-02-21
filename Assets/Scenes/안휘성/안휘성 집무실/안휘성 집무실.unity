@@ -1463,6 +1463,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3285850697087049293, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
+      propertyPath: talkEventName
+      value: "\uD29C\uD1A0\uB9AC\uC5BC_SC1."
+      objectReference: {fileID: 0}
     - target: {fileID: 4464347122971564738, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_Name
       value: NPC
@@ -2432,7 +2436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outPoint: {fileID: 1376634199}
-  nextSceneName: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
+  nextSceneName: "\uC548\uD718\uC131 \uBCF5\uB3C4"
   nextSpawnPoint: 0
   walkOut: 0
   transitionMode: 1
