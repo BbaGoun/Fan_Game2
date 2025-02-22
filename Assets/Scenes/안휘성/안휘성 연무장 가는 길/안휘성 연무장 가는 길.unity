@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 410032818}
   - component: {fileID: 410032819}
   m_Layer: 0
-  m_Name: "1-5 \uB9CC\uB4502"
+  m_Name: "\uC548\uD718\uC131_\uC5F0\uBB34\uC7A5\uAC00\uB294\uAE38_\uB9CC\uB4502"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1890,7 +1890,7 @@ GameObject:
   - component: {fileID: 1209653402}
   - component: {fileID: 1209653403}
   m_Layer: 0
-  m_Name: "1-5 \uB9CC\uB4501"
+  m_Name: "\uC548\uD718\uC131_\uC5F0\uBB34\uC7A5\uAC00\uB294\uAE38_\uB9CC\uB4501"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

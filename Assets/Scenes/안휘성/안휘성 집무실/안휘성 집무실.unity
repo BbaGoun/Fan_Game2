@@ -1271,6 +1271,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4464347122971564738, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5988947435381099705, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5
@@ -1469,7 +1473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4464347122971564738, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_Name
-      value: NPC
+      value: "\uC548\uD718\uC131_\uC9D1\uBB34\uC2E4_\uAC00\uC8FC"
       objectReference: {fileID: 0}
     - target: {fileID: 5988947435381099705, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_LocalScale.x
@@ -1488,6 +1492,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7454548758822890714, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8442431690125471024, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451641211379053807, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

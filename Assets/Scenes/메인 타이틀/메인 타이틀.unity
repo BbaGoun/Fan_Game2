@@ -3770,7 +3770,7 @@ MonoBehaviour:
   RightSpawnPoint: {fileID: 0}
   RightWalkOutPoint: {fileID: 0}
   NoneSpawnPoint: {fileID: 0}
-  bgmClip: {fileID: 8300000, guid: c321511d8d47ca746a11ca07d2091051, type: 3}
+  bgmClip: {fileID: 8300000, guid: b4febeb4c7965f245bc83ae6600350e1, type: 3}
 --- !u!1 &1629885309
 GameObject:
   m_ObjectHideFlags: 0
