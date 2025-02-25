@@ -182,7 +182,7 @@ namespace ActionPart
                     capsuleCollider.enabled = false;
 
                     // 가만히 있는데 낑기는지 확인
-                    var countX = body.Cast(Vector2.zero, contactFilter, hitBuffer, 0f);
+                    var countX = body.Cast(Vector2.up, contactFilter, hitBuffer, shellRadius);
                     if (countX > 0)
                     {
                         Debug.Log("낑기니까 바꿔줄게");
@@ -306,20 +306,20 @@ namespace ActionPart
         {
             CheckFrontSlope();
 
-            if(!isOnFrontSlope)
-                CheckDownSlope();
-            else
-            {
-                isOnDownSlope = false;
-                downSlopeVec = Vector2.zero;
-            }
-
-            if(!isOnFrontSlope && !isOnDownSlope)
+            if (!isOnFrontSlope)
                 CheckBackSlope();
             else
             {
                 isOnBackSlope = false;
                 backSlopeVec = Vector2.zero;
+            }
+
+            if (!isOnFrontSlope && !isOnBackSlope)
+                CheckDownSlope();
+            else
+            {
+                isOnDownSlope = false;
+                downSlopeVec = Vector2.zero;
             }
 
             ApplySlope();
@@ -328,19 +328,19 @@ namespace ActionPart
         private void CheckFrontSlope()
         {
             direction = transform.localScale.x;
-            
+
             Vector2 frontCheckPos = transform.position - new Vector3(direction * (-frontSlopeCheckOffset.x - colliderOffset.x), colliderSize.y / 2 - frontSlopeCheckOffset.y - colliderOffset.y);
             RaycastHit2D frontHit = new RaycastHit2D();
             if (isOnFrontSlope)
                 frontHit = Physics2D.Raycast(frontCheckPos, direction * Vector2.right, horizontalSlopeCheckDistance * checkDistanceFactor, contactFilter.layerMask);
             else
                 frontHit = Physics2D.Raycast(frontCheckPos, direction * Vector2.right, horizontalSlopeCheckDistance, contactFilter.layerMask);
-            
+
 
             if (frontHit)
             {
                 frontSlopeVec = -Vector2.Perpendicular(frontHit.normal).normalized;
-                if(Mathf.Abs(frontSlopeVec.y) > minUnitSlopeY && Mathf.Abs(frontSlopeVec.y) < maxUnitSlopeY)
+                if (Mathf.Abs(frontSlopeVec.y) > minUnitSlopeY && Mathf.Abs(frontSlopeVec.y) < maxUnitSlopeY)
                 {
                     Debug.DrawRay(frontCheckPos, direction * Vector2.right * horizontalSlopeCheckDistance, Color.green);
                     if (isOnFrontSlope)
@@ -422,14 +422,14 @@ namespace ActionPart
             {
                 slopeVec = frontSlopeVec;
             }
+            else if (isOnBackSlope)
+            {
+                slopeVec = backSlopeVec;
+            }
             else if (isOnDownSlope)
             {
                 slopeVec = downSlopeVec;
             }
-            else if(isOnBackSlope)
-            {
-                slopeVec = backSlopeVec;
-            }    
 
             if (slopeVec.y < maxUnitSlopeY)
             {
@@ -445,7 +445,9 @@ namespace ActionPart
         {
             //Debug.Log("before move: " + move);
 
-            if (isGrounded && (highestGroundY + groundOffsetY < body.position.y) && move.y > 0)
+            var isFloatingAir = highestGroundY + groundOffsetY < body.position.y;
+
+            if (isGrounded && isFloatingAir && move.y > 0)
             {
                 move.y = -move.y;
                 //Debug.Log("이젠 내려가거라");
@@ -527,12 +529,13 @@ namespace ActionPart
                 }
             }
 
-            if (distanceX < 0)
+            /*if (distanceX < 0)
                 distanceX = 0;
             if (distanceY < 0)
-                distanceY = 0;
+                distanceY = 0;*/
 
-            if((Mathf.Abs(moveY.y) > minMoveDistance && Mathf.Abs(moveX.x) < minMoveDistance) 
+            // 그냥 y=0으로 하지 말고 cast에서 경사로의 직교벡터로 하도록 하기
+            if(isGrounded && (Mathf.Abs(moveY.y) > minMoveDistance && Mathf.Abs(moveX.x) < minMoveDistance) 
                     && (isOnFrontSlope || isOnDownSlope || isOnBackSlope))
             {
                 //Debug.Log("내려가지말아다오");

@@ -756,6 +756,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   "\uC548\uD718\uBCF5\uB3C4First": 1
   "\uC548\uD718\uC131BossKilled": 0
+  "\uB179\uB9BCBossKilled": 0
+  "\uC810\uCC3DBossKilled": 0
+  "\uC0AC\uCC9CBossKilled": 0
+  "\uACE4\uB95CBossKilled": 0
+  "\uC18C\uB9BCBossKilled": 0
+  "\uB9C8\uAD50BossKilled": 0
+  "\uC548\uD718\uC131_\uC9D1\uBB34\uC2E4_\uAC00\uC8FCTalkCount": 0
+  "\uC548\uD718\uC131_\uBCF5\uB3C4_\uB9CC\uB4501TalkCount": 0
+  "\uC548\uD718\uC131_\uBCF5\uB3C4_\uB9CC\uB4502TalkCount": 0
+  "\uC548\uD718\uC131_\uC5F0\uBB34\uC7A5\uAC00\uB294\uAE38_\uB9CC\uB4501TalkCount": 0
+  "\uC548\uD718\uC131_\uC5F0\uBB34\uC7A5\uAC00\uB294\uAE38_\uB9CC\uB4502TalkCount": 0
+  "\uC548\uD718\uC131_\uC2DC\uC7A5_\uC138\uBC14\uC2A4\uCC2CTalkCount": 0
+  "\uC548\uD718\uC131_\uC2DC\uC7A5_\uC560\uBE44\uAC8C\uC77CTalkCount": 0
+  "\uC548\uD718\uC131_\uC2DC\uC7A5_\uB7EC\uB07CTalkCount": 0
+  "\uC548\uD718\uC131_\uC2DC\uC7A5_\uB9C8\uB9AC\uC548\uB290TalkCount": 0
+  "\uC548\uD718\uC131_\uC2DC\uC7A5_\uC170\uC778TalkCount": 0
+  "\uC548\uD718\uC131_\uC2DC\uC7A5_\uBBFC\uC218\uD558TalkCount": 0
+  "\uC548\uD718\uC131_\uC2DC\uC7A5_\uC624\uB274TalkCount": 0
 --- !u!114 &178768164 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 716232145224519970, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
@@ -11229,6 +11247,30 @@ PrefabInstance:
       propertyPath: playerDeathState
       value: 
       objectReference: {fileID: 8770118516554096265}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: _backSlopeCheckOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: _downSlopeCheckOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: _downSlopeCheckOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: _frontSlopeCheckOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: _verticalSlopeCheckDistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: _horizontalSlopeCheckDistance
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2590279981471532679, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.5
