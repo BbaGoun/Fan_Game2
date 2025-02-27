@@ -32,9 +32,9 @@ namespace ActionPart
 
         [Header("Jump Parameter")]
         [SerializeField]
-        private float jumpForce; // 점프력
+        private float jumpHeight; // 점프력
         [SerializeField]
-        private float doubleJumpForce; // 더블 점프력
+        private float doubleJumpHeight; // 더블 점프력
         [SerializeField]
         private int remainJump; // 현재 남은 점프 횟수
         [SerializeField]
@@ -246,7 +246,7 @@ namespace ActionPart
                     jumpPerformed = true;
                     jumpCanceled = false;
                     remainJump--;
-                    player.velocity.y = jumpForce;
+                    player.velocity.y = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
                     jumpTimer = 0f;
                     // 점프 관련 행동 추가 (사운드, 이펙트)
                     player.SetAnimatorTrigger("isJump");
@@ -276,7 +276,7 @@ namespace ActionPart
                     jumpPerformed = true;
                     jumpCanceled = false;
                     remainJump--;
-                    player.velocity.y = doubleJumpForce;
+                    player.velocity.y = Mathf.Sqrt(-2f * Physics.gravity.y * doubleJumpHeight);
                     jumpTimer = 0f;
                     // 더블 점프 관련 행동 추가
                     player.SetAnimatorTrigger("isDoubleJump");

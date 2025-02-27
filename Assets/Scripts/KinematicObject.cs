@@ -85,6 +85,9 @@ namespace ActionPart
 
         [SerializeField]
         private Vector2 slopeVec;
+        [SerializeField]
+        private Vector2 contactNormal;
+        private Vector2 hitPoint;
 
         private Vector2 finalMove;
 
@@ -169,10 +172,10 @@ namespace ActionPart
             GroundCheck();
             HeadingCheck();
 
-            deltaPosition = velocity * speedMultiplier * Time.deltaTime;
-
             if (isGrounded && velocity.y <= 0f)
             {
+                AdjustVelocity();
+                deltaPosition = velocity * speedMultiplier * Time.deltaTime;
 
                 CheckSlope();
 
@@ -182,13 +185,13 @@ namespace ActionPart
                     capsuleCollider.enabled = false;
 
                     // 가만히 있는데 낑기는지 확인
-                    var countX = body.Cast(Vector2.up, contactFilter, hitBuffer, shellRadius);
+                    /*var countX = body.Cast(Vector2.up, contactFilter, hitBuffer, shellRadius);
                     if (countX > 0)
                     {
                         Debug.Log("낑기니까 바꿔줄게");
                         boxCollider.enabled = false;
                         capsuleCollider.enabled = true;
-                    }
+                    }*/
 
                     move = deltaPosition;
                 }
@@ -212,6 +215,7 @@ namespace ActionPart
                 isOnDownSlope = false;
                 isOnBackSlope = false;
 
+                deltaPosition = velocity * speedMultiplier * Time.deltaTime;
                 move = deltaPosition;
             }
 
@@ -222,7 +226,7 @@ namespace ActionPart
         /// <summary>
         /// 지면 착지 검사
         /// </summary>
-        private void GroundCheck()
+        /*private void GroundCheck()
         {
             if (velocity.y > 0f)
             {
@@ -279,9 +283,41 @@ namespace ActionPart
                         isGrounded = false;
                 }
             }
+        }*/
+
+        /// <summary>
+        ///  지면감지 바꿈, 일단 잘 작동함.
+        /// </summary>
+        private void GroundCheck()
+        {
+            if(velocity.y > 0f)
+            {
+                isGrounded = false;
+                return;
+            }
+            var count = body.Cast(Vector2.down, contactFilter, hitBuffer, shellRadius);
+            if (count > 0)
+            {
+                for(int i = 0;i<count;i++)
+                {
+                    Vector2 normal = hitBuffer[i].normal;
+                    if(Mathf.Abs(normal.y) >= 1 - maxUnitSlopeY)
+                    {
+                        isGrounded = true;
+                        contactNormal = normal;
+                        hitPoint = hitBuffer[i].point;
+                        Debug.DrawRay(hitBuffer[i].point, normal * 10, Color.magenta);
+                    }
+                }
+            }
+            else 
+            { 
+                isGrounded = false;
+                contactNormal = Vector2.up;
+            }
         }
 
-        private void HeadingCheck()
+        /*private void HeadingCheck()
         {
             direction = transform.localScale.x;
             Vector2 checkPos = transform.position + new Vector3(direction * colliderOffset.x, colliderSize.y / 2 + colliderOffset.y);
@@ -297,6 +333,47 @@ namespace ActionPart
             {
                 isHeading = false;
             }
+        }*/
+
+        /// <summary>
+        ///  헤딩감지 바꿈, 일단 잘 작동함.
+        /// </summary>
+        private void HeadingCheck()
+        {
+            var count = body.Cast(Vector2.up, contactFilter, hitBuffer, shellRadius);
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Vector2 normal = hitBuffer[i].normal;
+                    if (Mathf.Abs(normal.y) >= 1)
+                    {
+                        isHeading = true;
+                    }
+                }
+            }
+            else
+            {
+                isHeading = false;
+            }
+        }
+
+        private void AdjustVelocity()
+        {
+            Vector2 alongSlope = ProjectOnContactVector(Vector2.right).normalized;
+
+            var tempVelocity = alongSlope * velocity.x;
+            Debug.DrawRay(hitPoint, tempVelocity * 10, Color.red);
+        }
+
+        /// <summary>
+        /// 닿은 지면을 따라 움직이는 벡터를 생성
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        private Vector2 ProjectOnContactVector(Vector2 vector)
+        {
+            return vector - contactNormal * Vector2.Dot(vector, contactNormal);
         }
 
         /// <summary>
@@ -304,7 +381,7 @@ namespace ActionPart
         /// </summary>
         private void CheckSlope()
         {
-            CheckFrontSlope();
+            /*CheckFrontSlope();
 
             if (!isOnFrontSlope)
                 CheckBackSlope();
@@ -320,6 +397,24 @@ namespace ActionPart
             {
                 isOnDownSlope = false;
                 downSlopeVec = Vector2.zero;
+            }*/
+
+            CheckDownSlope();
+
+            if(!isOnDownSlope)
+                CheckFrontSlope();
+            else
+            {
+                isOnFrontSlope = false;
+                frontSlopeVec = Vector2.zero;
+            }
+
+            if(!isOnDownSlope && !isOnFrontSlope)
+                CheckBackSlope();
+            else
+            {
+                isOnBackSlope = false;
+                backSlopeVec = Vector2.zero;
             }
 
             ApplySlope();
@@ -342,11 +437,11 @@ namespace ActionPart
                 frontSlopeVec = -Vector2.Perpendicular(frontHit.normal).normalized;
                 if (Mathf.Abs(frontSlopeVec.y) > minUnitSlopeY && Mathf.Abs(frontSlopeVec.y) < maxUnitSlopeY)
                 {
-                    Debug.DrawRay(frontCheckPos, direction * Vector2.right * horizontalSlopeCheckDistance, Color.green);
+                    /*Debug.DrawRay(frontCheckPos, direction * Vector2.right * horizontalSlopeCheckDistance, Color.green);
                     if (isOnFrontSlope)
                         Debug.DrawRay(frontCheckPos, direction * Vector2.right * horizontalSlopeCheckDistance * checkDistanceFactor, Color.blue);
                     Debug.DrawRay(frontHit.point, frontSlopeVec, Color.cyan);
-                    Debug.DrawRay(frontHit.point, frontHit.normal, Color.magenta);
+                    Debug.DrawRay(frontHit.point, frontHit.normal, Color.magenta);*/
                     isOnFrontSlope = true;
                     return;
                 }
@@ -361,7 +456,7 @@ namespace ActionPart
             direction = transform.localScale.x;
 
             RaycastHit2D downHit = new RaycastHit2D();
-            Vector2 downCheckPos = transform.position - new Vector3(direction * (-downSlopeCheckOffset.x - colliderOffset.x), colliderSize.y / 2 - downSlopeCheckOffset.y - colliderOffset.y); 
+            Vector2 downCheckPos = transform.position - new Vector3(direction * (-downSlopeCheckOffset.x - colliderOffset.x), colliderSize.y / 2 - downSlopeCheckOffset.y - colliderOffset.y);
             if (isOnDownSlope)
                 downHit = Physics2D.Raycast(downCheckPos, Vector2.down, verticalSlopeCheckDistance * checkDistanceFactor, contactFilter.layerMask);
             else
@@ -372,11 +467,11 @@ namespace ActionPart
                 downSlopeVec = -Vector2.Perpendicular(downHit.normal).normalized;
                 if (Mathf.Abs(downSlopeVec.y) > minUnitSlopeY && Mathf.Abs(downSlopeVec.y) < maxUnitSlopeY)
                 {
-                    Debug.DrawRay(downCheckPos, Vector2.down * verticalSlopeCheckDistance, Color.yellow);
+                    /*Debug.DrawRay(downCheckPos, Vector2.down * verticalSlopeCheckDistance, Color.yellow);
                     if (isOnDownSlope)
                         Debug.DrawRay(downCheckPos, Vector2.down * verticalSlopeCheckDistance * checkDistanceFactor, Color.blue);
                     Debug.DrawRay(downHit.point, downSlopeVec, Color.cyan);
-                    Debug.DrawRay(downHit.point, downHit.normal, Color.magenta);
+                    Debug.DrawRay(downHit.point, downHit.normal, Color.magenta);*/
                     isOnDownSlope = true;
                     return;
                 }
@@ -385,6 +480,7 @@ namespace ActionPart
             isOnDownSlope = false;
             downSlopeVec = Vector2.zero;
         }
+
 
         private void CheckBackSlope()
         {
@@ -402,11 +498,11 @@ namespace ActionPart
                 backSlopeVec = -Vector2.Perpendicular(backHit.normal).normalized;
                 if (Mathf.Abs(backSlopeVec.y) > minUnitSlopeY && Mathf.Abs(backSlopeVec.y) < maxUnitSlopeY)
                 {
-                    Debug.DrawRay(backCheckPos, direction * Vector2.left * horizontalSlopeCheckDistance, Color.red);
+                    /*Debug.DrawRay(backCheckPos, direction * Vector2.left * horizontalSlopeCheckDistance, Color.red);
                     if(isOnBackSlope)
                         Debug.DrawRay(backCheckPos, direction * Vector2.left * horizontalSlopeCheckDistance * checkDistanceFactor, Color.blue);
                     Debug.DrawRay(backHit.point, backSlopeVec, Color.cyan);
-                    Debug.DrawRay(backHit.point, backHit.normal, Color.magenta);
+                    Debug.DrawRay(backHit.point, backHit.normal, Color.magenta);*/
                     isOnBackSlope = true;
                     return;
                 }
@@ -534,8 +630,7 @@ namespace ActionPart
             if (distanceY < 0)
                 distanceY = 0;*/
 
-            // 그냥 y=0으로 하지 말고 cast에서 경사로의 직교벡터로 하도록 하기
-            if(isGrounded && (Mathf.Abs(moveY.y) > minMoveDistance && Mathf.Abs(moveX.x) < minMoveDistance) 
+            if(!isFloatingAir && isGrounded && (Mathf.Abs(moveY.y) > minMoveDistance && Mathf.Abs(moveX.x) < minMoveDistance) 
                     && (isOnFrontSlope || isOnDownSlope || isOnBackSlope))
             {
                 //Debug.Log("내려가지말아다오");

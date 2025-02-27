@@ -11495,6 +11495,18 @@ PrefabInstance:
       propertyPath: landAudio
       value: 
       objectReference: {fileID: 8300000, guid: a7258661cde1988489c4427a417db8e1, type: 3}
+    - target: {fileID: 7233790644082638672, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: jumpHeight
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233790644082638672, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: doubleJumpHeight
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233790644082638672, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: jumpCancelGravity
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 7661074772784491762, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: damage
       value: 10
