@@ -15,6 +15,8 @@ namespace ActionPart
         /// </summary>
         [SerializeField]
         public Vector2 velocity;
+        [SerializeField]
+        private Vector2 adjustedVelocity;
         private float speedMultiplier;
 
         /// <summary>
@@ -175,23 +177,27 @@ namespace ActionPart
             if (isGrounded && velocity.y <= 0f)
             {
                 AdjustVelocity();
-                deltaPosition = velocity * speedMultiplier * Time.deltaTime;
+                deltaPosition = adjustedVelocity * speedMultiplier * Time.deltaTime;
 
-                CheckSlope();
+                capsuleCollider.enabled = true;
+                boxCollider.enabled = false;
+                move = deltaPosition;
 
-                if (!isOnFrontSlope && !isOnDownSlope && !isOnBackSlope)
+                //CheckSlope();
+
+                /*if (!isOnFrontSlope && !isOnDownSlope && !isOnBackSlope)
                 {
                     boxCollider.enabled = true;
                     capsuleCollider.enabled = false;
 
                     // 가만히 있는데 낑기는지 확인
-                    /*var countX = body.Cast(Vector2.up, contactFilter, hitBuffer, shellRadius);
+                    *//*var countX = body.Cast(Vector2.up, contactFilter, hitBuffer, shellRadius);
                     if (countX > 0)
                     {
                         Debug.Log("낑기니까 바꿔줄게");
                         boxCollider.enabled = false;
                         capsuleCollider.enabled = true;
-                    }*/
+                    }*//*
 
                     move = deltaPosition;
                 }
@@ -207,7 +213,7 @@ namespace ActionPart
                     {
                         move = slopeVec * deltaPosition.x;
                     }
-                }
+                }*/
             }
             else
             {
@@ -295,7 +301,8 @@ namespace ActionPart
                 isGrounded = false;
                 return;
             }
-            var count = body.Cast(Vector2.down, contactFilter, hitBuffer, shellRadius);
+            var count = body.Cast(Vector2.down, contactFilter, hitBuffer, shellRadius+verticalSlopeCheckDistance);
+            Debug.DrawRay(transform.localPosition - new Vector3(0, transform.localScale.x * 0.95f, 0), Vector2.down * (shellRadius + verticalSlopeCheckDistance)); 
             if (count > 0)
             {
                 for(int i = 0;i<count;i++)
@@ -360,20 +367,13 @@ namespace ActionPart
 
         private void AdjustVelocity()
         {
-            Vector2 alongSlope = ProjectOnContactVector(Vector2.right).normalized;
+            Vector2 alongSlope = -Vector2.Perpendicular(contactNormal).normalized;
 
-            var tempVelocity = alongSlope * velocity.x;
-            Debug.DrawRay(hitPoint, tempVelocity * 10, Color.red);
-        }
-
-        /// <summary>
-        /// 닿은 지면을 따라 움직이는 벡터를 생성
-        /// </summary>
-        /// <param name="vector"></param>
-        /// <returns></returns>
-        private Vector2 ProjectOnContactVector(Vector2 vector)
-        {
-            return vector - contactNormal * Vector2.Dot(vector, contactNormal);
+            adjustedVelocity = alongSlope * velocity.x * Vector2.Dot(Vector2.right, alongSlope);
+            if(Mathf.Abs(alongSlope.y) < minUnitSlopeY)
+            {
+                adjustedVelocity.y = velocity.y;
+            }
         }
 
         /// <summary>
@@ -541,13 +541,13 @@ namespace ActionPart
         {
             //Debug.Log("before move: " + move);
 
-            var isFloatingAir = highestGroundY + groundOffsetY < body.position.y;
+            /*var isFloatingAir = highestGroundY + groundOffsetY < body.position.y;
 
             if (isGrounded && isFloatingAir && move.y > 0)
             {
                 move.y = -move.y;
                 //Debug.Log("이젠 내려가거라");
-            }
+            }*/
 
             Vector2 moveX = Vector2.right * move.x;
             Vector2 moveY = Vector2.up * move.y;
@@ -559,7 +559,6 @@ namespace ActionPart
             Vector2 moveNormalVec = Vector2.zero;
             RaycastHit2D hitPoint = new RaycastHit2D();
             bool isHit = false;
-
 
             if (distanceX > minMoveDistance)
             {
@@ -630,12 +629,12 @@ namespace ActionPart
             if (distanceY < 0)
                 distanceY = 0;*/
 
-            if(!isFloatingAir && isGrounded && (Mathf.Abs(moveY.y) > minMoveDistance && Mathf.Abs(moveX.x) < minMoveDistance) 
+            /*if(!isFloatingAir && isGrounded && (Mathf.Abs(moveY.y) > minMoveDistance && Mathf.Abs(moveX.x) < minMoveDistance) 
                     && (isOnFrontSlope || isOnDownSlope || isOnBackSlope))
             {
                 //Debug.Log("내려가지말아다오");
                 distanceY = 0f;
-            }
+            }*/
 
             move = moveX.normalized * distanceX + moveY.normalized * distanceY;
             Debug.DrawRay(body.position, move * 100, Color.white);
