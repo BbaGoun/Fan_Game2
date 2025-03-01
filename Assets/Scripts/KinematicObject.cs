@@ -41,6 +41,9 @@ namespace ActionPart
         private float shellRadius = 0.01f;
 
         [Header("Ground/Slope Parameter")]
+        private int groundContactCount;
+        [SerializeField]
+        private float probeDistance;
         [SerializeField]
         protected float coyoteTime;
         private float groundLastTime;
@@ -100,6 +103,8 @@ namespace ActionPart
         public float _groundOffsetY;
         private float groundOffsetY;
         private float highestGroundY;
+
+        int stepsSinceLastGrounded;
 
         /// <summary>
         /// Teleport to some position.
@@ -171,16 +176,22 @@ namespace ActionPart
             Vector2 move;
             slopeVec = Vector2.zero;
 
+            stepsSinceLastGrounded += 1;
             GroundCheck();
+            if(isGrounded)
+                stepsSinceLastGrounded = 0;
+            
             HeadingCheck();
 
-            if (isGrounded && velocity.y <= 0f)
+            if ((isGrounded || SnapToGround()) && velocity.y <= 0f)
             {
-                AdjustVelocity();
-                deltaPosition = adjustedVelocity * speedMultiplier * Time.deltaTime;
-
                 capsuleCollider.enabled = true;
                 boxCollider.enabled = false;
+
+                AdjustVelocity();
+
+                deltaPosition = adjustedVelocity * speedMultiplier * Time.deltaTime;
+
                 move = deltaPosition;
 
                 //CheckSlope();
@@ -301,8 +312,17 @@ namespace ActionPart
                 isGrounded = false;
                 return;
             }
-            var count = body.Cast(Vector2.down, contactFilter, hitBuffer, shellRadius+verticalSlopeCheckDistance);
-            Debug.DrawRay(transform.localPosition - new Vector3(0, transform.localScale.x * 0.95f, 0), Vector2.down * (shellRadius + verticalSlopeCheckDistance)); 
+            int count;
+            if (isGrounded)
+            {
+                count = body.Cast(Vector2.down, contactFilter, hitBuffer, shellRadius + verticalSlopeCheckDistance);
+                Debug.DrawRay(transform.localPosition - new Vector3(0, colliderSize.y / 2 - colliderOffset.y, 0), Vector2.down * (shellRadius + verticalSlopeCheckDistance), Color.red); 
+            }
+            else
+            {
+                count = body.Cast(Vector2.down, contactFilter, hitBuffer, shellRadius);
+                Debug.DrawRay(transform.localPosition - new Vector3(0, colliderSize.y / 2 - colliderOffset.y, 0), Vector2.down * shellRadius, Color.red);
+            }
             if (count > 0)
             {
                 for(int i = 0;i<count;i++)
@@ -318,7 +338,7 @@ namespace ActionPart
                 }
             }
             else 
-            { 
+            {
                 isGrounded = false;
                 contactNormal = Vector2.up;
             }
@@ -365,6 +385,36 @@ namespace ActionPart
             }
         }
 
+        private bool SnapToGround()
+        {
+            if(velocity.y > 0)
+                return false;
+            if (stepsSinceLastGrounded > 1)
+            {
+                Debug.Log("1단계 탈락");
+                return false;
+            }
+            var hit = Physics2D.Raycast(transform.localPosition - new Vector3(0, colliderSize.y / 2 - colliderOffset.y, 0), Vector2.down, probeDistance, contactFilter.layerMask);
+            Debug.DrawRay(transform.localPosition - new Vector3(0, colliderSize.y / 2 - colliderOffset.y, 0), Vector2.down * probeDistance, Color.green);
+            if (!hit)
+            {
+                Debug.Log("2단계 탈락");
+                return false;
+            }
+            if(hit.normal.y < minUnitSlopeY)
+            {
+                Debug.Log("3단계 탈락");
+                return false;
+            }
+
+            contactNormal = hit.normal;
+            isGrounded = true;
+            groundContactCount = 1;
+            Debug.Log("스냅 처리");
+
+            return true;
+        }
+
         private void AdjustVelocity()
         {
             Vector2 alongSlope = -Vector2.Perpendicular(contactNormal).normalized;
@@ -373,6 +423,12 @@ namespace ActionPart
             if(Mathf.Abs(alongSlope.y) < minUnitSlopeY)
             {
                 adjustedVelocity.y = velocity.y;
+            }
+
+            var isFloatingAir = hitPoint.y + groundOffsetY < transform.localPosition.y;
+            if (isGrounded && isFloatingAir)
+            {
+                adjustedVelocity.y = Physics2D.gravity.y;
             }
         }
 
@@ -540,15 +596,6 @@ namespace ActionPart
         private void PerformMovement(Vector2 move)
         {
             //Debug.Log("before move: " + move);
-
-            /*var isFloatingAir = highestGroundY + groundOffsetY < body.position.y;
-
-            if (isGrounded && isFloatingAir && move.y > 0)
-            {
-                move.y = -move.y;
-                //Debug.Log("이젠 내려가거라");
-            }*/
-
             Vector2 moveX = Vector2.right * move.x;
             Vector2 moveY = Vector2.up * move.y;
 
@@ -557,7 +604,6 @@ namespace ActionPart
             var distance = move.magnitude;
 
             Vector2 moveNormalVec = Vector2.zero;
-            RaycastHit2D hitPoint = new RaycastHit2D();
             bool isHit = false;
 
             if (distanceX > minMoveDistance)
@@ -599,7 +645,6 @@ namespace ActionPart
                     {
                         distance = modifiedDistance;
                         moveNormalVec = -Vector2.Perpendicular(hitBuffer[i].normal).normalized;
-                        hitPoint = hitBuffer[i];
                         isHit = true;
                     }
                 }

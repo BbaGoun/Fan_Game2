@@ -314,7 +314,6 @@ namespace ActionPart
                     }
                     break;
                 case PlayerState.DashAttack:
-                    playerDashAttackState.SetBackStep(playerDashState.CheckBackStep());
                     stateMachine.ChangeState(playerDashAttackState);
                     playerState = PlayerState.DashAttack;
                     break;

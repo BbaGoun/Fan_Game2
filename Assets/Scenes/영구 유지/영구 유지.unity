@@ -4492,7 +4492,6 @@ GameObject:
   - component: {fileID: 1090723029}
   - component: {fileID: 1090723028}
   - component: {fileID: 1090723030}
-  - component: {fileID: 1090723031}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -4587,19 +4586,6 @@ MonoBehaviour:
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
   mNoiseOffsets: {x: -973.32434, y: -888.2058, z: 975.91614}
---- !u!114 &1090723031
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090723026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4c41ac9245b87c4192012080077d830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Damping: 0
 --- !u!1 &1096527154
 GameObject:
   m_ObjectHideFlags: 0
@@ -8217,7 +8203,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 8770118516554096216}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 8770118516554096216}
   m_Lens:
     FieldOfView: 60
@@ -11240,8 +11226,12 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: probeDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: _groundOffsetY
-      value: 1
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: playerDeathState
@@ -11265,7 +11255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: _verticalSlopeCheckDistance
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2556017749603341948, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: _horizontalSlopeCheckDistance

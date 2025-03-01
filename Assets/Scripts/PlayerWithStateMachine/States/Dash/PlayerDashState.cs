@@ -27,7 +27,6 @@ namespace ActionPart
         private int dashCount;
 
         private Health health;
-        private bool isBackStep;
 
         public void Initialize(PlayerWithStateMachine _playerWithStateMachine)
         {
@@ -81,7 +80,6 @@ namespace ActionPart
                     timePer = Mathf.Clamp01(timePer);
                     var rate = 1 - Mathf.Pow(timePer, 2);
                     var lookDirection = 1 * Mathf.Sign(gameObject.transform.localScale.x);
-                    lookDirection *= isBackStep ? -1 : 1;
 
                     player.velocity.x = lookDirection * dashSpeed * rate;
                     player.velocity.y = 0f;
@@ -120,21 +118,18 @@ namespace ActionPart
                 case DashState.Idle:
                     break;
                 case DashState.PrepareDash:
-                    if (moveVec.x == 0f) // backStep
+                    if (moveVec.x == 0) ;
+                    else if(Mathf.Sign(moveVec.x) == 1)
                     {
-                        player.SetAnimatorTrigger("isBackStep");
-                        isBackStep = true;
+                        player.LookRight();
                     }
-                    else // dash
+                    else if(Mathf.Sign(moveVec.x) == -1)
                     {
-                        if(Mathf.Sign(moveVec.x) == 1)
-                            player.LookRight();
-                        else if(Mathf.Sign(moveVec.x) == -1)
-                            player.LookLeft();
+                        player.LookLeft();
+                    }
 
-                        player.SetAnimatorTrigger("isDash");
-                        isBackStep = false;
-                    }
+                    player.SetAnimatorTrigger("isDash");
+
                     dashTimer = 0f;
                     dashState = DashState.Dashing;
                     dashCount -= 1;
@@ -149,11 +144,6 @@ namespace ActionPart
                     }
                     break;
             }
-        }
-
-        public bool CheckBackStep()
-        {
-            return isBackStep;
         }
 
         #region Key Event
