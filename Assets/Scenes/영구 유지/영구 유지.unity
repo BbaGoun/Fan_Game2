@@ -2855,7 +2855,7 @@ Transform:
   m_GameObject: {fileID: 614757061}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.16, y: -2.1299999, z: -14}
+  m_LocalPosition: {x: -2.16, y: -2.63, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4480,6 +4480,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1042694459}
   m_CullTransparentMesh: 1
+--- !u!1 &1059190957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1059190958}
+  m_Layer: 0
+  m_Name: CameraFollowObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1059190958
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059190957}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1406846671}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1090723026
 GameObject:
   m_ObjectHideFlags: 3
@@ -4527,15 +4558,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 0.2
-  m_LookaheadSmoothing: 0
-  m_LookaheadIgnoreY: 0
-  m_XDamping: 1.5
-  m_YDamping: 1.5
-  m_ZDamping: 1
+  m_LookaheadTime: 0.05
+  m_LookaheadSmoothing: 1
+  m_LookaheadIgnoreY: 1
+  m_XDamping: 0.75
+  m_YDamping: 1.75
+  m_ZDamping: 0
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
-  m_ScreenY: 0.6
+  m_ScreenY: 0.55
   m_CameraDistance: 10
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
@@ -4581,7 +4612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: e9ce97b7a206dc64d90931ea044e0c72, type: 2}
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
@@ -6947,6 +6978,7 @@ Transform:
   - {fileID: 1766588457}
   - {fileID: 1554635282}
   - {fileID: 272311007}
+  - {fileID: 1059190958}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1423231741 stripped
@@ -8233,7 +8265,7 @@ Transform:
   m_GameObject: {fileID: 1766588455}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.16, y: -2.1299999, z: -14}
+  m_LocalPosition: {x: -2.16, y: -2.63, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8268,7 +8300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ea1083857c2874e842801e5dbe7ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnTime: 0.45
+  turnOffset: 0.75
+  turnTime: 0.75
   camAreaName: TownCamArea
 --- !u!114 &1766588461
 MonoBehaviour:
@@ -10138,8 +10171,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].slowTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[1].maxFlash
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].slowTime
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[0].StiffnessName
@@ -10162,8 +10203,12 @@ PrefabInstance:
       value: Big
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].shakeIntensity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[1].shakeIntensity
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[0].damageThreshold
@@ -11305,6 +11350,62 @@ PrefabInstance:
       propertyPath: guardAudio
       value: 
       objectReference: {fileID: 8300000, guid: be35c10792884dc4e8d3f8a10245ab7e, type: 3}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: parryShakeIntensity
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].maxFlash
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].slowTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].maxFlash
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].slowTime
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].StiffnessName
+      value: Big
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].shakeIntensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].shakeIntensity
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[2].shakeIntensity
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].damageThreshold
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].damageThreshold
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].knockBackVector.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587476436405571643, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].knockBackVector.x
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4056507680979183462, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_Name
       value: Player (1)
@@ -11325,6 +11426,14 @@ PrefabInstance:
       propertyPath: attackObject2
       value: 
       objectReference: {fileID: 215858498}
+    - target: {fileID: 4404090010638762496, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: shakeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404090010638762496, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: shakeIntensity
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4404090010638762496, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: attackMoveFrame
       value: 20
@@ -11450,12 +11559,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 4f8cfef66545a5648808b7d084887248, type: 3}
     - target: {fileID: 6768893537139379640, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: shakeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768893537139379640, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: attackCoolTime
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6768893537139379640, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: attackWaitTime
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768893537139379640, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: shakeIntensity
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6768893537139379640, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: attackMoveFrame

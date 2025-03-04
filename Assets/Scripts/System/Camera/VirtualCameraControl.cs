@@ -9,6 +9,7 @@ namespace ActionPart
     {
         public static VirtualCameraControl Instance { get; private set; }
 
+        public float turnOffset;
         public float turnTime = 0;
         public string camAreaName;
         CinemachineVirtualCamera cvCamera;
@@ -70,36 +71,50 @@ namespace ActionPart
         {
             perlinNoise.m_AmplitudeGain = intensity;
             perlinNoise.m_FrequencyGain = frequency;
-            yield return new WaitForSeconds(duration);
+
+            float elapsedTime = 0f;
+            while(elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                var newIntensity = LeanTween.easeOutQuint(intensity, 0f, elapsedTime);
+                perlinNoise.m_AmplitudeGain = newIntensity;
+                yield return null;
+            }
+
             perlinNoise.m_AmplitudeGain = 0f;
             perlinNoise.m_FrequencyGain = 0f;
         }
 
-        public void TurnCamera(float offsetX)
+        public void TurnCameraRight(bool isRight)
         {
             if (turnCameraCoroutine != null)
                 StopCoroutine(turnCameraCoroutine);
+
+            var offsetX = GetEndOffset(isRight);
             turnCameraCoroutine = StartCoroutine(TurnCameraCoroutine(offsetX));
+        }
+
+        float GetEndOffset(bool isRight)
+        {
+            if (isRight)
+                return turnOffset;
+            else
+                return -turnOffset;
         }
 
         IEnumerator TurnCameraCoroutine(float offsetX)
         {
-            float refFloat = 0f;
-            while (true)
+            var startOffsetX = vcFTposer.m_TrackedObjectOffset.x;
+            float elapsedTime = 0f;
+            while (elapsedTime < turnTime)
             {
-                if (vcFTposer == null)
-                    Debug.Log("카메라 고장");
-                var current = vcFTposer.m_TrackedObjectOffset.x;
+                elapsedTime += Time.deltaTime;
 
-                if (Mathf.Abs(offsetX - current) < 0.001f)
-                    break;
-
-                float newOffset = Mathf.SmoothDamp(current, offsetX, ref refFloat, turnTime, Mathf.Infinity, deltaTime: Time.fixedDeltaTime);
+                var newOffset = LeanTween.easeInOutSine(startOffsetX, offsetX, elapsedTime / turnTime);
                 vcFTposer.m_TrackedObjectOffset.x = newOffset;
-                yield return new WaitForSeconds(Time.fixedDeltaTime);
-            }
 
-            yield return null;
+                yield return null;
+            }
         }
     }
 }

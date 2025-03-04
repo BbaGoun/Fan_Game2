@@ -225,7 +225,7 @@ namespace ActionPart
                 scaleX = -scaleX;
 
             transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
-            VirtualCameraControl.Instance.TurnCamera(1);
+            VirtualCameraControl.Instance.TurnCameraRight(true);
         }
 
         public void LookLeft()
@@ -236,7 +236,7 @@ namespace ActionPart
                 scaleX = -scaleX;
 
             transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
-            VirtualCameraControl.Instance.TurnCamera(-1);
+            VirtualCameraControl.Instance.TurnCameraRight(false);
         }
 
         public void SetAnimatorTrigger(string triggerName)
