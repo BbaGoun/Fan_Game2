@@ -131,7 +131,12 @@ namespace ActionPart
             return isGroggy;
         }
 
-        public bool IsInvincible()
+        public bool IsCanGetDamage()
+        {
+            return isAlive && !isInvincible;
+        }
+
+        private bool IsInvincible()
         {
             return isInvincible;
         }

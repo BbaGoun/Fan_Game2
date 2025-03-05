@@ -195,12 +195,17 @@ namespace ActionPart
             isCharged = false;
         }
 
+        public bool CheckCanGetDamage()
+        {
+            return health.IsCanGetDamage();
+        }
+
         public void GetDamage(float _hpDelta, Vector2 _direction)
         {
-            var isInvincible = health.CheckInvincible();
-            if (isInvincible)
+            var isCanGetDamage = health.IsCanGetDamage();
+            if (!isCanGetDamage)
             {
-                Debug.Log("무적일 때 닿음");
+                Debug.Log("플레이어 : 때릴 수 없을 때 닿음");
                 return;
             }
 

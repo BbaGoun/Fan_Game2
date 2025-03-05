@@ -29,6 +29,9 @@ namespace ActionPart
                     if (damageAble == null)
                         damageAble = player.GetComponent<IDamageAble>();
 
+                    if (!damageAble.CheckCanGetDamage())
+                        return;
+
                     Vector2 direction = player.transform.position - transform.position;
 
                     damageAble.GetDamage(damage, direction);

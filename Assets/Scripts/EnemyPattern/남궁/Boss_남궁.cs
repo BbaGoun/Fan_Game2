@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using UnityEngine;
 
 namespace ActionPart
@@ -171,11 +170,17 @@ namespace ActionPart
             transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
         }
 
+        public override bool CheckCanGetDamage()
+        {
+            return enemyHealth.IsCanGetDamage();
+        }
+
         public override void GetDamage(float _hpDelta, Vector2 _direction)
         {
-            var isInvincible = enemyHealth.CheckInvincible();
-            if (isInvincible)
+            var isCanGetDamage = CheckCanGetDamage();
+            if (!isCanGetDamage)
             {
+                Debug.Log("남궁의 아이 : 때릴 수 없을 때 닿음");
                 return;
             }
 

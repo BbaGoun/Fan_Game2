@@ -6,6 +6,8 @@ namespace ActionPart
 {
     public interface IDamageAble
     {
+        public bool CheckCanGetDamage();
+
         public void GetDamage(float hpDelta, Vector2 direction);
 
         public struct DamageInfo

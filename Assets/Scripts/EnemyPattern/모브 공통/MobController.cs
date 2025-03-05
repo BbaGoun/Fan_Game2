@@ -38,11 +38,11 @@ namespace ActionPart
                     {
                         Debug.Log("모브가 없단다");
                     }
-                    if (mobs[i].health == null)
+                    if (mobs[i].enemyHealth == null)
                     {
                         Debug.Log("모브한테 체력을 안 넣어줬단다");
                     }
-                    if (!mobs[i].health.CheckIsAlive())
+                    if (!mobs[i].enemyHealth.CheckIsAlive())
                     {
                         mobs.Remove(mobs[i]);
                     }

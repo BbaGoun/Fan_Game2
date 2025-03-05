@@ -7,7 +7,7 @@ namespace ActionPart
     public class Mob : KinematicObject, IWithStateMachine, IDamageAble
     {
         public StateMachine stateMachine;
-        public Health health;
+        public EnemyHealth enemyHealth;
         public Animator animator;
 
         Coroutine lifeCoroutine;
@@ -25,7 +25,7 @@ namespace ActionPart
         private void Awake()
         {
             stateMachine = GetComponent<StateMachine>();
-            health = GetComponent<Health>();
+            enemyHealth = GetComponent<EnemyHealth>();
             animator = GetComponent<Animator>();
         }
 
@@ -71,6 +71,11 @@ namespace ActionPart
                 scaleX = -scaleX;
 
             transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+        }
+
+        public bool CheckCanGetDamage() 
+        {
+            return false;
         }
 
         public void GetDamage(float _hpDelta, Vector2 _direction)

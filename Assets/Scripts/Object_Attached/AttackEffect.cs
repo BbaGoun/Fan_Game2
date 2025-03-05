@@ -68,6 +68,14 @@ namespace ActionPart
                 var enemy = collision.gameObject;
 
                 var damageAble = enemy.GetComponent<IDamageAble>();
+                if (damageAble == null)
+                {
+                    Debug.LogError("대상에게 damageAble 인터페이스가 없음");
+                    return;
+                }
+
+                if (!damageAble.CheckCanGetDamage())
+                    return;
 
                 var playerPos = new Vector2(player.transform.position.x, transform.position.y);
                 var closestHitPoint = collision.collider.ClosestPoint(playerPos);

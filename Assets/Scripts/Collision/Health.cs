@@ -132,6 +132,11 @@ namespace ActionPart
             return isGroggy;
         }
 
+        public bool IsCanGetDamage()
+        {
+            return isAlive && !isInvincible;
+        }
+
         public bool IsInvincible()
         {
             return isInvincible;
@@ -200,7 +205,7 @@ namespace ActionPart
             StartCoroutine(Invincible(invincibleDuration));
         }
 
-        public bool CheckInvincible()
+        private bool CheckInvincible()
         {
             return isInvincible;
         }
