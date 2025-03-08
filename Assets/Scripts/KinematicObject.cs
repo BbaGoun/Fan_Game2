@@ -175,7 +175,7 @@ namespace ActionPart
             Vector2 deltaPosition;
             Vector2 move;
             slopeVec = Vector2.zero;
-
+            
             stepsSinceLastGrounded += 1;
             GroundCheck();
             if(isGrounded)
@@ -185,9 +185,6 @@ namespace ActionPart
 
             if ((isGrounded || SnapToGround()) && velocity.y <= 0f)
             {
-                capsuleCollider.enabled = true;
-                boxCollider.enabled = false;
-
                 AdjustVelocity();
 
                 deltaPosition = adjustedVelocity * speedMultiplier * Time.deltaTime;
@@ -323,6 +320,9 @@ namespace ActionPart
                 count = body.Cast(Vector2.down, contactFilter, hitBuffer, shellRadius);
                 Debug.DrawRay(transform.localPosition - new Vector3(0, colliderSize.y / 2 - colliderOffset.y, 0), Vector2.down * shellRadius, Color.red);
             }
+
+            contactNormal = Vector2.zero;
+            
             if (count > 0)
             {
                 for(int i = 0;i<count;i++)
@@ -331,7 +331,8 @@ namespace ActionPart
                     if(Mathf.Abs(normal.y) >= 1 - maxUnitSlopeY)
                     {
                         isGrounded = true;
-                        contactNormal = normal;
+                        if (contactNormal.y < normal.y)
+                            contactNormal = normal;
                         hitPoint = hitBuffer[i].point;
                         Debug.DrawRay(hitBuffer[i].point, normal * 10, Color.magenta);
                     }
@@ -340,7 +341,6 @@ namespace ActionPart
             else 
             {
                 isGrounded = false;
-                contactNormal = Vector2.up;
             }
         }
 

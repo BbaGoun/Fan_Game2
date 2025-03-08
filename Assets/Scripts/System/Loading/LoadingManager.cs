@@ -74,6 +74,12 @@ namespace ActionPart
 
         public void LoadSceneAsync(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode = TransitionMode.Direct, float inDelay = 0.25f, float outDelay = 0.25f)
         {
+            if (!IsSceneInBuild(sceneName))
+            {
+                Debug.Log("씬이 빌드에 없음: " + sceneName);
+                return;
+            }
+
             // 캐릭터 조작 비활성화
             PlayerInputPart.Instance.CantInput();
 
@@ -261,6 +267,12 @@ namespace ActionPart
 
         public void LoadCartoonSceneAsync(string sceneName, TransitionMode mode = TransitionMode.Direct, float inDelay = 0.25f, float outDelay = 0.25f)
         {
+            if (!IsSceneInBuild(sceneName))
+            {
+                Debug.Log("씬이 빌드에 없음: " + sceneName);
+                return;
+            }
+
             if (coroutine != null)
                 StopCoroutine(coroutine);
 
@@ -442,6 +454,22 @@ namespace ActionPart
                 default:
                     break;
             }
+        }
+
+        bool IsSceneInBuild(string sceneName)
+        {
+            int sceneCount = SceneManager.sceneCountInBuildSettings;
+            for (int i = 0; i < sceneCount; i++)
+            {
+                string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+                string sceneFileName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+
+                if (sceneFileName == sceneName)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public enum TransitionMode

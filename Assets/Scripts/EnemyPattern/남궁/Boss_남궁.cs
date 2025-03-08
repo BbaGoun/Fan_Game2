@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using UnityEditor.ShaderGraph.Drawing;
 using UnityEngine;
 
 namespace ActionPart
 {
     public class Boss_남궁 : Boss
     {
+        [Space(10)]
+        [Header("Boss_남궁")]
         public PlayerWithStateMachine player;
 
+        [Header("States")]
         #region states
         [SerializeField]
         Boss_남궁_MoveState moveState;
@@ -20,11 +24,14 @@ namespace ActionPart
         Boss_남궁_GroggyState groggyState;
         [SerializeField]
         Boss_남궁_DeathState deathState;
+
+        [Header("Areas")]
         [SerializeField]
         BossTalkArea bossTalkArea;
         #endregion
 
-        public GameObject bossWall;
+        public GameObject bossBeforeWall;
+        public GameObject[] bossingWalls;
 
         public RangeArea InRange;
         public RangeArea OutRange;
@@ -55,7 +62,7 @@ namespace ActionPart
         public HarmfulToPlayer harmfulToPlayer;
         private void Awake()
         {
-            bossWall?.SetActive(true);
+            bossBeforeWall?.SetActive(true);
             stateMachine = GetComponent<StateMachine>();
             enemyHealth = GetComponent<EnemyHealth>();
             animator = GetComponent<Animator>();
@@ -79,7 +86,11 @@ namespace ActionPart
 
         public override void Initialize()
         {
-            bossWall?.SetActive(false);
+            bossBeforeWall?.SetActive(false);
+            foreach(var bossingWall in bossingWalls)
+            {
+                bossingWall.SetActive(true);
+            }
             StartCoroutine(IELifeCycle());
         }
 
@@ -281,6 +292,14 @@ namespace ActionPart
         public bool CheckIsSuperArmour()
         {
             return isAttackSuperArmour || isDamageSuperArmour || isGroggy;
+        }
+
+        public void EventBossDead()
+        {
+            foreach(var bossingWall in bossingWalls)
+            {
+                bossingWall.SetActive(false);
+            }
         }
 
         public enum BossState

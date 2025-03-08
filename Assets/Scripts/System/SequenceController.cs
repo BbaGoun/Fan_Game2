@@ -17,7 +17,6 @@ namespace ActionPart
         public BattleManager _battleManager;
         public MainMenuController _mainMenuController;
         public AudioController _audioController;
-        public ForDebug _forDebug;
         public GlobalTimelineController _timelineController;
         public PlayerWithStateMachine _playerWithStateMachine;
         
@@ -25,7 +24,6 @@ namespace ActionPart
         {
             // 별 상관 없는 것들
             _timelineController.Initialize();
-            _forDebug.Initialize();
             _timeController.Initialize();
             _battleManager.Initialize();
 
