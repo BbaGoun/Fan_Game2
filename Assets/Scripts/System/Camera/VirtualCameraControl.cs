@@ -20,6 +20,8 @@ namespace ActionPart
         CinemachineConfiner2D confiner;
         Coroutine shakeCameraCoroutine;
         Coroutine turnCameraCoroutine;
+        Coroutine _panCameraCoroutine;
+        private Vector2 _startingTrackedObjectOffset;
 
         private void Awake()
         {
@@ -31,7 +33,7 @@ namespace ActionPart
             else
             {
                 Instance = this;
-            }   
+            }
             #endregion
 
 
@@ -40,6 +42,8 @@ namespace ActionPart
             cvCamera = GetComponent<CinemachineVirtualCamera>();
             perlinNoise = cvCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             vcFTposer = cvCamera.GetComponentInChildren<CinemachineFramingTransposer>();
+
+            _startingTrackedObjectOffset = vcFTposer.m_TrackedObjectOffset;
         }
 
         public void SetCamSize(float value)
@@ -75,7 +79,7 @@ namespace ActionPart
             perlinNoise.m_FrequencyGain = frequency;
 
             float elapsedTime = 0f;
-            while(elapsedTime < duration)
+            while (elapsedTime < duration)
             {
                 elapsedTime += Time.deltaTime;
                 var newIntensity = LeanTween.easeOutQuint(intensity, 0f, elapsedTime);
@@ -131,5 +135,64 @@ namespace ActionPart
             else
                 return -turnOffset;
         }
+
+        #region Pan Camera
+
+        public void PanCameraOnContact(float panDistance, float panTime, PanDirection panDirection, bool panToStartingPos)
+        {
+            _panCameraCoroutine = StartCoroutine(IEPanCamera(panDistance, panTime, panDirection, panToStartingPos));
+
+
+            IEnumerator IEPanCamera(float panDistance, float panTime, PanDirection panDirection, bool panToStartingPos)
+            {
+                Vector2 endPos = Vector2.zero;
+                Vector2 startingPos = Vector2.zero;
+
+                if (!panToStartingPos)
+                {
+                    switch (panDirection)
+                    {
+                        case PanDirection.Up:
+                            endPos = Vector2.up;
+                            break;
+                        case PanDirection.Down:
+                            endPos = Vector2.down;
+                            break;
+                        case PanDirection.Left:
+                            endPos = Vector2.left;
+                            break;
+                        case PanDirection.Right:
+                            endPos = Vector2.right;
+                            break;
+                        default:
+                            break;
+                    }
+    
+                    endPos *= panDistance;
+        
+                    startingPos = _startingTrackedObjectOffset;
+                    
+                    endPos += startingPos;
+                }
+                else
+                {
+                    startingPos = vcFTposer.m_TrackedObjectOffset;
+                    endPos = _startingTrackedObjectOffset;
+                }
+
+                float elapsedTime = 0f;
+                while(elapsedTime < panTime)
+                {
+                    elapsedTime += Time.deltaTime;
+
+                    Vector3 panLerp = Vector3.Lerp(startingPos, endPos, (elapsedTime / panTime));
+                    vcFTposer.m_TrackedObjectOffset = panLerp;
+
+                    yield return null;
+                }
+            }
     }
+
+    #endregion
+}
 }
