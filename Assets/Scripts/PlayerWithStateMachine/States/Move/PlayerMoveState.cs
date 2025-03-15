@@ -32,16 +32,16 @@ namespace ActionPart
 
         [Header("Jump Parameter")]
         [SerializeField]
-        private float jumpHeight; // Á¡ÇÁ·Â
+        private float jumpHeight; // ì í”„ë ¥
         [SerializeField]
-        private float doubleJumpHeight; // ´õºí Á¡ÇÁ·Â
+        private float doubleJumpHeight; // ë”ë¸” ì í”„ë ¥
         [SerializeField]
-        private int remainJump; // ÇöÀç ³²Àº Á¡ÇÁ È½¼ö
+        private int remainJump; // í˜„ì¬ ë‚¨ì€ ì í”„ íšŸìˆ˜
         [SerializeField]
-        private int maxJumpCount; // ÃÖ´ë Á¡ÇÁ È½¼ö
+        private int maxJumpCount; // ìµœëŒ€ ì í”„ íšŸìˆ˜
         [SerializeField]
-        private float minJumpDuration; // ÃÖ¼Ò Á¡ÇÁ Áö¼Ó ½Ã°£
-        private float jumpTimer; // ÇöÀç Á¡ÇÁ Áö¼Ó ½Ã°£
+        private float minJumpDuration; // ìµœì†Œ ì í”„ ì§€ì† ì‹œê°„
+        private float jumpTimer; // í˜„ì¬ ì í”„ ì§€ì† ì‹œê°„
         [SerializeField, Range(-100, -9.81f)]
         private float maxFallSpeed;
         [SerializeField]
@@ -130,7 +130,7 @@ namespace ActionPart
 
             player.velocity.x += movement * Time.deltaTime;
 
-            // ¸ØÃß·Á°í ÇÏ´Â °æ¿ì
+            // ë©ˆì¶”ë ¤ê³  í•˜ëŠ” ê²½ìš°
             if (player.isGrounded && Mathf.Abs(moveVec.x) < 0.01f)
             {
                 float amount = Mathf.Min(Mathf.Abs(player.velocity.x), Mathf.Abs(frictionAmount));
@@ -169,8 +169,8 @@ namespace ActionPart
 
             if (moveVec.x < -0.01f && isLookRight)
             {
-                //¿ŞÂÊÀ¸·Î µ¹±â
-                //Debug.Log("¿ŞÂÊÀ¸·Î µ¹±â");
+                //ì™¼ìª½ìœ¼ë¡œ ëŒê¸°
+                //Debug.Log("ì™¼ìª½ìœ¼ë¡œ ëŒê¸°");
                 if (player.isGrounded)
                     player.SetAnimatorTrigger("isTurn");
                 player.SetAnimatorBool("isMove", false);
@@ -178,8 +178,8 @@ namespace ActionPart
             }
             else if (moveVec.x > 0.01f && !isLookRight)
             {
-                //¿À¸¥ÂÊÀ¸·Î µ¹±â
-                //Debug.Log("¿À¸¥ÂÊÀ¸·Î µ¹±â");
+                //ì˜¤ë¥¸ìª½ìœ¼ë¡œ ëŒê¸°
+                //Debug.Log("ì˜¤ë¥¸ìª½ìœ¼ë¡œ ëŒê¸°");
                 if (player.isGrounded)
                     player.SetAnimatorTrigger("isTurn");
                 player.SetAnimatorBool("isMove", false);
@@ -187,12 +187,12 @@ namespace ActionPart
             }
             else if (Mathf.Abs(moveVec.x) > 0.01f)
             {
-                // °¡´Â ¹æÇâ ±×´ë·Î
+                // ê°€ëŠ” ë°©í–¥ ê·¸ëŒ€ë¡œ
                 player.SetAnimatorBool("isMove", true);
             }
             else
             {
-                // °¡¸¸È÷ ¼­ÀÖÀ½
+                // ê°€ë§Œíˆ ì„œìˆìŒ
                 player.SetAnimatorBool("isMove", false);
             }
         }
@@ -213,17 +213,17 @@ namespace ActionPart
         {
             if (jumpState == JumpState.Grounded && !player.isGrounded)
             {
-                //Debug.Log("¶³¾îÁö±â ½ÃÀÛÇÑ´Ù");
+                //Debug.Log("ë–¨ì–´ì§€ê¸° ì‹œì‘í•œë‹¤");
                 jumpState = JumpState.Falling;
             }
             else if (jumpState == JumpState.Grounded && jumpStarted && remainJump > 0)
             {
-                //Debug.Log("¿ì¸° Á¡ÇÁ ÁØºñ·Î °£´Ù");
+                //Debug.Log("ìš°ë¦° ì í”„ ì¤€ë¹„ë¡œ ê°„ë‹¤");
                 jumpState = JumpState.PrepareToJump;
             }
             else if (jumpState == JumpState.Falling && jumpStarted && remainJump > 0)
             {
-                //Debug.Log("¿ì¸° ´õºí Á¡ÇÁ ÁØºñ·Î °£´Ù");
+                //Debug.Log("ìš°ë¦° ë”ë¸” ì í”„ ì¤€ë¹„ë¡œ ê°„ë‹¤");
                 jumpState = JumpState.PrepareToDoubleJump;
             }
         }
@@ -236,7 +236,7 @@ namespace ActionPart
                     jumpCanceled = false;
                     remainJump = Mathf.Min(remainJump, maxJumpCount - 1);
 
-                    //Debug.Log("³«ÇÏ ÁØºñ");
+                    //Debug.Log("ë‚™í•˜ ì¤€ë¹„");
                     if (player.isGrounded)
                         jumpState = JumpState.Landed;
                     break;
@@ -248,9 +248,9 @@ namespace ActionPart
                     remainJump--;
                     player.velocity.y = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
                     jumpTimer = 0f;
-                    // Á¡ÇÁ °ü·Ã Çàµ¿ Ãß°¡ (»ç¿îµå, ÀÌÆåÆ®)
+                    // ì í”„ ê´€ë ¨ í–‰ë™ ì¶”ê°€ (ì‚¬ìš´ë“œ, ì´í™íŠ¸)
                     player.SetAnimatorTrigger("isJump");
-                    //Debug.Log("Á¡ÇÁ ÁØºñ!");
+                    //Debug.Log("ì í”„ ì¤€ë¹„!");
                     jumpState = JumpState.Jumping;
                     break;
 
@@ -278,10 +278,10 @@ namespace ActionPart
                     remainJump--;
                     player.velocity.y = Mathf.Sqrt(-2f * Physics.gravity.y * doubleJumpHeight);
                     jumpTimer = 0f;
-                    // ´õºí Á¡ÇÁ °ü·Ã Çàµ¿ Ãß°¡
+                    // ë”ë¸” ì í”„ ê´€ë ¨ í–‰ë™ ì¶”ê°€
                     player.SetAnimatorTrigger("isDoubleJump");
                     player.delegateJump?.Invoke();
-                    //Debug.Log("´õºí Á¡ÇÁ ÁØºñ!");
+                    //Debug.Log("ë”ë¸” ì í”„ ì¤€ë¹„!");
                     jumpState = JumpState.Jumping;
                     break;
 
@@ -289,7 +289,7 @@ namespace ActionPart
                     jumpStarted = false;
                     jumpPerformed = false;
                     jumpCanceled = false;
-                    // ÂøÁö °ü·Ã Çàµ¿ Ãß°¡
+                    // ì°©ì§€ ê´€ë ¨ í–‰ë™ ì¶”ê°€
                     jumpState = JumpState.Grounded;
                     break;
 
@@ -298,6 +298,8 @@ namespace ActionPart
                     player.velocity.y = Physics2D.gravity.y;
                     break;
             }
+
+            VirtualCameraControl.Instance.ChangeYDumping(player.velocity.y, maxFallSpeed);
         }
 
 
@@ -430,14 +432,14 @@ namespace ActionPart
         #region Key Event
         void JumpKeyDown()
         {
-            //Debug.Log("´­·¶´Ù´Ï±î");
+            //Debug.Log("ëˆŒë €ë‹¤ë‹ˆê¹Œ");
             jumpStarted = true;
             jumpCanceled = false;
         }
 
         void JumpKeyUp()
         {
-            //Debug.Log("¶®´Ù´Ï±î");
+            //Debug.Log("ë• ë‹¤ë‹ˆê¹Œ");
             jumpStarted = false;
             jumpCanceled = true;
         }
@@ -463,7 +465,7 @@ namespace ActionPart
         #endregion
 
         /*public void JumpTrigger()
-        {// ÀÔ·ÂÀ» ±â´Ù¸®´Â »çÀÌ¿¡ ³¢¾îµé¾î, ¹İÀÀÀ» ³ôÈ÷±â À§ÇÑ ÇÔ¼ö
+        {// ì…ë ¥ì„ ê¸°ë‹¤ë¦¬ëŠ” ì‚¬ì´ì— ë¼ì–´ë“¤ì–´, ë°˜ì‘ì„ ë†’íˆê¸° ìœ„í•œ í•¨ìˆ˜
             StartCoroutine(IEJumpTrigger());
         }
 

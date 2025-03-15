@@ -11,6 +11,8 @@ namespace ActionPart
 
         public float turnOffset;
         public float turnTime = 0;
+
+        public float yDamping;
         public string camAreaName;
         CinemachineVirtualCamera cvCamera;
         CinemachineBasicMultiChannelPerlin perlinNoise;
@@ -47,8 +49,8 @@ namespace ActionPart
 
         public void SetConfiner()
         {
-            // ÀÌ°Ç ½ÇÇè Å×½ºÆ®·Î stringÀ» ÅëÇØ °¡Á®¿À´Â Áß
-            // ´ÙÀ½¿¡´Â ¿¢Æ¼ºê ½Å¿¡¼­ °¡Á®¿Àµµ·Ï ÇØ¾ßÇÔ
+            // ì´ê±´ ì‹¤í—˜ í…ŒìŠ¤íŠ¸ë¡œ stringì„ í†µí•´ ê°€ì ¸ì˜¤ëŠ” ì¤‘
+            // ë‹¤ìŒì—ëŠ” ì—‘í‹°ë¸Œ ì‹ ì—ì„œ ê°€ì ¸ì˜¤ë„ë¡ í•´ì•¼í•¨
 
             confiner.m_BoundingShape2D = GameObject.FindGameObjectWithTag("CamArea").GetComponent<CompositeCollider2D>();
             confiner.InvalidateCache();
@@ -92,6 +94,34 @@ namespace ActionPart
 
             var offsetX = GetEndOffset(isRight);
             turnCameraCoroutine = StartCoroutine(TurnCameraCoroutine(offsetX));
+
+            IEnumerator TurnCameraCoroutine(float offsetX)
+            {
+                var startOffsetX = vcFTposer.m_TrackedObjectOffset.x;
+                float elapsedTime = 0f;
+                while (elapsedTime < turnTime)
+                {
+                    elapsedTime += Time.deltaTime;
+
+                    var newOffset = LeanTween.easeInOutSine(startOffsetX, offsetX, elapsedTime / turnTime);
+                    vcFTposer.m_TrackedObjectOffset.x = newOffset;
+
+                    yield return null;
+                }
+            }
+        }
+
+        public void ChangeYDumping(float velocityY, float maxFallSpeed)
+        {
+            if (velocityY >= Physics2D.gravity.y)
+            {
+                vcFTposer.m_YDamping = yDamping;
+            }
+            else
+            {
+                var changed_yDamping = Mathf.Lerp(0f, yDamping, (velocityY - maxFallSpeed) / (Physics2D.gravity.y - maxFallSpeed));
+                vcFTposer.m_YDamping = changed_yDamping;
+            }
         }
 
         float GetEndOffset(bool isRight)
@@ -100,21 +130,6 @@ namespace ActionPart
                 return turnOffset;
             else
                 return -turnOffset;
-        }
-
-        IEnumerator TurnCameraCoroutine(float offsetX)
-        {
-            var startOffsetX = vcFTposer.m_TrackedObjectOffset.x;
-            float elapsedTime = 0f;
-            while (elapsedTime < turnTime)
-            {
-                elapsedTime += Time.deltaTime;
-
-                var newOffset = LeanTween.easeInOutSine(startOffsetX, offsetX, elapsedTime / turnTime);
-                vcFTposer.m_TrackedObjectOffset.x = newOffset;
-
-                yield return null;
-            }
         }
     }
 }

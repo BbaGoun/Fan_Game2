@@ -115,7 +115,7 @@ namespace ActionPart
             {
                 if (isStopped)
                 {
-                    // FixedUpdate´Â ¸ØÃßÁö ¾Ê±â ¶§¹®¿¡ velocity°¡ ³²¾ÆÀÖÀ¸¸é ¾ÈµÊ
+                    // FixedUpdate?? ?????? ??? ?????? velocity?? ?????????? ???
                     velocity = Vector2.zero;
                     yield return null;
                     continue;
@@ -205,7 +205,7 @@ namespace ActionPart
             var isCanGetDamage = health.IsCanGetDamage();
             if (!isCanGetDamage)
             {
-                Debug.Log("ÇÃ·¹ÀÌ¾î : ¶§¸± ¼ö ¾øÀ» ¶§ ´êÀ½");
+                Debug.Log("?ï¿½ï¿½???? : ???? ?? ???? ?? ????");
                 return;
             }
 
@@ -354,7 +354,7 @@ namespace ActionPart
                     playerState = PlayerState.Death;
                     break;
                 default:
-                    Debug.Log("¾ø´Â »óÅÂ ÀÎµª¼î?");
+                    Debug.Log("???? ???? ?ï¿½ï¿½????");
                     break;
             }
         }

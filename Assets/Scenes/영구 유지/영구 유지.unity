@@ -8916,6 +8916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnOffset: 0.75
   turnTime: 0.75
+  yDamping: 1.75
   camAreaName: TownCamArea
 --- !u!114 &1766588461
 MonoBehaviour:

@@ -54,7 +54,7 @@ namespace ActionPart
             }
             #endregion // Singleton
 
-            LoadSceneAsync("¸ŞÀÎ Å¸ÀÌÆ²", SpawnPoint.None, WithWalkOut.None, mode: TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
+            LoadSceneAsync("ë©”ì¸ íƒ€ì´í‹€", SpawnPoint.None, WithWalkOut.None, mode: TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
 
         public string GetLoadedSceneName()
@@ -76,11 +76,11 @@ namespace ActionPart
         {
             if (!IsSceneInBuild(sceneName))
             {
-                Debug.Log("¾ÀÀÌ ºôµå¿¡ ¾øÀ½: " + sceneName);
+                Debug.Log("ì”¬ì´ ë¹Œë“œì— ì—†ìŒ: " + sceneName);
                 return;
             }
 
-            // Ä³¸¯ÅÍ Á¶ÀÛ ºñÈ°¼ºÈ­
+            // ìºë¦­í„° ì¡°ì‘ ë¹„í™œì„±í™”
             PlayerInputPart.Instance.CantInput();
 
             if (coroutine != null)
@@ -111,7 +111,7 @@ namespace ActionPart
 
                 //audioController.PauseBGM();
 
-                // ¾À ¼¼ÆÃ Àü ÃÊ±âÈ­
+                // ì”¬ ì„¸íŒ… ì „ ì´ˆê¸°í™”
                 isLoadDone = false;
                 isCamSetDone = false;
 
@@ -119,7 +119,7 @@ namespace ActionPart
                 loadingScene.LoadingProgressApply(0f);
                 yield return new WaitForSeconds(inDelay);
 
-                // ÀÌÀü ¾À ¾ğ·Îµå ÇÊ¿ä
+                // ì´ì „ ì”¬ ì–¸ë¡œë“œ í•„ìš”
                 if (loadedSceneName != null)
                 {
                     AsyncOperation async1 = SceneManager.UnloadSceneAsync(loadedSceneName);
@@ -139,10 +139,10 @@ namespace ActionPart
                         yield return new WaitForSeconds(0.01f); // Wait for the next frame
                     }
 
-                    // ¾À ¾ğ·Îµå ÇÏ¸é¼­ ÇØ¾ßÇÒ °Íµé Ãß°¡ ÇÊ¿ä?
+                    // ì”¬ ì–¸ë¡œë“œ í•˜ë©´ì„œ í•´ì•¼í•  ê²ƒë“¤ ì¶”ê°€ í•„ìš”?
                 }
 
-                // »õ ¾À ·Îµå
+                // ìƒˆ ì”¬ ë¡œë“œ
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                 asyncLoad.allowSceneActivation = false;
 
@@ -162,15 +162,15 @@ namespace ActionPart
 
                 sceneSetting = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<SceneSetting>();
 
-                // ¾À ·ÎµùÇÏ¸é¼­ ÃÊ±âÈ­ÇØ¾ßÇÒ °Íµé Ãß°¡ ÇÊ¿ä?
-                if (!sceneName.Equals("¸ŞÀÎ Å¸ÀÌÆ²") && !sceneName.Equals("ÇÁ·Ñ·Î±× ¸¸È­ÄÆ"))
+                // ì”¬ ë¡œë”©í•˜ë©´ì„œ ì´ˆê¸°í™”í•´ì•¼í•  ê²ƒë“¤ ì¶”ê°€ í•„ìš”?
+                if (!sceneName.Equals("ë©”ì¸ íƒ€ì´í‹€") && !sceneName.Equals("í”„ë¡¤ë¡œê·¸ ë§Œí™”ì»·"))
                 {
                     interfaces.SetActive(true);
 
-                    // ÇÃ·¹ÀÌ¾î¸¦ ¸ÕÀú ¼ÒÈ¯ÇØ¾ß ÇÔ
+                    // í”Œë ˆì´ì–´ë¥¼ ë¨¼ì € ì†Œí™˜í•´ì•¼ í•¨
                     player.gameObject.SetActive(true);
-                    // ÇÃ·¹ÀÌ¾î Å©±â Á¶Á¤ + Ä«¸Ş¶ó Å©±â Á¶Á¤
-                    if (sceneName.Equals("¾ÈÈÖ¼º ½ÃÀå"))
+                    // í”Œë ˆì´ì–´ í¬ê¸° ì¡°ì • + ì¹´ë©”ë¼ í¬ê¸° ì¡°ì •
+                    if (sceneName.Equals("ì•ˆíœ˜ì„± ì‹œì¥"))
                     {
                         player.SetSpeedMultiplier(1.5f);
                         player.transform.localScale = new Vector3(2, 2, 1);
@@ -202,20 +202,20 @@ namespace ActionPart
                     virtualCameraControl.SetConfiner();
                     parallaxBackground = GameObject.FindGameObjectWithTag("Maps").GetComponent<ParallaxBackground>();
                     parallaxBackground.SetCamera();
-                    // Ä«¸Ş¶ó ¼¼ÆÃ ³¡
+                    // ì¹´ë©”ë¼ ì„¸íŒ… ë
                     isCamSetDone = true;
 
                     localTimelineController = GameObject.FindGameObjectWithTag("LocalTimelineController").GetComponent<LocalTimelineController>();
                     GlobalTimelineController.instance.ChangeCurrentLocalTimelineController(localTimelineController);
                 }
-                else if(sceneName.Equals("¸ŞÀÎ Å¸ÀÌÆ²"))
+                else if(sceneName.Equals("ë©”ì¸ íƒ€ì´í‹€"))
                 {
                     interfaces.SetActive(false);
                     var titleController = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<TitleController>();
                     titleController.Initialize();
                     player.gameObject.SetActive(false);
                 }
-                else if(sceneName.Equals("ÇÁ·Ñ·Î±× ¸¸È­ÄÆ"))
+                else if(sceneName.Equals("í”„ë¡¤ë¡œê·¸ ë§Œí™”ì»·"))
                 {
                     interfaces.SetActive(false);
                     player.gameObject.SetActive(false);
@@ -233,13 +233,13 @@ namespace ActionPart
                         loadingScene.ToRightWipeOut(0.5f);
                         break;
                     case TransitionMode.FadeIn:
-                        // ÆäÀÌµå ¾Æ¿ô ÇÊ¿ä
+                        // í˜ì´ë“œ ì•„ì›ƒ í•„ìš”
                         break;
                     case TransitionMode.Direct:
                         loadingScene.DirectOut();
                         break;
                 }
-                // °É¾î³ª¿À´Â ±â´É Ãß°¡ÇÔ
+                // ê±¸ì–´ë‚˜ì˜¤ëŠ” ê¸°ëŠ¥ ì¶”ê°€í•¨
                 switch (walkOut)
                 {
                     case WithWalkOut.Left:
@@ -269,7 +269,7 @@ namespace ActionPart
         {
             if (!IsSceneInBuild(sceneName))
             {
-                Debug.Log("¾ÀÀÌ ºôµå¿¡ ¾øÀ½: " + sceneName);
+                Debug.Log("ì”¬ì´ ë¹Œë“œì— ì—†ìŒ: " + sceneName);
                 return;
             }
 
@@ -281,8 +281,8 @@ namespace ActionPart
 
             IEnumerator LoadCartoonSceneCoroutine(string sceneName, TransitionMode mode, float inDelay, float outDelay)
             {
-                // Ä³¸¯ÅÍ Á¶ÀÛ ºñÈ°¼ºÈ­
-                // ÄÆ½ÅÀÌ ³¡³¯ ¶§ Á¶ÀÛ È°¼ºÈ­ ½ÃÅ³ ¿¹Á¤
+                // ìºë¦­í„° ì¡°ì‘ ë¹„í™œì„±í™”
+                // ì»·ì‹ ì´ ëë‚  ë•Œ ì¡°ì‘ í™œì„±í™” ì‹œí‚¬ ì˜ˆì •
                 PlayerInputPart.Instance.CantInput();
                 interfaces.SetActive(false);
 
@@ -308,7 +308,7 @@ namespace ActionPart
 
                 yield return new WaitForSeconds(inDelay);
 
-                // »õ ¾À ·Îµå
+                // ìƒˆ ì”¬ ë¡œë“œ
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                 asyncLoad.allowSceneActivation = false;
 
@@ -386,7 +386,7 @@ namespace ActionPart
 
                 yield return new WaitForSeconds(inDelay);
 
-                //¸¸È­ÄÆ ¾ğ ·Îµå
+                //ë§Œí™”ì»· ì–¸ ë¡œë“œ
                 AsyncOperation asyncUnLoad = SceneManager.UnloadSceneAsync(loadedCartoonSceneName);
                 loadedCartoonSceneName = null;
                 asyncUnLoad.allowSceneActivation = false;
@@ -444,11 +444,11 @@ namespace ActionPart
         {
             switch (sceneName)
             {
-                case "¾ÈÈÖ¼º º¹µµ":
-                    if (EventRemember.Instance.¾ÈÈÖº¹µµFirst)
+                case "ì•ˆíœ˜ì„± ë³µë„":
+                    if (EventRemember.Instance.ì•ˆíœ˜ë³µë„First)
                     {
-                        EventRemember.Instance.¾ÈÈÖº¹µµFirst = false;
-                        TalkManager.Instance.TalkStart("Æ©Åä¸®¾ó_SC1-1.", null);
+                        EventRemember.Instance.ì•ˆíœ˜ë³µë„First = false;
+                        TalkManager.Instance.TalkStart("íŠœí† ë¦¬ì–¼_SC1-1.", null);
                     }
                     break;
                 default:

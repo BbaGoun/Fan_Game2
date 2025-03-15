@@ -6,34 +6,34 @@ namespace ActionPart
 {
     public class EventRemember : MonoBehaviour
     {
-        #region Áö¿ª µ¹ÀÔ
-        public bool ¾ÈÈÖº¹µµFirst = true;
+        #region ì§€ì—­ ëŒì…
+        public bool ì•ˆíœ˜ë³µë„First = true;
         #endregion
 
-        #region º¸½º Ã³¸®
-        public bool ¾ÈÈÖ¼ºBossKilled = false;
-        public bool ³ì¸²BossKilled = false;
-        public bool Á¡Ã¢BossKilled = false;
-        public bool »çÃµBossKilled = false;
-        public bool °ï·ûBossKilled = false;
-        public bool ¼Ò¸²BossKilled = false;
-        public bool ¸¶±³BossKilled = false;
+        #region ë³´ìŠ¤ ì²˜ë¦¬
+        public bool ì•ˆíœ˜ì„±BossKilled = false;
+        public bool ë…¹ë¦¼BossKilled = false;
+        public bool ì ì°½BossKilled = false;
+        public bool ì‚¬ì²œBossKilled = false;
+        public bool ê³¤ë¥œBossKilled = false;
+        public bool ì†Œë¦¼BossKilled = false;
+        public bool ë§ˆêµBossKilled = false;
         #endregion
 
         #region NPC
-        #region ¾ÈÈÖ¼º
-        public int ¾ÈÈÖ¼º_Áı¹«½Ç_°¡ÁÖTalkCount = 0;
-        public int ¾ÈÈÖ¼º_º¹µµ_¸¸µÎ1TalkCount = 0;
-        public int ¾ÈÈÖ¼º_º¹µµ_¸¸µÎ2TalkCount = 0;
-        public int ¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ1TalkCount = 0;
-        public int ¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ2TalkCount = 0;
-        public int ¾ÈÈÖ¼º_½ÃÀå_¼¼¹Ù½ºÂùTalkCount = 0;
-        public int ¾ÈÈÖ¼º_½ÃÀå_¾Öºñ°ÔÀÏTalkCount = 0;
-        public int ¾ÈÈÖ¼º_½ÃÀå_·¯³¢TalkCount = 0;
-        public int ¾ÈÈÖ¼º_½ÃÀå_¸¶¸®¾È´ÀTalkCount = 0;
-        public int ¾ÈÈÖ¼º_½ÃÀå_¼ÎÀÎTalkCount = 0;
-        public int ¾ÈÈÖ¼º_½ÃÀå_¹Î¼öÇÏTalkCount = 0;
-        public int ¾ÈÈÖ¼º_½ÃÀå_¿À´ºTalkCount = 0;
+        #region ì•ˆíœ˜ì„±
+        public int ì•ˆíœ˜ì„±_ì§‘ë¬´ì‹¤_ê°€ì£¼TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘1TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘2TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘1TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘2TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ì‹œì¥_ì„¸ë°”ìŠ¤ì°¬TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ì‹œì¥_ì• ë¹„ê²Œì¼TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ì‹œì¥_ëŸ¬ë¼TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ì‹œì¥_ë§ˆë¦¬ì•ˆëŠTalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ì‹œì¥_ì…°ì¸TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ì‹œì¥_ë¯¼ìˆ˜í•˜TalkCount = 0;
+        public int ì•ˆíœ˜ì„±_ì‹œì¥_ì˜¤ë‰´TalkCount = 0;
         #endregion
         #endregion
 
@@ -50,41 +50,41 @@ namespace ActionPart
         {
             switch(NPCName)
             {
-                case "¾ÈÈÖ¼º_Áı¹«½Ç_°¡ÁÖ":
-                    return ¾ÈÈÖ¼º_Áı¹«½Ç_°¡ÁÖTalkCount;
+                case "ì•ˆíœ˜ì„±_ì§‘ë¬´ì‹¤_ê°€ì£¼":
+                    return ì•ˆíœ˜ì„±_ì§‘ë¬´ì‹¤_ê°€ì£¼TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_º¹µµ_¸¸µÎ1":
-                    return ¾ÈÈÖ¼º_º¹µµ_¸¸µÎ1TalkCount;
+                case "ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘1":
+                    return ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘1TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_º¹µµ_¸¸µÎ2":
-                    return ¾ÈÈÖ¼º_º¹µµ_¸¸µÎ2TalkCount;
+                case "ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘2":
+                    return ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘2TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ1":
-                    return ¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ1TalkCount;
+                case "ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘1":
+                    return ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘1TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ2":
-                    return ¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ2TalkCount;
+                case "ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘2":
+                    return ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘2TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¼¼¹Ù½ºÂù":
-                    return ¾ÈÈÖ¼º_½ÃÀå_¼¼¹Ù½ºÂùTalkCount;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ì„¸ë°”ìŠ¤ì°¬":
+                    return ì•ˆíœ˜ì„±_ì‹œì¥_ì„¸ë°”ìŠ¤ì°¬TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¾Öºñ°ÔÀÏ":
-                    return ¾ÈÈÖ¼º_½ÃÀå_¾Öºñ°ÔÀÏTalkCount;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ì• ë¹„ê²Œì¼":
+                    return ì•ˆíœ˜ì„±_ì‹œì¥_ì• ë¹„ê²Œì¼TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_·¯³¢":
-                    return ¾ÈÈÖ¼º_½ÃÀå_·¯³¢TalkCount;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ëŸ¬ë¼":
+                    return ì•ˆíœ˜ì„±_ì‹œì¥_ëŸ¬ë¼TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¸¶¸®¾È´À":
-                    return ¾ÈÈÖ¼º_½ÃÀå_¸¶¸®¾È´ÀTalkCount;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ë§ˆë¦¬ì•ˆëŠ":
+                    return ì•ˆíœ˜ì„±_ì‹œì¥_ë§ˆë¦¬ì•ˆëŠTalkCount;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¼ÎÀÎ":
-                    return ¾ÈÈÖ¼º_½ÃÀå_¼ÎÀÎTalkCount;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ì…°ì¸":
+                    return ì•ˆíœ˜ì„±_ì‹œì¥_ì…°ì¸TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¹Î¼öÇÏ":
-                    return ¾ÈÈÖ¼º_½ÃÀå_¹Î¼öÇÏTalkCount;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ë¯¼ìˆ˜í•˜":
+                    return ì•ˆíœ˜ì„±_ì‹œì¥_ë¯¼ìˆ˜í•˜TalkCount;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¿À´º":
-                    return ¾ÈÈÖ¼º_½ÃÀå_¿À´ºTalkCount;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ì˜¤ë‰´":
+                    return ì•ˆíœ˜ì„±_ì‹œì¥_ì˜¤ë‰´TalkCount;
                     break;
                 default:
                     return 1;
@@ -95,41 +95,41 @@ namespace ActionPart
         {
             switch (NPCName)
             {
-                case "¾ÈÈÖ¼º_Áı¹«½Ç_°¡ÁÖ":
-                    ¾ÈÈÖ¼º_Áı¹«½Ç_°¡ÁÖTalkCount++;
+                case "ì•ˆíœ˜ì„±_ì§‘ë¬´ì‹¤_ê°€ì£¼":
+                    ì•ˆíœ˜ì„±_ì§‘ë¬´ì‹¤_ê°€ì£¼TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_º¹µµ_¸¸µÎ1":
-                    ¾ÈÈÖ¼º_º¹µµ_¸¸µÎ1TalkCount++;
+                case "ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘1":
+                    ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘1TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_º¹µµ_¸¸µÎ2":
-                    ¾ÈÈÖ¼º_º¹µµ_¸¸µÎ2TalkCount++;
+                case "ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘2":
+                    ì•ˆíœ˜ì„±_ë³µë„_ë§Œë‘2TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ1":
-                    ¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ1TalkCount++;
+                case "ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘1":
+                    ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘1TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ2":
-                    ¾ÈÈÖ¼º_¿¬¹«Àå°¡´Â±æ_¸¸µÎ2TalkCount++;
+                case "ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘2":
+                    ì•ˆíœ˜ì„±_ì—°ë¬´ì¥ê°€ëŠ”ê¸¸_ë§Œë‘2TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¼¼¹Ù½ºÂù":
-                    ¾ÈÈÖ¼º_½ÃÀå_¼¼¹Ù½ºÂùTalkCount++;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ì„¸ë°”ìŠ¤ì°¬":
+                    ì•ˆíœ˜ì„±_ì‹œì¥_ì„¸ë°”ìŠ¤ì°¬TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¾Öºñ°ÔÀÏ":
-                    ¾ÈÈÖ¼º_½ÃÀå_¾Öºñ°ÔÀÏTalkCount++;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ì• ë¹„ê²Œì¼":
+                    ì•ˆíœ˜ì„±_ì‹œì¥_ì• ë¹„ê²Œì¼TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_·¯³¢":
-                    ¾ÈÈÖ¼º_½ÃÀå_·¯³¢TalkCount++;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ëŸ¬ë¼":
+                    ì•ˆíœ˜ì„±_ì‹œì¥_ëŸ¬ë¼TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¸¶¸®¾È´À":
-                    ¾ÈÈÖ¼º_½ÃÀå_¸¶¸®¾È´ÀTalkCount++;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ë§ˆë¦¬ì•ˆëŠ":
+                    ì•ˆíœ˜ì„±_ì‹œì¥_ë§ˆë¦¬ì•ˆëŠTalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¼ÎÀÎ":
-                    ¾ÈÈÖ¼º_½ÃÀå_¼ÎÀÎTalkCount++;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ì…°ì¸":
+                    ì•ˆíœ˜ì„±_ì‹œì¥_ì…°ì¸TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¹Î¼öÇÏ":
-                    ¾ÈÈÖ¼º_½ÃÀå_¹Î¼öÇÏTalkCount++;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ë¯¼ìˆ˜í•˜":
+                    ì•ˆíœ˜ì„±_ì‹œì¥_ë¯¼ìˆ˜í•˜TalkCount++;
                     break;
-                case "¾ÈÈÖ¼º_½ÃÀå_¿À´º":
-                    ¾ÈÈÖ¼º_½ÃÀå_¿À´ºTalkCount++;
+                case "ì•ˆíœ˜ì„±_ì‹œì¥_ì˜¤ë‰´":
+                    ì•ˆíœ˜ì„±_ì‹œì¥_ì˜¤ë‰´TalkCount++;
                     break;
             }
         }
