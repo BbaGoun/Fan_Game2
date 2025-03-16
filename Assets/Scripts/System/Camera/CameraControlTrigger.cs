@@ -23,6 +23,7 @@ namespace ActionPart
             {
                 if(customInspectorObjects.panCameraOnContact)
                 {
+                    Debug.Log("들어옴");
                     VirtualCameraControl.Instance.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, false);
                 }
             }
@@ -34,6 +35,7 @@ namespace ActionPart
             {
                 if(customInspectorObjects.panCameraOnContact)
                 {
+                    Debug.Log("나감");
                     VirtualCameraControl.Instance.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, true);
                 }
             }

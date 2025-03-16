@@ -21,7 +21,7 @@ namespace ActionPart
         Coroutine shakeCameraCoroutine;
         Coroutine turnCameraCoroutine;
         Coroutine _panCameraCoroutine;
-        private Vector2 _startingTrackedObjectOffset;
+        public bool isOffsetUsed;
 
         private void Awake()
         {
@@ -42,8 +42,6 @@ namespace ActionPart
             cvCamera = GetComponent<CinemachineVirtualCamera>();
             perlinNoise = cvCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             vcFTposer = cvCamera.GetComponentInChildren<CinemachineFramingTransposer>();
-
-            _startingTrackedObjectOffset = vcFTposer.m_TrackedObjectOffset;
         }
 
         public void SetCamSize(float value)
@@ -95,6 +93,12 @@ namespace ActionPart
         {
             if (turnCameraCoroutine != null)
                 StopCoroutine(turnCameraCoroutine);
+            
+            if (CheckIsOffsetUsed())
+            {
+                Debug.Log("이미 카메라를 쓰고 계셔유");
+                return;
+            }
 
             var offsetX = GetEndOffset(isRight);
             turnCameraCoroutine = StartCoroutine(TurnCameraCoroutine(offsetX));
@@ -140,8 +144,12 @@ namespace ActionPart
 
         public void PanCameraOnContact(float panDistance, float panTime, PanDirection panDirection, bool panToStartingPos)
         {
-            _panCameraCoroutine = StartCoroutine(IEPanCamera(panDistance, panTime, panDirection, panToStartingPos));
+            if(turnCameraCoroutine != null)
+                StopCoroutine(turnCameraCoroutine);
+            if(_panCameraCoroutine != null)
+                StopCoroutine(_panCameraCoroutine);
 
+            _panCameraCoroutine = StartCoroutine(IEPanCamera(panDistance, panTime, panDirection, panToStartingPos));
 
             IEnumerator IEPanCamera(float panDistance, float panTime, PanDirection panDirection, bool panToStartingPos)
             {
@@ -150,6 +158,8 @@ namespace ActionPart
 
                 if (!panToStartingPos)
                 {
+                    SetIsOffsetUsed(true);
+
                     switch (panDirection)
                     {
                         case PanDirection.Up:
@@ -170,14 +180,14 @@ namespace ActionPart
     
                     endPos *= panDistance;
         
-                    startingPos = _startingTrackedObjectOffset;
-                    
-                    endPos += startingPos;
+                    startingPos = vcFTposer.m_TrackedObjectOffset;
                 }
                 else
                 {
+                    SetIsOffsetUsed(false);
+
                     startingPos = vcFTposer.m_TrackedObjectOffset;
-                    endPos = _startingTrackedObjectOffset;
+                    endPos = new Vector2(GetEndOffset(PlayerWithStateMachine.Instance.CheckIsRight()), 0f);
                 }
 
                 float elapsedTime = 0f;
@@ -191,8 +201,18 @@ namespace ActionPart
                     yield return null;
                 }
             }
-    }
+        }
 
-    #endregion
-}
+        private bool CheckIsOffsetUsed()
+        {
+            return isOffsetUsed;
+        }
+
+        private void SetIsOffsetUsed(bool _isOffsetUsed)
+        {
+            isOffsetUsed = _isOffsetUsed;
+        }
+
+        #endregion
+    }
 }

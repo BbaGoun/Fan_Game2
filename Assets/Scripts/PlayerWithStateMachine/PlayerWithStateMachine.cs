@@ -244,6 +244,11 @@ namespace ActionPart
             VirtualCameraControl.Instance.TurnCameraRight(false);
         }
 
+        public bool CheckIsRight()
+        {
+            return transform.localScale.x > 0;
+        }
+
         public void SetAnimatorTrigger(string triggerName)
         {
             animator.SetTrigger(triggerName);
