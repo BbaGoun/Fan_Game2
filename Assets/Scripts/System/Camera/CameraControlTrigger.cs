@@ -19,9 +19,9 @@ namespace ActionPart
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(collision.CompareTag("Player"))
+            if (collision.CompareTag("Player"))
             {
-                if(customInspectorObjects.panCameraOnContact)
+                if (customInspectorObjects.panCameraOnContact)
                 {
                     Debug.Log("들어옴");
                     VirtualCameraControl.Instance.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, false);
@@ -31,9 +31,16 @@ namespace ActionPart
 
         void OnTriggerExit2D(Collider2D collision)
         {
-            if(collision.CompareTag("Player"))
+            if (collision.CompareTag("Player"))
             {
-                if(customInspectorObjects.panCameraOnContact)
+                Vector2 exitDirection = (collision.transform.position - _coll.bounds.center).normalized;
+
+                if (customInspectorObjects.swapCameras)
+                {
+                    VirtualCameraControl.Instance.SwapCamera(customInspectorObjects.swapDirection, exitDirection, customInspectorObjects.cameraOnLeft, customInspectorObjects.cameraOnRight, customInspectorObjects.cameraOnUp, customInspectorObjects.cameraOnDown);
+                }
+
+                if (customInspectorObjects.panCameraOnContact)
                 {
                     Debug.Log("나감");
                     VirtualCameraControl.Instance.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, true);
@@ -48,9 +55,12 @@ namespace ActionPart
         public bool swapCameras = false;
         public bool panCameraOnContact = false;
 
+        [HideInInspector] public SwapDirection swapDirection;
         [HideInInspector] public CinemachineVirtualCamera cameraOnLeft;
         [HideInInspector] public CinemachineVirtualCamera cameraOnRight;
-        
+        [HideInInspector] public CinemachineVirtualCamera cameraOnUp;
+        [HideInInspector] public CinemachineVirtualCamera cameraOnDown;
+
         [HideInInspector] public PanDirection panDirection;
         [HideInInspector] public float panDistance = 3f;
         [HideInInspector] public float panTime = 0.35f;
@@ -62,6 +72,12 @@ namespace ActionPart
         Down,
         Left,
         Right
+    }
+
+    public enum SwapDirection
+    {
+        Horizontal,
+        Vertical,
     }
 
     [CustomEditor(typeof(CameraControlTrigger))]
@@ -80,14 +96,30 @@ namespace ActionPart
 
             if (cameraControlTrigger.customInspectorObjects.swapCameras)
             {
-                cameraControlTrigger.customInspectorObjects.cameraOnLeft = EditorGUILayout.ObjectField("Camera on Left", cameraControlTrigger.customInspectorObjects.cameraOnLeft,
-                    typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+                cameraControlTrigger.customInspectorObjects.swapDirection = (SwapDirection)EditorGUILayout.EnumPopup("Camera Swap Direction",
+                    cameraControlTrigger.customInspectorObjects.swapDirection);
 
-                cameraControlTrigger.customInspectorObjects.cameraOnRight = EditorGUILayout.ObjectField("Camera on Right", cameraControlTrigger.customInspectorObjects.cameraOnLeft,
-                    typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+                switch (cameraControlTrigger.customInspectorObjects.swapDirection)
+                {
+                    case SwapDirection.Horizontal:
+                        cameraControlTrigger.customInspectorObjects.cameraOnLeft = EditorGUILayout.ObjectField("Camera On Left Of Trigger", cameraControlTrigger.customInspectorObjects.cameraOnLeft,
+                            typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+
+                        cameraControlTrigger.customInspectorObjects.cameraOnRight = EditorGUILayout.ObjectField("Camera On Right Of Trigger", cameraControlTrigger.customInspectorObjects.cameraOnRight,
+                            typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+                        break;
+
+                    case SwapDirection.Vertical:
+                        cameraControlTrigger.customInspectorObjects.cameraOnUp = EditorGUILayout.ObjectField("Camera On Up Of Trigger", cameraControlTrigger.customInspectorObjects.cameraOnUp,
+                            typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+
+                        cameraControlTrigger.customInspectorObjects.cameraOnDown = EditorGUILayout.ObjectField("Camera On Down Of Trigger", cameraControlTrigger.customInspectorObjects.cameraOnDown,
+                            typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+                        break;
+                }
             }
-            
-            if(cameraControlTrigger.customInspectorObjects.panCameraOnContact)
+
+            if (cameraControlTrigger.customInspectorObjects.panCameraOnContact)
             {
                 cameraControlTrigger.customInspectorObjects.panDirection = (PanDirection)EditorGUILayout.EnumPopup("Camera Pan Direction",
                     cameraControlTrigger.customInspectorObjects.panDirection);
@@ -96,7 +128,7 @@ namespace ActionPart
                 cameraControlTrigger.customInspectorObjects.panTime = EditorGUILayout.FloatField("Pan Time", cameraControlTrigger.customInspectorObjects.panTime);
             }
 
-            if(GUI.changed)
+            if (GUI.changed)
             {
                 EditorUtility.SetDirty(cameraControlTrigger);
             }
