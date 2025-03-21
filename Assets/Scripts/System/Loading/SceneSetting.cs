@@ -6,13 +6,16 @@ namespace ActionPart
 {
     public class SceneSetting : MonoBehaviour
     {
-        public Transform LeftSpawnPoint;
-        public Transform LeftWalkOutPoint;
+        public Transform leftSpawnPoint;
+        public Transform leftWalkOutPoint;
         
-        public Transform RightSpawnPoint;
-        public Transform RightWalkOutPoint;
+        public Transform rightSpawnPoint;
+        public Transform rightWalkOutPoint;
 
-        public Transform NoneSpawnPoint;
+        public Transform noneSpawnPoint;
+
+        public float[] camSizes = new float[5];
+        public Transform[] lockedCamPoint = new Transform[3];
 
         public AudioClip bgmClip;
     }

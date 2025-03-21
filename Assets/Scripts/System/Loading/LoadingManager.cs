@@ -174,32 +174,30 @@ namespace ActionPart
                     {
                         player.SetSpeedMultiplier(1.5f);
                         player.transform.localScale = new Vector3(2, 2, 1);
-                        virtualCameraControl.SetCamSize(10f);
                     }
                     else
                     {
                         player.SetSpeedMultiplier(1.0f);
                         player.transform.localScale = Vector3.one;
-                        virtualCameraControl.SetCamSize(5f);
                     }
 
                     switch (spawnPoint)
                     {
                         case SpawnPoint.None:
-                            player.transform.localPosition = new Vector3(sceneSetting.NoneSpawnPoint.localPosition.x, sceneSetting.NoneSpawnPoint.localPosition.y, -4);
+                            player.transform.localPosition = new Vector3(sceneSetting.noneSpawnPoint.localPosition.x, sceneSetting.noneSpawnPoint.localPosition.y, -4);
                             player.LookRight();
                             break;
                         case SpawnPoint.Left:
-                            player.transform.localPosition = new Vector3(sceneSetting.LeftSpawnPoint.localPosition.x, sceneSetting.LeftSpawnPoint.localPosition.y, -4);
+                            player.transform.localPosition = new Vector3(sceneSetting.leftSpawnPoint.localPosition.x, sceneSetting.leftSpawnPoint.localPosition.y, -4);
                             player.LookRight();
                             break;
                         case SpawnPoint.Right:
-                            player.transform.localPosition = new Vector3(sceneSetting.RightSpawnPoint.localPosition.x, sceneSetting.RightSpawnPoint.localPosition.y, -4);
+                            player.transform.localPosition = new Vector3(sceneSetting.rightSpawnPoint.localPosition.x, sceneSetting.rightSpawnPoint.localPosition.y, -4);
                             player.LookLeft();
                             break;
                     }
-                    
-                    virtualCameraControl.SetConfiner();
+
+                    virtualCameraControl.SetCamBySceneSetting();
                     parallaxBackground = GameObject.FindGameObjectWithTag("Maps").GetComponent<ParallaxBackground>();
                     parallaxBackground.SetCamera();
                     // 카메라 세팅 끝
@@ -243,10 +241,10 @@ namespace ActionPart
                 switch (walkOut)
                 {
                     case WithWalkOut.Left:
-                        player.playerMoveState.MoveXFromTo(sceneSetting.LeftSpawnPoint.localPosition, sceneSetting.LeftWalkOutPoint.localPosition);
+                        player.playerMoveState.MoveXFromTo(sceneSetting.leftSpawnPoint.localPosition, sceneSetting.leftWalkOutPoint.localPosition);
                         break;
                     case WithWalkOut.Right:
-                        player.playerMoveState.MoveXFromTo(sceneSetting.RightSpawnPoint.localPosition, sceneSetting.RightWalkOutPoint.localPosition);
+                        player.playerMoveState.MoveXFromTo(sceneSetting.rightSpawnPoint.localPosition, sceneSetting.rightWalkOutPoint.localPosition);
                         break;
                     case WithWalkOut.None:
                         player.playerMoveState.OnIsCoroutineDone();

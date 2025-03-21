@@ -11,6 +11,15 @@ namespace ActionPart
 
         public CinemachineVirtualCamera[] allVirtualCameras;
 
+        public enum VirtaulCamList
+        {
+            PlayerFollowCam = 0,
+            NoYFollowCam = 1,
+            LockedCam1 = 2,
+            LockedCam2 = 3,
+            LockedCam3 = 4,
+        }
+
         public float turnOffset;
         public float turnTime = 0;
 
@@ -53,10 +62,36 @@ namespace ActionPart
             _currentCamera.m_Lens.OrthographicSize = value;
         }
 
-        public void SetConfiner()
+        public void SetCamBySceneSetting()
+        {
+            var sceneSetting = GameObject.FindGameObjectWithTag("SceneSetting").GetComponent<SceneSetting>();
+            SetCamSize(sceneSetting);
+            SetConfiner();
+            SetLockedCam(sceneSetting);
+        }
+
+        private void SetCamSize(SceneSetting sceneSetting)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                allVirtualCameras[i].m_Lens.OrthographicSize = sceneSetting.camSizes[i];
+            }
+        }
+
+        private void SetConfiner()
         {
             _confiner.m_BoundingShape2D = GameObject.FindGameObjectWithTag("CamArea").GetComponent<CompositeCollider2D>();
             _confiner.InvalidateCache();
+        }
+
+        private void SetLockedCam(SceneSetting sceneSetting)
+        {
+            if(sceneSetting.lockedCamPoint[0] != null)
+                allVirtualCameras[(int)VirtaulCamList.LockedCam1].Follow = sceneSetting.lockedCamPoint[0];
+            if(sceneSetting.lockedCamPoint[1] != null)
+                allVirtualCameras[(int)VirtaulCamList.LockedCam2].Follow = sceneSetting.lockedCamPoint[1];
+            if(sceneSetting.lockedCamPoint[2] != null)
+                allVirtualCameras[(int)VirtaulCamList.LockedCam3].Follow = sceneSetting.lockedCamPoint[2];
         }
 
         public void ShakeCamera(float duration, float intensity, float frequency = 1f)
@@ -230,26 +265,26 @@ namespace ActionPart
         #region Camera Swap
 
         public void SwapCamera(SwapDirection swapDirection, Vector2 exitDirection, 
-            CinemachineVirtualCamera cameraOnLeft, CinemachineVirtualCamera cameraOnRight, CinemachineVirtualCamera cameraOnUp, CinemachineVirtualCamera cameraOnDown)
+            VirtaulCamList cameraOnLeft, VirtaulCamList cameraOnRight, VirtaulCamList cameraOnUp, VirtaulCamList cameraOnDown)
         {
             switch (swapDirection)
             {
                 case SwapDirection.Horizontal:
-                    if (_currentCamera == cameraOnLeft && exitDirection.x > 0f)
+                    if (_currentCamera == allVirtualCameras[(int)cameraOnLeft] && exitDirection.x > 0f)
                     {
-                        cameraOnLeft.enabled = false;
-                        cameraOnRight.enabled = true;
-                        _currentCamera = cameraOnRight;
+                        allVirtualCameras[(int)cameraOnLeft].gameObject.SetActive(false);
+                        allVirtualCameras[(int)cameraOnRight].gameObject.SetActive(true);
+                        _currentCamera = allVirtualCameras[(int)cameraOnRight];
 
                         _confiner = _currentCamera.GetComponent<CinemachineConfiner2D>();
                         _perlinNoise = _currentCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
                         _framingTransposer = _currentCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
                     }
-                    else if (_currentCamera == cameraOnRight && exitDirection.x < 0f)
+                    else if (_currentCamera == allVirtualCameras[(int)cameraOnRight] && exitDirection.x < 0f)
                     {
-                        cameraOnLeft.enabled = true;
-                        cameraOnRight.enabled = false;
-                        _currentCamera = cameraOnLeft;
+                        allVirtualCameras[(int)cameraOnLeft].gameObject.SetActive(true);
+                        allVirtualCameras[(int)cameraOnRight].gameObject.SetActive(false);
+                        _currentCamera = allVirtualCameras[(int)cameraOnLeft];
 
                         _confiner = _currentCamera.GetComponent<CinemachineConfiner2D>();
                         _perlinNoise = _currentCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
@@ -258,21 +293,21 @@ namespace ActionPart
                     break;
 
                 case SwapDirection.Vertical:
-                    if (_currentCamera == cameraOnUp && exitDirection.y < 0f)
+                    if (_currentCamera == allVirtualCameras[(int)cameraOnUp] && exitDirection.y < 0f)
                     {
-                        cameraOnUp.enabled = false;
-                        cameraOnDown.enabled = true;
-                        _currentCamera = cameraOnDown;
+                        allVirtualCameras[(int)cameraOnUp].gameObject.SetActive(false);
+                        allVirtualCameras[(int)cameraOnDown].gameObject.SetActive(true);
+                        _currentCamera = allVirtualCameras[(int)cameraOnDown];
 
                         _confiner = _currentCamera.GetComponent<CinemachineConfiner2D>();
                         _perlinNoise = _currentCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
                         _framingTransposer = _currentCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
                     }
-                    else if (_currentCamera == cameraOnDown && exitDirection.y > 0f)
+                    else if (_currentCamera == allVirtualCameras[(int)cameraOnDown] && exitDirection.y > 0f)
                     {
-                        cameraOnUp.enabled = true;
-                        cameraOnDown.enabled = false;
-                        _currentCamera = cameraOnUp;
+                        allVirtualCameras[(int)cameraOnUp].gameObject.SetActive(true);
+                        allVirtualCameras[(int)cameraOnDown].gameObject.SetActive(false);
+                        _currentCamera = allVirtualCameras[(int)cameraOnUp];
 
                         _confiner = _currentCamera.GetComponent<CinemachineConfiner2D>();
                         _perlinNoise = _currentCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();

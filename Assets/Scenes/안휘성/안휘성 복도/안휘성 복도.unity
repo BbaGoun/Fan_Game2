@@ -873,11 +873,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d6c8da63d4caa4f8ce415b32f04e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LeftSpawnPoint: {fileID: 922654709}
-  LeftWalkOutPoint: {fileID: 1112486495}
-  RightSpawnPoint: {fileID: 1881532000}
-  RightWalkOutPoint: {fileID: 259451323}
-  NoneSpawnPoint: {fileID: 0}
+  leftSpawnPoint: {fileID: 922654709}
+  leftWalkOutPoint: {fileID: 1112486495}
+  rightSpawnPoint: {fileID: 1881532000}
+  rightWalkOutPoint: {fileID: 259451323}
+  noneSpawnPoint: {fileID: 0}
+  camSizes:
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  lockedCamPoint:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   bgmClip: {fileID: 8300000, guid: 94de4649ab2c8124b9d11079a828e7b9, type: 3}
 --- !u!4 &492908143
 Transform:

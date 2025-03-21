@@ -56,10 +56,10 @@ namespace ActionPart
         public bool panCameraOnContact = false;
 
         [HideInInspector] public SwapDirection swapDirection;
-        [HideInInspector] public CinemachineVirtualCamera cameraOnLeft;
-        [HideInInspector] public CinemachineVirtualCamera cameraOnRight;
-        [HideInInspector] public CinemachineVirtualCamera cameraOnUp;
-        [HideInInspector] public CinemachineVirtualCamera cameraOnDown;
+        [HideInInspector] public VirtualCameraControl.VirtaulCamList cameraOnLeft;
+        [HideInInspector] public VirtualCameraControl.VirtaulCamList cameraOnRight;
+        [HideInInspector] public VirtualCameraControl.VirtaulCamList cameraOnUp;
+        [HideInInspector] public VirtualCameraControl.VirtaulCamList cameraOnDown;
 
         [HideInInspector] public PanDirection panDirection;
         [HideInInspector] public float panDistance = 3f;
@@ -102,19 +102,21 @@ namespace ActionPart
                 switch (cameraControlTrigger.customInspectorObjects.swapDirection)
                 {
                     case SwapDirection.Horizontal:
-                        cameraControlTrigger.customInspectorObjects.cameraOnLeft = EditorGUILayout.ObjectField("Camera On Left Of Trigger", cameraControlTrigger.customInspectorObjects.cameraOnLeft,
-                            typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+                        //cameraControlTrigger.customInspectorObjects.cameraOnLeft = EditorGUILayout.ObjectField("Camera On Left", cameraControlTrigger.customInspectorObjects.cameraOnLeft,
+                            //typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+                        cameraControlTrigger.customInspectorObjects.cameraOnLeft = (VirtualCameraControl.VirtaulCamList)EditorGUILayout.EnumPopup("Camera On Left",
+                            cameraControlTrigger.customInspectorObjects.cameraOnLeft);
 
-                        cameraControlTrigger.customInspectorObjects.cameraOnRight = EditorGUILayout.ObjectField("Camera On Right Of Trigger", cameraControlTrigger.customInspectorObjects.cameraOnRight,
-                            typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+                        cameraControlTrigger.customInspectorObjects.cameraOnRight = (VirtualCameraControl.VirtaulCamList)EditorGUILayout.EnumPopup("Camera On Right",
+                            cameraControlTrigger.customInspectorObjects.cameraOnRight);
                         break;
 
                     case SwapDirection.Vertical:
-                        cameraControlTrigger.customInspectorObjects.cameraOnUp = EditorGUILayout.ObjectField("Camera On Up Of Trigger", cameraControlTrigger.customInspectorObjects.cameraOnUp,
-                            typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+                        cameraControlTrigger.customInspectorObjects.cameraOnUp = (VirtualCameraControl.VirtaulCamList)EditorGUILayout.EnumPopup("Camera On Up",
+                            cameraControlTrigger.customInspectorObjects.cameraOnUp);
 
-                        cameraControlTrigger.customInspectorObjects.cameraOnDown = EditorGUILayout.ObjectField("Camera On Down Of Trigger", cameraControlTrigger.customInspectorObjects.cameraOnDown,
-                            typeof(CinemachineVirtualCamera), true) as CinemachineVirtualCamera;
+                        cameraControlTrigger.customInspectorObjects.cameraOnDown = (VirtualCameraControl.VirtaulCamList)EditorGUILayout.EnumPopup("Camera On Down",
+                            cameraControlTrigger.customInspectorObjects.cameraOnDown);
                         break;
                 }
             }
