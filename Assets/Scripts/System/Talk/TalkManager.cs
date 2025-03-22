@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine.InputSystem;
+using System.ComponentModel;
 
 namespace ActionPart
 {
@@ -23,7 +24,8 @@ namespace ActionPart
         private TalkUI talkUI;
         
         Dictionary<string, TalkEvent> talkDictionary = new Dictionary<string, TalkEvent>();
-        [SerializeField]
+        
+        [SerializeField, ReadOnly(false)]
         List<TalkEvent> talkEventList;
 
         [SerializeField]
@@ -39,6 +41,8 @@ namespace ActionPart
         bool isTypingDone;
         Coroutine typeingCoroutine;
         bool isTalkNext;
+
+        TalkData talkData;
 
         private ITalkAble npc;
 
@@ -92,43 +96,15 @@ namespace ActionPart
         {
             if (isTalking && Time.timeScale != 0)
             {
-                // for debug
-                /*
-                if (Input.GetMouseButtonDown(1))
-                {
-                    TalkNextEvent(currentTalkEvent.nextEvent);
-                    istalking = false;
-                    currentTalkEvent = null;
-                    currentTalkDataIndex = 0;
-                    currentContextIndex = 0;
-                    talkBox.SetActive(false);
-                    return;
-                }
-                */
-
-                var talkData = currentTalkEvent.talkDatas[currentTalkDataIndex];
-                var context = talkData.contexts[currentContextIndex];
-                var name = talkData.name;
-                talkUI.SetSpeaker(name);
-
-                /*if (isTypingStarted && !isTypingDone)
-                {
-                    if (isTalkNext || Input.GetMouseButtonDown(0))
-                    {
-                        if (isCoroutine)
-                        {
-                            StopCoroutine(coroutine);
-                            talkUI.SetContext(context);
-                            isTypingDone = true;
-                            return;
-                        }
-                        else
-                            Debug.Log("텍스트 넘기기 뭔가 잘못됨");
-                    }
-                }*/
-
                 if (!isTypingStarted)
                 {
+                    talkData = currentTalkEvent.talkDatas[currentTalkDataIndex];
+                    var context = talkData.contexts[currentContextIndex];
+                    var face = talkData.faces[currentContextIndex];
+                    var name = talkData.name;
+                    talkUI.SetSpeaker(name);
+                    talkUI.SetSpeakerSprite(face);
+
                     typeingCoroutine = StartCoroutine(TypeDialog(context));
                     // 표정 바꾸기 넣어야 함
                 }

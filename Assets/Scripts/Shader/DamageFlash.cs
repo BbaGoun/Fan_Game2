@@ -18,7 +18,8 @@ namespace ActionPart
         {
             if(_spriteRenderer == null)
                 _spriteRenderer = GetComponent<SpriteRenderer>();
-            _material = _spriteRenderer.material;
+            _material = new Material(_spriteRenderer.material);
+            _spriteRenderer.material = _material;
         }
 
         public void CallDamageFlash(float waitFlashTime, float flashFrequency, float flashRepetition, float maxFlash)

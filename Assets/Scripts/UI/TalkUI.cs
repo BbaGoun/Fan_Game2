@@ -3,21 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Text.RegularExpressions;
 
 namespace ActionPart
 {
     public class TalkUI : MonoBehaviour
     {
+        Dictionary<string, Sprite> speakerDictionary = new Dictionary<string, Sprite>();
+
         [SerializeField]
-        private Image[] leftSpeakers;
+        List<LDSprite> LDSpriteList;
+
+        [System.Serializable]
+        public class LDSprite
+        {
+            public string spriteName;
+            public Sprite sprite;
+
+            public LDSprite(string spriteName, Sprite sprite)
+            {
+                this.spriteName = spriteName;
+                this.sprite = sprite;
+            }
+        }
         [SerializeField]
-        private Image[] rightSpeakers;
+        private Speaker[] leftSpeakers = new Speaker[3];
+        [SerializeField]
+        private Speaker[] rightSpeakers = new Speaker[3];
         [SerializeField]
         private GameObject talkBox;
         [SerializeField]
         private TMP_Text speaker;
         [SerializeField]
         private TMP_Text context;
+
+        private void Awake()
+        {
+            speakerDictionary.Clear();
+            foreach(var ldSprite in LDSpriteList)
+            {
+                speakerDictionary.Add(ldSprite.spriteName, ldSprite.sprite);
+            }
+        }
 
         public void SetTalkBoxOff()
         {
@@ -49,14 +76,106 @@ namespace ActionPart
             context.text += add;
         }
 
-        public void SetLeftSpeaker(string speaker, string face, int index)
+        public void SetSpeakerSprite(string face)
         {
-            //ÀÌ¸§°ú Ç¥Á¤¿¡ ¸Â°Ô ¹Ù²Ù±â
+            // ì •í•´ì§„ index ì™¸ì—ëŠ” imageì˜ enabledê°€ falseì—¬ì•¼ í•¨.
+            // ë§í•˜ëŠ” ì¤‘ì¸ imageì™¸ì—ëŠ” ê²€ì€ìƒ‰ ì²˜ë¦¬ê°€ ë˜ì–´ì•¼ í•¨.
+            if(face.Equals("clear"))
+            {
+                foreach(var ls in leftSpeakers)
+                {
+                    ls.image.sprite = null;
+                    ls.gameObject.SetActive(false);
+                }
+                foreach(var rs in rightSpeakers)
+                {
+                    rs.image.sprite = null;
+                    rs.gameObject.SetActive(false);
+                }
+            }
+            else if(!face.Equals("/////"))
+            {
+                string[] values = face.Split('/');
+                for (int i = 0; i < 3; i++)
+                {
+                    var value = values[i];
+                    if (!value.Equals(""))
+                    {
+                        if (char.Equals(value[0], '*'))
+                        {
+                            value = value.Substring(1);
+                            if (!value.Equals(""))
+                            {
+                                leftSpeakers[i].gameObject.SetActive(true);
+                                SetLeftSpeakerSprite(value, i);
+                            }
+                            leftSpeakers[i].CallUnDark();
+                        }
+                        else if (char.Equals(value[0], 'd'))
+                        {
+                            leftSpeakers[i].gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            leftSpeakers[i].gameObject.SetActive(true);
+                            SetLeftSpeakerSprite(value, i);
+                            leftSpeakers[i].CallDark();
+                        }
+                    }
+                    else
+                    {
+                        if (leftSpeakers[i].gameObject.activeSelf)
+                            leftSpeakers[i].CallDark();
+                    }
+                }
+                for (int i = 3; i < 6; i++)
+                {
+                    var right_index = i - 3;
+                    var value = values[i];
+                    if (!value.Equals(""))
+                    {
+                        if (char.Equals(value[0], '*'))
+                        {
+                            value = value.Substring(1);
+                            if (!value.Equals(""))
+                            {
+                                rightSpeakers[right_index].gameObject.SetActive(true);
+                                SetRightSpeakerSprite(value, right_index);
+                            }
+                            rightSpeakers[right_index].CallUnDark();
+                        }
+                        else if (char.Equals(value[0], '*'))
+                        {
+                            rightSpeakers[right_index].gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            rightSpeakers[right_index].gameObject.SetActive(true);
+                            SetRightSpeakerSprite(value, right_index);
+                            rightSpeakers[right_index].CallDark();
+                        }
+                    }
+                    else
+                    {
+                        if(rightSpeakers[right_index].gameObject.activeSelf)
+                            rightSpeakers[right_index].CallDark();
+                    }
+                }
+            }
         }
 
-        public void SetRightSpeaker(string speaker, string face, int index)
+        private void SetLeftSpeakerSprite(string speaker, int index)
         {
-            //ÀÌ¸§°ú Ç¥Á¤¿¡ ¸Â°Ô ¹Ù²Ù±â
+            if (index < 0 || index > 3)
+                return;
+            leftSpeakers[index].image.sprite = speakerDictionary[speaker];
+        }
+
+        private void SetRightSpeakerSprite(string speaker, int index)
+        {
+            if (index < 0 || index > 3)
+                return;
+            rightSpeakers[index].image.sprite = speakerDictionary[speaker];
         }
     }
 }
