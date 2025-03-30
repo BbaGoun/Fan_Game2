@@ -58,6 +58,7 @@ namespace ActionPart
         public IDamageAble.DamageInfo damageInfo;
 
         Animator animator;
+        Coroutine lifeCycleCoroutine;
         [SerializeField]
         PlayerState playerState;
 
@@ -115,7 +116,6 @@ namespace ActionPart
             {
                 if (isStopped)
                 {
-                    // FixedUpdate?? ?????? ??? ?????? velocity?? ?????????? ???
                     velocity = Vector2.zero;
                     yield return null;
                     continue;
@@ -167,14 +167,16 @@ namespace ActionPart
             base.Start();
         }
 
-        private void Awake()
+        private void OnEnable()
         {
-            StartCoroutine(IELifeCycle());
+            base.OnEnable();
+            lifeCycleCoroutine = StartCoroutine(IELifeCycle());
         }
 
         public void OnDisable()
         {
-
+            base.OnDisable();
+            StopCoroutine(lifeCycleCoroutine);
         }
 
         protected override void ComputeVelocity()

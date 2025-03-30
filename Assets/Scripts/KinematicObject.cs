@@ -127,6 +127,8 @@ namespace ActionPart
             velocity = Vector2.zero;
         }
 
+        protected virtual void OnDisable() { }
+
         protected virtual void Start()
         {
             speedMultiplier = 1f;

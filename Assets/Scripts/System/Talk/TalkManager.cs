@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI.Table;
-using TMPro;
-using UnityEngine.UI;
-using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine.InputSystem;
 using System.ComponentModel;
 
@@ -137,20 +133,12 @@ namespace ActionPart
         void TalkNextEvent(string nextEvent)
         {
             Debug.Log(nextEvent);
+            
             switch(nextEvent)
             {
-                case "전투 시작":
-                    //Schedule<BossBattleStart>();
-                    //Schedule<PlayerTalkEnd>();
-                    break;
-                case "승천":
-                    //Schedule<BossAscend>();
-                    break;
-                case "엔딩":
-                    //Schedule<GameEnding>();
-                    break;
                 default:
                     PlayerInputPart.Instance.CanInput();
+                    MetaGameController.instance.ShowInterface();
                     if (npc != null)
                     {
                         npc.TalkDone();
@@ -233,6 +221,7 @@ namespace ActionPart
                     }
                     PlayerInputPart.Instance.CantInput();
                     talkUI.SetTalkBoxOn();
+                    MetaGameController.instance.DisShowInterface();
                     currentTalkEvent = talkDictionary[eventName];
                     currentTalkDataIndex = 0;
                     currentContextIndex = 0;

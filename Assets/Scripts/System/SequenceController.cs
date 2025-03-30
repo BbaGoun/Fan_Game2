@@ -22,19 +22,19 @@ namespace ActionPart
         
         private void Awake()
         {
-            // º° »ó°ü ¾ø´Â °Íµé
+            // ì„ í–‰
             _timelineController.Initialize();
             _timeController.Initialize();
             _battleManager.Initialize();
 
-            // ¸ÕÀú ÇØ¾ß ÇÏ´Â °Íµé
+            // í›„í–‰
             _settingContainer.Initialize();
             _dataManager.Initialize();
             _talkManager.Initialize();
             _audioController.Initialize();
             _playerInputPart.Initialize();
 
-            // ÀÌÈÄ ÇØ¾ß ÇÏ´Â °Íµé
+            // ìƒê´€ì—†ìŒ
             _mainMenuController.Initialize();
             _loadingManager.Initialize();
             _playerWithStateMachine.Initialize();

@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-namespace ActionPart.UI
+namespace ActionPart
 {
     public class MainMenuController : MonoBehaviour
     {
@@ -124,7 +124,7 @@ namespace ActionPart.UI
         {
             PlayClickSound();
             Time.timeScale = 1;
-            LoadingManager.Instance.LoadSceneAsync("∏ﬁ¿Œ ≈∏¿Ã∆≤", LoadingManager.SpawnPoint.None, LoadingManager.WithWalkOut.None, mode: LoadingManager.TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
+            LoadingManager.Instance.LoadSceneAsync("Î©îÏù∏ ÌÉÄÏù¥ÌãÄ", LoadingManager.SpawnPoint.None, LoadingManager.WithWalkOut.None, mode: LoadingManager.TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
         #endregion
 
@@ -406,8 +406,6 @@ namespace ActionPart.UI
         public void YesQuit()
         {
             PlayClickSound();
-            // ¿˙¿Â √ﬂ∞°
-            // ≈∏¿Ã∆≤∑Œ ¿Ãµø«œ¥¬ ∞…∑Œ πŸ≤Ÿ¿⁄
             Time.timeScale = 1;
 
             background.SetActive(false);
@@ -419,7 +417,8 @@ namespace ActionPart.UI
             sound.SetActive(false);
             saveGame.SetActive(false);
 
-            LoadingManager.Instance.LoadSceneAsync("∏ﬁ¿Œ ≈∏¿Ã∆≤", LoadingManager.SpawnPoint.None, LoadingManager.WithWalkOut.None, mode: LoadingManager.TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
+            MetaGameController.instance.SwitchActionMap(MetaGameController.ActionMap.Player);
+            LoadingManager.Instance.LoadSceneAsync("Î©îÏù∏ ÌÉÄÏù¥ÌãÄ", LoadingManager.SpawnPoint.None, LoadingManager.WithWalkOut.None, mode: LoadingManager.TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
         #endregion
 

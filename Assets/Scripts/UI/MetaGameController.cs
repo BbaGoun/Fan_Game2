@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ActionPart.UI
+namespace ActionPart
 {
     public class MetaGameController : MonoBehaviour
     {
@@ -49,15 +49,34 @@ namespace ActionPart.UI
             {
                 mainMenuController.ToggleMainMenu(true);
                 interfaces.SetActive(false);
-                playerInput.SwitchCurrentActionMap("UI");
+                SwitchActionMap(ActionMap.UI);
             }
             else
             {
                 mainMenuController.ToggleMainMenu(false);
                 interfaces.SetActive(true);
-                playerInput.SwitchCurrentActionMap("Player");
+                SwitchActionMap(ActionMap.Player);
             }
             this.showMainCanvas = show;
+        }
+
+        public void SwitchActionMap(ActionMap actionMap)
+        {
+            switch (actionMap)
+            {
+                case ActionMap.Player:
+                    playerInput.SwitchCurrentActionMap("Player");
+                    break;
+                case ActionMap.UI:
+                    playerInput.SwitchCurrentActionMap("UI");
+                    break;
+            }
+        }
+
+        public enum ActionMap
+        {
+            Player,
+            UI
         }
 
         public void ShowInterface()
@@ -78,9 +97,9 @@ namespace ActionPart.UI
 
                 if (loadedSceneName == null)
                     return;
-                else if (loadedSceneName.Equals("∏ﬁ¿Œ ≈∏¿Ã∆≤"))
+                else if (loadedSceneName.Equals("Î©îÏù∏ ÌÉÄÏù¥ÌãÄ"))
                     return;
-                else if (loadedSceneName.Contains("∏∏»≠ƒ∆"))
+                else if (loadedSceneName.Contains("ÎßåÌôîÏª∑"))
                     return;
                 else if (LoadingManager.Instance.CheckCartoonOn())
                     return;

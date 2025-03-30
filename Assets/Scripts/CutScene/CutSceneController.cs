@@ -41,7 +41,6 @@ namespace ActionPart
 
         public void CutSceneConfirm()
         {
-            //Debug.Log("¹¹Áö");
             isNext = true;
         }
 
@@ -93,7 +92,7 @@ namespace ActionPart
                     {
                         LoadingManager.Instance.LoadSceneAsync(sceneName, spawnPoint, withWalkOut, transitionMode, inDelay: 0.25f, outDelay: 0.25f);
                     }
-                    // ÄÆ½Å Á¾·á¿¡ ´ëÇÑ Çàµ¿
+                    // ï¿½Æ½ï¿½ ï¿½ï¿½ï¿½á¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½àµ¿
                     break;
             }
 
