@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using UnityEditor.ShaderGraph.Drawing;
 using UnityEngine;
 
 namespace ActionPart
@@ -9,9 +8,6 @@ namespace ActionPart
     public class Boss_남궁 : Boss
     {
         [Space(10)]
-        [Header("Boss_남궁")]
-        public PlayerWithStateMachine player;
-
         [Header("States")]
         #region states
         [SerializeField]
@@ -30,8 +26,11 @@ namespace ActionPart
         BossTalkArea bossTalkArea;
         #endregion
 
-        public GameObject bossBeforeWall;
-        public GameObject[] bossingWalls;
+        public GameObject bossBeforeObjects;
+        public GameObject bossBattleObjects;
+        public GameObject bossBattlePhase1Objects;
+        public GameObject bossBattlePhase2Objects;
+        public GameObject bossAfterObjects;
 
         public RangeArea InRange;
         public RangeArea OutRange;
@@ -62,13 +61,16 @@ namespace ActionPart
         public HarmfulToPlayer harmfulToPlayer;
         private void Awake()
         {
-            bossBeforeWall?.SetActive(true);
+            bossBeforeObjects?.SetActive(true);
+            bossBattleObjects?.SetActive(false);
+            bossBattlePhase1Objects?.SetActive(false);
+            bossBattlePhase2Objects?.SetActive(false);
+            bossAfterObjects?.SetActive(false);
+
             stateMachine = GetComponent<StateMachine>();
             enemyHealth = GetComponent<EnemyHealth>();
             animator = GetComponent<Animator>();
             harmfulToPlayer = GetComponent<HarmfulToPlayer>();
-
-            player = PlayerWithStateMachine.Instance;
 
             moveState.Inintialize(this);
             attackState.Initialize(this);
@@ -86,11 +88,8 @@ namespace ActionPart
 
         public override void Initialize()
         {
-            bossBeforeWall?.SetActive(false);
-            foreach(var bossingWall in bossingWalls)
-            {
-                bossingWall.SetActive(true);
-            }
+            bossBeforeObjects?.SetActive(false);
+            bossBattleObjects?.SetActive(true);
             StartCoroutine(IELifeCycle());
         }
 
@@ -296,10 +295,8 @@ namespace ActionPart
 
         public void EventBossDead()
         {
-            foreach(var bossingWall in bossingWalls)
-            {
-                bossingWall.SetActive(false);
-            }
+            bossBattleObjects.SetActive(false);
+            bossAfterObjects.SetActive(true);
         }
 
         public enum BossState

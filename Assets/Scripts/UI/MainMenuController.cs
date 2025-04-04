@@ -32,6 +32,7 @@ namespace ActionPart
 
         public SettingData tmpSettingData;
 
+        bool quited;
         private void Awake()
         {
             background = transform.GetChild(0).gameObject;
@@ -77,11 +78,12 @@ namespace ActionPart
             PlayClickSound();
             if (isShowMenu)
             {
+                quited = false;
                 Time.timeScale = 0;
                 background.SetActive(true);
                 mainMenu.SetActive(true);
             }
-            else
+            else if(!quited)
             {
                 Time.timeScale = 1;
                 foreach (var button in buttons)
@@ -98,6 +100,24 @@ namespace ActionPart
                 saveGame.SetActive(false);
             }
         }
+
+        public void OffMainMenu()
+        {
+            Time.timeScale = 1;
+            foreach (var button in buttons)
+            {
+                button.interactable = true;
+            }
+            background.SetActive(false);
+            mainMenu.SetActive(false);
+            titleAlert.SetActive(false);
+            quitAlert.SetActive(false);
+            option.SetActive(false);
+            graphic.SetActive(false);
+            sound.SetActive(false);
+            saveGame.SetActive(false);
+        }
+
 
         #region Title
         public void ShowTitleAlert()
@@ -405,19 +425,13 @@ namespace ActionPart
 
         public void YesQuit()
         {
+            if (quited)
+                return;
+
+            quited = true;
             PlayClickSound();
             Time.timeScale = 1;
 
-            background.SetActive(false);
-            mainMenu.SetActive(false);
-            titleAlert.SetActive(false);
-            quitAlert.SetActive(false);
-            option.SetActive(false);
-            graphic.SetActive(false);
-            sound.SetActive(false);
-            saveGame.SetActive(false);
-
-            MetaGameController.instance.SwitchActionMap(MetaGameController.ActionMap.Player);
             LoadingManager.Instance.LoadSceneAsync("메인 타이틀", LoadingManager.SpawnPoint.None, LoadingManager.WithWalkOut.None, mode: LoadingManager.TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
         #endregion
@@ -448,6 +462,10 @@ namespace ActionPart
             }
         }
 
+        public void OffAllElements()
+        {
+
+        }
         
     }
 }

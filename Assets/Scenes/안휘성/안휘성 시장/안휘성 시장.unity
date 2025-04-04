@@ -2219,9 +2219,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 611092871}
     m_Modifications:
     - target: {fileID: 460249733384433525, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
+      propertyPath: m_Size.x
+      value: 4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 460249733384433525, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
+      propertyPath: m_Size.y
+      value: 4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 460249733384433525, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: cf3edde5b42b2d142a090003fcc13b29, type: 3}
+      objectReference: {fileID: 21300000, guid: 60d5618132287d3488c7405f02788b75, type: 3}
+    - target: {fileID: 460249733384433525, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1980983273449216446, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 56.02
@@ -2268,11 +2280,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4464347122971564738, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_Name
-      value: "\uC548\uD718\uC131_\uC2DC\uC7A5_\uC624\uB274"
+      value: "\uC548\uD718\uC131_\uC2DC\uC7A5_\uAE40\uD1A0\uD0A4"
       objectReference: {fileID: 0}
     - target: {fileID: 5988947435381099705, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899202888366585241, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899202888366585241, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 4.4
       objectReference: {fileID: 0}
     - target: {fileID: 6899202888366585241, guid: 7e2e6eb59448776408180033551a26ef, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x

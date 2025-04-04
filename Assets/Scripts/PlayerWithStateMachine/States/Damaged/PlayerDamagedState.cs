@@ -110,17 +110,17 @@ namespace ActionPart
 
             if(!isStiffnessSelected)
             {
-                Debug.Log("ÃÖ´ë µ¥¹ÌÁö·Î ¸ÂÀ½");
+                Debug.Log("ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 currentStiffness = stiffnessList[stiffnessList.Count - 1];
             }
 
             if (player.damageInfo.knockbackDirection.x <= 0)
-            { // ¿À¸¥ÂÊ¿¡¼­ ¿Â Ãæ°Ý
+            { 
                 player.LookRight();
                 knockBackDirection = -1f;
             }
             else if (player.damageInfo.knockbackDirection.x > 0)
-            { // ¿ÞÂÊ¿¡¼­ ¿Â Ãæ°Ý
+            { 
                 player.LookLeft();
                 knockBackDirection = 1f;
             }
@@ -135,6 +135,7 @@ namespace ActionPart
                 case DamagedState.Idle:
                     break;
                 case DamagedState.Damaged:
+                    PlayHitSound(currentStiffness.hitSound);
                     knockBackTimer = 0f;
                     var canHurt = health.Hurt_Hp(hpDelta, currentStiffness.invincibleDuration,
                         currentStiffness.waitFlashTime, currentStiffness.flashFrequency, currentStiffness.flashRepetition, currentStiffness.maxFlash);
@@ -201,6 +202,11 @@ namespace ActionPart
             }
         }
 
+        void PlayHitSound(AudioClip hitSound)
+        {
+            player.playerAudioSource.PlayOneShot(hitSound, 1.0f);
+        }
+
         #region Animation Events
         void KnockBackDone()
         {
@@ -239,6 +245,8 @@ namespace ActionPart
             public float maxFlash;
 
             public float slowTime;
+
+            public AudioClip hitSound;
         }
     }
 }

@@ -24,7 +24,10 @@ namespace ActionPart
         public float turnTime = 0;
 
         public float yDamping;
-        public string camAreaName;
+
+        CinemachineBrain _cinemachineBrain;
+        CinemachineBlendDefinition _blendCut;
+        CinemachineBlendDefinition _blendEaseInOut;
         
         CinemachineVirtualCamera _currentCamera;
         CinemachineBasicMultiChannelPerlin _perlinNoise;
@@ -49,6 +52,10 @@ namespace ActionPart
                 Instance = this;
             }
             #endregion
+
+            _cinemachineBrain = Camera.main.gameObject.GetComponent<CinemachineBrain>();
+            _blendCut = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0f);
+            _blendEaseInOut = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.EaseInOut, 2f);
 
             _currentCamera = allVirtualCameras[0];
 
@@ -317,6 +324,32 @@ namespace ActionPart
             }
         }
 
+        public void ResetSwapedCamera()
+        {
+            foreach (var cam in allVirtualCameras)
+            {
+                cam.gameObject.SetActive(false);
+            }
+            allVirtualCameras[(int)VirtaulCamList.PlayerFollowCam].gameObject.SetActive(true);
+            _currentCamera = allVirtualCameras[(int)VirtaulCamList.PlayerFollowCam];
+
+            _confiner = _currentCamera.GetComponent<CinemachineConfiner2D>();
+            _perlinNoise = _currentCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            _framingTransposer = _currentCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        }
         #endregion
+
+        public void SetCinemachineBrainBlend(CinemachineBlendDefinition.Style style)
+        {
+            switch (style)
+            {
+                case CinemachineBlendDefinition.Style.Cut:
+                    _cinemachineBrain.m_DefaultBlend = _blendCut;
+                    break;
+                case CinemachineBlendDefinition.Style.EaseInOut:
+                    _cinemachineBrain.m_DefaultBlend = _blendEaseInOut;
+                    break;
+            }
+        }
     }
 }

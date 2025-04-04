@@ -112,5 +112,10 @@ namespace ActionPart
         {
             ToggleMainMenu(show: !showMainCanvas);
         }
+
+        public void OffMainMenu()
+        {
+            mainMenuController.OffMainMenu();
+        }
     }
 }

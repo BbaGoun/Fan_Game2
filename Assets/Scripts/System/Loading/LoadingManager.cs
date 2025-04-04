@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -109,7 +110,12 @@ namespace ActionPart
                 audioController.FadeOutBGM(0.5f);
                 yield return new WaitUntil(loadingScene.CheckisDone);
 
-                //audioController.PauseBGM();
+                // 메인메뉴 회수
+                MetaGameController.instance.OffMainMenu();
+
+                // 카메라 원위치
+                virtualCameraControl.ResetSwapedCamera();
+                virtualCameraControl.SetCinemachineBrainBlend(CinemachineBlendDefinition.Style.Cut);
 
                 // 씬 세팅 전 초기화
                 isLoadDone = false;
@@ -198,6 +204,7 @@ namespace ActionPart
                     }
 
                     virtualCameraControl.SetCamBySceneSetting();
+                    virtualCameraControl.SetCinemachineBrainBlend(CinemachineBlendDefinition.Style.EaseInOut);
                     parallaxBackground = GameObject.FindGameObjectWithTag("Maps").GetComponent<ParallaxBackground>();
                     parallaxBackground.SetCamera();
                     // 카메라 세팅 끝

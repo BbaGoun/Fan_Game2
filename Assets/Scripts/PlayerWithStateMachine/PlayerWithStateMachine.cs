@@ -361,7 +361,7 @@ namespace ActionPart
                     playerState = PlayerState.Death;
                     break;
                 default:
-                    Debug.Log("???? ???? ?��????");
+                    Debug.Log("뭔지 모를 상태");
                     break;
             }
         }

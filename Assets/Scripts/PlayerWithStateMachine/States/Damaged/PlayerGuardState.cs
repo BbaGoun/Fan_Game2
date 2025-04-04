@@ -143,12 +143,12 @@ namespace ActionPart
             {
                 if (player.damageInfo.knockbackDirection.x <= 0f && Mathf.Sign(transform.localScale.x) != 1f)
                 {
-                    // ¿À¸¥ÂÊ¿¡¼­ °ø°ÝÀ» ´çÇß´Âµ¥, ¿À¸¥ÂÊÀ» º¸°íÀÖÁö ¾Ê¾ÒÀ» °æ¿ì
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß´Âµï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                     player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
                 }
                 else if (player.damageInfo.knockbackDirection.x > 0f && Mathf.Sign(transform.localScale.x) != -1f)
                 {
-                    // ¿ÞÂÊ¿¡¼­ °ø°ÝÀ» ´çÇß´Âµ¥, ¿ÞÂÊÀ» º¸°íÀÖÁö ¾Ê¾ÒÀ» °æ¿ì
+                    // ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß´Âµï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                     player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Damaged);
                 }
                 else
@@ -193,7 +193,7 @@ namespace ActionPart
                     guardState = GuardState.JustGuard;
                     break;
                 case GuardState.JustGuard:
-                    // ÀÌµ¿ ±â´É ³Ö±â
+                    // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
                     justGuardTimer += Time.deltaTime;
                     if (justGuardTimer >= justGuardTime)
                     {
@@ -207,7 +207,7 @@ namespace ActionPart
 
                     health.Hurt_StaminaOnlyTo1(hpDelta);
                     health.OnInvincible(parryInvincibleTime);
-                    // Àû ½ºÅ×¹Ì³ª °¨¼Ò ½ÃÅ°±â ÇÊ¿ä
+                    // ï¿½ï¿½ ï¿½ï¿½ï¿½×¹Ì³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ê¿ï¿½
                     var parryEffect = ObjectPoolManager.Instance.GetObject("Player_Hitted_Parry");
                     parryEffect.transform.position = player.transform.position + new Vector3(-1 * knockBackDirection * 1f, 0.5f, 0f);
                     parryEffect.transform.localScale = new Vector3(-1 * knockBackDirection, 1, 1);
@@ -228,10 +228,10 @@ namespace ActionPart
                             TimeController.Instance.SetTimeScale(1f);
                         }
                     }
-                    // ÆÐ¸µ ¾Ö´Ï¸ÞÀÌ¼Ç¿¡ Æ®¸®°Å ºÙ¿©³õÀ½
+                    // ï¿½Ð¸ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼Ç¿ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ï¿½ï¿½
                     break;
                 case GuardState.Idle:
-                    //ÀÌµ¿ ±â´É ³Ö±â
+                    //ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
                     break;
                 case GuardState.Damaged:
                     knockBackTimer = 0f;
@@ -262,7 +262,7 @@ namespace ActionPart
                             TimeController.Instance.SetTimeScale(1f);
                         }
                     }
-                    // ³Ë¹é ¾Ö´Ï¸ÞÀÌ¼Ç¿¡ Æ®¸®°Å ºÙ¿©³õÀ½
+                    // ï¿½Ë¹ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼Ç¿ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ï¿½ï¿½
                     break;
                 case GuardState.PrepareIdle:
                     waitTimer += Time.deltaTime;

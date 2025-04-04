@@ -77,6 +77,15 @@ namespace ActionPart
             }
         }
 
+        public void DebugLoadScene()
+        {
+            if(!started)
+            {
+                started = true;
+                LoadingManager.Instance.LoadSceneAsync("안휘성 집무실", LoadingManager.SpawnPoint.Left, LoadingManager.WithWalkOut.Left, LoadingManager.TransitionMode.FromRight);
+            }
+        }
+
         #region Option
         public void ToOption()
         {

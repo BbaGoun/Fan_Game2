@@ -68,7 +68,7 @@ namespace ActionPart
 
         void XControl()
         {
-            moveVec = new Vector2(Mathf.Sign(boss.player.transform.position.x - this.transform.position.x), 0);
+            moveVec = new Vector2(Mathf.Sign(PlayerWithStateMachine.Instance.transform.position.x - this.transform.position.x), 0);
 
             if (boss.isStopped || Time.timeScale == 0f)
                 moveVec = Vector2.zero;

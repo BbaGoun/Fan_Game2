@@ -70,7 +70,7 @@ namespace ActionPart
                 var damageAble = enemy.GetComponent<IDamageAble>();
                 if (damageAble == null)
                 {
-                    Debug.LogError("´ë»ó¿¡°Ô damageAble ÀÎÅÍÆäÀÌ½º°¡ ¾øÀ½");
+                    Debug.LogError("ï¿½ï¿½ó¿¡°ï¿½ damageAble ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                     return;
                 }
 

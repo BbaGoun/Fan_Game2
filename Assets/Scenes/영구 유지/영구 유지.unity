@@ -1429,7 +1429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mousePressedColor: {r: 0, g: 0, b: 0, a: 0}
+  mousePressedColor: {r: 0.01960786, g: 0.5537305, b: 0.9490196, a: 0.78431374}
   mouseOnColor: {r: 0.019607844, g: 0.78039217, b: 0.9490196, a: 0.78431374}
   mouseOffColor: {r: 1, g: 1, b: 1, a: 0.78431374}
 --- !u!1 &207739164
@@ -2021,7 +2021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mousePressedColor: {r: 0, g: 0, b: 0, a: 0}
+  mousePressedColor: {r: 0.01960786, g: 0.5537305, b: 0.9490196, a: 0.78431374}
   mouseOnColor: {r: 0.019607844, g: 0.78039217, b: 0.9490196, a: 0.78431374}
   mouseOffColor: {r: 1, g: 1, b: 1, a: 0.78431374}
 --- !u!1 &369137701
@@ -2815,7 +2815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mousePressedColor: {r: 0, g: 0, b: 0, a: 0}
+  mousePressedColor: {r: 0.01960786, g: 0.5537305, b: 0.9490196, a: 0.78431374}
   mouseOnColor: {r: 0.019607844, g: 0.78039217, b: 0.9490196, a: 0.78431374}
   mouseOffColor: {r: 1, g: 1, b: 1, a: 0.78431374}
 --- !u!1 &599624039
@@ -7946,7 +7946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52edf09089a02e4ea08096d1c86b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mousePressedColor: {r: 0, g: 0, b: 0, a: 0}
+  mousePressedColor: {r: 0.01960786, g: 0.5537305, b: 0.9490196, a: 0.78431374}
   mouseOnColor: {r: 0.019607844, g: 0.78039217, b: 0.9490196, a: 0.78431374}
   mouseOffColor: {r: 1, g: 1, b: 1, a: 0.78431374}
 --- !u!1 &1396048063
@@ -9148,7 +9148,6 @@ MonoBehaviour:
   turnOffset: 0.75
   turnTime: 0.75
   yDamping: 1.75
-  camAreaName: TownCamArea
 --- !u!1 &1591384906
 GameObject:
   m_ObjectHideFlags: 0
@@ -12246,9 +12245,17 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[0].hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4beb213ba26f31f43a3dfe7237865846, type: 3}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[0].slowTime
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: stiffnessList.Array.data[1].hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b0f49d664e04a0643b149bf51e73a8a6, type: 3}
     - target: {fileID: 1280239672331627736, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: stiffnessList.Array.data[1].maxFlash
       value: 0.8

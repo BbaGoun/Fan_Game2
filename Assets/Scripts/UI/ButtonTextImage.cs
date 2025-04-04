@@ -32,7 +32,7 @@ public class ButtonTextImage : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     {
         if (button.interactable)
         {
-            if (mousePressed)
+            if (mousePressed && mouseOver)
             {
                 image.color = mousePressedColor;
             }

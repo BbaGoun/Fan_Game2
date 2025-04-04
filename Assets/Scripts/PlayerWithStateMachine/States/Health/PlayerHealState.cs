@@ -36,7 +36,7 @@ namespace ActionPart
         float shakeIntensity;
         [SerializeField]
         float shakeFrequency;
-        // ÀÌÆåÆ® ¿ÀºêÁ§Æ® ¿¬°á
+        // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         #endregion
 
         public void Initialize(PlayerWithStateMachine _playerWithStateMachine)
