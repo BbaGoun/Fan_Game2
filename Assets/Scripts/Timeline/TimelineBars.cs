@@ -6,12 +6,29 @@ namespace ActionPart
 {
     public class TimelineBars : MonoBehaviour
     {
+        public static TimelineBars Instance;
+
         public RectTransform upSide;
         public RectTransform downSide;
         public float defaultY;
 
         private void Awake()
         {
+            #region Singleton
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                if (Instance != this)
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+
+            #endregion
+
             upSide = transform.GetChild(0).GetComponent<RectTransform>();
             downSide = transform.GetChild(1).GetComponent<RectTransform>();
             upSide.gameObject.SetActive(false);

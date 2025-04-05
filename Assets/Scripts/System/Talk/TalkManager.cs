@@ -145,6 +145,8 @@ namespace ActionPart
                         npc = null;
                     }
 
+                    TimelineBars.Instance.BarsOff();
+
                     break;
             }
         }
@@ -228,6 +230,8 @@ namespace ActionPart
                     isTalking = true;
                     isTypingStarted = false;
                     isTypingDone = false;
+
+                    TimelineBars.Instance.BarsOn();
                 }
                 else
                     Debug.LogWarning("찾을 수 없는 이벤트 이름 : " + eventName);

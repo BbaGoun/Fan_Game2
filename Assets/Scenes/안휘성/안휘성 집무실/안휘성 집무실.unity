@@ -1269,6 +1269,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 8342212337900980584, guid: c74cccfbcc5fd0045a164d9d6eca85b9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9214431609984788174, guid: c74cccfbcc5fd0045a164d9d6eca85b9, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -2267,6 +2271,10 @@ PrefabInstance:
     - target: {fileID: 8342212337900980584, guid: c74cccfbcc5fd0045a164d9d6eca85b9, type: 3}
       propertyPath: m_Name
       value: CameraTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342212337900980584, guid: c74cccfbcc5fd0045a164d9d6eca85b9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9214431609984788174, guid: c74cccfbcc5fd0045a164d9d6eca85b9, type: 3}
       propertyPath: m_LocalPosition.x
