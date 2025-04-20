@@ -27,9 +27,11 @@ namespace ActionPart
             }
         }
         [SerializeField]
-        private Speaker[] leftSpeakers = new Speaker[3];
+        private GameObject background;
         [SerializeField]
-        private Speaker[] rightSpeakers = new Speaker[3];
+        private Speaker leftSpeaker;
+        [SerializeField]
+        private Speaker rightSpeaker;
         [SerializeField]
         private GameObject talkBox;
         [SerializeField]
@@ -48,16 +50,16 @@ namespace ActionPart
 
         public void SetTalkBoxOff()
         {
-            foreach (var Lspeaker in leftSpeakers)
-                Lspeaker.gameObject.SetActive(false);
-            foreach (var Rspeaker in rightSpeakers)
-                Rspeaker.gameObject.SetActive(false);
+            background.SetActive(false);
+            leftSpeaker.gameObject.SetActive(false);
+            rightSpeaker.gameObject.SetActive(false);
 
             talkBox.SetActive(false);
         }
 
         public void SetTalkBoxOn()
         {
+            background.SetActive(true);
             talkBox.SetActive(true);
         }
 
@@ -82,100 +84,87 @@ namespace ActionPart
             // 말하는 중인 image외에는 검은색 처리가 되어야 함.
             if(face.Equals("clear"))
             {
-                foreach(var ls in leftSpeakers)
-                {
-                    ls.image.sprite = null;
-                    ls.gameObject.SetActive(false);
-                }
-                foreach(var rs in rightSpeakers)
-                {
-                    rs.image.sprite = null;
-                    rs.gameObject.SetActive(false);
-                }
+                leftSpeaker.image.sprite = null;
+                leftSpeaker.gameObject.SetActive(false);
+
+                rightSpeaker.image.sprite = null;
+                rightSpeaker.gameObject.SetActive(false);
             }
-            else if(!face.Equals("/////"))
+            else if(!face.Equals("/"))
             {
                 string[] values = face.Split('/');
-                for (int i = 0; i < 3; i++)
+
+                var value = values[0];
+                if (!value.Equals(""))
                 {
-                    var value = values[i];
-                    if (!value.Equals(""))
+                    if (char.Equals(value[0], '*'))
                     {
-                        if (char.Equals(value[0], '*'))
+                        value = value.Substring(1);
+                        if (!value.Equals(""))
                         {
-                            value = value.Substring(1);
-                            if (!value.Equals(""))
-                            {
-                                leftSpeakers[i].gameObject.SetActive(true);
-                                SetLeftSpeakerSprite(value, i);
-                            }
-                            leftSpeakers[i].CallUnDark();
+                            leftSpeaker.gameObject.SetActive(true);
+                            SetLeftSpeakerSprite(value);
                         }
-                        else if (char.Equals(value[0], 'd'))
-                        {
-                            leftSpeakers[i].gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            leftSpeakers[i].gameObject.SetActive(true);
-                            SetLeftSpeakerSprite(value, i);
-                            leftSpeakers[i].CallDark();
-                        }
+                        leftSpeaker.CallUnDark();
+                    }
+                    else if (char.Equals(value[0], 'd'))
+                    {
+                        leftSpeaker.gameObject.SetActive(false);
                     }
                     else
                     {
-                        if (leftSpeakers[i].gameObject.activeSelf)
-                            leftSpeakers[i].CallDark();
+                        leftSpeaker.gameObject.SetActive(true);
+                        SetLeftSpeakerSprite(value);
+                        leftSpeaker.CallDark();
                     }
                 }
-                for (int i = 3; i < 6; i++)
+                else
                 {
-                    var right_index = i - 3;
-                    var value = values[i];
-                    if (!value.Equals(""))
+                    if (leftSpeaker.gameObject.activeSelf)
+                        leftSpeaker.CallDark();
+                }
+
+
+                value = values[1];
+                if (!value.Equals(""))
+                {
+                    if (char.Equals(value[0], '*'))
                     {
-                        if (char.Equals(value[0], '*'))
+                        value = value.Substring(1);
+                        if (!value.Equals(""))
                         {
-                            value = value.Substring(1);
-                            if (!value.Equals(""))
-                            {
-                                rightSpeakers[right_index].gameObject.SetActive(true);
-                                SetRightSpeakerSprite(value, right_index);
-                            }
-                            rightSpeakers[right_index].CallUnDark();
+                            rightSpeaker.gameObject.SetActive(true);
+                            SetRightSpeakerSprite(value);
                         }
-                        else if (char.Equals(value[0], '*'))
-                        {
-                            rightSpeakers[right_index].gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            rightSpeakers[right_index].gameObject.SetActive(true);
-                            SetRightSpeakerSprite(value, right_index);
-                            rightSpeakers[right_index].CallDark();
-                        }
+                        rightSpeaker.CallUnDark();
+                    }
+                    else if (char.Equals(value[0], '*'))
+                    {
+                        rightSpeaker.gameObject.SetActive(false);
                     }
                     else
                     {
-                        if(rightSpeakers[right_index].gameObject.activeSelf)
-                            rightSpeakers[right_index].CallDark();
+                        rightSpeaker.gameObject.SetActive(true);
+                        SetRightSpeakerSprite(value);
+                        rightSpeaker.CallDark();
                     }
+                }
+                else
+                {
+                    if(rightSpeaker.gameObject.activeSelf)
+                        rightSpeaker.CallDark();
                 }
             }
         }
 
-        private void SetLeftSpeakerSprite(string speaker, int index)
+        private void SetLeftSpeakerSprite(string speaker)
         {
-            if (index < 0 || index > 3)
-                return;
-            leftSpeakers[index].image.sprite = speakerDictionary[speaker];
+            leftSpeaker.image.sprite = speakerDictionary[speaker];
         }
 
-        private void SetRightSpeakerSprite(string speaker, int index)
+        private void SetRightSpeakerSprite(string speaker)
         {
-            if (index < 0 || index > 3)
-                return;
-            rightSpeakers[index].image.sprite = speakerDictionary[speaker];
+            rightSpeaker.image.sprite = speakerDictionary[speaker];
         }
     }
 }
