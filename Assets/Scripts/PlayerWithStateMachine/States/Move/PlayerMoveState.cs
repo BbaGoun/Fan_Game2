@@ -412,6 +412,7 @@ namespace ActionPart
         #region Audio Event
         public void RunAudio()
         {
+            //Debug.Log("RunAudio");
             player.playerAudioSource.PlayOneShot(runAudio, 1f);
         }
         public void JumpAudio()

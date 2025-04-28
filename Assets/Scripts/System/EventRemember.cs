@@ -7,33 +7,34 @@ namespace ActionPart
     public class EventRemember : MonoBehaviour
     {
         #region 지역 돌입
-        public bool 안휘복도First = true;
+        private bool 안휘성_집무실First = true;
+        private bool 안휘복도First = true;
         #endregion
 
         #region 보스 처리
-        public bool 안휘성BossKilled = false;
-        public bool 녹림BossKilled = false;
-        public bool 점창BossKilled = false;
-        public bool 사천BossKilled = false;
-        public bool 곤륜BossKilled = false;
-        public bool 소림BossKilled = false;
-        public bool 마교BossKilled = false;
+        private bool 안휘성BossKilled = false;
+        private bool 녹림BossKilled = false;
+        private bool 점창BossKilled = false;
+        private bool 사천BossKilled = false;
+        private bool 곤륜BossKilled = false;
+        private bool 소림BossKilled = false;
+        private bool 마교BossKilled = false;
         #endregion
 
         #region NPC
         #region 안휘성
-        public int 안휘성_집무실_가주TalkCount = 0;
-        public int 안휘성_복도_만두1TalkCount = 0;
-        public int 안휘성_복도_만두2TalkCount = 0;
-        public int 안휘성_연무장가는길_만두1TalkCount = 0;
-        public int 안휘성_연무장가는길_만두2TalkCount = 0;
-        public int 안휘성_시장_세바스찬TalkCount = 0;
-        public int 안휘성_시장_애비게일TalkCount = 0;
-        public int 안휘성_시장_러끼TalkCount = 0;
-        public int 안휘성_시장_마리안느TalkCount = 0;
-        public int 안휘성_시장_셰인TalkCount = 0;
-        public int 안휘성_시장_민수하TalkCount = 0;
-        public int 안휘성_시장_오뉴TalkCount = 0;
+        private int 안휘성_집무실_가주TalkCount = 0;
+        private int 안휘성_복도_만두1TalkCount = 0;
+        private int 안휘성_복도_만두2TalkCount = 0;
+        private int 안휘성_연무장가는길_만두1TalkCount = 0;
+        private int 안휘성_연무장가는길_만두2TalkCount = 0;
+        private int 안휘성_시장_세바스찬TalkCount = 0;
+        private int 안휘성_시장_애비게일TalkCount = 0;
+        private int 안휘성_시장_러끼TalkCount = 0;
+        private int 안휘성_시장_마리안느TalkCount = 0;
+        private int 안휘성_시장_셰인TalkCount = 0;
+        private int 안휘성_시장_민수하TalkCount = 0;
+        private int 안휘성_시장_오뉴TalkCount = 0;
         #endregion
         #endregion
 
@@ -44,6 +45,36 @@ namespace ActionPart
                 Instance = this;
             else
                 Destroy(this.gameObject);
+        }
+
+        public bool IsLocalEnterFirst(string localName)
+        {
+            switch(localName)
+            {
+                case "안휘성_집무실":
+                    return 안휘성_집무실First;
+                    break;
+                case "안휘성_복도":
+                    return 안휘복도First;
+                    break;
+                default:
+                    return false;
+            }
+        }
+
+        public void SetLocalEnterFirst(string localName, bool isFirst)
+        {
+            switch(localName)
+            {
+                case "안휘성_집무실":
+                    안휘성_집무실First = isFirst;
+                    break;
+                case "안휘성_복도":
+                    안휘복도First = isFirst;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public int GetNPCTalkCount(string NPCName)

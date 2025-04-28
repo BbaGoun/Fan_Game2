@@ -11,8 +11,11 @@ namespace ActionPart
     {
         public static GlobalTimelineController instance;
 
-        public TimelineBars timelineBars;
-        public LocalTimelineController currentLocalTimelineController;
+        private PlayableDirector _playableDirector;
+        [SerializeField]
+        private List<TimelineAsset> _timelineAssets;
+        private TimelineAsset _currentTimelineAsset;
+        public LocalTimelineController _currentLocalTimelineController;
 
         public void Initialize()
         {
@@ -26,30 +29,53 @@ namespace ActionPart
                 Destroy(this.gameObject);
             }
             #endregion
+
+            _playableDirector = GetComponent<PlayableDirector>();
         }
 
         public void ChangeCurrentLocalTimelineController(LocalTimelineController other)
         {
-            currentLocalTimelineController = other;
+            _currentLocalTimelineController = other;
+        }
+
+        private void ChangeCurrentTimelineAsset(string assetName)
+        {
+            _currentTimelineAsset = _timelineAssets.Find(timelineAsset => timelineAsset.name == assetName);
+            if(_currentTimelineAsset == null)
+            {
+                Debug.LogError("Change Current TimelineAsset Error : " + assetName);
+                return;
+            }
+            _playableDirector.playableAsset = _currentTimelineAsset;
         }
 
         public void PlayTimeline(string timelineName)
         {
-            StartCoroutine(IEPlayTimeline(timelineName));
+            ChangeCurrentTimelineAsset(timelineName);
 
-            IEnumerator IEPlayTimeline(string timelineName)
+            if(_currentTimelineAsset == null)
             {
-                timelineBars.BarsOn();
-
-                switch (timelineName)
-                {
-                    default:
-                        break;
-                }
-
-                timelineBars.BarsOff();
-                yield return null;
+                Debug.LogError("TimelineAsset not found: " + timelineName);
+                return;
             }
+
+            TimelineBars.Instance.BarsOn();
+
+            _playableDirector.Play();
+        }
+
+        public void EndTimeLine(){
+            switch(_currentTimelineAsset.name)
+            {
+                case "안휘성_집무실First":
+                    TalkManager.Instance.TalkStart("튜토리얼_SC1.", null);
+                    break;
+                default:
+                    PlayerCanMove();
+                    TimelineBars.Instance.BarsOff();
+                    break;
+            }
+            VirtualCameraControl.Instance.OffTimelineCam();
         }
 
         public void PlayerCanMove()

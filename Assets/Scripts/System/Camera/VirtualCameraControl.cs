@@ -18,6 +18,7 @@ namespace ActionPart
             LockedCam1 = 2,
             LockedCam2 = 3,
             LockedCam3 = 4,
+            TimelineCam = 5,
         }
 
         public float turnOffset;
@@ -106,6 +107,11 @@ namespace ActionPart
             if (shakeCameraCoroutine != null)
                 StopCoroutine(shakeCameraCoroutine);
             StartCoroutine(ShakeCameraCoroutine(duration, intensity, frequency));
+        }
+
+        public void OffTimelineCam()
+        {
+            allVirtualCameras[(int)VirtaulCamList.TimelineCam].gameObject.SetActive(false);
         }
 
         public void SetShakeCameraDirect(float intensity, float frequency)

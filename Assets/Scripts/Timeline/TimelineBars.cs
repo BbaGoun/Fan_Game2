@@ -11,7 +11,7 @@ namespace ActionPart
         public RectTransform upSide;
         public RectTransform downSide;
         public float defaultY;
-
+        private bool isBarsOn;
         private void Awake()
         {
             #region Singleton
@@ -37,18 +37,22 @@ namespace ActionPart
 
         public void BarsOn()
         {
+            if(isBarsOn)
+                return;
+
             upSide.gameObject.SetActive(true);
             upSide.anchoredPosition = new Vector3(0, defaultY, 0);
 
             downSide.gameObject.SetActive(true);
             downSide.anchoredPosition = new Vector3(0, -defaultY, 0);
 
+            isBarsOn = true;
             StartCoroutine(IEBarsOn());
 
             IEnumerator IEBarsOn()
             {
                 float gap = defaultY / 100f;
-                for (int i=0; i<100; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     upSide.anchoredPosition = new Vector3(0, upSide.anchoredPosition.y - gap, 0);
                     downSide.anchoredPosition = new Vector3(0, downSide.anchoredPosition.y + gap, 0);
@@ -59,12 +63,16 @@ namespace ActionPart
 
         public void BarsOff()
         {
+            if(!isBarsOn)
+                return;
+
             upSide.gameObject.SetActive(true);
             upSide.anchoredPosition = new Vector3(0, 0, 0);
 
             downSide.gameObject.SetActive(true);
             downSide.anchoredPosition = new Vector3(0, 0, 0);
 
+            isBarsOn = false;
             StartCoroutine(IEBarsOff());
 
             IEnumerator IEBarsOff()

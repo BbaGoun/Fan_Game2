@@ -244,7 +244,7 @@ namespace ActionPart
                         loadingScene.DirectOut();
                         break;
                 }
-                // 걸어나오는 기능 추가함
+                
                 switch (walkOut)
                 {
                     case WithWalkOut.Left:
@@ -449,10 +449,17 @@ namespace ActionPart
         {
             switch (sceneName)
             {
-                case "안휘성 복도":
-                    if (EventRemember.Instance.안휘복도First)
+                case "안휘성 집무실":
+                    if (EventRemember.Instance.IsLocalEnterFirst("안휘성_집무실"))
                     {
-                        EventRemember.Instance.안휘복도First = false;
+                        EventRemember.Instance.SetLocalEnterFirst("안휘성_집무실", false);
+                        GlobalTimelineController.instance.PlayTimeline("안휘성_집무실First");
+                    }
+                    break;
+                case "안휘성 복도":
+                    if (EventRemember.Instance.IsLocalEnterFirst("안휘성_복도"))
+                    {
+                        EventRemember.Instance.SetLocalEnterFirst("안휘성_복도", false);
                         TalkManager.Instance.TalkStart("튜토리얼_SC1-1.", null);
                     }
                     break;
