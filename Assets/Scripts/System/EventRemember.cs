@@ -9,6 +9,7 @@ namespace ActionPart
         #region 지역 돌입
         private bool 안휘성_집무실First = true;
         private bool 안휘복도First = true;
+        private bool 안휘성_연무장First = true;
         #endregion
 
         #region 보스 처리
@@ -56,6 +57,9 @@ namespace ActionPart
                     break;
                 case "안휘성_복도":
                     return 안휘복도First;
+                    break;
+                case "안휘성_연무장":
+                    return 안휘성_연무장First;
                     break;
                 default:
                     return false;

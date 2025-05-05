@@ -463,6 +463,13 @@ namespace ActionPart
                         TalkManager.Instance.TalkStart("튜토리얼_SC1-1.", null);
                     }
                     break;
+                case "안휘성 연무장":
+                    if (EventRemember.Instance.IsLocalEnterFirst("안휘성_연무장"))
+                    {
+                        EventRemember.Instance.SetLocalEnterFirst("안휘성_연무장", false);
+                        GlobalTimelineController.instance.PlayTimeline("안휘성_연무장First");
+                    }
+                    break;
                 default:
                     break;
             }

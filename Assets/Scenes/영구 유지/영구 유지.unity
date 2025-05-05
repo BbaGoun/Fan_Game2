@@ -10512,7 +10512,7 @@ MonoBehaviour:
       name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
       _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
         \uC5F0\uBB34\uC7A5.unity"
-    loadInEditor: 0
+    loadInEditor: 1
     loadMethod: 3
   - scene:
       editorAssetGUID: c629230ab3a2c1e4ca3a20da3078c35e
@@ -10581,21 +10581,21 @@ MonoBehaviour:
       version: 0
     _toObject:
       scene:
-        editorAssetGUID: 293870e1002964d4ab8f47ceffe9e43f
-        name: "\uC548\uD718\uC131 \uC9D1\uBB34\uC2E4"
-        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC9D1\uBB34\uC2E4/\uC548\uD718\uC131
-          \uC9D1\uBB34\uC2E4.unity"
+        editorAssetGUID: 6f8a9d1176b8e5d4681fb26ff7a64cc3
+        name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
+        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
+          \uC5F0\uBB34\uC7A5.unity"
       fullPath: /==== Maps ====/==== Points ====/TimelineCamPoint
       componentName: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       componentIndex: 0
-      editorLocalId: 885994776
+      editorLocalId: 0
       editorPrefabRelativePath: 
       version: 1
     _data:
       data:
       - object: {fileID: 0}
-        string: 3601895156b49a94181a033b1cccb7b2
+        string: 87b7872a049c83d4786c031ad0c5378b
   - _sourceObject: {fileID: 1882747179}
     _sourceField: m_ExposedReferences.m_References,3.second
     DEPRECATED_fromObject:
@@ -10686,6 +10686,66 @@ MonoBehaviour:
       data:
       - object: {fileID: 0}
         string: 635a0837a0dca4847b4b54748bd40be1
+  - _sourceObject: {fileID: 1882747179}
+    _sourceField: m_ExposedReferences.m_References,6.second
+    DEPRECATED_fromObject:
+      scene:
+        editorAssetGUID: 
+        name: 
+        _path: 
+      fullPath: 
+      componentName: 
+      componentIndex: 0
+      editorLocalId: 0
+      editorPrefabRelativePath: 
+      version: 0
+    _toObject:
+      scene:
+        editorAssetGUID: 6f8a9d1176b8e5d4681fb26ff7a64cc3
+        name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
+        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
+          \uC5F0\uBB34\uC7A5.unity"
+      fullPath: /==== Maps ====/==== Points ====/TimelineCamPoint
+      componentName: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      componentIndex: 0
+      editorLocalId: 0
+      editorPrefabRelativePath: 
+      version: 1
+    _data:
+      data:
+      - object: {fileID: 0}
+        string: 63b980d60cca4b94984405d90855ec40
+  - _sourceObject: {fileID: 1882747179}
+    _sourceField: m_SceneBindings,17.value
+    DEPRECATED_fromObject:
+      scene:
+        editorAssetGUID: 
+        name: 
+        _path: 
+      fullPath: 
+      componentName: 
+      componentIndex: 0
+      editorLocalId: 0
+      editorPrefabRelativePath: 
+      version: 0
+    _toObject:
+      scene:
+        editorAssetGUID: 6f8a9d1176b8e5d4681fb26ff7a64cc3
+        name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
+        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
+          \uC5F0\uBB34\uC7A5.unity"
+      fullPath: "/==== Enemys ====/\uB0A8\uAD81\uC758 \uC544\uC774"
+      componentName: UnityEngine.Animator, UnityEngine.AnimationModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      componentIndex: 0
+      editorLocalId: 2058913822
+      editorPrefabRelativePath: 
+      version: 1
+    _data:
+      data:
+      - object: {fileID: -4347920110128943462, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+        string: 
   _realSceneRootsForPostBuild: []
   _mergedScenes: []
 --- !u!1 &1859956081
@@ -10946,6 +11006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timelineAssets:
   - {fileID: 11400000, guid: 68ad1bcd7e66371499447d50eb0ef632, type: 2}
+  - {fileID: 11400000, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
   _currentLocalTimelineController: {fileID: 0}
 --- !u!320 &1882747179
 PlayableDirector:
@@ -10956,7 +11017,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1882747173}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 68ad1bcd7e66371499447d50eb0ef632, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -10978,6 +11039,26 @@ PlayableDirector:
     value: {fileID: 611372641}
   - key: {fileID: 8066908432485121887, guid: 68ad1bcd7e66371499447d50eb0ef632, type: 2}
     value: {fileID: 1882747180}
+  - key: {fileID: -8798782239120601013, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+    value: {fileID: 1353876377}
+  - key: {fileID: 0}
+    value: {fileID: 8770118516554096246}
+  - key: {fileID: 0}
+    value: {fileID: 8770118516554096246}
+  - key: {fileID: -1820224030103741721, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+    value: {fileID: 8770118516554096246}
+  - key: {fileID: -3132767238251554579, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+    value: {fileID: 8770118516554096246}
+  - key: {fileID: 9161423881095118335, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+    value: {fileID: 611372641}
+  - key: {fileID: -5384216171523865941, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+    value: {fileID: 883296951}
+  - key: {fileID: 7825123366908058853, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+    value: {fileID: 1882747180}
+  - key: {fileID: 5328180259006716800, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+    value: {fileID: 883296950}
+  - key: {fileID: -4347920110128943462, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
     - 635a0837a0dca4847b4b54748bd40be1: {fileID: 0}
@@ -10985,6 +11066,8 @@ PlayableDirector:
     - d3660d30e6a31544ba4ded7bd7c3aae8: {fileID: 3574819585635939622}
     - fc90855f1e2dfbc49a177a29ba59d5a9: {fileID: 0}
     - b7591569fdade4441b0c9fd202494d15: {fileID: 3574819585635939622}
+    - 87b7872a049c83d4786c031ad0c5378b: {fileID: 0}
+    - 63b980d60cca4b94984405d90855ec40: {fileID: 0}
     - 3601895156b49a94181a033b1cccb7b2: {fileID: 0}
 --- !u!114 &1882747180
 MonoBehaviour:

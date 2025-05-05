@@ -70,6 +70,9 @@ namespace ActionPart
                 case "안휘성_집무실First":
                     TalkManager.Instance.TalkStart("튜토리얼_SC1.", null);
                     break;
+                case "안휘성_연무장First":
+                    TalkManager.Instance.TalkStart("튜토리얼_SC1-2.", null);
+                    break;
                 default:
                     PlayerCanMove();
                     TimelineBars.Instance.BarsOff();
