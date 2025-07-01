@@ -55,6 +55,9 @@ namespace ActionPart
         public bool isStopped;
         private bool isInTalkArea;
         private bool isReadyTalk;
+
+        public bool isTalking;
+        
         public IDamageAble.DamageInfo damageInfo;
 
         Animator animator;
@@ -274,15 +277,15 @@ namespace ActionPart
 
         public void PauseAnimator()
         {
-            animator.Rebind();
-            animator.Update(0f);
+            //animator.Rebind();
+            //animator.Update(0f);
             animator.speed = 0f;
         }
 
         public void PlayAnimator()
         {
-            animator.Rebind();
-            animator.Update(0f);
+            //animator.Rebind();
+            //animator.Update(0f);
             animator.speed = 1f;
         }
 

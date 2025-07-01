@@ -6,12 +6,8 @@ namespace ActionPart
 {
     public interface ITalkAble
     {
-        public void TalkStart()
-        {
-        }
+        public void TalkStart();
 
-        public void TalkDone()
-        {
-        }
+        public void TalkDone();
     }
 }

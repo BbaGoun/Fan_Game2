@@ -1,21 +1,31 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
+
 namespace ActionPart
 {
+    [Serializable]
+    class CutScene{
+        public TimelineAsset timelineAsset;
+        public List<String> actors;
+    }
+
     public class GlobalTimelineController : MonoBehaviour
     {
         public static GlobalTimelineController instance;
 
         private PlayableDirector _playableDirector;
         [SerializeField]
-        private List<TimelineAsset> _timelineAssets;
-        private TimelineAsset _currentTimelineAsset;
-        public LocalTimelineController _currentLocalTimelineController;
+        private List<CutScene> _cutScenes;
+
+        [SerializeField, ReadOnly(true)]
+        private CutScene _currentCutScene;
 
         public void Initialize()
         {
@@ -33,39 +43,38 @@ namespace ActionPart
             _playableDirector = GetComponent<PlayableDirector>();
         }
 
-        public void ChangeCurrentLocalTimelineController(LocalTimelineController other)
-        {
-            _currentLocalTimelineController = other;
-        }
-
         private void ChangeCurrentTimelineAsset(string assetName)
         {
-            _currentTimelineAsset = _timelineAssets.Find(timelineAsset => timelineAsset.name == assetName);
-            if(_currentTimelineAsset == null)
+            _currentCutScene = _cutScenes.Find(cutScene => cutScene.timelineAsset.name == assetName);
+            if(_currentCutScene == null)
             {
-                Debug.LogError("Change Current TimelineAsset Error : " + assetName);
+                Debug.LogError("Change Current CutScene Error : " + assetName);
                 return;
             }
-            _playableDirector.playableAsset = _currentTimelineAsset;
+            _playableDirector.playableAsset = _currentCutScene.timelineAsset;
         }
 
         public void PlayTimeline(string timelineName)
         {
             ChangeCurrentTimelineAsset(timelineName);
 
-            if(_currentTimelineAsset == null)
+            if(_currentCutScene == null)
             {
-                Debug.LogError("TimelineAsset not found: " + timelineName);
+                Debug.LogError("CutScene not found: " + timelineName);
                 return;
             }
 
+            NPCTalkDataManager.Instance.WaitCutScene(_currentCutScene.actors);
+
             TimelineBars.Instance.BarsOn();
 
+            PlayerWithStateMachine.Instance.ResetAnimator();
+            PlayerInputPart.Instance.CantInput();
             _playableDirector.Play();
         }
 
         public void EndTimeLine(){
-            switch(_currentTimelineAsset.name)
+            switch(_currentCutScene.timelineAsset.name)
             {
                 case "안휘성_집무실First":
                     TalkManager.Instance.TalkStart("튜토리얼_SC1.", null);
@@ -74,10 +83,11 @@ namespace ActionPart
                     TalkManager.Instance.TalkStart("튜토리얼_SC1-2.", null);
                     break;
                 default:
-                    PlayerCanMove();
                     TimelineBars.Instance.BarsOff();
                     break;
             }
+            NPCTalkDataManager.Instance.UnWaitCutScene(_currentCutScene.actors);
+            PlayerCanMove();
             VirtualCameraControl.Instance.OffTimelineCam();
         }
 

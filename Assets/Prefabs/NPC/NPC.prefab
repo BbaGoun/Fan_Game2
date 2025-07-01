@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3, y: 5}
+  m_Size: {x: 4, y: 5}
   m_EdgeRadius: 0
 --- !u!114 &3285850697087049293
 MonoBehaviour:
@@ -145,7 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2cb2273bc55a4c4582898c403c62015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talkEventName: "\uD29C\uD1A0\uB9AC\uC5BC1"
 --- !u!1 &7454548758822890714
 GameObject:
   m_ObjectHideFlags: 0

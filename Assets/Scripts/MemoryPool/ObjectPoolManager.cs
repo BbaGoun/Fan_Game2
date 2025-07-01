@@ -43,7 +43,6 @@ namespace ActionPart.MemoryPool
             else
                 Destroy(this.gameObject);
 
-            DontDestroyOnLoad(gameObject);
             Init();
         }
 

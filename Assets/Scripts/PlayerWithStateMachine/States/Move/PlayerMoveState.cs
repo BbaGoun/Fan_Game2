@@ -67,6 +67,7 @@ namespace ActionPart
         public void Initialize(PlayerWithStateMachine _playerWithStateMachine)
         {
             player = _playerWithStateMachine;
+            jumpState = JumpState.Grounded;
         }
 
         public override void EnterState()
@@ -162,8 +163,9 @@ namespace ActionPart
         void XControl()
         {
             moveVec = PlayerInputPart.Instance.inputVec;
-            if (!PlayerInputPart.Instance.isCanInput || Time.timeScale == 0f)
+            if (!PlayerInputPart.Instance.isCanInput || Time.timeScale == 0f){
                 moveVec = Vector2.zero;
+            }
             
             var isLookRight = Mathf.Sign(player.transform.localScale.x) == 1;
 
@@ -236,7 +238,7 @@ namespace ActionPart
                     jumpCanceled = false;
                     remainJump = Mathf.Min(remainJump, maxJumpCount - 1);
 
-                    //Debug.Log("낙하 준비");
+                    //Debug.Log("착지");
                     if (player.isGrounded)
                         jumpState = JumpState.Landed;
                     break;
@@ -355,6 +357,10 @@ namespace ActionPart
 
         public void MoveYFromTo(Vector3 from, Vector3 to, float speedMultiplier = 0.5f)
         {
+            isCoroutineDone = false;
+            PlayerInputPart.Instance.CantInput();
+            player.isStopped = true;
+
             player.ChangeStateOfStateMachine(PlayerWithStateMachine.PlayerState.Move);
 
             if (moveCoroutine != null)
@@ -366,10 +372,6 @@ namespace ActionPart
 
             IEnumerator IEMoveYFromTo(Vector3 from, Vector3 to)
             {
-                isCoroutineDone = false;
-                PlayerInputPart.Instance.CantInput();
-                player.isStopped = true;
-
                 this.transform.localPosition = from;
                 var direction = Mathf.Sign(to.x - from.x);
                 if (direction >= 0)

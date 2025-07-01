@@ -22,7 +22,7 @@ namespace ActionPart
 
         private Coroutine coroutine;
         bool isDone;
-        public bool CheckisDone()
+        public bool CheckIsDone()
         {
             if (isDone)
             {
@@ -62,6 +62,7 @@ namespace ActionPart
         public void DirectOut()
         {
             wipeLeft.rectTransform.anchoredPosition = new Vector2(-wipeWidth, 0f);
+            wipeRight.rectTransform.anchoredPosition = new Vector2(0f, 0f);
             isDone = true;
         }
 

@@ -90,7 +90,7 @@ namespace ActionPart
                 rightSpeaker.image.sprite = null;
                 rightSpeaker.gameObject.SetActive(false);
             }
-            else if(!face.Equals("/"))
+            else if(!face.Equals("/") && !face.Equals(""))
             {
                 string[] values = face.Split('/');
 

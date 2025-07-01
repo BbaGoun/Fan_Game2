@@ -137,6 +137,7 @@ namespace ActionPart
             switch(nextEvent)
             {
                 default:
+                    PlayerWithStateMachine.Instance.isTalking = false;
                     PlayerInputPart.Instance.CanInput();
                     MetaGameController.instance.ShowInterface();
                     if (npc != null)
@@ -218,9 +219,11 @@ namespace ActionPart
                 {
                     if(_npc != null)
                     {
+                        Debug.Log("디버깅");
                         npc = _npc;
                         npc.TalkStart();
                     }
+                    PlayerWithStateMachine.Instance.isTalking = true;
                     PlayerInputPart.Instance.CantInput();
                     talkUI.SetTalkBoxOn();
                     MetaGameController.instance.DisShowInterface();

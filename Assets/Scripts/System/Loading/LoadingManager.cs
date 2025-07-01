@@ -73,7 +73,7 @@ namespace ActionPart
             return isCamSetDone;
         }
 
-        public void LoadSceneAsync(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode = TransitionMode.Direct, float inDelay = 0.25f, float outDelay = 0.25f)
+        public void LoadSceneAsync(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode = TransitionMode.Direct, float inDelay = 0.5f, float outDelay = 0.5f)
         {
             if (!IsSceneInBuild(sceneName))
             {
@@ -108,7 +108,7 @@ namespace ActionPart
                         break;
                 }
                 audioController.FadeOutBGM(0.5f);
-                yield return new WaitUntil(loadingScene.CheckisDone);
+                yield return new WaitUntil(loadingScene.CheckIsDone);
 
                 // 메인메뉴 회수
                 MetaGameController.instance.OffMainMenu();
@@ -187,31 +187,12 @@ namespace ActionPart
                         player.transform.localScale = Vector3.one;
                     }
 
-                    switch (spawnPoint)
-                    {
-                        case SpawnPoint.None:
-                            player.transform.localPosition = new Vector3(sceneSetting.noneSpawnPoint.localPosition.x, sceneSetting.noneSpawnPoint.localPosition.y, -4);
-                            player.LookRight();
-                            break;
-                        case SpawnPoint.Left:
-                            player.transform.localPosition = new Vector3(sceneSetting.leftSpawnPoint.localPosition.x, sceneSetting.leftSpawnPoint.localPosition.y, -4);
-                            player.LookRight();
-                            break;
-                        case SpawnPoint.Right:
-                            player.transform.localPosition = new Vector3(sceneSetting.rightSpawnPoint.localPosition.x, sceneSetting.rightSpawnPoint.localPosition.y, -4);
-                            player.LookLeft();
-                            break;
-                    }
-
                     virtualCameraControl.SetCamBySceneSetting();
                     virtualCameraControl.SetCinemachineBrainBlend(CinemachineBlendDefinition.Style.EaseInOut);
                     parallaxBackground = GameObject.FindGameObjectWithTag("Maps").GetComponent<ParallaxBackground>();
                     parallaxBackground.SetCamera();
                     // 카메라 세팅 끝
                     isCamSetDone = true;
-
-                    localTimelineController = GameObject.FindGameObjectWithTag("LocalTimelineController").GetComponent<LocalTimelineController>();
-                    GlobalTimelineController.instance.ChangeCurrentLocalTimelineController(localTimelineController);
                 }
                 else if(sceneName.Equals("메인 타이틀"))
                 {
@@ -229,43 +210,15 @@ namespace ActionPart
                 yield return new WaitForSeconds(outDelay);
                 loadingScene.LoadingObjectOff();
 
-                switch (mode)
-                {
-                    case TransitionMode.FromLeft:
-                        loadingScene.ToLeftWipeOut(0.5f);
-                        break;
-                    case TransitionMode.FromRight:
-                        loadingScene.ToRightWipeOut(0.5f);
-                        break;
-                    case TransitionMode.FadeIn:
-                        // 페이드 아웃 필요
-                        break;
-                    case TransitionMode.Direct:
-                        loadingScene.DirectOut();
-                        break;
-                }
-                
-                switch (walkOut)
-                {
-                    case WithWalkOut.Left:
-                        player.playerMoveState.MoveXFromTo(sceneSetting.leftSpawnPoint.localPosition, sceneSetting.leftWalkOutPoint.localPosition);
-                        break;
-                    case WithWalkOut.Right:
-                        player.playerMoveState.MoveXFromTo(sceneSetting.rightSpawnPoint.localPosition, sceneSetting.rightWalkOutPoint.localPosition);
-                        break;
-                    case WithWalkOut.None:
-                        player.playerMoveState.OnIsCoroutineDone();
-                        PlayerInputPart.Instance.CanInput();
-                        break;
-                }
+                CheckEnterEvent(sceneName, spawnPoint, walkOut, mode);
+
                 audioController.ChangeBGM(sceneSetting.bgmClip);
                 audioController.FadeInBGM(0.5f);
 
-                yield return new WaitUntil(loadingScene.CheckisDone);
+                yield return new WaitUntil(loadingScene.CheckIsDone);
                 yield return new WaitUntil(player.playerMoveState.IsCoroutineDone);
 
-                CheckEnterEvent(sceneName);
-
+                PlayerInputPart.Instance.CanInput();
                 isLoadDone = true;
             }
         }
@@ -307,7 +260,7 @@ namespace ActionPart
                         break;
                 }
                 audioController.FadeOutBGM(0.5f);
-                yield return new WaitUntil(loadingScene.CheckisDone);
+                yield return new WaitUntil(loadingScene.CheckIsDone);
 
                 //audioController.PauseBGM();
 
@@ -353,7 +306,7 @@ namespace ActionPart
                 audioController.ChangeBGM(cartoonSetting.bgmClip);
                 audioController.FadeInBGM(0.5f);
 
-                yield return new WaitUntil(loadingScene.CheckisDone);
+                yield return new WaitUntil(loadingScene.CheckIsDone);
 
                 isLoadDone = true;
             }
@@ -385,7 +338,7 @@ namespace ActionPart
                         break;
                 }
                 audioController.FadeOutBGM(0.5f);
-                yield return new WaitUntil(loadingScene.CheckisDone);
+                yield return new WaitUntil(loadingScene.CheckIsDone);
 
                 audioController.PauseBGM();
 
@@ -431,7 +384,7 @@ namespace ActionPart
                 PlayerInputPart.Instance.CanInput();
                 interfaces.SetActive(true);
 
-                yield return new WaitUntil(loadingScene.CheckisDone);
+                yield return new WaitUntil(loadingScene.CheckIsDone);
 
                 isLoadDone = true;
             }
@@ -445,32 +398,104 @@ namespace ActionPart
                 return true;
         }
 
-        public void CheckEnterEvent(string sceneName)
+        public void CheckEnterEvent(string sceneName, SpawnPoint spawnPoint, WithWalkOut walkOut, TransitionMode mode)
         {
             switch (sceneName)
             {
                 case "안휘성 집무실":
-                    if (EventRemember.Instance.IsLocalEnterFirst("안휘성_집무실"))
+                    if (EventRememberManager.Instance.IsEventTriggerTrue("안휘성_집무실First"))
                     {
-                        EventRemember.Instance.SetLocalEnterFirst("안휘성_집무실", false);
+                        EventRememberManager.Instance.SetEventTrigger("안휘성_집무실First", false);
+
+                        player.transform.localPosition = new Vector3(sceneSetting.leftWalkOutPoint.localPosition.x, sceneSetting.leftWalkOutPoint.localPosition.y, -4);
+                        player.LookRight();
+
+                        loadingScene.DirectOut();   
+
+                        player.playerMoveState.OnIsCoroutineDone();
+
                         GlobalTimelineController.instance.PlayTimeline("안휘성_집무실First");
+                        return;
                     }
-                    break;
+                    else
+                        break;
                 case "안휘성 복도":
-                    if (EventRemember.Instance.IsLocalEnterFirst("안휘성_복도"))
+                    if (EventRememberManager.Instance.IsEventTriggerTrue("안휘성_복도First"))
                     {
-                        EventRemember.Instance.SetLocalEnterFirst("안휘성_복도", false);
+                        EventRememberManager.Instance.SetEventTrigger("안휘성_복도First", false);
                         TalkManager.Instance.TalkStart("튜토리얼_SC1-1.", null);
                     }
                     break;
                 case "안휘성 연무장":
-                    if (EventRemember.Instance.IsLocalEnterFirst("안휘성_연무장"))
+                    if (EventRememberManager.Instance.IsEventTriggerTrue("안휘성_연무장First"))
                     {
-                        EventRemember.Instance.SetLocalEnterFirst("안휘성_연무장", false);
+                        EventRememberManager.Instance.SetEventTrigger("안휘성_연무장First", false);
+
+                        player.transform.localPosition = new Vector3(sceneSetting.leftWalkOutPoint.localPosition.x, sceneSetting.leftWalkOutPoint.localPosition.y, -4);
+                        player.LookRight();
+
+                        loadingScene.DirectOut();   
+
+                        player.playerMoveState.OnIsCoroutineDone();
+                        
                         GlobalTimelineController.instance.PlayTimeline("안휘성_연무장First");
+
+                        return;
                     }
-                    break;
+                    else
+                        break;
                 default:
+                    break;
+            }
+
+            switch (spawnPoint)
+            {
+                case SpawnPoint.None:
+                    if(!sceneSetting.noneSpawnPoint)
+                        break;
+                    player.transform.localPosition = new Vector3(sceneSetting.noneSpawnPoint.localPosition.x, sceneSetting.noneSpawnPoint.localPosition.y, -4);
+                    player.LookRight();
+                    break;
+                case SpawnPoint.Left:
+                    if(!sceneSetting.leftSpawnPoint)
+                            break;
+                    player.transform.localPosition = new Vector3(sceneSetting.leftSpawnPoint.localPosition.x, sceneSetting.leftSpawnPoint.localPosition.y, -4);
+                    player.LookRight();
+                    break;
+                case SpawnPoint.Right:
+                    if(!sceneSetting.rightSpawnPoint)
+                        break;
+                    player.transform.localPosition = new Vector3(sceneSetting.rightSpawnPoint.localPosition.x, sceneSetting.rightSpawnPoint.localPosition.y, -4);
+                    player.LookLeft();
+                    break;
+            }
+
+            switch (mode)
+            {
+                case TransitionMode.FromLeft:
+                    loadingScene.ToLeftWipeOut(0.5f);
+                    break;
+                case TransitionMode.FromRight:
+                    loadingScene.ToRightWipeOut(0.5f);
+                    break;
+                case TransitionMode.FadeIn:
+                    // 페이드 아웃 필요
+                    break;
+                case TransitionMode.Direct:
+                    loadingScene.DirectOut();
+                    break;
+            }
+        
+            switch (walkOut)
+            {
+                case WithWalkOut.Left:
+                    player.playerMoveState.MoveXFromTo(sceneSetting.leftSpawnPoint.localPosition, sceneSetting.leftWalkOutPoint.localPosition);
+                    break;
+                case WithWalkOut.Right:
+                    player.playerMoveState.MoveXFromTo(sceneSetting.rightSpawnPoint.localPosition, sceneSetting.rightWalkOutPoint.localPosition);
+                    break;
+                case WithWalkOut.None:
+                    player.playerMoveState.OnIsCoroutineDone();
                     break;
             }
         }

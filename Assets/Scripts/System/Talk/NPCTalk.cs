@@ -5,26 +5,30 @@ using UnityEngine;
 
 namespace ActionPart
 {
-    public class NPCTalk : MonoBehaviour, ITalkAble 
+    public class NPCTalk : MonoBehaviour, ITalkAble
     {
-        private string NPCName;
-        public string talkEventName;
+        public string npcName { get; private set; }
+
+        private NPCTalkData npcTalkData;
 
         private GameObject talkBalloon;
         private GameObject willTalk;
         private GameObject talking;
         private GameObject upArrow;
         private PlayerWithStateMachine player;
+        
+        [SerializeField]
         private bool isInTalkArea;
+        [SerializeField]
         private bool isTalking;
-        private int talkCount;
 
         private void Awake()
         {
-            NPCName = gameObject.name;
+            npcName = gameObject.name;
+            player = PlayerWithStateMachine.Instance;
 
             talkBalloon = transform.GetChild(0).gameObject;
-            
+
             willTalk = transform.GetChild(0).GetChild(0).gameObject;
             willTalk.SetActive(false);
 
@@ -35,12 +39,6 @@ namespace ActionPart
             upArrow.SetActive(false);
         }
 
-        public void TalkEventChange(string _talkEventName)
-        {
-            talkEventName = _talkEventName;
-            talkCount = 0;
-        }
-
         public void TalkStart()
         {
             SetIsTalking(true);
@@ -48,7 +46,7 @@ namespace ActionPart
 
         public void TalkDone()
         {
-            EventRemember.Instance.UpNPCTalkCount(NPCName);
+            NPCTalkDataManager.Instance.UpNPCTalkCount(npcName);
             SetIsTalking(false);
         }
 
@@ -59,53 +57,73 @@ namespace ActionPart
 
         private void Update()
         {
-            var talkCount = EventRemember.Instance.GetNPCTalkCount(NPCName);
-            if (talkCount == 0)
+            npcTalkData = NPCTalkDataManager.Instance.GetNPCTalkData(npcName);
+            if (npcTalkData == null)
             {
-                if (isInTalkArea)
+                Debug.Log($"{npcName}, NPCTalkData 정보 없음");
+                return;
+            }
+            if (npcTalkData.isWaitCutScene)
+            {
+                talkBalloon.SetActive(false);
+                willTalk.SetActive(false);
+                talking.SetActive(false);
+                upArrow.SetActive(false);
+
+                this.transform.localScale = new Vector3(-1 * Mathf.Abs(transform.localScale.x) * Mathf.Sign(player.transform.localPosition.x - this.transform.localPosition.x), this.transform.localScale.y, this.transform.localScale.z);
+            }
+            else
+            {
+                var talkCount = npcTalkData.talkCount;
+                if (talkCount == 0)
                 {
-                    if (!isTalking)
+                    if (isInTalkArea)
                     {
-                        talkBalloon.SetActive(false);
-                        willTalk.SetActive(false);
+                        if (!isTalking && !player.isTalking)
+                        {
+                            talkBalloon.SetActive(false);
+                            willTalk.SetActive(false);
+                        }
                     }
-                }
-                else
-                {
-                    talkBalloon.SetActive(true);
-                    willTalk.SetActive(true);
+                    else
+                    {
+                        talkBalloon.SetActive(true);
+                        willTalk.SetActive(true);
+                    }
                 }
             }
         }
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (isTalking)
+            if (collision.tag.Equals("Player"))
             {
-                upArrow.SetActive(false);
-                talkBalloon.SetActive(true);
-                talking.SetActive(true);
-            }
-            else if (collision.tag.Equals("Player"))
-            {
-                isInTalkArea = true;
-                upArrow.SetActive(true);
-                talkBalloon.SetActive(false);
-                willTalk.SetActive(false);
-                talking.SetActive(false);
-                if (player == null)
-                    player = collision.GetComponent<PlayerWithStateMachine>();
-                player.InTalkArea();
-
-                if (player.CheckReadyTalk() && player.isGrounded)
+                if (isTalking || player.isTalking)
                 {
-                    this.transform.localScale = new Vector3(-1 * Mathf.Abs(transform.localScale.x) * Mathf.Sign(player.transform.localPosition.x - this.transform.localPosition.x), this.transform.localScale.y, this.transform.localScale.z);
                     upArrow.SetActive(false);
-                    talkBalloon.transform.localScale = new Vector3(this.transform.localScale.x < 0 ? -1 * Mathf.Sign(talkBalloon.transform.localScale.x) * talkBalloon.transform.localScale.x : Mathf.Sign(talkBalloon.transform.localScale.x) * talkBalloon.transform.localScale.x, 
-                        talkBalloon.transform.localScale.y, talkBalloon.transform.localScale.z);
                     talkBalloon.SetActive(true);
                     talking.SetActive(true);
-                    TalkManager.Instance.TalkStart(talkEventName, this);
+
+                }
+                else
+                {
+                    isInTalkArea = true;
+                    upArrow.SetActive(true);
+                    talkBalloon.SetActive(false);
+                    willTalk.SetActive(false);
+                    talking.SetActive(false);
+                    player.InTalkArea();
+
+                    if (player.CheckReadyTalk() && player.isGrounded)
+                    {
+                        this.transform.localScale = new Vector3(-1 * Mathf.Abs(transform.localScale.x) * Mathf.Sign(player.transform.localPosition.x - this.transform.localPosition.x), this.transform.localScale.y, this.transform.localScale.z);
+                        upArrow.SetActive(false);
+                        talkBalloon.transform.localScale = new Vector3(this.transform.localScale.x < 0 ? -1 * Mathf.Sign(talkBalloon.transform.localScale.x) * talkBalloon.transform.localScale.x : Mathf.Sign(talkBalloon.transform.localScale.x) * talkBalloon.transform.localScale.x,
+                            talkBalloon.transform.localScale.y, talkBalloon.transform.localScale.z);
+                        talkBalloon.SetActive(true);
+                        talking.SetActive(true);
+                        TalkManager.Instance.TalkStart(npcTalkData.currentTalkEvent, this);
+                    }
                 }
             }
         }

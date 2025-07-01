@@ -119,6 +119,7 @@ namespace ActionPart
 
         protected virtual void OnEnable()
         {
+            isGrounded = true;
             body = GetComponent<Rigidbody2D>();
             boxCollider = GetComponent<BoxCollider2D>();
             capsuleCollider = GetComponent<CapsuleCollider2D>();
@@ -309,6 +310,7 @@ namespace ActionPart
             if(velocity.y > 0f)
             {
                 isGrounded = false;
+                groundLastTime = Time.time;
                 return;
             }
             int count;
@@ -342,7 +344,13 @@ namespace ActionPart
             }
             else 
             {
-                isGrounded = false;
+                if(isGrounded && Time.time - groundLastTime < coyoteTime){
+                    isGrounded = true;
+                }
+                else{
+                    isGrounded = false;
+                    groundLastTime = Time.time;
+                }
             }
         }
 

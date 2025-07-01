@@ -25,6 +25,8 @@ namespace ActionPart
             isCanInput = true;
         }
 
+
+        private int cantInputCount = 0;
         public bool isCanInput;
 
         public delegate void DelArrowKey();
@@ -75,12 +77,18 @@ namespace ActionPart
 
         public void CanInput()
         {
-            isCanInput = true;
+            Debug.Log($"cantInputCount: {cantInputCount} -> {cantInputCount - 1}");
+            cantInputCount = Mathf.Max(cantInputCount-1, 0);
+            if(cantInputCount == 0)
+                isCanInput = true;
         }
 
         public void CantInput()
         {
-            isCanInput = false;
+            Debug.Log($"cantInputCount: {cantInputCount} -> {cantInputCount + 1}");
+            cantInputCount++;
+            if(cantInputCount > 0)
+                isCanInput = false;
         }
 
         public void ActionMove(InputAction.CallbackContext context)
