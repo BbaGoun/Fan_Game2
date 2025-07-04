@@ -401,26 +401,26 @@ namespace ActionPart
                 return false;
             if (stepsSinceLastGrounded > 1)
             {
-                Debug.Log("1단계 탈락");
+                //Debug.Log("1단계 탈락");
                 return false;
             }
             var hit = Physics2D.Raycast(transform.localPosition - new Vector3(0, colliderSize.y / 2 - colliderOffset.y, 0), Vector2.down, probeDistance, contactFilter.layerMask);
             Debug.DrawRay(transform.localPosition - new Vector3(0, colliderSize.y / 2 - colliderOffset.y, 0), Vector2.down * probeDistance, Color.green);
             if (!hit)
             {
-                Debug.Log("2단계 탈락");
+                //Debug.Log("2단계 탈락");
                 return false;
             }
             if(hit.normal.y < minUnitSlopeY)
             {
-                Debug.Log("3단계 탈락");
+                //Debug.Log("3단계 탈락");
                 return false;
             }
 
             contactNormal = hit.normal;
             isGrounded = true;
             groundContactCount = 1;
-            Debug.Log("스냅 처리");
+            //Debug.Log("스냅 처리");
 
             return true;
         }

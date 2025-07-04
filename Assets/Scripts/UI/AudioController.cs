@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 
 public class AudioController : MonoBehaviour
 {
-    public static AudioController instance;
+    public static AudioController Instance;
 
     public AudioMixer audioMixer;
     public AudioSource BGM;
@@ -13,13 +13,13 @@ public class AudioController : MonoBehaviour
 
     public void Initialize()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
-            if(instance != this)
+            if(Instance != this)
             {
                 Destroy(this.gameObject);
             }

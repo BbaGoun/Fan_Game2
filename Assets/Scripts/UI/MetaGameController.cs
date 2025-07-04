@@ -7,11 +7,13 @@ namespace ActionPart
 {
     public class MetaGameController : MonoBehaviour
     {
-        public static MetaGameController instance;
+        public static MetaGameController Instance;
         /// <summary>
         /// The main UI object which used for the menu.
         /// </summary>
         public MainMenuController mainMenuController;
+
+        private int interfaceOffCount;
         public GameObject interfaces;
         public PlayerInput playerInput;
 
@@ -20,15 +22,17 @@ namespace ActionPart
         private void Awake()
         {
             #region Singleton
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
             }
-            else if(instance != this)
+            else if(Instance != this)
             {
                 Destroy(this.gameObject);
             }
             #endregion
+
+            interfaceOffCount = 0;
         }
 
         /// <summary>
@@ -81,11 +85,16 @@ namespace ActionPart
 
         public void ShowInterface()
         {
-            interfaces.SetActive(true);
+            interfaceOffCount = Mathf.Max(interfaceOffCount - 1, 0);
+            Debug.Log($"인터페이스 켜기 : {interfaceOffCount}");
+            if(interfaceOffCount == 0)
+                interfaces.SetActive(true);
         }
 
         public void DisShowInterface()
         {
+            interfaceOffCount += 1;
+            Debug.Log($"인터페이스 끄기 : {interfaceOffCount}");
             interfaces.SetActive(false);
         }
 

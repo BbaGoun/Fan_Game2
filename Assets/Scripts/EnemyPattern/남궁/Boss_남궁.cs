@@ -26,12 +26,6 @@ namespace ActionPart
         BossTalkArea bossTalkArea;
         #endregion
 
-        public GameObject bossBeforeObjects;
-        public GameObject bossBattleObjects;
-        public GameObject bossBattlePhase1Objects;
-        public GameObject bossBattlePhase2Objects;
-        public GameObject bossAfterObjects;
-
         public RangeArea InRange;
         public RangeArea OutRange;
 
@@ -61,12 +55,6 @@ namespace ActionPart
         public HarmfulToPlayer harmfulToPlayer;
         private void Awake()
         {
-            bossBeforeObjects?.SetActive(true);
-            bossBattleObjects?.SetActive(false);
-            bossBattlePhase1Objects?.SetActive(false);
-            bossBattlePhase2Objects?.SetActive(false);
-            bossAfterObjects?.SetActive(false);
-
             stateMachine = GetComponent<StateMachine>();
             enemyHealth = GetComponent<EnemyHealth>();
             animator = GetComponent<Animator>();
@@ -88,8 +76,6 @@ namespace ActionPart
 
         public override void Initialize()
         {
-            bossBeforeObjects?.SetActive(false);
-            bossBattleObjects?.SetActive(true);
             StartCoroutine(IELifeCycle());
         }
 
@@ -291,12 +277,6 @@ namespace ActionPart
         public bool CheckIsSuperArmour()
         {
             return isAttackSuperArmour || isDamageSuperArmour || isGroggy;
-        }
-
-        public void EventBossDead()
-        {
-            bossBattleObjects.SetActive(false);
-            bossAfterObjects.SetActive(true);
         }
 
         public enum BossState

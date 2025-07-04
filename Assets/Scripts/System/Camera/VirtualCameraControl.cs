@@ -41,7 +41,7 @@ namespace ActionPart
         
         private bool isOffsetUsed;
 
-        private void Awake()
+        public void Initialize()
         {
             #region Singleton
             if (Instance != null && Instance != this)

@@ -19,6 +19,8 @@ namespace ActionPart
         public AudioController _audioController;
         public GlobalTimelineController _timelineController;
         public PlayerWithStateMachine _playerWithStateMachine;
+
+        public VirtualCameraControl _virtualCameraControl;
         
         private void Awake()
         {
@@ -26,18 +28,19 @@ namespace ActionPart
             _timelineController.Initialize();
             _timeController.Initialize();
             _battleManager.Initialize();
+            _virtualCameraControl.Initialize();
+            _playerInputPart.Initialize();
 
             // 후행
             _settingContainer.Initialize();
             _dataManager.Initialize();
             _talkManager.Initialize();
             _audioController.Initialize();
-            _playerInputPart.Initialize();
+            _playerWithStateMachine.Initialize();
+            _loadingManager.Initialize();
 
             // 상관없음
             _mainMenuController.Initialize();
-            _loadingManager.Initialize();
-            _playerWithStateMachine.Initialize();
         }
     }
 }

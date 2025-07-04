@@ -56,7 +56,7 @@ namespace ActionPart.UI
             }
 
             PlayerInputPart.Instance.CanInput();
-            MetaGameController.instance.ShowInterface();
+            MetaGameController.Instance.ShowInterface();
             this.gameObject.SetActive(false);
         }
     }

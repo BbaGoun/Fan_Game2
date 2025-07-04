@@ -4822,6 +4822,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1083781885}
+  - {fileID: 1986880743}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1934034663
@@ -5135,6 +5136,56 @@ Transform:
   - {fileID: 912452438}
   m_Father: {fileID: 577733209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1986880742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1986880743}
+  - component: {fileID: 1986880744}
+  m_Layer: 0
+  m_Name: LocalBattleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1986880743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986880742}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1916225658}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1986880744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986880742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf833cb233a4d04c90b59584fef2bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss: {fileID: 2058913825}
+  bossBeforeObjects: {fileID: 110850034}
+  bossBattleObjects: {fileID: 161370810}
+  bossBattlePhase1Objects: {fileID: 128135260}
+  bossBattlePhase2Objects: {fileID: 701036802}
+  bossAfterObjects: {fileID: 2060961923}
 --- !u!1 &2042230261
 GameObject:
   m_ObjectHideFlags: 0
@@ -5526,11 +5577,6 @@ MonoBehaviour:
   groggyState: {fileID: 2058913830}
   deathState: {fileID: 2058913831}
   bossTalkArea: {fileID: 1461410960}
-  bossBeforeObjects: {fileID: 110850034}
-  bossBattleObjects: {fileID: 161370810}
-  bossBattlePhase1Objects: {fileID: 128135260}
-  bossBattlePhase2Objects: {fileID: 701036802}
-  bossAfterObjects: {fileID: 2060961923}
   InRange: {fileID: 1128409121}
   OutRange: {fileID: 1333306459}
   stateMachine: {fileID: 0}

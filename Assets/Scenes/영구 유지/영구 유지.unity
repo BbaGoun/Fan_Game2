@@ -926,6 +926,7 @@ MonoBehaviour:
   _audioController: {fileID: 1366983827}
   _timelineController: {fileID: 1882747178}
   _playerWithStateMachine: {fileID: 8770118516554096234}
+  _virtualCameraControl: {fileID: 1587940628}
 --- !u!1 &126166936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,6 +1172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventRememberJson: {fileID: 4900000, guid: c34054ac170e3e341900f3dbe23a2fba, type: 3}
+  eventRememberWrapper: []
   filePath: 
 --- !u!114 &178768164 stripped
 MonoBehaviour:
@@ -2491,9 +2493,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScene: {fileID: 1554635286}
-  virtualCameraControl: {fileID: 1587940628}
-  player: {fileID: 8770118516554096234}
-  audioController: {fileID: 1366983827}
   interfaces: {fileID: 705378979}
 --- !u!1 &549783697
 GameObject:
@@ -6631,6 +6630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787c1584285948c418a88c349c7d9d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localBattleManager: {fileID: 0}
 --- !u!114 &1239057570 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5018521854535333161, guid: 7371a07fb5e478f48be05795ab0c41c7, type: 3}
@@ -10569,7 +10569,7 @@ MonoBehaviour:
       name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
       _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
         \uC5F0\uBB34\uC7A5.unity"
-    loadInEditor: 0
+    loadInEditor: 1
     loadMethod: 3
   - scene:
       editorAssetGUID: c629230ab3a2c1e4ca3a20da3078c35e
@@ -10623,96 +10623,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _version: 2
   _crossSceneReferences:
-  - _sourceObject: {fileID: 1882747179}
-    _sourceField: m_ExposedReferences.m_References,6.second
-    DEPRECATED_fromObject:
-      scene:
-        editorAssetGUID: 
-        name: 
-        _path: 
-      fullPath: 
-      componentName: 
-      componentIndex: 0
-      editorLocalId: 0
-      editorPrefabRelativePath: 
-      version: 0
-    _toObject:
-      scene:
-        editorAssetGUID: 6f8a9d1176b8e5d4681fb26ff7a64cc3
-        name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
-        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
-          \uC5F0\uBB34\uC7A5.unity"
-      fullPath: /==== Maps ====/==== Points ====/TimelineCamPoint
-      componentName: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      componentIndex: 0
-      editorLocalId: 1130068187
-      editorPrefabRelativePath: 
-      version: 1
-    _data:
-      data:
-      - object: {fileID: 0}
-        string: 63b980d60cca4b94984405d90855ec40
-  - _sourceObject: {fileID: 1882747179}
-    _sourceField: m_ExposedReferences.m_References,5.second
-    DEPRECATED_fromObject:
-      scene:
-        editorAssetGUID: 
-        name: 
-        _path: 
-      fullPath: 
-      componentName: 
-      componentIndex: 0
-      editorLocalId: 0
-      editorPrefabRelativePath: 
-      version: 0
-    _toObject:
-      scene:
-        editorAssetGUID: 6f8a9d1176b8e5d4681fb26ff7a64cc3
-        name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
-        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
-          \uC5F0\uBB34\uC7A5.unity"
-      fullPath: /==== Maps ====/==== Points ====/TimelineCamPoint
-      componentName: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      componentIndex: 0
-      editorLocalId: 1130068187
-      editorPrefabRelativePath: 
-      version: 1
-    _data:
-      data:
-      - object: {fileID: 0}
-        string: 87b7872a049c83d4786c031ad0c5378b
-  - _sourceObject: {fileID: 1882747179}
-    _sourceField: m_SceneBindings,17.value
-    DEPRECATED_fromObject:
-      scene:
-        editorAssetGUID: 
-        name: 
-        _path: 
-      fullPath: 
-      componentName: 
-      componentIndex: 0
-      editorLocalId: 0
-      editorPrefabRelativePath: 
-      version: 0
-    _toObject:
-      scene:
-        editorAssetGUID: 6f8a9d1176b8e5d4681fb26ff7a64cc3
-        name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
-        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
-          \uC5F0\uBB34\uC7A5.unity"
-      fullPath: "/==== Enemys ====/\uB0A8\uAD81\uC758 \uC544\uC774"
-      componentName: UnityEngine.Animator, UnityEngine.AnimationModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      componentIndex: 0
-      editorLocalId: 2058913822
-      editorPrefabRelativePath: 
-      version: 1
-    _data:
-      data:
-      - object: {fileID: -4347920110128943462, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
-        string: 
   - _sourceObject: {fileID: 1882747179}
     _sourceField: m_ExposedReferences.m_References,3.second
     DEPRECATED_fromObject:
@@ -10803,6 +10713,96 @@ MonoBehaviour:
       data:
       - object: {fileID: 0}
         string: 635a0837a0dca4847b4b54748bd40be1
+  - _sourceObject: {fileID: 1882747179}
+    _sourceField: m_ExposedReferences.m_References,6.second
+    DEPRECATED_fromObject:
+      scene:
+        editorAssetGUID: 
+        name: 
+        _path: 
+      fullPath: 
+      componentName: 
+      componentIndex: 0
+      editorLocalId: 0
+      editorPrefabRelativePath: 
+      version: 0
+    _toObject:
+      scene:
+        editorAssetGUID: 6f8a9d1176b8e5d4681fb26ff7a64cc3
+        name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
+        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
+          \uC5F0\uBB34\uC7A5.unity"
+      fullPath: /==== Maps ====/==== Points ====/TimelineCamPoint
+      componentName: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      componentIndex: 0
+      editorLocalId: 1130068187
+      editorPrefabRelativePath: 
+      version: 1
+    _data:
+      data:
+      - object: {fileID: 0}
+        string: 63b980d60cca4b94984405d90855ec40
+  - _sourceObject: {fileID: 1882747179}
+    _sourceField: m_ExposedReferences.m_References,5.second
+    DEPRECATED_fromObject:
+      scene:
+        editorAssetGUID: 
+        name: 
+        _path: 
+      fullPath: 
+      componentName: 
+      componentIndex: 0
+      editorLocalId: 0
+      editorPrefabRelativePath: 
+      version: 0
+    _toObject:
+      scene:
+        editorAssetGUID: 6f8a9d1176b8e5d4681fb26ff7a64cc3
+        name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
+        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
+          \uC5F0\uBB34\uC7A5.unity"
+      fullPath: /==== Maps ====/==== Points ====/TimelineCamPoint
+      componentName: UnityEngine.Transform, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      componentIndex: 0
+      editorLocalId: 1130068187
+      editorPrefabRelativePath: 
+      version: 1
+    _data:
+      data:
+      - object: {fileID: 0}
+        string: 87b7872a049c83d4786c031ad0c5378b
+  - _sourceObject: {fileID: 1882747179}
+    _sourceField: m_SceneBindings,17.value
+    DEPRECATED_fromObject:
+      scene:
+        editorAssetGUID: 
+        name: 
+        _path: 
+      fullPath: 
+      componentName: 
+      componentIndex: 0
+      editorLocalId: 0
+      editorPrefabRelativePath: 
+      version: 0
+    _toObject:
+      scene:
+        editorAssetGUID: 6f8a9d1176b8e5d4681fb26ff7a64cc3
+        name: "\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5"
+        _path: "Assets/Scenes/\uC548\uD718\uC131/\uC548\uD718\uC131 \uC5F0\uBB34\uC7A5/\uC548\uD718\uC131
+          \uC5F0\uBB34\uC7A5.unity"
+      fullPath: "/==== Enemys ====/\uB0A8\uAD81\uC758 \uC544\uC774"
+      componentName: UnityEngine.Animator, UnityEngine.AnimationModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      componentIndex: 0
+      editorLocalId: 2058913822
+      editorPrefabRelativePath: 
+      version: 1
+    _data:
+      data:
+      - object: {fileID: -4347920110128943462, guid: 51e895f96d9d8ff448ab1fa86e765234, type: 2}
+        string: 
   _realSceneRootsForPostBuild: []
   _mergedScenes: []
 --- !u!1 &1859956081
@@ -14011,6 +14011,10 @@ PrefabInstance:
     - target: {fileID: 4075800536691764152, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404090010638762496, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
+      propertyPath: idleWaitTime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4404090010638762496, guid: 00b7e7a56abdd9549880995f27f98b31, type: 3}
       propertyPath: attackObject1

@@ -36,7 +36,7 @@ namespace ActionPart
                 Destroy(instance.gameObject);
             }
 
-            #endregion // !Singleton 
+            #endregion
             m_sPath = Application.persistentDataPath + "/save";
         }
 

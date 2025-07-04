@@ -1,9 +1,5 @@
 using Cinemachine;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,19 +19,21 @@ namespace ActionPart
 
         [SerializeField]
         private LoadingScene loadingScene;
-        [SerializeField]
+
         private VirtualCameraControl virtualCameraControl;
-        [SerializeField]
+        
         private PlayerWithStateMachine player;
-        [SerializeField]
+        
         private AudioController audioController;
+        
         [SerializeField]
         private GameObject interfaces;
+
+        private BattleManager battleManager;
         private bool isLoadDone;
         private bool isCamSetDone;
 
         private SceneSetting sceneSetting;
-        private LocalTimelineController localTimelineController;
         private ParallaxBackground parallaxBackground;
         private string loadedSceneName;
         private string loadedCartoonSceneName;
@@ -54,6 +52,11 @@ namespace ActionPart
                 Destroy(this.gameObject);
             }
             #endregion // Singleton
+
+            virtualCameraControl = VirtualCameraControl.Instance;
+            player = PlayerWithStateMachine.Instance;
+            audioController = AudioController.Instance;
+            battleManager = BattleManager.Instance;
 
             LoadSceneAsync("메인 타이틀", SpawnPoint.None, WithWalkOut.None, mode: TransitionMode.FromLeft, inDelay: 0.25f, outDelay: 0.25f);
         }
@@ -111,7 +114,7 @@ namespace ActionPart
                 yield return new WaitUntil(loadingScene.CheckIsDone);
 
                 // 메인메뉴 회수
-                MetaGameController.instance.OffMainMenu();
+                MetaGameController.Instance.OffMainMenu();
 
                 // 카메라 원위치
                 virtualCameraControl.ResetSwapedCamera();
@@ -186,6 +189,8 @@ namespace ActionPart
                         player.SetSpeedMultiplier(1.0f);
                         player.transform.localScale = Vector3.one;
                     }
+
+                    battleManager.ChangeLocalBattleManager();
 
                     virtualCameraControl.SetCamBySceneSetting();
                     virtualCameraControl.SetCinemachineBrainBlend(CinemachineBlendDefinition.Style.EaseInOut);

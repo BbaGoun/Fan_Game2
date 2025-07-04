@@ -66,6 +66,7 @@ namespace ActionPart
 
             NPCTalkDataManager.Instance.WaitCutScene(_currentCutScene.actors);
 
+            MetaGameController.Instance.DisShowInterface();
             TimelineBars.Instance.BarsOn();
 
             PlayerWithStateMachine.Instance.ResetAnimator();
@@ -87,6 +88,7 @@ namespace ActionPart
                     break;
             }
             NPCTalkDataManager.Instance.UnWaitCutScene(_currentCutScene.actors);
+            MetaGameController.Instance.ShowInterface();
             PlayerCanMove();
             VirtualCameraControl.Instance.OffTimelineCam();
         }

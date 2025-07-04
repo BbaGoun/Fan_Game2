@@ -32,25 +32,25 @@ namespace ActionPart.UI
             switch (index)
             {
                 case 0:
-                    sceneSideEnd.ChangeNextScene("Ã¢Ãµ°´ÀÜ");
+                    sceneSideEnd.ChangeNextScene("Ã¢Ãµï¿½ï¿½ï¿½ï¿½");
                     break;                        
                 case 1:                           
-                    sceneSideEnd.ChangeNextScene("Ã¢Ãµ°´ÀÜ");
+                    sceneSideEnd.ChangeNextScene("Ã¢Ãµï¿½ï¿½ï¿½ï¿½");
                     break;                        
                 case 2:                           
-                    sceneSideEnd.ChangeNextScene("Ã¢Ãµ°´ÀÜ");
+                    sceneSideEnd.ChangeNextScene("Ã¢Ãµï¿½ï¿½ï¿½ï¿½");
                     break;                        
                 case 3:                           
-                    sceneSideEnd.ChangeNextScene("Ã¢Ãµ°´ÀÜ");
+                    sceneSideEnd.ChangeNextScene("Ã¢Ãµï¿½ï¿½ï¿½ï¿½");
                     break;                        
                 case 4:                           
-                    sceneSideEnd.ChangeNextScene("Ã¢Ãµ°´ÀÜ");
+                    sceneSideEnd.ChangeNextScene("Ã¢Ãµï¿½ï¿½ï¿½ï¿½");
                     break;                        
                 case 5:                           
-                    sceneSideEnd.ChangeNextScene("Ã¢Ãµ°´ÀÜ");
+                    sceneSideEnd.ChangeNextScene("Ã¢Ãµï¿½ï¿½ï¿½ï¿½");
                     break;                        
                 case 6:                           
-                    sceneSideEnd.ChangeNextScene("Ã¢Ãµ°´ÀÜ");
+                    sceneSideEnd.ChangeNextScene("Ã¢Ãµï¿½ï¿½ï¿½ï¿½");
                     break;
             }
 
@@ -77,7 +77,7 @@ namespace ActionPart.UI
                     isInteracting = true;
                     upArrow.SetActive(false);
 
-                    MetaGameController.instance.DisShowInterface();
+                    MetaGameController.Instance.DisShowInterface();
                     door.SetActive(true);
                 }
             }

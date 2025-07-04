@@ -77,7 +77,7 @@ namespace ActionPart
 
         public void CanInput()
         {
-            Debug.Log($"cantInputCount: {cantInputCount} -> {cantInputCount - 1}");
+            //Debug.Log($"cantInputCount: {cantInputCount} -> {cantInputCount - 1}");
             cantInputCount = Mathf.Max(cantInputCount-1, 0);
             if(cantInputCount == 0)
                 isCanInput = true;
@@ -85,7 +85,7 @@ namespace ActionPart
 
         public void CantInput()
         {
-            Debug.Log($"cantInputCount: {cantInputCount} -> {cantInputCount + 1}");
+            //Debug.Log($"cantInputCount: {cantInputCount} -> {cantInputCount + 1}");
             cantInputCount++;
             if(cantInputCount > 0)
                 isCanInput = false;

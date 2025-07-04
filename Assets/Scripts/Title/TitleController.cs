@@ -56,7 +56,7 @@ namespace ActionPart
 
         public void Initialize()
         {
-            audioController = AudioController.instance;
+            audioController = AudioController.Instance;
 
             maxResolutionIndex = SettingContainer.instance.m_SettingData.resolutionList.Count - 1;
 

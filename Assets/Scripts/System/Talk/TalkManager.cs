@@ -10,6 +10,7 @@ namespace ActionPart
     {
         public static TalkManager Instance;
 
+
         [SerializeField]
         private TextAsset[] csvFiles;
         [SerializeField]
@@ -117,8 +118,8 @@ namespace ActionPart
                             currentContextIndex = 0;
                             if(++currentTalkDataIndex >= currentTalkEvent.talkDatas.Length)
                             {
-                                TalkNextEvent(currentTalkEvent.nextEvent);
                                 isTalking = false;
+                                TalkNextEvent(currentTalkEvent.nextEvent);
                                 currentTalkEvent = null;
                                 currentTalkDataIndex = 0;
                                 currentContextIndex = 0;
@@ -136,20 +137,23 @@ namespace ActionPart
             
             switch(nextEvent)
             {
+                case "튜토리얼_전투":
+                    BattleManager.Instance.LocalBossBattleStart();
+                    break;
                 default:
-                    PlayerWithStateMachine.Instance.isTalking = false;
-                    PlayerInputPart.Instance.CanInput();
-                    MetaGameController.instance.ShowInterface();
-                    if (npc != null)
-                    {
-                        npc.TalkDone();
-                        npc = null;
-                    }
-
-                    TimelineBars.Instance.BarsOff();
-
                     break;
             }
+            
+            PlayerWithStateMachine.Instance.isTalking = false;
+            PlayerInputPart.Instance.CanInput();
+            MetaGameController.Instance.ShowInterface();
+            if (npc != null)
+            {
+                npc.TalkDone();
+                npc = null;
+            }
+
+            TimelineBars.Instance.BarsOff();
         }
 
         void SetTalkDictionary()
@@ -226,7 +230,7 @@ namespace ActionPart
                     PlayerWithStateMachine.Instance.isTalking = true;
                     PlayerInputPart.Instance.CantInput();
                     talkUI.SetTalkBoxOn();
-                    MetaGameController.instance.DisShowInterface();
+                    MetaGameController.Instance.DisShowInterface();
                     currentTalkEvent = talkDictionary[eventName];
                     currentTalkDataIndex = 0;
                     currentContextIndex = 0;
