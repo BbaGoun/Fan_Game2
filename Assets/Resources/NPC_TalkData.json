@@ -1,108 +1,122 @@
 {
     "npcTalks": [
-      {
-        "npcName": "안휘성_집무실_가주",
-        "talkCount": 0,
-        "talkEvents": [
-          "튜토리얼_SC1."
-        ],
-        "currentTalkEvent": "튜토리얼_SC1."
-      },
-      {
-        "npcName": "안휘성_시장_러끼",
-        "talkCount": 0,
-        "talkEvents": [
-          "러끼"
-        ],
-        "currentTalkEvent": "러끼"
-      },
-      {
-        "npcName": "안휘성_시장_마리안느",
-        "talkCount": 0,
-        "talkEvents": [
-          "마리안느"
-        ],
-        "currentTalkEvent": "마리안느"
-      },
-      {
-        "npcName": "안휘성_시장_애비게일",
-        "talkCount": 0,
-        "talkEvents": [
-          "애비게일"
-        ],
-        "currentTalkEvent": "애비게일"
-      },
-      {
-        "npcName": "안휘성_시장_세바스찬",
-        "talkCount": 0,
-        "talkEvents": [
-          "세바스찬"
-        ],
-        "currentTalkEvent": "세바스찬"
-      },
-      {
-        "npcName": "안휘성_시장_셰인",
-        "talkCount": 0,
-        "talkEvents": [
-          "셰인"
-        ],
-        "currentTalkEvent": "셰인"
-      },
-      {
-        "npcName": "안휘성_시장_초텐",
-        "talkCount": 0,
-        "talkEvents": [
-          "초텐"
-        ],
-        "currentTalkEvent": "초텐"
-      },
-      {
-        "npcName": "안휘성_시장_민수하",
-        "talkCount": 0,
-        "talkEvents": [
-          "민수하"
-        ],
-        "currentTalkEvent": "민수하"
-      },
-      {
-        "npcName": "요나&윤서",
-        "talkCount": 0,
-        "talkEvents": [
-          "요나&윤서"
-        ],
-        "currentTalkEvent": "요나&윤서"
-      },
-      {
-        "npcName": "아빠킹&호무새",
-        "talkCount": 0,
-        "talkEvents": [
-          "아빠킹&호무새"
-        ],
-        "currentTalkEvent": "아빠킹&호무새"
-      },
-      {
-        "npcName": "동식&석두",
-        "talkCount": 0,
-        "talkEvents": [
-          "동식&석두"
-        ],
-        "currentTalkEvent": "동식&석두"
-      },
-      {
-        "npcName": "라스",
-        "talkCount": 0,
-        "talkEvents": [
-          "라스"
-        ],
-        "currentTalkEvent": "라스"
-      },
-      {
-        "npcName": "펭",
-        "talkCount": 0,
-        "talkEvents": [
-          "펭"
-        ],
-        "currentTalkEvent": "펭"
-      }
+        {
+            "npcName": "안휘성_집무실_가주",
+            "talkCount": 1,
+            "talkEvents": [
+                "튜토리얼_SC1.",
+                "튜토리얼_SC1.이후"
+            ],
+            "currentTalkEvent": "튜토리얼_SC1.이후",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "안휘성_시장_러끼",
+            "talkCount": 0,
+            "talkEvents": [
+                "러끼"
+            ],
+            "currentTalkEvent": "러끼",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "안휘성_시장_마리안느",
+            "talkCount": 0,
+            "talkEvents": [
+                "마리안느"
+            ],
+            "currentTalkEvent": "마리안느",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "안휘성_시장_애비게일",
+            "talkCount": 1,
+            "talkEvents": [
+                "애비게일"
+            ],
+            "currentTalkEvent": "애비게일",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "안휘성_시장_세바스찬",
+            "talkCount": 0,
+            "talkEvents": [
+                "세바스찬"
+            ],
+            "currentTalkEvent": "세바스찬",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "안휘성_시장_셰인",
+            "talkCount": 0,
+            "talkEvents": [
+                "셰인"
+            ],
+            "currentTalkEvent": "셰인",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "안휘성_시장_초텐",
+            "talkCount": 0,
+            "talkEvents": [
+                "초텐"
+            ],
+            "currentTalkEvent": "초텐",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "안휘성_시장_민수하",
+            "talkCount": 0,
+            "talkEvents": [
+                "민수하"
+            ],
+            "currentTalkEvent": "민수하",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "요나&윤서",
+            "talkCount": 0,
+            "talkEvents": [
+                "요나&윤서"
+            ],
+            "currentTalkEvent": "요나&윤서",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "아빠킹&호무새",
+            "talkCount": 0,
+            "talkEvents": [
+                "아빠킹&호무새"
+            ],
+            "currentTalkEvent": "아빠킹&호무새",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "동식&석두",
+            "talkCount": 0,
+            "talkEvents": [
+                "동식&석두"
+            ],
+            "currentTalkEvent": "동식&석두",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "라스",
+            "talkCount": 0,
+            "talkEvents": [
+                "라스"
+            ],
+            "currentTalkEvent": "라스",
+            "isWaitCutScene": false
+        },
+        {
+            "npcName": "펭",
+            "talkCount": 0,
+            "talkEvents": [
+                "펭"
+            ],
+            "currentTalkEvent": "펭",
+            "isWaitCutScene": false
+        }
     ]
-  }
+}

@@ -4,7 +4,8 @@
         "npcName": "안휘성_집무실_가주",
         "talkCount": 0,
         "talkEvents": [
-          "튜토리얼_SC1."
+          "튜토리얼_SC1.",
+          "튜토리얼_SC1.이후"
         ],
         "currentTalkEvent": "튜토리얼_SC1."
       },

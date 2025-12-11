@@ -5571,6 +5571,7 @@ MonoBehaviour:
   contactNormal: {x: 0, y: 0}
   canWalkOnSlope: 0
   _groundOffsetY: 0
+  localBattleManager: {fileID: 1986880744}
   moveState: {fileID: 2058913824}
   attackState: {fileID: 2058913826}
   damagedState: {fileID: 2058913828}

@@ -8,6 +8,8 @@ namespace ActionPart
     public class Boss_남궁 : Boss
     {
         [Space(10)]
+        public LocalBattleManager localBattleManager;
+        [Space(10)]
         [Header("States")]
         #region states
         [SerializeField]

@@ -140,6 +140,9 @@ namespace ActionPart
                 case "튜토리얼_전투":
                     BattleManager.Instance.LocalBossBattleStart();
                     break;
+                case "튜토리얼_SC1.이후":
+                    NPCTalkDataManager.Instance.SetNPCTalkEvent("안휘성_집무실_가주", "튜토리얼_SC1.이후");
+                    break;
                 default:
                     break;
             }

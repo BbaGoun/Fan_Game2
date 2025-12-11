@@ -19,6 +19,7 @@ namespace ActionPart
             // 사밍 시 할 거
             boss.SetAnimatorTrigger("isDead");
             boss.harmfulToPlayer.SetIsWork(false);
+            boss.localBattleManager.BossBattleEnd();
         }
 
         public override void ExitState()

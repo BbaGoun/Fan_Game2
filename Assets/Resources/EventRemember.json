@@ -1,7 +1,7 @@
 {
   "안휘성_집무실First": false,
-  "안휘성_복도First": true,
-  "안휘성_연무장First": true,
+  "안휘성_복도First": false,
+  "안휘성_연무장First": false,
   "안휘BossKilled": false,
   "녹림BossKilled": false,
   "점창BossKilled": false,
